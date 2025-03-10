@@ -1,4 +1,4 @@
-# Idées
+# Idées - magasin de collection de voiture miniature
 
 ## Interface - 2 parties
 - **stock**
