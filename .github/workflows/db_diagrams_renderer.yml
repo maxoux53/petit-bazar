@@ -1,0 +1,38 @@
+name: Render .drawio files
+
+on: [pull_request]
+
+jobs:
+  render_drawio:
+    runs-on: ubuntu-latest
+    name: Render .drawio files
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.pull_request.head.ref }}
+        repository: ${{ github.event.pull_request.head.repo.full_name }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Render .drawio files
+      uses: docker://ghcr.io/racklet/render-drawio-action:v1
+      with:
+        formats: 'png'
+        sub-dirs: 'docs/DB'
+        # files:
+        # log-level: 'info'
+        rendered-files: 'docs/img/db.png'
+      id: render
+
+    - name: List the rendered files
+      run: 'ls -l ${{ steps.render.outputs.rendered-files }}'
+    
+    - name: Commit the rendered files
+      uses: EndBug/add-and-commit@v7
+      with:
+        # This makes the GH Actions user/bot the author of the commit
+        default_author: github_actor
+        message: 'Automated .drawio file rendering'
+        add: "${{ steps.render.outputs.rendered-files }}"
+        branch: ${{ github.event.pull_request.head.ref }}
+      if: "${{ steps.render.outputs.rendered-files != ''}}"
