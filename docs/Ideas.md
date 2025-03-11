@@ -4,15 +4,18 @@
 - **stock**
     - page login (hashage du MDP)
     - patron
-        - ajouter employé
-        - modifier employé
-        - supprimer employé
+        - partie création
+            - ajouter employé
+        - partie gestion
+            - modifier employé
+            - supprimer employé
     - articles
         - Partie création
             - ajouter un article
-            - supprimer un article (en fonction de l'ID)
-            - modifier un article (en fonction de l'ID)
-        - Partie recherche
+        - Partie recherche (en fonction de l'ID)
+            - supprimer un article 
+            - modifier un article 
+                - Prix : modifier le prix va créer une nouvelle ligne avec le nouveau prix, la date début (startDate) à l'instanté
             - rechercher par rapport à une certaines colonnes dans la bdd
             - trier
             - afficher les articles épuisés
@@ -25,8 +28,3 @@
     - créer une carte de fidélité
     - modifier une carte de fidélité (en fonction du numéro)
     - supprimer une carte de fidélité (en fonction du numéro)
-## BDDs
-- **stock**
-    - employee
-        - <u>ID<u>
-        - 
