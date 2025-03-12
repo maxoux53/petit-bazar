@@ -18,7 +18,7 @@ jobs:
       uses: docker://ghcr.io/racklet/render-drawio-action:v1
       with:
         formats: 'png'
-        files: 'docs/img/db.png=docs/DB/DB.drawio'
+        files: 'docs/img/db.png:docs/DB/DB.drawio'
       id: render
 
     - name: List the rendered files
