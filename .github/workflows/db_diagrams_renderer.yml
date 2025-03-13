@@ -1,6 +1,9 @@
 name: Render .drawio files
 
-on: [pull_request]
+on:
+  pull_request:
+    paths:
+      - 'docs/DB/*.drawio'
 
 jobs:
   render_drawio:
