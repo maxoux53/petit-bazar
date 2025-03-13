@@ -1,13 +1,11 @@
-version: '3.8'
+version: '3.9'
 
 services:
-  database:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    platform: linux/amd64 #apple silicon: ensure rosetta 2 is installed (if not, 'softwareupdate --install-rosetta')
-    container_name: sqlserver
-    ports:
-      - "1433:1433"
+  db:
+    container_name: postgresql
+    image: postgres
+    shm_size: 128mb # set shared memory limit
     environment:
-      - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=${SA_PASSWORD}
-      - MSSQL_PID=Developer
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+    ports:
+      - "5432:5432"
