@@ -20,7 +20,7 @@ jobs:
         # Currently broken, see action repo issue #27
         # Keeping this here for when it will be fixed
         formats: 'png'
-        files: 'docs/img/db.png=docs/DB/DB.drawio'
+        files: 'docs/DB/img_ER_diagram.png=docs/DB/ER_diagram.drawio,docs/DB/img_Relational_diagram.png=docs/DB/Relational_diagram.drawio'
       id: render
 
     - name: List the rendered files
