@@ -2,32 +2,51 @@
 
 ## À propos
 
-Notre projet, réalisé en Java et SQL, est un logiciel de gestion de magasin d'alimentation. Il permet la gestion des stocks, la gestion client (programme de fidélité, etc), la gestion des employés (par le manager).
+Notre projet, réalisé en Java et SQL (PostgreSQL), est un logiciel de gestion de magasin d'alimentation généraliste.
+Il permet la gestion des stocks, la gestion client (programme de fidélité, etc), la gestion des employés (par le manager).
 
 ## Table des matières
 
 1. [À propos](#à-propos)
-2. [Installation](#installation)
-3. [Utilisation](#utilisation)
-4. [Comment contribuer](#comment-contribuer)
-5. [Informations sur la licence](#informations-sur-la-licence)
+2. [Structure de la base de données](#structure-de-la-base-de-données)
+3. [Technologies utilisées](#technologies-utilisées)
+   - [Conception](#conception)
+   - [Développement](#développement)
+   - [Interface utilisateur](#interface-utilisateur)
+   - [Base de données](#base-de-données)
+4. [Installation](#installation)
+5. [Utilisation](#utilisation)
+6. [Informations sur la licence](#informations-sur-la-licence)
 
-## Stack utilisée
+## Structure de la base de données
 
-### Conceptualisation
+**Schema entité-association (EA)**  
+![Schema EA](docs/DB/ER_diagram.svg)
+
+**Schema relationnel**  
+![Schema relationnel](docs/DB/Relational_diagram.svg)
+
+## Technologies utilisées
+
+### Conception
 
 - PlantUML pour la modélisation orientée objet.
 - Draw.io pour la modélisation de la base de données (EA + relationnel).
 
-### Frontend
+### Développement
+
+- Java
+- OpenJDK
+- Environnement: IntelliJ IDEA
+
+### Interface utilisateur
 
 - JFC Swing
 - AWT
 
-### Backend
+### Base de données
 
-- Java
-- PostgreSQL pour la base de données
+- PostgreSQL
 
 ## Installation
 
@@ -38,3 +57,5 @@ Notre projet, réalisé en Java et SQL, est un logiciel de gestion de magasin d'
 (...)
 
 ## Informations sur la licence
+
+*Ce projet est sous licence GNU GPL v3. Pour plus de détails, veuillez consulter le fichier [LICENSE](LICENSE).*
