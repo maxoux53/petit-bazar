@@ -21,10 +21,10 @@ Il permet la gestion des stocks, la gestion client (programme de fidélité, etc
 ## Structure de la base de données
 
 **Schema entité-association (EA)**  
-![Schema EA](docs/db/er_diagram.svg)
+![Schema EA](docs/db_design/er_diagram.svg)
 
 **Schema relationnel**  
-![Schema relationnel](docs/db/relational_schema.svg)
+![Schema relationnel](docs/db_design/relational_schema.svg)
 
 ## Technologies utilisées
 
