@@ -14,93 +14,93 @@ CREATE TABLE country (
 );
 
 CREATE TABLE city (
-    zip_code NUMERIC(4),
+    zip_code SMALLINT,
     name VARCHAR(20) NOT NULL,
     country VARCHAR(20) NOT NULL REFERENCES country(name),
     CONSTRAINT pk_city PRIMARY KEY (zip_code, name)
 );
 
 CREATE TABLE employee (
-    id NUMERIC(5) PRIMARY KEY,
+    id SMALLSERIAL PRIMARY KEY,
     first_name VARCHAR(20) NOT NULL,
     last_name VARCHAR(25) NOT NULL,
-    password VARCHAR(250) NOT NULL, -- temporaire, à revoir en fonction du hash
+    password BYTEA NOT NULL,
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
     street VARCHAR(30) NOT NULL,
-    street_number NUMERIC(3) NOT NULL,
-    unit_number NUMERIC(2),
+    street_number SMALLINT NOT NULL,
+    unit_number SMALLINT,
     role_label VARCHAR(25) NOT NULL,
     hire_date DATE NOT NULL,
-    manager_id NUMERIC(5) REFERENCES employee(id),
-    city_zip_code NUMERIC(4) NOT NULL,
+    manager_id SMALLINT REFERENCES employee(id),
+    city_zip_code SMALLINT NOT NULL,
     city_name VARCHAR(20) NOT NULL,
     CONSTRAINT fk_employee_city FOREIGN KEY (city_zip_code, city_name) REFERENCES city(zip_code, name)
 );
 
 CREATE TABLE vat (
     type CHAR(1) PRIMARY KEY,
-    rate NUMERIC(3,2) NOT NULL
+    rate SMALLINT NOT NULL
 );
 
 CREATE TABLE category (
-    id NUMERIC(3) PRIMARY KEY,
+    id SMALLSERIAL PRIMARY KEY,
     name VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE brand (
-    id NUMERIC(3) PRIMARY KEY,
+    id SMALLSERIAL PRIMARY KEY,
     name VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE supplier (
-    vat_number NUMERIC(10) PRIMARY KEY,
-    name VARCHAR(20) NOT NULL,
+    vat_number BIGINT PRIMARY KEY,
+    name VARCHAR(40) NOT NULL,
     email VARCHAR(50) NOT NULL,
-    phone NUMERIC(15) NOT NULL,
+    phone INT NOT NULL,                 -- à vérifier
     country_name VARCHAR(20) NOT NULL REFERENCES country(name)
 );
 
 CREATE TABLE product (
-    barcode NUMERIC(15) PRIMARY KEY,
+    barcode BIGINT PRIMARY KEY,
     name VARCHAR(60) NOT NULL,
-    description VARCHAR(350),
-    amount NUMERIC(4) NOT NULL,
+    description TEXT,
+    amount SMALLINT NOT NULL,
     is_available BOOLEAN NOT NULL DEFAULT TRUE,
     vat_type CHAR(1) NOT NULL REFERENCES vat(type),
-    category_id NUMERIC(3) NOT NULL REFERENCES category(id),
-    brand_id NUMERIC(3) NOT NULL REFERENCES brand(id),
-    supplier_vat_number NUMERIC(10) NOT NULL REFERENCES supplier(vat_number)
+    category_id SMALLINT NOT NULL REFERENCES category(id),
+    brand_id SMALLINT NOT NULL REFERENCES brand(id),
+    supplier_vat_number BIGINT NOT NULL REFERENCES supplier(vat_number)
 );
 
 CREATE TABLE price_history (
-    excl_vat_price NUMERIC(10,2) NOT NULL,
-    discount NUMERIC(2) NOT NULL,
+    excl_vat_price MONEY NOT NULL,
+    discount SMALLINT NOT NULL,
     start_date DATE NOT NULL,
-    product_barcode NUMERIC(15) NOT NULL REFERENCES product(barcode),
+    product_barcode BIGINT NOT NULL REFERENCES product(barcode),
     CONSTRAINT pk_price_history PRIMARY KEY (start_date, product_barcode)
 );
 
 CREATE TABLE customer (
-    loyalty_card_number NUMERIC(15) PRIMARY KEY,
+    loyalty_card_number SERIAL PRIMARY KEY,
     first_name VARCHAR(20) NOT NULL,
     last_name VARCHAR(25) NOT NULL,
     birth_date DATE NOT NULL,
     email VARCHAR(50) NOT NULL,
-    phone NUMERIC(15),
-    vat_number NUMERIC(10),
-    loyalty_points NUMERIC(4) NOT NULL DEFAULT 0
+    phone INT,
+    vat_number BIGINT,
+    loyalty_points SMALLINT NOT NULL DEFAULT 0
 );
 
 CREATE TABLE purchase (
-    id NUMERIC(6) PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     date DATE NOT NULL,
-    employee_id NUMERIC(5) NOT NULL REFERENCES employee(id),
-    customer_card_number NUMERIC(15) REFERENCES customer(loyalty_card_number)
+    employee_id SMALLINT NOT NULL REFERENCES employee(id),
+    customer_card_number INT REFERENCES customer(loyalty_card_number)
 );
 
 CREATE TABLE order_line (
-    quantity NUMERIC(3) NOT NULL,
-    product_barcode NUMERIC(15) NOT NULL REFERENCES product(barcode),
-    purchase_id NUMERIC(6) NOT NULL REFERENCES purchase(id),
+    quantity SMALLINT NOT NULL,
+    product_barcode BIGINT NOT NULL REFERENCES product(barcode),
+    purchase_id BIGINT NOT NULL REFERENCES purchase(id),
     CONSTRAINT pk_order_line PRIMARY KEY (product_barcode, purchase_id)
 );
