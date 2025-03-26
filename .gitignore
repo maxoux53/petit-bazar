@@ -8,7 +8,12 @@
 ### Visual Studio Code ###
 .vscode/
 
-### IntelliJ ###
+### JetBrains IDEs ###
+# DataGrip
+sql/.idea/*
+!sql/.idea/sqldialects.xml
+
+# IntelliJ
 .idea/
 out/
 target/
