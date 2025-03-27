@@ -1,4 +1,31 @@
-# Roadmap (<u>non-exhaustive</u>)
+# Roadmap/to-do list (<u>non-exhaustive</u>)
+
+## Code, documentation et partie technique
+
+- [x] Schémas et diagrammes de la base de données
+- [x] Configuration Docker compose pour la BDD PostgreSQL
+- [x] Structure du dépôt (répertoires) pour accueillir le code
+- [x] Script de création des tables
+- [ ] Création du projet Java (système de build IntelliJ)
+- [ ] Décomposition en couches MVC (différents packages)
+- [ ] Développer la couche de connexion à la BDD
+- [ ] Diagrammes de classes UML
+- [ ] Développer les classes Java fondamentales
+  - [ ] `Role`
+  - [ ] `Country`
+  - [ ] `City`
+  - [ ] `Employee`
+  - [ ] `Vat`
+  - [ ] `Category`
+  - [ ] `Brand`
+  - [ ] `Supplier`
+  - [ ] `Product`
+  - [ ] `PriceHistory`
+  - [ ] `Customer`
+  - [ ] `Purchase`
+  - [ ] `OrderLine`
+
+## Fonctionnalités métier
 
 - [ ] **Gérer le stock**
   - [ ] Page de login
