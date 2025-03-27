@@ -6,6 +6,6 @@ services:
     environment:
       POSTGRES_PASSWORD: ${PG_PASSWORD}
       POSTGRES_USER: ${PG_USER}
-      POSTGRES_DB: store_management_db
+      POSTGRES_DB: store_management
     ports:
       - "5432:5432"
