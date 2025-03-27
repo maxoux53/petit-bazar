@@ -3,7 +3,7 @@ name: Render .drawio files
 on:
   pull_request:
     paths:
-      - 'docs/DB/*.drawio'
+      - 'docs/db_design/*.drawio'
 
 jobs:
   render_drawio:
