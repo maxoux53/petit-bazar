@@ -10,16 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     name: Render .puml files
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+    - name: checkout
+      uses: actions/checkout@v1
       with:
-        ref: ${{ github.event.pull_request.head.ref }}
-        repository: ${{ github.event.pull_request.head.repo.full_name }}
-        token: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: generate and commit diagrams
-      uses: abekoh/commit-plantuml-action@1.0.3
+        fetch-depth: 1
+    - name: plantuml
+      id: plantuml
+      uses: grassedge/generate-plantuml-action@v1.5
       with:
-        botEmail: '${{ secrets.BOT_EMAIL }}'
-        botGithubToken: ${{ secrets.GITHUB_TOKEN }}
-        enableReviewComment: false
+        path: .
+        message: "Automated .puml file rendering"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
