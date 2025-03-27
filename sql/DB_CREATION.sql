@@ -1,9 +1,7 @@
-CREATE DATABASE project;
+-- ⚠️ Se connecter à 'store_management' ⚠️ --
 
--- ⚠️ Se connecter à 'project' ⚠️ --
-
-/*CREATE SCHEMA project;
-SET search_path TO project;*/
+/*CREATE SCHEMA store_management;
+SET search_path TO store_management;*/
 
 CREATE TABLE role (
     label VARCHAR(25) PRIMARY KEY
