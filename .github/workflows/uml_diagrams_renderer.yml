@@ -10,10 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     name: Render .puml files
     steps:
-      - uses: actions/checkout@v2
-      - name: generate and commit diagrams
-        uses: abekoh/commit-plantuml-action@1.0.3
-        with:
-          botEmail: '${{ secrets.BOT_EMAIL }}'
-          botGithubToken: ${{ secrets.GITHUB_TOKEN }}
-          enableReviewComment: false
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.pull_request.head.ref }}
+        repository: ${{ github.event.pull_request.head.repo.full_name }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: generate and commit diagrams
+      uses: abekoh/commit-plantuml-action@1.0.3
+      with:
+        botEmail: '${{ secrets.BOT_EMAIL }}'
+        botGithubToken: ${{ secrets.GITHUB_TOKEN }}
+        enableReviewComment: false
