@@ -1,10 +1,8 @@
 @startuml Store
 
 ' Classes
-class Employee {
+class Employee extends Person {
     -id
-    -firstName
-    -lastName
     -password
     -isActive : bool
     -street
@@ -71,15 +69,18 @@ class Purchase {
     -date
 }
 
-class Customer {
+class Customer extends Person {
     -loyaltyCardNumber
-    -firstName
-    -lastName
     -birthDate
     -email
     -phone [0..1]
     -vatNumber [0..1]
     -loyaltyPoints
+}
+
+abstract class Person {
+    -firstName
+    -lastName
 }
 
 ' Relationships
