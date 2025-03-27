@@ -6,7 +6,9 @@ on:
       - 'docs/uml_diagrams/*.puml'
 
 jobs:
-  build:
+  render_plantuml:
+    runs-on: ubuntu-latest
+    name: Render .puml files
     steps:
       - uses: actions/checkout@v2
       - name: generate and commit diagrams
