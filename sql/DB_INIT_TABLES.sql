@@ -13,7 +13,7 @@ CREATE TABLE country (
 
 CREATE TABLE city (
     zip_code SMALLINT,
-    name VARCHAR(20) NOT NULL,
+    name VARCHAR(20),
     country VARCHAR(20) NOT NULL REFERENCES country(name),
     CONSTRAINT pk_city PRIMARY KEY (zip_code, name)
 );
