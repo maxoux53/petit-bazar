@@ -6,24 +6,27 @@
 - [x] Configuration Docker compose pour la BDD PostgreSQL
 - [x] Structure du dépôt (répertoires) pour accueillir le code
 - [x] Script de création des tables
-- [ ] Création du projet Java (système de build IntelliJ)
-- [ ] Décomposition en couches MVC (différents packages)
+- [x] Création du projet Java (système de build IntelliJ)
+- [x] Décomposition en couches MVC (différents packages)
 - [ ] Développer la couche de connexion à la BDD
+- [ ] Développer la couche métier
+- [ ] Développer la couche interface graphique
+- [ ] Développer la couche controller
 - [ ] Diagrammes de classes UML
-- [ ] Développer les classes Java fondamentales
-  - [ ] `Role`
-  - [ ] `Country`
-  - [ ] `City`
-  - [ ] `Employee`
-  - [ ] `Vat`
-  - [ ] `Category`
-  - [ ] `Brand`
-  - [ ] `Supplier`
-  - [ ] `Product`
-  - [ ] `PriceHistory`
-  - [ ] `Customer`
-  - [ ] `Purchase`
-  - [ ] `OrderLine`
+- [x] Développer les classes Java fondamentales
+  - `Role`
+  - `Country`
+  - `City`
+  - `Employee`
+  - `Vat`
+  - `Category`
+  - `Brand`
+  - `Supplier`
+  - `Product`
+  - `PriceHistory`
+  - `Customer`
+  - `Purchase`
+  - `OrderLine`
 
 ## Fonctionnalités métier
 
