@@ -9,14 +9,15 @@
 .vscode/
 
 ### JetBrains IDEs ###
+# IntelliJ
+.idea/*
+!.idea/sqldialects.xml
+out/
+target/
+
 # DataGrip
 sql/.idea/*
 !sql/.idea/sqldialects.xml
-
-# IntelliJ
-.idea/
-out/
-target/
 
 ### Environment Variables ###
 .env
