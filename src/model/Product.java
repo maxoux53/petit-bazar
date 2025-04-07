@@ -11,15 +11,39 @@ public class Product {
     private Integer brandId;
     private Integer supplierVatNumber;
 
-    public Product(Integer barcode, String name, String description, Integer amount, Boolean isAvailable, Character vatType, Integer categoryId, Integer brandId, Integer supplierVatNumber) {
+    public Product(Integer barcode) {
         this.barcode = barcode;
+    }
+
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setAmount(Integer amount) {
         this.amount = amount;
-        this.isAvailable = isAvailable;
+    }
+
+    public void setAvailable(Boolean available) {
+        isAvailable = available;
+    }
+
+    public void setVatType(Character vatType) {
         this.vatType = vatType;
+    }
+
+    public void setCategoryId(Integer categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public void setBrandId(Integer brandId) {
         this.brandId = brandId;
+    }
+
+    public void setSupplierVatNumber(Integer supplierVatNumber) {
         this.supplierVatNumber = supplierVatNumber;
     }
 }
