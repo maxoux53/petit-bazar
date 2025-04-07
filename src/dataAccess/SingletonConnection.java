@@ -10,12 +10,12 @@ public class SingletonConnection {
     private static final String user = dotenv.get("PG_USER");
     private static final String password = dotenv.get("PG_PASSWORD");
     private static final String dbName = dotenv.get("PG_DB");
-    private static final String connectionUrl = "jdbc:postgresql://localhost:5432/" + dbName;
+    private static final String connectionURL = "jdbc:postgresql://localhost:5432/" + dbName;
 
     public static Connection getInstance() {
         if (connection == null) {
             try {
-                connection = DriverManager.getConnection(connectionUrl, user, password);
+                connection = DriverManager.getConnection(connectionURL, user, password);
                 System.out.println("Connection successful!");
             } catch (SQLException e) {
                 System.out.println("Connection error! " + e.getMessage());
