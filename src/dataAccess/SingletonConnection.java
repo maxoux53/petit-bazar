@@ -12,13 +12,13 @@ public class SingletonConnection {
     private static final String dbName = dotenv.get("PG_DB");
     private static final String connectionURL = "jdbc:postgresql://localhost:5432/" + dbName;
 
-    public static Connection getInstance() {
+    public static Connection getInstance() throws DataRetrievalFailureException {
         if (connection == null) {
             try {
                 connection = DriverManager.getConnection(connectionURL, user, password);
                 System.out.println("Connection successful!");
             } catch (SQLException e) {
-                System.out.println("Connection error! " + e.getMessage());
+                throw new DataRetrievalFailureException("SQL connection to database failed, see: " + e.getMessage());
             }
         }
 
