@@ -21,6 +21,10 @@ public class Employee {
         this.id = id;
     }
 
+    public Employee() {
+        this(null);
+    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -29,11 +33,11 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public void setPassword(Byte[] password) {
+    public void setPassword(byte[] password) {
         this.password = password;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(boolean active) {
         isActive = active;
     }
 
@@ -41,11 +45,11 @@ public class Employee {
         this.street = street;
     }
 
-    public void setStreetNumber(Integer streetNumber) {
+    public void setStreetNumber(int streetNumber) {
         this.streetNumber = streetNumber;
     }
 
-    public void setUnitNumber(Integer unitNumber) {
+    public void setUnitNumber(int unitNumber) {
         this.unitNumber = unitNumber;
     }
 
@@ -57,15 +61,63 @@ public class Employee {
         this.hireDate = hireDate;
     }
 
-    public void setManagerId(Integer managerId) {
+    public void setManagerId(int managerId) {
         this.managerId = managerId;
     }
 
-    public void setCityZipCode(Integer cityZipCode) {
+    public void setCityZipCode(int cityZipCode) {
         this.cityZipCode = cityZipCode;
     }
 
     public void setCityName(String cityName) {
         this.cityName = cityName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public Byte[] getPassword() {
+        return password;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public Integer getStreetNumber() {
+        return streetNumber;
+    }
+
+    public Integer getUnitNumber() {
+        return unitNumber;
+    }
+
+    public String getRoleLabel() {
+        return roleLabel;
+    }
+
+    public LocalDate getHireDate() {
+        return hireDate;
+    }
+
+    public Integer getManagerId() {
+        return managerId;
+    }
+
+    public Integer getCityZipCode() {
+        return cityZipCode;
+    }
+
+    public String getCityName() {
+        return cityName;
     }
 }
