@@ -13,39 +13,75 @@ Une feuille de route avec les fonctionnalités à implémenter et leur avancemen
 
 1. [À propos](#à-propos)
 2. [Roadmap](#roadmap)
-3. [Structure de la base de données](#structure-de-la-base-de-données)
-4. [Technologies utilisées](#technologies-utilisées)
-   - [Conception](#conception)
+3. [Table des matières](#table-des-matières)
+4. [Installation](#installation)
+   - [Prérequis](#prérequis)
+   - [Installation de l'application](#installation-de-lapplication)
+5. [Utilisation](#utilisation)
+6. [Technologies utilisées](#technologies-utilisées)
    - [Développement](#développement)
+   - [Dépendances](#dépendances)
    - [Interface utilisateur](#interface-utilisateur)
    - [Base de données](#base-de-données)
-5. [Installation](#installation)
-6. [Utilisation](#utilisation)
-7. [Informations sur la licence](#informations-sur-la-licence)
+   - [Conception](#conception)
+7. [Structure de la base de données](#structure-de-la-base-de-données)
+8. [Informations sur la licence](#informations-sur-la-licence)
 
-## Structure de la base de données
+## Installation
 
-> [!NOTE]
-> Schémas uniquement visibles avec l'interface en **mode clair** !
+### Prérequis
 
-**Schema entité-association (EA)**  
-![Schema EA](docs/db_design/er_diagram.svg)
+- Java 11 ou supérieur (JDK)
+- Docker (pour la base de données)
 
-**Schema relationnel**  
-![Schema relationnel](docs/db_design/relational_schema.svg)
+### Installation de l'application
+
+1. **Cloner le dépôt**
+
+   ```bash
+   git clone https://github.com/maxoux53/projet-Java.git
+   cd projet-Java
+   ```
+
+2. **Configurer les variables d'environnement**
+   Configurer les variables :
+   - `PG_USER`: Nom d'utilisateur pour la base de données
+   - `PG_PASSWORD`: Mot de passe pour la base de données
+   - `PG_DB`: Nom de la base de données
+
+   Exemple de fichier `.env` [ici](.env).
+
+3. **Configuration de la base de données**
+   - Utiliser la commande compose pour créer le conteneur PostgreSQL
+
+      ```bash
+      docker compose up -d
+      ```
+
+   - Exécuter le script SQL de création de table disponible [ici](./sql/DB_INIT_TABLES.sql)
+
+4. **Lancer l'application**
+   - Ouvrir le projet dans IntelliJ
+   - Lancer la classe `Main` pour démarrer l'application
+
+   Possibilité de compiler le projet soi-même avec `javac`.
+
+## Utilisation
+
+(...)
 
 ## Technologies utilisées
-
-### Conception
-
-- PlantUML pour la modélisation orientée objet.
-- Draw.io pour la modélisation de la base de données (EA + relationnel).
 
 ### Développement
 
 - Java
 - OpenJDK
-- Environnement: IntelliJ IDEA
+- Système de build IntelliJ
+
+### Dépendances
+
+- [Dotenv](https://github.com/cdimascio/dotenv-java)
+- [Pilote JDBC PostgreSQL](https://github.com/pgjdbc/pgjdbc)
 
 ### Interface utilisateur
 
@@ -55,14 +91,24 @@ Une feuille de route avec les fonctionnalités à implémenter et leur avancemen
 ### Base de données
 
 - PostgreSQL
+- Docker
+- DataGrip & Azure Data Studio (pour le développement)
 
-## Installation
+### Conception
 
-(...)
+- PlantUML pour la modélisation orientée objet.
+- Draw.io pour la modélisation de la base de données (EA + relationnel).
 
-## Utilisation
+## Structure de la base de données
 
-(...)
+> [!NOTE]
+> Schémas uniquement visibles avec l'interface en **thème clair** !
+
+**Schema entité-association (EA)**  
+![Schema EA](docs/db_design/er_diagram.svg)
+
+**Schema relationnel**  
+![Schema relationnel](docs/db_design/relational_schema.svg)
 
 ## Informations sur la licence
 
