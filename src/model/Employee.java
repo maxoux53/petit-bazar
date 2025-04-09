@@ -6,7 +6,7 @@ public class Employee {
     private Integer id;
     private String firstName;
     private String lastName;
-    private Byte[] password; // check type (primitive/referenced)
+    private byte[] password;
     private Boolean isActive;
     private String street;
     private Integer streetNumber;
@@ -81,7 +81,7 @@ public class Employee {
         return lastName;
     }
 
-    public Byte[] getPassword() {
+    public byte[] getPassword() {
         return password;
     }
 
