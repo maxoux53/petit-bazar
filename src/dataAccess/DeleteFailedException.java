@@ -1,7 +1,7 @@
 package dataAccess;
 
 public class DeleteFailedException extends DAOOperationFailedException {
-    public DeleteFailedException(String message) {
-        super("Object deletion failed: " + message);
+    public DeleteFailedException(String objectType, int objectId, String message) {
+        super("deletion", objectType, objectId, message);
     }
 }
