@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public interface IProductDAO {
     void create(Product product) throws InsertionFailedException;
     void delete(Product product) throws DeleteFailedException;
-    Product findByBarcode(int barcode) throws NotFoundException;
+    Product findByBarcode(int barcode) throws NotFoundException, DAORetrievalFailedException;
     ArrayList<Product> findAll();
     void edit(Product product) throws UpdateFailedException;
 
