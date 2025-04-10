@@ -46,7 +46,7 @@ A roadmap with features to be implemented and progress is available [here](roadm
    cd projet-Java
    ```
 
-2. **Set up environment variables**
+2. **Set up environment variables**  
    Configure the following variables:
    - `PG_USER`: Database username
    - `PG_PASSWORD`: User password for the database
