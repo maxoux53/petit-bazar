@@ -120,4 +120,8 @@ public class Employee {
     public String getCityName() {
         return cityName;
     }
+
+    public Integer getId() {
+        return id;
+    }
 }
