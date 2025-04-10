@@ -46,7 +46,7 @@ Une feuille de route avec les fonctionnalités à implémenter et leur avancemen
    cd projet-Java
    ```
 
-2. **Configurer les variables d'environnement**
+2. **Configurer les variables d'environnement**  
    Configurer les variables :
    - `PG_USER`: Nom d'utilisateur pour la base de données
    - `PG_PASSWORD`: Mot de passe pour la base de données
