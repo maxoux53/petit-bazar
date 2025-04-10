@@ -43,8 +43,7 @@ public class EmployeeDBAccess implements IEmployeeDAO {
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-
-            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(1, id);                 // really useful?? if not, double check exceptions handling
 
             try {
                 preparedStatement.executeQuery();
@@ -61,18 +60,11 @@ public class EmployeeDBAccess implements IEmployeeDAO {
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-            preparedStatement.setInt(1, id);                                          // useless with int ??
+            preparedStatement.setInt(1, id);                                          // useless ??
+
             data = preparedStatement.executeQuery();
 
-            boolean employeeExists;
-
-            try {
-                employeeExists = data.next();
-            } catch (SQLException e) {
-                throw new NotFoundException("employee", id, e.getMessage()); // ability to use .class.getSimpleName()
-            }
-
-            if (employeeExists) {
+            if (data.next()) {
                 String firstName;
                 String lastName;
                 byte[] password;
@@ -149,13 +141,13 @@ public class EmployeeDBAccess implements IEmployeeDAO {
                 }
 
                 return employee;
+            } else {
+                throw new NotFoundException("employee", id, "There are no more rows."); // EXCEPTION MESSAGE
             }
-
-            return null;
         } catch (SQLTimeoutException e) {
-            throw new DAORetrievalFailedException("Database query timed out!" + e.getMessage());
+            throw new DAORetrievalFailedException("Database query timed out!", e.getMessage());
         } catch (SQLException e) {
-            throw new DAORetrievalFailedException("SQL data access failed!" + e.getMessage());
+            throw new DAORetrievalFailedException("SQL data access failed!", e.getMessage());
         }
     }
 
@@ -256,7 +248,7 @@ public class EmployeeDBAccess implements IEmployeeDAO {
         }
     }
 
-    public void edit(Employee employee) throws UpdateFailedException {
+    public void edit() throws UpdateFailedException {
 
     }
 }
