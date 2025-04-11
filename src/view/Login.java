@@ -38,7 +38,7 @@ public class Login extends JPanel {
         formPanel.add(blankLabel);
         
         // User
-        JLabel usernameLabel = new JLabel("👷Nom d'utilisateur", SwingConstants.LEFT);
+        JLabel usernameLabel = new JLabel("👤 Nom d'utilisateur", SwingConstants.LEFT);
         usernameLabel.setFont(new Font("SansSerif", Font.PLAIN, 35));
         formPanel.add(usernameLabel);
         usernameField = new JTextField();
@@ -48,7 +48,7 @@ public class Login extends JPanel {
         formPanel.add(usernameField);
         
         // Password
-        JLabel passwordLabel = new JLabel("🔒Mot de passe", SwingConstants.LEFT);
+        JLabel passwordLabel = new JLabel("🔑 Mot de passe", SwingConstants.LEFT);
         passwordLabel.setFont(new Font("SansSerif", Font.PLAIN, 35));
         formPanel.add(passwordLabel);
         passwordField = new JPasswordField();
