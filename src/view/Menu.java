@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.rmi.dgc.Lease;
 
 public class Menu extends JPanel {
@@ -23,14 +24,18 @@ public class Menu extends JPanel {
 
         // Application
         JMenuItem signOut = new JMenuItem("Se déconnecter");
-        signOut.addActionListener(e -> {
-            window.showLogin();
+        signOut.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                window.showLogin();
+            }
         });
         window.showLogin();
 
         JMenuItem leave = new JMenuItem("Quitter");
-        leave.addActionListener(e -> {
-            System.exit(0);
+        leave.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
         });
         application.add(signOut);
         application.add(leave);
