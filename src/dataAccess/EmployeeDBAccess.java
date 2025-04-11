@@ -255,7 +255,7 @@ public class EmployeeDBAccess implements IEmployeeDAO {
     }
 
     public int edit(Employee employee) throws UpdateFailedException, DAORetrievalFailedException {
-        sqlInstruction = "INSERT INTO employee (first_name, last_name, password, is_active, street, street_number, unit_number, role_label, hire_date, manager_id, city_zip_code, city_name) VALUES(?,?,?,?,?,?,?,?,?,?,?,?) WHERE id = ?;";
+        sqlInstruction = "UPDATE employee SET first_name = ?, last_name = ?, password = ?, is_active = ?, street = ?, street_number = ?, unit_number = ?, role_label = ?, hire_date = ?, manager_id = ?, city_zip_code = ?, city_name = ? WHERE id = ?;";
         int id = employee.getId();
 
         try {
