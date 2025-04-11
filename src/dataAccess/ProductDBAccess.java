@@ -9,12 +9,48 @@ public class ProductDBAccess implements IProductDAO {
     private PreparedStatement preparedStatement;
     private ResultSet data;
 
-    public void create(Product product) throws InsertionFailedException {
+    public int create(Product product) throws InsertionFailedException, DAORetrievalFailedException {
+        sqlInstruction = "INSERT INTO product (name, description, amount, is_available, vat_type, category_id, brand_id, supplier_vat_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            preparedStatement.setString(1, product.getName());
+            preparedStatement.setString(2, product.getDescription());
+            preparedStatement.setInt(3, product.getAmount());
+            preparedStatement.setBoolean(4, product.getAvailable());
+            preparedStatement.setString(5, String.valueOf(product.getVatType()));
+            preparedStatement.setInt(6, product.getCategoryId());
+            preparedStatement.setInt(7, product.getBrandId());
+            preparedStatement.setInt(8, product.getSupplierVatNumber());
+
+            try {
+                return preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                throw new InsertionFailedException("product", product.getBarcode(), e.getMessage());
+            }
+        } catch (SQLTimeoutException e) {
+            throw new DAORetrievalFailedException("Database query timed out!", e.getMessage());
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException("SQL data access failed!", e.getMessage());
+        }
     }
 
-    public void delete(Product product) throws DeleteFailedException {
+    public void deleteByBarcode(int barcode) throws DeleteFailedException, DAORetrievalFailedException {
+        sqlInstruction = "DELETE FROM product WHERE barcode = ?;";
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, barcode);
 
+            try {
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                throw new DeleteFailedException("product", barcode, e.getMessage());
+            }
+        } catch (SQLTimeoutException e) {
+            throw new DAORetrievalFailedException("Database query timed out!", e.getMessage());
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException("SQL data access failed!", e.getMessage());
+        }
     }
 
     public Product findByBarcode(int barcode) throws NotFoundException, DAORetrievalFailedException {
@@ -163,7 +199,32 @@ public class ProductDBAccess implements IProductDAO {
         }
     }
 
-    public void edit(Product product) throws UpdateFailedException {
+    public int edit(Product product) throws UpdateFailedException, DAORetrievalFailedException {
+        sqlInstruction = "UPDATE product SET name = ?, description = ?, amount = ?, is_available = ?, vat_type = ?, category_id = ?, brand_id = ?, supplier_vat_number = ? WHERE barcode = ?;";
+        int barcode = product.getBarcode();
 
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            preparedStatement.setString(1, product.getName());
+            preparedStatement.setString(2, product.getDescription());
+            preparedStatement.setInt(3, product.getAmount());
+            preparedStatement.setBoolean(4, product.getAvailable());
+            preparedStatement.setString(5, String.valueOf(product.getVatType()));
+            preparedStatement.setInt(6, product.getCategoryId());
+            preparedStatement.setInt(7, product.getBrandId());
+            preparedStatement.setInt(8, product.getSupplierVatNumber());
+            preparedStatement.setInt(9, barcode);
+
+            try {
+                return preparedStatement.executeUpdate();
+            } catch (SQLTimeoutException e) {
+                throw new DAORetrievalFailedException("Database query timed out!", e.getMessage());
+            } catch (SQLException e) {
+                throw new UpdateFailedException("product", barcode, e.getMessage());
+            }
+
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException("SQL data access failed!", e.getMessage());
+        }
     }
 }
