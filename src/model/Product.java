@@ -46,4 +46,40 @@ public class Product {
     public void setSupplierVatNumber(Integer supplierVatNumber) {
         this.supplierVatNumber = supplierVatNumber;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public Boolean getAvailable() {
+        return isAvailable;
+    }
+
+    public Character getVatType() {
+        return vatType;
+    }
+
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public Integer getBrandId() {
+        return brandId;
+    }
+
+    public Integer getSupplierVatNumber() {
+        return supplierVatNumber;
+    }
+
+    public Integer getBarcode() {
+        return barcode;
+    }
 }
