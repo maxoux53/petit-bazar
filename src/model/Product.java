@@ -82,4 +82,5 @@ public class Product {
     public Integer getBarcode() {
         return barcode;
     }
+
 }
