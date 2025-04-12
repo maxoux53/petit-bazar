@@ -10,13 +10,16 @@ public class Home extends JPanel {
     
     // Constructors
     public Home() {
-        setLayout(new GridLayout(2, 1, 0, 0));
+        setLayout(new GridLayout(5, 1, 0, 0));
         setBackground(Color.white);
         
         // Title
-        JLabel welcome = new JLabel("Gestion du magasin Le P'tit Bazar", SwingConstants.CENTER);
-        welcome.setFont(new Font("SansSerif", Font.PLAIN, 50));
-        add(welcome);
+        JLabel text = new JLabel("<html>Gestion du magasin<html>", SwingConstants.CENTER);
+        text.setFont(new Font("SansSerif", Font.PLAIN, 50));
+        JLabel shopName = new JLabel("Le P'tit Bazar", SwingConstants.CENTER);
+        shopName.setFont(new Font("SansSerif", Font.PLAIN, 50));
+        add(text);
+        add(shopName);
         
         // Cart
         cart = new Cart();

@@ -15,10 +15,11 @@ public class CartThread extends Thread{
         while (true) {
             cart.move();
             homePage.repaint();
+            System.out.println("test");
             try {
                 Thread.sleep(5);
             }catch (InterruptedException interruptedException) {
-                throw new RuntimeException(interruptedException);
+                throw new SleepFaildedException(interruptedException.getMessage());
             }
         }
     }
