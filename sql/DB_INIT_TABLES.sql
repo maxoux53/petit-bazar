@@ -74,7 +74,7 @@ CREATE TABLE price_history (
     excl_vat_price MONEY NOT NULL,
     discount SMALLINT NOT NULL,
     start_date DATE NOT NULL,
-    product_barcode BIGINT NOT NULL REFERENCES product(barcode),
+    product_barcode BIGINT REFERENCES product(barcode),
     CONSTRAINT pk_price_history PRIMARY KEY (start_date, product_barcode)
 );
 
@@ -98,7 +98,7 @@ CREATE TABLE purchase (
 
 CREATE TABLE order_line (
     quantity SMALLINT NOT NULL,
-    product_barcode BIGINT NOT NULL REFERENCES product(barcode),
+    product_barcode BIGINT REFERENCES product(barcode),
     purchase_id BIGINT NOT NULL REFERENCES purchase(id),
     CONSTRAINT pk_order_line PRIMARY KEY (product_barcode, purchase_id)
 );
