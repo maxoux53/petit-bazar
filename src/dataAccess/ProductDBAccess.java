@@ -227,4 +227,28 @@ public class ProductDBAccess implements IProductDAO {
             throw new DAORetrievalFailedException("SQL data access failed!", e.getMessage());
         }
     }
+
+    public void price(int barcode, double price, int discountPercentageIncluded) throws InsertionFailedException, DAORetrievalFailedException {
+        sqlInstruction = "INSERT INTO price_history (excl_vat_price, discount, start_date) VALUES (?,?,CURRENT_DATE) WHERE product_barcode = ?;";
+
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            preparedStatement.setDouble(1, price);
+            preparedStatement.setInt(2, discountPercentageIncluded);
+            preparedStatement.setInt(3, barcode);
+
+
+            try {
+                preparedStatement.executeUpdate();
+            } catch (SQLTimeoutException e) {
+                throw new DAORetrievalFailedException("Database query timed out!", e.getMessage());
+            } catch (SQLException e) {
+                throw new InsertionFailedException("price", barcode, e.getMessage());
+            }
+
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException("SQL data access failed!", e.getMessage());
+        }
+    }
+
 }
