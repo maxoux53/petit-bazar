@@ -42,6 +42,9 @@ public class EmployeeDBAccess implements IEmployeeDAO {
     }
 
     public void deleteById(int id) throws DeleteFailedException, DAORetrievalFailedException {
+        nullifyEmployeeReferencesFromPurchases(id);
+        nullifyEmployeeReferencedAsManager(id);
+
         sqlInstruction = "DELETE FROM employee WHERE id = ?;";
 
         try {
@@ -58,6 +61,34 @@ public class EmployeeDBAccess implements IEmployeeDAO {
 
         } catch (SQLException e) {
             throw new DAORetrievalFailedException(e.getMessage());
+        }
+    }
+
+    private void nullifyEmployeeReferencesFromPurchases(int employeeId) throws DAORetrievalFailedException {
+        sqlInstruction = "UPDATE purchase SET employee_id = NULL WHERE employee_id = ?;";
+
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, employeeId);
+            preparedStatement.executeUpdate();
+        } catch (SQLTimeoutException e) {
+            throw new DAORetrievalFailedException("Database query timed out!", e.getMessage());
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException("SQL data access failed!", e.getMessage());
+        }
+    }
+
+    private void nullifyEmployeeReferencedAsManager(int employeeId) throws DAORetrievalFailedException {
+        sqlInstruction = "UPDATE employee SET manager_id = NULL WHERE manager_id = ?;";
+
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, employeeId);
+            preparedStatement.executeUpdate();
+        } catch (SQLTimeoutException e) {
+            throw new DAORetrievalFailedException("Database query timed out!", e.getMessage());
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException("SQL data access failed!", e.getMessage());
         }
     }
 
@@ -128,7 +159,7 @@ public class EmployeeDBAccess implements IEmployeeDAO {
 
                 hireDate = data.getDate("hire_date");
                 if (!data.wasNull()) {
-                    employee.setHireDate(hireDate.toLocalDate()); // where to handle date type conversion... here or in the class itself with a dedicated setter?
+                    employee.setHireDate(hireDate.toLocalDate());
                 }
 
                 managerId = data.getInt("manager_id");
