@@ -92,7 +92,7 @@ CREATE TABLE customer (
 CREATE TABLE purchase (
     id BIGSERIAL PRIMARY KEY,
     date DATE NOT NULL,
-    employee_id SMALLINT NOT NULL REFERENCES employee(id),
+    employee_id SMALLINT REFERENCES employee(id),
     customer_card_number INT REFERENCES customer(loyalty_card_number)
 );
 
