@@ -251,4 +251,30 @@ public class ProductDBAccess implements IProductDAO {
         }
     }
 
+    public ArrayList<Integer> outOfStock() throws DAORetrievalFailedException {
+        ArrayList<Integer> products = new ArrayList<>();
+
+        sqlInstruction = "SELECT barcode FROM product WHERE amount = 0;";
+
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+
+            data = preparedStatement.executeQuery();
+
+            int barcode;
+
+            while (data.next()) {
+                barcode = data.getInt("barcode");
+                if (!data.wasNull()) {
+                    products.add(barcode);
+                }
+            }
+
+            return products;
+        } catch (SQLTimeoutException e) {
+            throw new DAORetrievalFailedException("Database query timed out!", e.getMessage());
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException("SQL data access failed!", e.getMessage());
+        }
+    }
 }
