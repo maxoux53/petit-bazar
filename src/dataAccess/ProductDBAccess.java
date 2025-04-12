@@ -228,7 +228,7 @@ public class ProductDBAccess implements IProductDAO {
         }
     }
 
-    public void price(int barcode, double price, int discountPercentageIncluded) throws InsertionFailedException, DAORetrievalFailedException {
+    public void setPrice(int barcode, double price, int discountPercentageIncluded) throws InsertionFailedException, DAORetrievalFailedException {
         sqlInstruction = "INSERT INTO price_history (excl_vat_price, discount, start_date) VALUES (?,?,CURRENT_DATE) WHERE product_barcode = ?;";
 
         try {
@@ -252,8 +252,6 @@ public class ProductDBAccess implements IProductDAO {
     }
 
     public ArrayList<Integer> outOfStock() throws DAORetrievalFailedException {
-        ArrayList<Integer> products = new ArrayList<>();
-
         sqlInstruction = "SELECT barcode FROM product WHERE amount = 0;";
 
         try {
@@ -261,6 +259,7 @@ public class ProductDBAccess implements IProductDAO {
 
             data = preparedStatement.executeQuery();
 
+            ArrayList<Integer> products = new ArrayList<>();
             int barcode;
 
             while (data.next()) {
@@ -268,6 +267,99 @@ public class ProductDBAccess implements IProductDAO {
                 if (!data.wasNull()) {
                     products.add(barcode);
                 }
+            }
+
+            return products;
+        } catch (SQLTimeoutException e) {
+            throw new DAORetrievalFailedException("Database query timed out!", e.getMessage());
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException("SQL data access failed!", e.getMessage());
+        }
+    }
+
+    public double getPrice(int barcode) throws DAORetrievalFailedException, NotFoundException {
+        sqlInstruction = "SELECT excl_vat_price FROM price_history WHERE product_barcode = ?;";
+
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, barcode);
+
+            data = preparedStatement.executeQuery();
+
+            if (data.next()) {
+                return data.getDouble("excl_vat_price");
+            } else {
+                throw new NotFoundException("price", barcode, "There are no more rows.");
+            }
+
+        } catch (SQLTimeoutException e) {
+            throw new DAORetrievalFailedException("Database query timed out!", e.getMessage());
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException("SQL data access failed!", e.getMessage());
+        }
+    }
+
+    // todo: implement method to get the discount percentage
+
+    public ArrayList<Product> findByName(String name) throws DAORetrievalFailedException {
+        sqlInstruction = "SELECT * FROM product WHERE name ILIKE '?%';";        // watch out for ? not to be replaced with name
+
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            preparedStatement.setString(1, name);
+
+            data = preparedStatement.executeQuery();
+
+            ArrayList<Product> products = new ArrayList<>();
+
+            Product product;
+            String description;
+            int amount;
+            boolean isAvailable;
+            char vatType;
+            int categoryId;
+            int brandId;
+            int supplierVatNumber;
+
+            while (data.next()) {
+                product = new Product(data.getInt("barcode"));
+
+                description = data.getString("description");
+                if (!data.wasNull()) {
+                    product.setDescription(description);
+                }
+
+                amount = data.getInt("amount");
+                if (!data.wasNull()) {
+                    product.setAmount(amount);
+                }
+
+                isAvailable = data.getBoolean("is_available");
+                if (!data.wasNull()) {
+                    product.setAvailable(isAvailable);
+                }
+
+                vatType = data.getString("vat_type").charAt(0);
+                if (!data.wasNull()) {
+                    product.setVatType(vatType);
+                }
+
+                categoryId = data.getInt("category_id");
+                if (!data.wasNull()) {
+                    product.setCategoryId(categoryId);
+                }
+
+                brandId = data.getInt("brand_id");
+                if (!data.wasNull()) {
+                    product.setBrandId(brandId);
+                }
+
+                supplierVatNumber = data.getInt("supplier_vat_number");
+                if (!data.wasNull()) {
+                    product.setSupplierVatNumber(supplierVatNumber);
+                }
+
+                products.add(product);
             }
 
             return products;
