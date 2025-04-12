@@ -7,6 +7,7 @@ public class Home extends JPanel {
     // Attributes
     private Window window;
     private Cart cart;
+    private CartThread cartThread;
     
     // Constructors
     public Home() {
@@ -25,13 +26,18 @@ public class Home extends JPanel {
         cart = new Cart();
         
         // Cart Thread
-        CartThread cartThread = new CartThread(this);
+        cartThread = new CartThread(this);
+        cartThread.setRunning(true);
         cartThread.start();
     }
 
     // Getters
     public Cart getCart() {
         return cart;
+    }
+
+    public CartThread getCartThread() {
+        return cartThread;
     }
 
     // Methods

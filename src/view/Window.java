@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Objects;
 
 public class Window extends JFrame {
     // Attributes
@@ -30,12 +29,17 @@ public class Window extends JFrame {
             }
         });
 
+        // Menu bar
+        menu = new Menu(this);
+        setJMenuBar(menu.getMenuBar());
+        menu.grayOut();
+
         // Login
         login = new Login(this);
         
         container = getContentPane();
         container.add(login);
-        currentPanel = login;
+        setCurrentPanel(login);
         
         // Visible
         setVisible(true);
@@ -45,14 +49,13 @@ public class Window extends JFrame {
         if (currentPanel != home) {
             container.remove(currentPanel);
 
-            menu = new Menu(this);
-            setJMenuBar(menu.getMenuBar());
+            menu.activate();
             home = new Home();
             
             container.add(menu);
             container.add(home);
-            
-            currentPanel = home;
+
+            setCurrentPanel(home);
             
             container.revalidate();
             container.repaint();
@@ -62,14 +65,22 @@ public class Window extends JFrame {
     public void showLogin() {
         if (currentPanel != login) {
             container.remove(currentPanel);
-            setJMenuBar(null);
+            menu.grayOut();
 
             container.add(login);
-            currentPanel = login;
+            setCurrentPanel(login);
 
             container.revalidate();
             container.repaint();
         }
+    }
+
+    private void setCurrentPanel(JPanel currentPanel) {
+        if (home != null && currentPanel != home) {
+            home.getCartThread().setRunning(false);
+        }
+
+        this.currentPanel = currentPanel;
     }
 
     private static void applyPlatformSpecificSettings() { // migration to final main
@@ -79,6 +90,5 @@ public class Window extends JFrame {
             System.setProperty("apple.laf.useScreenMenuBar", "true");
             System.setProperty("apple.awt.application.name", "Le p'tit bazar");
         }
-
     }
 }
