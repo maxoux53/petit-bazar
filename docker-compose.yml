@@ -4,8 +4,8 @@ services:
     image: postgres
     shm_size: 128mb # set shared memory limit
     environment:
-      POSTGRES_PASSWORD: ${PG_PASSWORD}
       POSTGRES_USER: ${PG_USER}
-      POSTGRES_DB: store_management
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DB}
     ports:
       - "5432:5432"

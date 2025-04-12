@@ -1,6 +1,5 @@
 package view;
 
-import javax.smartcardio.CardTerminal;
 import javax.swing.*;
 import java.awt.*;
 

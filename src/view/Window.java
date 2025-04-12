@@ -13,6 +13,10 @@ public class Window extends JFrame {
     private Menu menu;
     private Login login;
     private Home home;
+
+    static {
+        applyPlatformSpecificSettings();
+    }
     
     
     // Constructors
@@ -26,14 +30,6 @@ public class Window extends JFrame {
             }
         });
 
-        // Need review
-        /*String osName = System.getProperty("os.name").toLowerCase();
-        if (osName.contains("mac")) {
-            System.setProperty("apple.laf.useScreenMenuBar", "true");
-            System.setProperty("apple.awt.application.name", "IESN");
-        }
-        */
-        
         // Login
         login = new Login(this);
         
@@ -74,5 +70,15 @@ public class Window extends JFrame {
             container.revalidate();
             container.repaint();
         }
+    }
+
+    private static void applyPlatformSpecificSettings() { // migration to final main
+
+        // Apple macOS
+        if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+            System.setProperty("apple.laf.useScreenMenuBar", "true");
+            System.setProperty("apple.awt.application.name", "Le p'tit bazar");
+        }
+
     }
 }

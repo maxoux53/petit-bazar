@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 public class Login extends JPanel {
     // Attributes
@@ -38,7 +39,8 @@ public class Login extends JPanel {
         formPanel.add(blankLabel);
         
         // User
-        JLabel usernameLabel = new JLabel("👷Nom d'utilisateur", SwingConstants.LEFT);
+        JLabel usernameLabel = new JLabel("👤 Nom d'utilisateur", SwingConstants.LEFT);
+      
         usernameLabel.setFont(new Font("SansSerif", Font.PLAIN, 35));
         formPanel.add(usernameLabel);
         usernameField = new JTextField();
@@ -48,7 +50,8 @@ public class Login extends JPanel {
         formPanel.add(usernameField);
         
         // Password
-        JLabel passwordLabel = new JLabel("🔒Mot de passe", SwingConstants.LEFT);
+        JLabel passwordLabel = new JLabel("🔑 Mot de passe", SwingConstants.LEFT);
+
         passwordLabel.setFont(new Font("SansSerif", Font.PLAIN, 35));
         formPanel.add(passwordLabel);
         passwordField = new JPasswordField();
@@ -69,17 +72,20 @@ public class Login extends JPanel {
         button.setPreferredSize(new Dimension(300, 50));
         buttonPanel.add(button);
         add(buttonPanel, BorderLayout.SOUTH);
-        button.addActionListener(e -> {
-            String username = usernameField.getText();
-            String password = new String(passwordField.getPassword());
 
-            // Exemple : afficher dans la console
-            System.out.println("Nom d'utilisateur : " + username);
-            System.out.println("Mot de passe : " + password);
-            
-            // if (connectionIsDone(username, password) {}
-            
-            window.showHome();
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String username = usernameField.getText();
+                String password = new String(passwordField.getPassword());
+
+                // Exemple : afficher dans la console
+                System.out.println("Nom d'utilisateur : " + username);
+                System.out.println("Mot de passe : " + password);
+
+                // if (connectionIsDone(username, password) {}
+
+                window.showHome();
+            }
         });
     }
 }
