@@ -1,15 +1,17 @@
 package dataAccess;
 
+import model.Employee;
 import model.Product;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class ProductDBAccess implements IProductDAO {
-    private String sqlInstruction;
-    private PreparedStatement preparedStatement;
-    private ResultSet data;
-    // "product" redundant
+public class ProductDBAccess extends DBAccess implements IProductDAO {
+    private static final String objectClassName;
+
+    static {
+        objectClassName = Product.class.getSimpleName().toLowerCase();
+    }
 
     public int create(Product product) throws InsertionFailedException, DAORetrievalFailedException {
         sqlInstruction = "INSERT INTO product (name, description, amount, is_available, vat_type, category_id, brand_id, supplier_vat_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
@@ -28,7 +30,7 @@ public class ProductDBAccess implements IProductDAO {
             try {
                 return preparedStatement.executeUpdate();
             } catch (SQLException e) {
-                throw new InsertionFailedException("product", product.getBarcode(), e.getMessage());
+                throw new InsertionFailedException(objectClassName, product.getBarcode(), e.getMessage());
             }
         } catch (SQLTimeoutException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
@@ -50,7 +52,7 @@ public class ProductDBAccess implements IProductDAO {
             try {
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
-                throw new DeleteFailedException("product", barcode, e.getMessage());
+                throw new DeleteFailedException(objectClassName, barcode, e.getMessage());
             }
         } catch (SQLTimeoutException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
@@ -83,7 +85,7 @@ public class ProductDBAccess implements IProductDAO {
             try {
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
-                throw new DeleteFailedException("product", barcode, e.getMessage());
+                throw new DeleteFailedException(objectClassName, barcode, e.getMessage());
             }
 
         } catch (SQLTimeoutException e) {
@@ -114,7 +116,7 @@ public class ProductDBAccess implements IProductDAO {
             } catch (SQLTimeoutException e) {
                 throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
             } catch (SQLException e) {
-                throw new UpdateFailedException("product", barcode, e.getMessage());
+                throw new UpdateFailedException(objectClassName, barcode, e.getMessage());
             }
 
         } catch (SQLException e) {
@@ -185,7 +187,7 @@ public class ProductDBAccess implements IProductDAO {
 
                 return product;
             } else {
-                throw new NotFoundException("product", barcode, DBRetrievalFailure.NO_ROW.toString()); // e.getMessage()
+                throw new NotFoundException(objectClassName, barcode, DBRetrievalFailure.NO_ROW.toString()); // e.getMessage()
             }
         } catch (SQLTimeoutException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
@@ -374,7 +376,7 @@ public class ProductDBAccess implements IProductDAO {
             } catch (SQLTimeoutException e) {
                 throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
             } catch (SQLException e) {
-                throw new InsertionFailedException("product", barcode, e.getMessage());
+                throw new InsertionFailedException(objectClassName, barcode, e.getMessage());
             }
 
         } catch (SQLException e) {
@@ -395,7 +397,7 @@ public class ProductDBAccess implements IProductDAO {
             if (data.next()) {
                 return data.getDouble("excl_vat_price");
             } else {
-                throw new NotFoundException("product", barcode, DBRetrievalFailure.NO_ROW.toString());
+                throw new NotFoundException(objectClassName, barcode, DBRetrievalFailure.NO_ROW.toString());
             }
 
         } catch (SQLTimeoutException e) {
@@ -417,7 +419,7 @@ public class ProductDBAccess implements IProductDAO {
             if (data.next()) {
                 return data.getInt("amount");
             } else {
-                throw new NotFoundException("product", barcode, DBRetrievalFailure.NO_ROW.toString());
+                throw new NotFoundException(objectClassName, barcode, DBRetrievalFailure.NO_ROW.toString());
             }
 
         } catch (SQLTimeoutException e) {
@@ -465,7 +467,7 @@ public class ProductDBAccess implements IProductDAO {
             if (data.next()) {
                 return data.getInt("discount");
             } else {
-                throw new NotFoundException("product", barcode, DBRetrievalFailure.NO_ROW.toString());
+                throw new NotFoundException(objectClassName, barcode, DBRetrievalFailure.NO_ROW.toString());
             }
 
         } catch (SQLTimeoutException e) {
@@ -488,7 +490,7 @@ public class ProductDBAccess implements IProductDAO {
             if (data.next()) {
                 return data.getInt("discount");
             } else {
-                throw new NotFoundException("product", barcode, DBRetrievalFailure.NO_ROW.toString());
+                throw new NotFoundException(objectClassName, barcode, DBRetrievalFailure.NO_ROW.toString());
             }
 
         } catch (SQLTimeoutException e) {
