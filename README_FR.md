@@ -115,4 +115,11 @@ Une feuille de route avec les fonctionnalités à implémenter et leur avancemen
 
 ## Informations sur la licence
 
+### Contributions et crédits
+
+Ce projet est réalisé par [Constant B.](https://github.com/Zencaaw/) et [Max N.](https://github.com/maxoux53/) dans le cadre du cours de Programmation orientée objet avancée (IG252).  
+Nom inspiré de l'illustre [Grand Bazar](https://github.com/Tisdax/grand-bazar) par Tisdo.
+
+### Licence
+
 *Ce projet est sous licence GNU GPL v3. Pour plus de détails, veuillez consulter le fichier [LICENSE](LICENSE).*
