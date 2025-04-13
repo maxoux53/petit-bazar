@@ -1,4 +1,4 @@
-# "Le P'tit Bazar": a store management software using Java + SQL
+<h1 align="center">Le P'tit Bazar<br>a store management software using Java & SQL</h1>
 
 > [!NOTE]
 > Readme également disponible en [français](README_FR.md)

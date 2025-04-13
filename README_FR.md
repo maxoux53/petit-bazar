@@ -1,4 +1,4 @@
-# Le P'tit Bazar (Projet Java + SQL)
+<h1 align="center">Le P'tit Bazar<br>un projet de gestion de magasin en Java & SQL</h1>
 
 > [!NOTE]
 > Readme available in [English](README.md) too
