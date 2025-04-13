@@ -3,12 +3,13 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.rmi.dgc.Lease;
 
 public class Menu extends JPanel {
     // Attributes
     private Window window;
     private JMenuBar menuBar;
+    private JMenu edit;
+    private JMenuItem signOut;
 
 
     // Constructors
@@ -20,18 +21,21 @@ public class Menu extends JPanel {
 
         // Menu
         JMenu application = new JMenu("Application");
-        JMenu edit = new JMenu("Édition d'article");
+        edit = new JMenu("Édition d'articles");
 
         // Application
-        JMenuItem signOut = new JMenuItem("Se déconnecter");
+        signOut = new JMenuItem("Se déconnecter");
+
         signOut.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                grayOut();
                 window.showLogin();
             }
         });
         window.showLogin();
 
         JMenuItem leave = new JMenuItem("Quitter");
+
         leave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
@@ -47,6 +51,23 @@ public class Menu extends JPanel {
         // Add
         menuBar.add(application);
         menuBar.add(edit);
+    }
+
+    // Methods
+    public void toggleMenu(boolean status) {
+        edit.setEnabled(status);
+
+        signOut.setEnabled(status);
+
+        menuBar.repaint();
+    }
+
+    public void grayOut() {
+        toggleMenu(false);
+    }
+
+    public void activate() {
+        toggleMenu(true);
     }
 
     // Getters
