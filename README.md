@@ -1,4 +1,4 @@
-# Projet Java + SQL
+# "Le P'tit Bazar": a store management software using Java + SQL
 
 > [!NOTE]
 > Readme également disponible en [français](README_FR.md)
@@ -52,7 +52,7 @@ A roadmap with features to be implemented and progress is available [here](roadm
    - `PG_PASSWORD`: User password for the database
    - `PG_DB`: Database name
 
-   `.env` file example [here](.env).
+   `.env` file example [here](./example.env).
 
 3. **Database configuration**
    - Use the compose command to create the PostgreSQL container
