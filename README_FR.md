@@ -1,4 +1,4 @@
-# Projet Java + SQL
+# Le P'tit Bazar (Projet Java + SQL)
 
 > [!NOTE]
 > Readme available in [English](README.md) too
@@ -52,7 +52,7 @@ Une feuille de route avec les fonctionnalités à implémenter et leur avancemen
    - `PG_PASSWORD`: Mot de passe pour la base de données
    - `PG_DB`: Nom de la base de données
 
-   Exemple de fichier `.env` [ici](.env).
+   Exemple de fichier `.env` [ici](./example.env).
 
 3. **Configuration de la base de données**
    - Utiliser la commande compose pour créer le conteneur PostgreSQL
