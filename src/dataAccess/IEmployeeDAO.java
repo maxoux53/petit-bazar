@@ -11,4 +11,6 @@ public interface IEmployeeDAO {
     Employee findById(int id) throws NotFoundException, DAORetrievalFailedException;
     ArrayList<Employee> findAll() throws DAORetrievalFailedException;
 
+    byte[] getPasswordHash(int id) throws NotFoundException, DAORetrievalFailedException;
+
 }

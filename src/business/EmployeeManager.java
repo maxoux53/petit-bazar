@@ -29,7 +29,7 @@ public class EmployeeManager {                           // static?
         return dao.findAll();
     }
 
-    public static void update(Employee employee) throws DAORetrievalFailedException, UpdateFailedException {
+    public static void update(Employee employee) throws UpdateFailedException, DAORetrievalFailedException {
         dao.edit(employee);
     }
 
@@ -45,10 +45,10 @@ public class EmployeeManager {                           // static?
         return digest.digest(password.getBytes());
     }
 
-    public static boolean checkPassword(String passwordAttempt, int id) throws HashFailedException {
+    public static boolean checkPassword(String passwordAttempt, int id) throws HashFailedException, NotFoundException, DAORetrievalFailedException {
         return MessageDigest.isEqual(
                 hashPassword(passwordAttempt),
-                dao.getPasswordHash(id) // todo: create method in data access layer
+                dao.getPasswordHash(id)
         );
     }
 }

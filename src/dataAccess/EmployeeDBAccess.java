@@ -321,4 +321,25 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
             throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
         }
     }
+
+    public byte[] getPasswordHash(int id) throws NotFoundException, DAORetrievalFailedException {
+        sqlInstruction = "SELECT password FROM employee WHERE id = ?;";
+
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, id);
+
+            data = preparedStatement.executeQuery();
+
+            if (data.next()) {
+                return data.getBytes("password");
+            } else {
+                throw new NotFoundException(objectClassName, id, DBRetrievalFailure.NO_ROW.toString());
+            }
+        } catch (SQLTimeoutException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+        }
+    }
 }
