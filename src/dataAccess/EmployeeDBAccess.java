@@ -27,7 +27,7 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
             preparedStatement.setString(8, employee.getRoleLabel());
             preparedStatement.setDate(9, Date.valueOf(employee.getHireDate()));
             preparedStatement.setInt(10, employee.getManagerId());
-            preparedStatement.setInt(11, employee.getCityZipCode());
+            preparedStatement.setInt(11, city(employee.getCityName(), employee.getCityZipCode()));
             preparedStatement.setString(12, employee.getCityName());
 
             try {
@@ -341,5 +341,37 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
         } catch (SQLException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
         }
+    }
+
+    private int city(String cityName, int cityZipCode) throws DAORetrievalFailedException {
+        boolean exists = true;
+
+        do {
+            sqlInstruction = "SELECT id FROM city WHERE name = ? AND zip_code = ?;";
+
+            try {
+                preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+                preparedStatement.setString(1, cityName);
+                preparedStatement.setInt(2, cityZipCode);
+
+                data = preparedStatement.executeQuery();
+                exists = data.next();
+
+                if (exists) {
+                    return data.getInt("id");
+                } else {
+                    sqlInstruction = "INSERT INTO city (name, zip_code) VALUES(?, ?);";
+
+                    preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction, Statement.RETURN_GENERATED_KEYS);
+                    preparedStatement.setString(1, cityName);
+                    preparedStatement.setInt(2, cityZipCode);
+                    preparedStatement.executeUpdate();
+                }
+            } catch (SQLTimeoutException e) {
+                throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+            } catch (SQLException e) {
+                throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+            }
+        } while (!exists); // "Condition '!exists' is always 'true'"... why?? am i missing something?
     }
 }
