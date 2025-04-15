@@ -2,6 +2,8 @@ package business;
 
 import dataAccess.*;
 import model.Product;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ProductManager {                           // static?
@@ -29,5 +31,37 @@ public class ProductManager {                           // static?
 
     public static void update(Product product) throws DAORetrievalFailedException, UpdateFailedException {
         productDataAccess.edit(product);
+    }
+
+    public static void setPrice(int barcode, double price, int discountPercentage) throws InsertionFailedException, DAORetrievalFailedException {
+        productDataAccess.setPrice(barcode, price, discountPercentage);
+    }
+
+    public static double getCurrentPrice(int barcode) throws NotFoundException, DAORetrievalFailedException {
+        return productDataAccess.currentPrice(barcode);
+    }
+
+    public static double getPriceAtDate(int barcode, LocalDate date) throws NotFoundException, DAORetrievalFailedException {
+        return productDataAccess.priceAtDate(barcode, date);
+    }
+
+    public static int getCurrentStock(int barcode) throws NotFoundException, DAORetrievalFailedException {
+        return productDataAccess.currentStock(barcode);
+    }
+
+    public static ArrayList<Integer> getOutOfStock() throws NotFoundException, DAORetrievalFailedException {
+        return productDataAccess.outOfStock();
+    }
+
+    public static int getCurrentDiscount(int barcode) throws NotFoundException, DAORetrievalFailedException {
+        return productDataAccess.currentDiscount(barcode);
+    }
+
+    public static int getDiscountAtDate(int barcode, LocalDate date) throws NotFoundException, DAORetrievalFailedException {
+        return productDataAccess.discountAtDate(barcode, date);
+    }
+
+    public static ArrayList<Product> searchByName(String name) throws NotFoundException, DAORetrievalFailedException {
+        return productDataAccess.findByName(name);
     }
 }
