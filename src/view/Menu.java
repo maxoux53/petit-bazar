@@ -13,7 +13,6 @@ public class Menu extends JPanel {
     private JMenuItem leave;
     private JMenuItem signOut;
     private JMenu product;
-    
     JMenuItem addProduct;
     
     // Constructors
