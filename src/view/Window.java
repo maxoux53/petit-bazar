@@ -12,6 +12,7 @@ public class Window extends JFrame {
     private Menu menu;
     private Login login;
     private Home home;
+    private AddProduct addProduct;
 
     static {
         applyPlatformSpecificSettings();
@@ -49,7 +50,9 @@ public class Window extends JFrame {
         if (currentPanel != home) {
             container.remove(currentPanel);
 
-            menu.activate();
+            if (currentPanel == login) {
+                menu.activate();
+            }
             home = new Home();
             
             container.add(menu);
@@ -69,6 +72,20 @@ public class Window extends JFrame {
 
             container.add(login);
             setCurrentPanel(login);
+
+            container.revalidate();
+            container.repaint();
+        }
+    }
+    
+    public void showAddProduct() {
+        if (currentPanel != addProduct) {
+            container.remove(currentPanel);
+            
+            addProduct = new AddProduct();
+            
+            container.add(addProduct);
+            setCurrentPanel(addProduct);
 
             container.revalidate();
             container.repaint();
