@@ -22,8 +22,7 @@ public class Window extends JFrame {
     // Constructors
     public Window() {
         super("Le p'tit bazar");
-        setBounds(0, 0, 1920, 1080);
-        
+        setExtendedState(JFrame.MAXIMIZED_BOTH); 
         addWindowListener(new WindowAdapter() {
             public void windowClosing (WindowEvent e) {
                 System.exit(0);

@@ -23,7 +23,7 @@ public class CartThread extends Thread {
         while (running) {
             cart.move();
             homePage.repaint();
-            System.out.println("test"); // DEBUG
+            // System.out.println("test"); // DEBUG
 
             try {
                 Thread.sleep(15);
