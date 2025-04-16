@@ -8,4 +8,9 @@ public class Category {
         this.id = id;
         this.name = name;
     }
+    
+    // Getters
+    public String getName() {
+        return name;
+    }
 }
