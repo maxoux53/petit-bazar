@@ -105,6 +105,7 @@ public class Window extends JFrame {
         if (System.getProperty("os.name").toLowerCase().contains("mac")) {
             System.setProperty("apple.laf.useScreenMenuBar", "true");
             System.setProperty("apple.awt.application.name", "Le p'tit bazar");
+            System.setProperty("apple.awt.application.appearance", "system");
         }
     }
 }
