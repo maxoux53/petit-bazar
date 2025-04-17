@@ -111,7 +111,7 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
             preparedStatement.setString(8, employee.getRoleLabel());
             preparedStatement.setDate(9, Date.valueOf(employee.getHireDate()));
             preparedStatement.setInt(10, employee.getManagerId());
-            preparedStatement.setInt(11, employee.getCityZipCode());
+            preparedStatement.setInt(11, city(employee.getCityName(), employee.getCityZipCode()));
             preparedStatement.setString(12, employee.getCityName());
 
             preparedStatement.setInt(13, id);
