@@ -12,7 +12,6 @@ public class Window extends JFrame {
     private Menu menu;
     private Login login;
     private Home home;
-    private CartThread cartThread;
     private AddProduct addProduct;
     private EditProduct editProduct;
 
