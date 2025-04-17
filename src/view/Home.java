@@ -26,8 +26,7 @@ public class Home extends JPanel {
         cart = new Cart();
         
         // Cart Thread
-        cartThread = new CartThread(this);
-        cartThread.setRunning(true);
+        setCartThread(new CartThread(this));
         cartThread.start();
     }
 
@@ -38,6 +37,11 @@ public class Home extends JPanel {
 
     public CartThread getCartThread() {
         return cartThread;
+    }
+    
+    // Setters
+    public void setCartThread(CartThread cartThread) {
+        this.cartThread = cartThread;
     }
 
     // Methods

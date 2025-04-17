@@ -12,7 +12,9 @@ public class Window extends JFrame {
     private Menu menu;
     private Login login;
     private Home home;
+    private CartThread cartThread;
     private AddProduct addProduct;
+    private EditProduct editProduct;
 
     static {
         applyPlatformSpecificSettings();
@@ -34,8 +36,11 @@ public class Window extends JFrame {
         setJMenuBar(menu.getMenuBar());
         menu.grayOut();
 
-        // Login
+        // Create panel
         login = new Login(this);
+        home = new Home();
+        addProduct = new AddProduct();
+        editProduct = new EditProduct();
         
         container = getContentPane();
         container.add(login);
@@ -52,12 +57,13 @@ public class Window extends JFrame {
             if (currentPanel == login) {
                 menu.activate();
             }
-            home = new Home();
             
-            container.add(menu);
             container.add(home);
-
+            
+            home.getCartThread().setRunning(true);
+            
             setCurrentPanel(home);
+            
             
             container.revalidate();
             container.repaint();
@@ -81,13 +87,23 @@ public class Window extends JFrame {
         if (currentPanel != addProduct) {
             container.remove(currentPanel);
             
-            addProduct = new AddProduct();
-            
             container.add(addProduct);
             setCurrentPanel(addProduct);
 
             container.revalidate();
             container.repaint();
+        }
+    }
+    
+    public void showEditProduct() {
+        if (currentPanel != editProduct) {
+            container.remove(currentPanel);
+            
+            container.add(editProduct);
+            setCurrentPanel(editProduct);
+            
+            container.repaint();
+            container.revalidate();
         }
     }
 
