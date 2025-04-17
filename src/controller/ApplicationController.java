@@ -1,5 +1,6 @@
 package controller;
 
+import model.Brand;
 import model.Category;
 import model.Product;
 import model.Vat;
@@ -32,7 +33,32 @@ public class ApplicationController {
         categories.add(new Category(5, "Librairie"));
         
         return categories;
-    } 
+    }
+    
+    public static ArrayList<Brand> getBrands() {
+        ArrayList<Brand> brands = new ArrayList<Brand>();
+        brands.add(new Brand(1, "Nike"));
+        brands.add(new Brand(2, "Boni"));
+        brands.add(new Brand(3, "Moulinex"));
+        brands.add(new Brand(4, "Stihl"));
+        brands.add(new Brand(5, "Spinelle"));
+
+        return brands;
+    }
+    
+    public static Product getProductByBarcode(int barcode) {
+        // return méthodes pour récupérer un produit
+        Product product = new Product(12345);
+        product.setName("Chocolat");
+        product.setDescription("C'est du chocolat");
+        product.setAmount(3);
+        product.setVatType('A');
+        product.setCategoryId(2);
+        product.setBrandId(2);
+        product.setAvailable(true);
+        
+        return product;
+    }
     
     // Verifications
     public static void productIsValid(String name, String description, String stringPrice, int amount, String vat, String categoryName, String brand, String stringDay, String stringMonth, String stringYear, boolean available) throws FieldIsEmpty, WrongType, WrongDate {
@@ -93,4 +119,5 @@ public class ApplicationController {
 
         //Product product = new Product()
     }
+    
 }

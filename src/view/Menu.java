@@ -13,7 +13,8 @@ public class Menu extends JPanel {
     private JMenuItem leave;
     private JMenuItem signOut;
     private JMenu product;
-    JMenuItem addProduct;
+    private JMenuItem addProduct;
+    private JMenuItem editProduct;
     
     // Constructors
     public Menu(Window window) {
@@ -72,6 +73,16 @@ public class Menu extends JPanel {
             }
         });
         product.add(addProduct);
+        
+        // Edit
+        editProduct = new JMenuItem("Modifier un article");
+        editProduct.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                window.showEditProduct();
+            }
+        });
+        product.add(editProduct);
         
         // Add to menu
         menuBar.add(application);
