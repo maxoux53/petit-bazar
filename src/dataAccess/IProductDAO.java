@@ -1,5 +1,6 @@
 package dataAccess;
 
+import model.Category;
 import model.Product;
 
 import java.time.LocalDate;
@@ -14,14 +15,10 @@ public interface IProductDAO {
     ArrayList<Product> findByName(String name) throws NotFoundException, DAORetrievalFailedException;
     ArrayList<Product> findAll() throws DAORetrievalFailedException;
 
-    double currentPrice(int barcode) throws NotFoundException, DAORetrievalFailedException;
-    void setPrice(int barcode, double price, int discountPercentage) throws InsertionFailedException, DAORetrievalFailedException;
-    double priceAtDate(int barcode, LocalDate date) throws NotFoundException, DAORetrievalFailedException;
-
     int currentStock(int barcode) throws NotFoundException, DAORetrievalFailedException;
     ArrayList<Integer> outOfStock() throws NotFoundException, DAORetrievalFailedException;
 
-    int currentDiscount(int barcode) throws NotFoundException, DAORetrievalFailedException;
-    int discountAtDate(int barcode, LocalDate date) throws NotFoundException, DAORetrievalFailedException;
+    Category getCategory(int barcode) throws NotFoundException, DAORetrievalFailedException;
 
+    int brand(String brandName) throws DAORetrievalFailedException;
 }
