@@ -59,14 +59,8 @@ CREATE TABLE product (
     vat_type CHAR(1) NOT NULL REFERENCES vat(type),
     category_id SMALLINT NOT NULL REFERENCES category(id),
     brand_id SMALLINT NOT NULL REFERENCES brand(id),
-);
-
-CREATE TABLE price_history (
     excl_vat_price MONEY NOT NULL,
-    discount SMALLINT NOT NULL,
-    start_date DATE NOT NULL,
-    product_barcode BIGINT REFERENCES product(barcode),
-    CONSTRAINT pk_price_history PRIMARY KEY (start_date, product_barcode)
+    start_date DATE NOT NULL
 );
 
 CREATE TABLE customer (
