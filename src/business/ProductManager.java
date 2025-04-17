@@ -1,7 +1,9 @@
 package business;
 
 import dataAccess.*;
+import model.Category;
 import model.Product;
+import model.Vat;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -33,18 +35,6 @@ public class ProductManager {                           // static?
         productDataAccess.edit(product);
     }
 
-    public static void setPrice(int barcode, double price, int discountPercentage) throws InsertionFailedException, DAORetrievalFailedException {
-        productDataAccess.setPrice(barcode, price, discountPercentage);
-    }
-
-    public static double getCurrentPrice(int barcode) throws NotFoundException, DAORetrievalFailedException {
-        return productDataAccess.currentPrice(barcode);
-    }
-
-    public static double getPriceAtDate(int barcode, LocalDate date) throws NotFoundException, DAORetrievalFailedException {
-        return productDataAccess.priceAtDate(barcode, date);
-    }
-
     public static int getCurrentStock(int barcode) throws NotFoundException, DAORetrievalFailedException {
         return productDataAccess.currentStock(barcode);
     }
@@ -53,15 +43,19 @@ public class ProductManager {                           // static?
         return productDataAccess.outOfStock();
     }
 
-    public static int getCurrentDiscount(int barcode) throws NotFoundException, DAORetrievalFailedException {
-        return productDataAccess.currentDiscount(barcode);
-    }
-
-    public static int getDiscountAtDate(int barcode, LocalDate date) throws NotFoundException, DAORetrievalFailedException {
-        return productDataAccess.discountAtDate(barcode, date);
-    }
-
     public static ArrayList<Product> searchByName(String name) throws NotFoundException, DAORetrievalFailedException {
         return productDataAccess.findByName(name);
+    }
+
+    public static ArrayList<Category> getAllCategories() throws DAORetrievalFailedException {
+        return productDataAccess.getAllCategories();
+    }
+
+    public static ArrayList<Vat> getAllVats() throws DAORetrievalFailedException {
+        return productDataAccess.getAllVatTypes();
+    }
+
+    public static int setBrand(String name) throws DAORetrievalFailedException {
+        return productDataAccess.brand(name);
     }
 }

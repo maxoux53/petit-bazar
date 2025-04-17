@@ -3,6 +3,8 @@ package dataAccess;
 import model.Brand;
 import model.Category;
 import model.Product;
+import model.Vat;
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -393,30 +395,29 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
         }
     }
 
-    public Category getCategory(int id) throws NotFoundException, DAORetrievalFailedException {
-        sqlInstruction = "SELECT * FROM category WHERE id = ?;";
+    public ArrayList<Category> getAllCategories() throws DAORetrievalFailedException {
+        sqlInstruction = "SELECT * FROM category;";
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-            preparedStatement.setInt(1, id);
-
             data = preparedStatement.executeQuery();
 
+            ArrayList<Category> categories = new ArrayList<>();
             Category category;
             String label;
 
-            if (data.next()) {
+            while (data.next()) {
                 category = new Category(data.getInt("category_id"));
 
                 label = data.getString("label");
                 if (!data.wasNull()) {
                     category.setLabel(label);
                 }
-            } else {
-                throw new NotFoundException(Category.class.getSimpleName().toLowerCase(), id, DBRetrievalFailure.NO_ROW.toString());
+
+                categories.add(category);
             }
 
-            return category;
+            return categories;
         } catch (SQLTimeoutException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
         } catch (SQLException e) {
@@ -453,5 +454,35 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
                 throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
             }
         } while (!exists);
+    }
+
+    public ArrayList<Vat> getAllVatTypes() throws DAORetrievalFailedException {
+        sqlInstruction = "SELECT * FROM vat_type;";
+
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            data = preparedStatement.executeQuery();
+
+            ArrayList<Vat> vatTypes = new ArrayList<>();
+            Vat vatType;
+            int rate;
+
+            while (data.next()) {
+                vatType = new Vat(data.getString("type").charAt(0));
+
+                rate = data.getInt("rate");
+                if (!data.wasNull()) {
+                    vatType.setRate(rate);
+                }
+
+                vatTypes.add(vatType);
+            }
+
+            return vatTypes;
+        } catch (SQLTimeoutException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+        }
     }
 }
