@@ -4,13 +4,15 @@ import model.Category;
 import model.Product;
 import model.Vat;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Objects;
 
 public class ApplicationController {
     // Static Methods
+    
+    // Getters
     public static ArrayList<Vat> getVats() { // Will change
         ArrayList<Vat> vats = new ArrayList<Vat>();
         vats.add(new Vat('A', 21));
@@ -32,40 +34,48 @@ public class ApplicationController {
         return categories;
     } 
     
-    public static void productIsValid(String name, String description, String stringPrice, Integer amount, String vat, String categoryName, String brand, String stringDay, String stringMonth, String stringYear, boolean available) throws FieldIsEmpty, WrongType {
+    // Verifications
+    public static void productIsValid(String name, String description, String stringPrice, int amount, String vat, String categoryName, String brand, String stringDay, String stringMonth, String stringYear, boolean available) throws FieldIsEmpty, WrongType, WrongDate {
+        double price;
+        int day;
+        int month;
+        int year;
+        
         if (name.isEmpty()) {
             throw new FieldIsEmpty("Nom");
         }
         
         try {
-            double price = Double.parseDouble(stringPrice);
-            
-            try {
-                Integer day = Integer.parseInt(stringDay);
-                
-                try {
-                    Integer month = Integer.parseInt(stringMonth);
-                    
-                    try {
-                        Integer year = Integer.parseInt(stringYear);
-                        
-                    }
-                    catch (NumberFormatException numberFormatException) {
-                        throw new WrongType("Année");
-                    }
-                }
-                catch (NumberFormatException numberFormatException) {
-                    throw new WrongType("Mois");
-                }
-            }
-            catch (NumberFormatException numberFormatException) {
-                throw new WrongType("Jour");
-            }
-        }
-        catch (NumberFormatException numberFormatException) {
+            price = Double.parseDouble(stringPrice);
+        } catch (NumberFormatException numberFormatException) {
             throw new WrongType("Prix");
         }
+        if (price < 0) throw new WrongType("Prix");
+
+        try {
+            day = Integer.parseInt(stringDay);
+        } catch (NumberFormatException numberFormatException) {
+            throw new WrongType("Jour");
+        }
+
+        try {
+            month = Integer.parseInt(stringMonth);
+        } catch (NumberFormatException numberFormatException) {
+            throw new WrongType("Mois");
+        }
+
+        try {
+            year = Integer.parseInt(stringYear);
+        } catch (NumberFormatException numberFormatException) {
+            throw new WrongType("Année");
+        }
         
+        try {
+            LocalDate date = LocalDate.of(year, month, day);
+        }
+        catch (DateTimeException dateTimeException) {
+            throw new WrongDate(null);
+        }
         
         Character vatType = vat.charAt(0);
         
@@ -83,5 +93,4 @@ public class ApplicationController {
 
         //Product product = new Product()
     }
-    
 }

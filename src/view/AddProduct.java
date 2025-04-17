@@ -2,6 +2,7 @@ package view;
 
 import controller.ApplicationController;
 import controller.FieldIsEmpty;
+import controller.WrongDate;
 import controller.WrongType;
 import model.Category;
 import model.Vat;
@@ -297,15 +298,10 @@ public class AddProduct extends JPanel {
                             startDateDayField.getText(), startDateMonthField.getText(), startDateYearField.getText(), 
                             availableRadioButtonYes.isSelected());
                     removeAllField();
-                } catch (FieldIsEmpty ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur",
-                            JOptionPane.ERROR_MESSAGE);
-                } catch (WrongType ex) {
+                } catch (FieldIsEmpty | WrongType | WrongDate ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur",
                             JOptionPane.ERROR_MESSAGE);
                 }
-
-                
             }
         });
         
