@@ -1,5 +1,6 @@
 package dataAccess;
 
+import model.City;
 import model.Employee;
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
         objectClassName = Employee.class.getSimpleName().toLowerCase();
     }
 
-    public int create(Employee employee) throws InsertionFailedException, DAORetrievalFailedException {
+    public int create(Employee employee, City city) throws InsertionFailedException, DAORetrievalFailedException {
         sqlInstruction = "INSERT INTO employee (first_name, last_name, password, is_active, street, street_number, unit_number, role_label, hire_date, manager_id, city_zip_code, city_name) VALUES(?,?,?,?,?,?,?,?,?,?,?,?);";
 
         try {
@@ -27,7 +28,10 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
             preparedStatement.setString(8, employee.getRoleLabel());
             preparedStatement.setDate(9, Date.valueOf(employee.getHireDate()));
             preparedStatement.setInt(10, employee.getManagerId());
-            preparedStatement.setInt(11, city(employee.getCityName(), employee.getCityZipCode()));
+
+            city(city);
+
+            preparedStatement.setInt(11, employee.getCityZipCode());
             preparedStatement.setString(12, employee.getCityName());
 
             try {
@@ -94,7 +98,7 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
         }
     }
 
-    public int edit(Employee employee) throws UpdateFailedException, DAORetrievalFailedException {
+    public int edit(Employee employee, City city) throws UpdateFailedException, DAORetrievalFailedException {
         sqlInstruction = "UPDATE employee SET first_name = ?, last_name = ?, password = ?, is_active = ?, street = ?, street_number = ?, unit_number = ?, role_label = ?, hire_date = ?, manager_id = ?, city_zip_code = ?, city_name = ? WHERE id = ?;";
         int id = employee.getId();
 
@@ -111,7 +115,10 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
             preparedStatement.setString(8, employee.getRoleLabel());
             preparedStatement.setDate(9, Date.valueOf(employee.getHireDate()));
             preparedStatement.setInt(10, employee.getManagerId());
-            preparedStatement.setInt(11, city(employee.getCityName(), employee.getCityZipCode()));
+
+            city(city);
+
+            preparedStatement.setInt(11, employee.getCityZipCode());
             preparedStatement.setString(12, employee.getCityName());
 
             preparedStatement.setInt(13, id);
@@ -343,35 +350,79 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
         }
     }
 
-    private int city(String cityName, int cityZipCode) throws DAORetrievalFailedException {
-        boolean exists = true;
+    private void city(City city) throws DAORetrievalFailedException {
+        boolean exists = false;
+        String cityName = city.getName();
+        int cityZipCode = city.getZipCode();
+        
+        sqlInstruction = "SELECT * FROM city WHERE name = ? AND zip_code = ?;";
 
-        do {
-            sqlInstruction = "SELECT id FROM city WHERE name = ? AND zip_code = ?;";
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            preparedStatement.setString(1, cityName);
+            preparedStatement.setInt(2, cityZipCode);
 
-            try {
+            data = preparedStatement.executeQuery();
+            exists = data.next();
+
+            if (!exists) {
+                sqlInstruction = "INSERT INTO city VALUES(?, ?, ?);";
+
                 preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
                 preparedStatement.setString(1, cityName);
                 preparedStatement.setInt(2, cityZipCode);
-
-                data = preparedStatement.executeQuery();
-                exists = data.next();
-
-                if (exists) {
-                    return data.getInt("id");
-                } else {
-                    sqlInstruction = "INSERT INTO city (name, zip_code) VALUES(?, ?);";
-
-                    preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction, Statement.RETURN_GENERATED_KEYS);
-                    preparedStatement.setString(1, cityName);
-                    preparedStatement.setInt(2, cityZipCode);
-                    preparedStatement.executeUpdate();
-                }
-            } catch (SQLTimeoutException e) {
-                throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
-            } catch (SQLException e) {
-                throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+                preparedStatement.setString(3, city.getCountry());
+                preparedStatement.executeUpdate();
             }
-        } while (!exists); // "Condition '!exists' is always 'true'"... why?? am i missing something?
+            
+        } catch (SQLTimeoutException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+        }
+    }
+
+    public ArrayList<String> getAllCountries() throws DAORetrievalFailedException {
+        sqlInstruction = "SELECT country FROM coutry;";
+
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+
+            data = preparedStatement.executeQuery();
+
+            ArrayList<String> countries = new ArrayList<>();
+
+            while (data.next()) {
+                countries.add(data.getString("country"));
+            }
+
+            return countries;
+        } catch (SQLTimeoutException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+        }
+    }
+
+    public ArrayList<String> getAllRoles() throws DAORetrievalFailedException {
+        sqlInstruction = "SELECT label FROM role;";
+
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+
+            data = preparedStatement.executeQuery();
+
+            ArrayList<String> roles = new ArrayList<>();
+
+            while (data.next()) {
+                roles.add(data.getString("label"));
+            }
+
+            return roles;
+        } catch (SQLTimeoutException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+        }
     }
 }
