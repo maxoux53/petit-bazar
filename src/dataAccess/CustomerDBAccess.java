@@ -12,62 +12,6 @@ public class CustomerDBAccess extends DBAccess implements ICustomerDAO {
         objectClassName = Customer.class.getSimpleName().toLowerCase();
     }
 
-    public int create(Customer customer) throws InsertionFailedException, DAORetrievalFailedException {
-        sqlInstruction = "INSERT INTO customer (first_name, last_name, birth_date, email, phone, vat_number, loyalty_points) VALUES(?,?,?,?,?,?,?);";
-        
-        try {
-            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-            
-            preparedStatement.setString(1, customer.getFirstName());
-            preparedStatement.setString(2, customer.getLastName());
-            preparedStatement.setDate(3, Date.valueOf(customer.getBirthDate()));
-            preparedStatement.setString(4, customer.getEmail());
-            preparedStatement.setInt(5, customer.getPhone());
-            preparedStatement.setInt(6, customer.getVatNumber());
-            preparedStatement.setInt(7, customer.getLoyaltyPoints());
-
-            try {
-                return preparedStatement.executeUpdate();
-            } catch (SQLTimeoutException e) {
-                throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
-            } catch (SQLException e) {
-                throw new InsertionFailedException(objectClassName, -1, e.getMessage());
-            }
-            
-        } catch (SQLException e) {
-            throw new DAORetrievalFailedException(e.getMessage());
-        }
-    }
-
-    public int edit(Customer customer) throws UpdateFailedException, DAORetrievalFailedException {
-        sqlInstruction = "UPDATE customer SET first_name = ?, last_name = ?, birth_date = ?, email = ?, phone = ?, vat_number = ?, loyalty_points = ? WHERE loyalty_card_number = ?;";
-        int loyaltyCardNumber = customer.getLoyaltyCardNumber();
-
-        try {
-            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-            
-            preparedStatement.setString(1, customer.getFirstName());
-            preparedStatement.setString(2, customer.getLastName());
-            preparedStatement.setDate(3, Date.valueOf(customer.getBirthDate()));
-            preparedStatement.setString(4, customer.getEmail());
-            preparedStatement.setInt(5, customer.getPhone());
-            preparedStatement.setInt(6, customer.getVatNumber());
-            preparedStatement.setInt(7, customer.getLoyaltyPoints());
-            preparedStatement.setInt(8, loyaltyCardNumber);
-
-            try {
-                return preparedStatement.executeUpdate();
-            } catch (SQLTimeoutException e) {
-                throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
-            } catch (SQLException e) {
-                throw new UpdateFailedException(objectClassName, loyaltyCardNumber, e.getMessage());
-            }
-            
-        } catch (SQLException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
-        }
-    }
-
     public Customer findByLoyaltyCardNumber(int loyaltyCardNumber) throws NotFoundException, DAORetrievalFailedException {
         sqlInstruction = "SELECT * FROM customer WHERE loyalty_card_number = ?;";
         
@@ -124,26 +68,6 @@ public class CustomerDBAccess extends DBAccess implements ICustomerDAO {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
         } catch (SQLException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
-        }
-    }
-
-    public void deleteByLoyaltyCardNumber(int loyaltyCardNumber) throws DeleteFailedException, DAORetrievalFailedException {
-        sqlInstruction = "DELETE FROM customer WHERE loyalty_card_number = ?;";
-        
-        try {
-            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-            preparedStatement.setInt(1, loyaltyCardNumber);
-
-            try {
-                preparedStatement.executeQuery();
-            } catch (SQLTimeoutException e) {
-                throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
-            } catch (SQLException e) {
-                throw new DeleteFailedException(objectClassName, loyaltyCardNumber, e.getMessage());
-            }
-            
-        } catch (SQLException e) {
-            throw new DAORetrievalFailedException(e.getMessage());
         }
     }
 
