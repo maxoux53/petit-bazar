@@ -1,5 +1,6 @@
 package view;
 
+import Utils.Env;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -18,12 +19,13 @@ public class Window extends JFrame {
     static {
         applyPlatformSpecificSettings();
     }
-    
-    
+
     // Constructors
     public Window() {
-        super("Le p'tit bazar");
-        setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        super(Env.getDotenv().get("STORE_NAME"));
+
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+
         addWindowListener(new WindowAdapter() {
             public void windowClosing (WindowEvent e) {
                 System.exit(0);
@@ -58,11 +60,8 @@ public class Window extends JFrame {
             }
             
             container.add(home);
-            
             home.getCartThread().setRunning(true);
-            
             setCurrentPanel(home);
-            
             
             container.revalidate();
             container.repaint();
@@ -119,7 +118,7 @@ public class Window extends JFrame {
         // Apple macOS
         if (System.getProperty("os.name").toLowerCase().contains("mac")) {
             System.setProperty("apple.laf.useScreenMenuBar", "true");
-            System.setProperty("apple.awt.application.name", "Le p'tit bazar");
+            System.setProperty("apple.awt.application.name", Env.getDotenv().get("STORE_NAME"));
             System.setProperty("apple.awt.application.appearance", "system");
         }
     }

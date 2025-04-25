@@ -1,11 +1,11 @@
 package view;
 
+import Utils.Env;
 import javax.swing.*;
 import java.awt.*;
 
 public class Home extends JPanel {
     // Attributes
-    private Window window;
     private Cart cart;
     private CartThread cartThread;
     
@@ -16,11 +16,11 @@ public class Home extends JPanel {
         
         // Title
         JLabel text = new JLabel("<html>Gestion du magasin<html>", SwingConstants.CENTER);
-        text.setFont(new Font("SansSerif", Font.BOLD, 50));
-        JLabel shopName = new JLabel("Le P'tit Bazar", SwingConstants.CENTER);
-        shopName.setFont(new Font("SansSerif", Font.BOLD, 50));
+        text.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.BOLD, 50));
+        JLabel storeName = new JLabel(Env.getDotenv().get("STORE_NAME"), SwingConstants.CENTER);
+        storeName.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.BOLD, 50));
         add(text);
-        add(shopName);
+        add(storeName);
         
         // Cart
         cart = new Cart();
@@ -46,7 +46,7 @@ public class Home extends JPanel {
 
     // Methods
     @Override
-    protected void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
         cart.draw(g);
     }

@@ -5,11 +5,13 @@ import javax.swing.*;
 public class CartThread extends Thread {
     // Attributes
     private Home homePage;
-    private boolean running = false; 
+    private boolean running;
+    private Cart cart;
     
     // Constructors
     public CartThread(Home homePage) {
         this.homePage = homePage;
+        cart = homePage.getCart();
     }
 
     public synchronized void setRunning(boolean isHomePageActive) {
@@ -21,28 +23,21 @@ public class CartThread extends Thread {
 
     @Override
     public void run() {
-        Cart cart = homePage.getCart();
-        
-        while (true) {
-            synchronized (this) {
-                if (!running) {
-                    try {
+        try {
+            while (true) {
+                synchronized (this) {
+                    if (!running) {
                         wait();
-                    } catch (InterruptedException interruptedException) {
-                        System.exit(0);
                     }
                 }
-            }
-                
-            cart.move();
-            homePage.repaint();
 
-            try {
+                cart.move();
+                homePage.repaint();
+
                 Thread.sleep(15);
-            } catch (InterruptedException e) {
-                JOptionPane.showMessageDialog(null, "Le temps d'attente de l'animation du chariot a échoué.\nErreur : " + e.getMessage(), "Critical Thread Error", JOptionPane.ERROR_MESSAGE); // should have a parent component?
-                System.exit(1); // DEBUG ONLY, SHOULD BE REMOVED IN THE NEAR FUTURE!! ⚠️
             }
+        } catch (InterruptedException e) {
+            JOptionPane.showMessageDialog(null, "L'animation du chariot a échoué !\nErreur : " + e.getMessage(), "Critical Thread Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

@@ -14,7 +14,7 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
     }
 
     public int create(Product product) throws InsertionFailedException, DAORetrievalFailedException {
-        sqlInstruction = "INSERT INTO product (name, description, amount, is_available, vat_type, category_id, brand_id, supplier_vat_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+        sqlInstruction = "INSERT INTO product (name, description, amount, is_available, vat_type, category_id, brand_id) VALUES (?, ?, ?, ?, ?, ?, ?);";
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
@@ -25,7 +25,6 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
             preparedStatement.setString(5, String.valueOf(product.getVatType()));
             preparedStatement.setInt(6, product.getCategoryId());
             preparedStatement.setInt(7, product.getBrandId());
-            preparedStatement.setInt(8, product.getSupplierVatNumber());
 
             try {
                 return preparedStatement.executeUpdate();
@@ -96,7 +95,7 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
     }
 
     public int edit(Product product) throws UpdateFailedException, DAORetrievalFailedException {
-        sqlInstruction = "UPDATE product SET name = ?, description = ?, amount = ?, is_available = ?, vat_type = ?, category_id = ?, brand_id = ?, supplier_vat_number = ? WHERE barcode = ?;";
+        sqlInstruction = "UPDATE product SET name = ?, description = ?, amount = ?, is_available = ?, vat_type = ?, category_id = ?, brand_id = ? WHERE barcode = ?;";
         int barcode = product.getBarcode();
 
         try {
@@ -108,7 +107,6 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
             preparedStatement.setString(5, String.valueOf(product.getVatType()));
             preparedStatement.setInt(6, product.getCategoryId());
             preparedStatement.setInt(7, product.getBrandId());
-            preparedStatement.setInt(8, product.getSupplierVatNumber());
             preparedStatement.setInt(9, barcode);
 
             try {
@@ -180,11 +178,6 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
                     product.setBrandId(brandId);
                 }
 
-                supplierVatNumber = data.getInt("supplier_vat_number");
-                if (!data.wasNull()) {
-                    product.setSupplierVatNumber(supplierVatNumber);
-                }
-
                 return product;
             } else {
                 throw new NotFoundException(objectClassName, barcode, DBRetrievalFailure.NO_ROW.toString()); // e.getMessage()
@@ -247,11 +240,6 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
                 brandId = data.getInt("brand_id");
                 if (!data.wasNull()) {
                     product.setBrandId(brandId);
-                }
-
-                supplierVatNumber = data.getInt("supplier_vat_number");
-                if (!data.wasNull()) {
-                    product.setSupplierVatNumber(supplierVatNumber);
                 }
 
                 products.add(product);
@@ -321,11 +309,6 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
                 brandId = data.getInt("brand_id");
                 if (!data.wasNull()) {
                     product.setBrandId(brandId);
-                }
-
-                supplierVatNumber = data.getInt("supplier_vat_number");
-                if (!data.wasNull()) {
-                    product.setSupplierVatNumber(supplierVatNumber);
                 }
 
                 products.add(product);
