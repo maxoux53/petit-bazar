@@ -3,17 +3,28 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays; // DEBUG ONLY, REMOVE LATER
 
 public class Login extends JPanel {
     // Attributes
-    private Window window;
+    /*private Window window;
     private JPanel titlePanel;
     private JLabel title;
     private JPanel formPanel;
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JPanel buttonPanel;
+    private JButton button;*/
+
+    private Window window;
+    private JPanel titlePanel, formPanel, buttonPanel;
+    private JLabel title, usernameLabel, passwordLabel;
+    private JTextField usernameField;
+    private JPasswordField passwordField;
     private JButton button;
+
+    private String username;
+    private char[] password;
     
     // Constructors
     public Login(Window window) {
@@ -26,7 +37,7 @@ public class Login extends JPanel {
         titlePanel = new JPanel();
         titlePanel.setBackground(Color.WHITE);
         title = new JLabel("Connexion");
-        title.setFont(new Font("SansSerif", Font.BOLD, 60));
+        title.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.BOLD, 60));
         titlePanel.add(title);
         add(titlePanel, BorderLayout.NORTH);
         
@@ -41,22 +52,22 @@ public class Login extends JPanel {
         // User
         JLabel usernameLabel = new JLabel("👤 Nom d'utilisateur", SwingConstants.LEFT);
       
-        usernameLabel.setFont(new Font("SansSerif", Font.PLAIN, 35));
+        usernameLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, 35));
         formPanel.add(usernameLabel);
         usernameField = new JTextField();
-        usernameField.setFont(new Font("SansSerif", Font.PLAIN, 25));
-        usernameField.setBackground(new Color(238, 238, 238));
+        usernameField.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, 25));
+        usernameField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         usernameField.setPreferredSize(new Dimension(20, 25));
         formPanel.add(usernameField);
         
         // Password
         JLabel passwordLabel = new JLabel("🔑 Mot de passe", SwingConstants.LEFT);
 
-        passwordLabel.setFont(new Font("SansSerif", Font.PLAIN, 35));
+        passwordLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, 35));
         formPanel.add(passwordLabel);
         passwordField = new JPasswordField();
-        passwordField.setFont(new Font("SansSerif", Font.PLAIN, 25));
-        passwordField.setBackground(new Color(238, 238, 238));
+        passwordField.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, 25));
+        passwordField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         passwordField.setPreferredSize(new Dimension(passwordField.getPreferredSize().width, 10));
         formPanel.add(passwordField, BorderLayout.CENTER);
         
@@ -66,7 +77,7 @@ public class Login extends JPanel {
         buttonPanel = new JPanel();
         buttonPanel.setBackground(Color.WHITE);
         button = new JButton("Se connecter");
-        button.setFont(new Font("SansSerif", Font.BOLD, 25));
+        button.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.BOLD, 25));
         button.setBackground(Color.white);
         button.setFocusPainted(false);
         button.setPreferredSize(new Dimension(300, 50));
@@ -75,14 +86,12 @@ public class Login extends JPanel {
 
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                String password = new String(passwordField.getPassword());
+                username = usernameField.getText();
+                password = passwordField.getPassword();
 
                 // Exemple : afficher dans la console
                 System.out.println("Nom d'utilisateur : " + username);
-                System.out.println("Mot de passe : " + password);
-
-                // if (connectionIsDone(username, password) {}
+                System.out.println("Mot de passe : " + Arrays.toString(password)); // DEBUG ONLY!! REMOVE LATER (+ import) ⚠️
 
                 window.showHome();
             }

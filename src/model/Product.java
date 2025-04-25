@@ -18,6 +18,19 @@ public class Product {
         this.barcode = barcode;
     }
 
+    public Product(String name, String description, Integer amount, Boolean isAvailable, Character vatType, Integer categoryId, Integer brandId, Double exclVatPrice, LocalDate startDate) {
+        this(null); // useless, tho might be useful in the future (for the sake of point the modification unique)
+        this.name = name;
+        this.description = description;
+        this.amount = amount;
+        this.isAvailable = isAvailable;
+        this.vatType = vatType;
+        this.categoryId = categoryId;
+        this.brandId = brandId;
+        this.exclVatPrice = exclVatPrice;
+        this.startDate = startDate;
+    }
+
     public void setName(String name) {
         this.name = name;
     }

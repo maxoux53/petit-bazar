@@ -255,7 +255,7 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
                 if (!data.wasNull()) {
                     product.setStartDate(startDate.toLocalDate());
                 }
-
+              
                 products.add(product);
             }
 

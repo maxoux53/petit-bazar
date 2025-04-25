@@ -15,4 +15,13 @@ public class Category {
     public Integer getId() {
         return id;
     }
+    
+    // Getters
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

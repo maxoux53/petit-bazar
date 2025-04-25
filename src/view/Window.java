@@ -1,5 +1,6 @@
 package view;
 
+import Utils.Env;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -12,17 +13,19 @@ public class Window extends JFrame {
     private Menu menu;
     private Login login;
     private Home home;
+    private AddProduct addProduct;
+    private EditProduct editProduct;
 
     static {
         applyPlatformSpecificSettings();
     }
-    
-    
+
     // Constructors
     public Window() {
-        super("Le p'tit bazar");
-        setBounds(0, 0, 1920, 1080);
-        
+        super(Env.getDotenv().get("STORE_NAME"));
+
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+
         addWindowListener(new WindowAdapter() {
             public void windowClosing (WindowEvent e) {
                 System.exit(0);
@@ -34,8 +37,11 @@ public class Window extends JFrame {
         setJMenuBar(menu.getMenuBar());
         menu.grayOut();
 
-        // Login
+        // Create panel
         login = new Login(this);
+        home = new Home();
+        addProduct = new AddProduct();
+        editProduct = new EditProduct();
         
         container = getContentPane();
         container.add(login);
@@ -49,12 +55,12 @@ public class Window extends JFrame {
         if (currentPanel != home) {
             container.remove(currentPanel);
 
-            menu.activate();
-            home = new Home();
+            if (currentPanel == login) {
+                menu.activate();
+            }
             
-            container.add(menu);
             container.add(home);
-
+            home.getCartThread().setRunning(true);
             setCurrentPanel(home);
             
             container.revalidate();
@@ -74,6 +80,30 @@ public class Window extends JFrame {
             container.repaint();
         }
     }
+    
+    public void showAddProduct() {
+        if (currentPanel != addProduct) {
+            container.remove(currentPanel);
+            
+            container.add(addProduct);
+            setCurrentPanel(addProduct);
+
+            container.revalidate();
+            container.repaint();
+        }
+    }
+    
+    public void showEditProduct() {
+        if (currentPanel != editProduct) {
+            container.remove(currentPanel);
+            
+            container.add(editProduct);
+            setCurrentPanel(editProduct);
+            
+            container.repaint();
+            container.revalidate();
+        }
+    }
 
     private void setCurrentPanel(JPanel currentPanel) {
         if (home != null && currentPanel != home) {
@@ -88,7 +118,8 @@ public class Window extends JFrame {
         // Apple macOS
         if (System.getProperty("os.name").toLowerCase().contains("mac")) {
             System.setProperty("apple.laf.useScreenMenuBar", "true");
-            System.setProperty("apple.awt.application.name", "Le p'tit bazar");
+            System.setProperty("apple.awt.application.name", Env.getDotenv().get("STORE_NAME"));
+            System.setProperty("apple.awt.application.appearance", "system");
         }
     }
 }

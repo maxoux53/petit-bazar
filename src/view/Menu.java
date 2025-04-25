@@ -6,24 +6,44 @@ import java.awt.event.*;
 
 public class Menu extends JPanel {
     // Attributes
+    /*private Window window;
+    private JMenuBar menuBar;
+    private JMenu application;
+    private JMenuItem home;
+    private JMenuItem leave;
+    private JMenuItem signOut;
+    private JMenu product;
+    private JMenuItem addProduct;
+    private JMenuItem editProduct;*/
+
     private Window window;
     private JMenuBar menuBar;
-    private JMenu edit;
-    private JMenuItem signOut;
-
-
+    private JMenu application, product;
+    private JMenuItem home, leave, signOut, addProduct, editProduct;
+    
     // Constructors
     public Menu(Window window) {
         this.window = window;
         menuBar = new JMenuBar();
+        application = new JMenu("Application");
+        product = new JMenu("Article");
+
 
         setBackground(Color.WHITE);
 
-        // Menu
-        JMenu application = new JMenu("Application");
-        edit = new JMenu("Édition d'articles");
+
 
         // Application
+        // Home
+        home = new JMenuItem("Accueil");
+        
+        home.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                window.showHome();
+            }
+        });
+        
+        // SignOut
         signOut = new JMenuItem("Se déconnecter");
 
         signOut.addActionListener(new ActionListener() {
@@ -32,30 +52,65 @@ public class Menu extends JPanel {
                 window.showLogin();
             }
         });
-        window.showLogin();
-
-        JMenuItem leave = new JMenuItem("Quitter");
+        
+        // Leave
+        leave = new JMenuItem("Quitter");
 
         leave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
             }
         });
+
+        // Add items to application submenu
+        application.add(home);
         application.add(signOut);
         application.add(leave);
 
-        // Edit
-        JMenuItem add = new JMenuItem("Ajouter un article");
-        edit.add(add);
 
+
+        // Product
         // Add
+        addProduct = new JMenuItem("Ajouter un article");
+
+        addProduct.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                window.showAddProduct();
+            }
+        });
+        
+        // Edit
+        editProduct = new JMenuItem("Modifier un article");
+
+        editProduct.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                window.showEditProduct();
+            }
+        });
+
+        // Add items to product submenu
+        product.add(addProduct);
+        product.add(editProduct);
+
+
+
+        // Add submenus to menu bar
         menuBar.add(application);
-        menuBar.add(edit);
+        menuBar.add(product);
+    }
+
+    // Getters
+    public JMenuBar getMenuBar() {
+        return menuBar;
     }
 
     // Methods
     public void toggleMenu(boolean status) {
-        edit.setEnabled(status);
+        home.setEnabled(status);
+        
+        addProduct.setEnabled(status);
 
         signOut.setEnabled(status);
 
@@ -68,10 +123,5 @@ public class Menu extends JPanel {
 
     public void activate() {
         toggleMenu(true);
-    }
-
-    // Getters
-    public JMenuBar getMenuBar() {
-        return menuBar;
     }
 }    
