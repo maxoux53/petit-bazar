@@ -1,5 +1,7 @@
 package model;
 
+import java.time.LocalDate;
+
 public class Product {
     private Integer barcode;
     private String name;
@@ -9,10 +11,24 @@ public class Product {
     private Character vatType;
     private Integer categoryId;
     private Integer brandId;
-    private Integer supplierVatNumber;
+    private Double exclVatPrice;
+    private LocalDate startDate;
 
     public Product(Integer barcode) {
         this.barcode = barcode;
+    }
+
+    public Product(String name, String description, Integer amount, Boolean isAvailable, Character vatType, Integer categoryId, Integer brandId, Double exclVatPrice, LocalDate startDate) {
+        this(null); // useless, tho might be useful in the future (for the sake of point the modification unique)
+        this.name = name;
+        this.description = description;
+        this.amount = amount;
+        this.isAvailable = isAvailable;
+        this.vatType = vatType;
+        this.categoryId = categoryId;
+        this.brandId = brandId;
+        this.exclVatPrice = exclVatPrice;
+        this.startDate = startDate;
     }
 
     public void setName(String name) {
@@ -43,8 +59,12 @@ public class Product {
         this.brandId = brandId;
     }
 
-    public void setSupplierVatNumber(Integer supplierVatNumber) {
-        this.supplierVatNumber = supplierVatNumber;
+    public void setExclVatPrice(Double exclVatPrice) {
+        this.exclVatPrice = exclVatPrice;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
     public String getName() {
@@ -75,8 +95,12 @@ public class Product {
         return brandId;
     }
 
-    public Integer getSupplierVatNumber() {
-        return supplierVatNumber;
+    public Double getExclVatPrice() {
+        return exclVatPrice;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
     public Integer getBarcode() {

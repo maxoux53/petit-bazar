@@ -2,7 +2,7 @@ package view;
 
 import controller.ApplicationController;
 import controller.FieldIsEmpty;
-import controller.WrongDate;
+import controller.ProhibitedValue;
 import controller.WrongType;
 import model.Category;
 import model.Vat;
@@ -340,14 +340,25 @@ public class EditProduct extends JPanel {
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    ApplicationController.productIsValid(nameField.getText(), descriptionField.getText(), priceField.getText(), 
-                            (Integer) amountSpinner.getValue(), (String)vatTypeComboBox.getSelectedItem(), (String) categoryComboBox.getSelectedItem(), brandField.getText(), 
-                            startDateDayField.getText(), startDateMonthField.getText(), startDateYearField.getText(), 
-                            availableRadioButtonYes.isSelected());
+                    ApplicationController.createProduct(
+                            nameField.getText(),
+                            descriptionField.getText(),
+                            priceField.getText(),
+                            (Integer)amountSpinner.getValue(),
+                            availableRadioButtonYes.isSelected(),
+                            ((String)vatTypeComboBox.getSelectedItem()).charAt(0), // MUST BE CHANGED TO A BETTER WAY OF GETTING THE VAT CHAR
+                            1,                                             // }
+                            //(String)categoryComboBox.getSelectedItem(),  // } FOR TESTING PURPOSES ONLY,
+                            1,                                             // } MUST PROVIDES DIRECT IDs
+                            //brandField.getText(),                        // }
+                            startDateDayField.getText(),
+                            startDateMonthField.getText(),
+                            startDateYearField.getText()
+                    );
+
                     removeAllField();
-                } catch (FieldIsEmpty | WrongType | WrongDate ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur",
-                            JOptionPane.ERROR_MESSAGE);
+                } catch (FieldIsEmpty | WrongType | ProhibitedValue ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

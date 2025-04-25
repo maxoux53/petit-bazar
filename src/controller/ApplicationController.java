@@ -1,21 +1,14 @@
 package controller;
 
-import model.Brand;
-import model.Category;
-import model.Product;
-import model.Vat;
-
+import model.*;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class ApplicationController {
-    // Static Methods
-    
-    // Getters
+
     public static ArrayList<Vat> getVats() { // Will change
-        ArrayList<Vat> vats = new ArrayList<Vat>();
+        ArrayList<Vat> vats = new ArrayList<>();
         vats.add(new Vat('A', 21));
         vats.add(new Vat('B', 12));
         vats.add(new Vat('C', 6));
@@ -25,7 +18,7 @@ public class ApplicationController {
     }
     
     public static ArrayList<Category> getCategories() { // Will change
-        ArrayList<Category> categories = new ArrayList<Category>();
+        ArrayList<Category> categories = new ArrayList<>();
         categories.add(new Category(1, "Électronique"));
         categories.add(new Category(2, "Alimentation"));
         categories.add(new Category(3, "Vêtements"));
@@ -36,7 +29,7 @@ public class ApplicationController {
     }
     
     public static ArrayList<Brand> getBrands() {
-        ArrayList<Brand> brands = new ArrayList<Brand>();
+        ArrayList<Brand> brands = new ArrayList<>();
         brands.add(new Brand(1, "Nike"));
         brands.add(new Brand(2, "Boni"));
         brands.add(new Brand(3, "Moulinex"));
@@ -60,24 +53,26 @@ public class ApplicationController {
         return product;
     }
     
-    // Verifications
-    public static void productIsValid(String name, String description, String stringPrice, int amount, String vat, String categoryName, String brand, String stringDay, String stringMonth, String stringYear, boolean available) throws FieldIsEmpty, WrongType, WrongDate {
-        double price;
+    public static void createProduct(String name, String description, String priceAsString, Integer amount, Boolean isAvailable, Character vat, Integer categoryId, Integer brandId, String stringDay, String stringMonth, String stringYear) throws FieldIsEmpty, WrongType, ProhibitedValue {
+        Double price = null; // why do i have to initialize it to null???
         int day;
         int month;
         int year;
-        
-        if (name.isEmpty()) {
-            throw new FieldIsEmpty("Nom");
-        }
-        
-        try {
-            price = Double.parseDouble(stringPrice);
-        } catch (NumberFormatException numberFormatException) {
-            throw new WrongType("Prix");
-        }
-        if (price < 0) throw new WrongType("Prix");
 
+        // Price
+        if (!priceAsString.isEmpty()) {
+            try {
+                price = Double.parseDouble(priceAsString);
+
+                if (price < 0) {
+                    throw new ProhibitedValue(priceAsString);
+                }
+            } catch (NumberFormatException numberFormatException) {
+                throw new WrongType("Prix");
+            }
+        }
+
+        // Date
         try {
             day = Integer.parseInt(stringDay);
         } catch (NumberFormatException numberFormatException) {
@@ -95,29 +90,16 @@ public class ApplicationController {
         } catch (NumberFormatException numberFormatException) {
             throw new WrongType("Année");
         }
-        
+
+        LocalDate startDate;
         try {
-            LocalDate date = LocalDate.of(year, month, day);
-        }
-        catch (DateTimeException dateTimeException) {
-            throw new WrongDate(null);
-        }
-        
-        Character vatType = vat.charAt(0);
-        
-        ArrayList<Category> categories = getCategories();
-        int iCategory = 0;
-        while (!Objects.equals(categories.get(iCategory).getName(), categoryName)) {
-            iCategory++;
-        }
-        
-        Integer categoryId = categories.get(iCategory).getId();
-        
-        if (brand.isEmpty()) {
-            throw new FieldIsEmpty("Marque");
+            startDate = LocalDate.of(year, month, day);
+        } catch (DateTimeException e) {
+            throw new ProhibitedValue(day + "/" + month + "/" + year);
         }
 
-        //Product product = new Product()
+        // Product creation
+        /*businessMethod (*/new Product(name, description, amount, isAvailable, vat, categoryId, brandId, price, startDate);
     }
-    
+
 }
