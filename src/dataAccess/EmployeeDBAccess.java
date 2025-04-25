@@ -351,7 +351,6 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
     }
 
     private void city(City city) throws DAORetrievalFailedException {
-        boolean exists = false;
         String cityName = city.getName();
         int cityZipCode = city.getZipCode();
         
@@ -363,9 +362,8 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
             preparedStatement.setInt(2, cityZipCode);
 
             data = preparedStatement.executeQuery();
-            exists = data.next();
 
-            if (!exists) {
+            if (data.next()) {
                 sqlInstruction = "INSERT INTO city VALUES(?, ?, ?);";
 
                 preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
