@@ -58,7 +58,7 @@ public class Menu extends JPanel {
 
         leave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                ViewCore.quit();
             }
         });
 
