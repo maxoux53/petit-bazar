@@ -5,9 +5,15 @@ public class City {
     private String name;
     private String country;
 
-    public City(Integer zipCode, String name) {
+
+    public City(Integer zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public City(Integer zipCode, String name, String country) {
         this.zipCode = zipCode;
         this.name = name;
+        this.country = country;
     }
 
     public void setCountry(String country) {
