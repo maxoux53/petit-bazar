@@ -1,16 +1,17 @@
 package controller;
 
+import business.EmployeeManager;
+import business.HashFailedException;
 import business.ProductManager;
 import dataAccess.DAORetrievalFailedException;
 import dataAccess.InsertionFailedException;
-import model.Brand;
-import model.Category;
-import model.Product;
-import model.Vat;
+import dataAccess.NotFoundException;
+import model.*;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class EmployeeController {
 
@@ -47,7 +48,6 @@ public class EmployeeController {
     }
 
     public static Product getProductByBarcode(int barcode) {
-        // return méthodes pour récupérer un produit
         Product product = new Product(12345);
         product.setName("Chocolat");
         product.setDescription("C'est du chocolat");
@@ -60,53 +60,109 @@ public class EmployeeController {
         return product;
     }
 
-    /*public static void createEmployee(String firstName, String lastName, byte[] password, boolean isActive, String street, int streetNumber, int unitNumber, String roleLabel, LocalDate hireDate, int managerId, int cityZipCode) {
-        Double price = null; // why do i have to initialize it to null???
-        int day;
-        int month;
-        int year;
+    public static void createEmployee(String firstName, String lastName, char[] password, Boolean isActive, String street, String streetNumberAsString, String unitNumberAsString, String roleLabel, String dayAsString, String monthAsString, String yearAsString, String managerIdAsString, String zipCodeAsString, String cityName) throws HashFailedException, InsertionFailedException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException {
+        byte[] passwordHash = null;
+        Integer streetNumber = null;
+        Integer unitNumber = null;
+        LocalDate hireDate;
+        Integer managerId = null;
+        Integer zipCode = null;
 
-        // Price
-        if (!priceAsString.isEmpty()) {
+        // Password
+        if (password != null) {
+            passwordHash = EmployeeManager.hashPassword(new String(password));
+        }
+
+        // Street number
+        if (!streetNumberAsString.isEmpty()) {
             try {
-                price = Double.parseDouble(priceAsString);
+                streetNumber = Integer.parseInt(streetNumberAsString);
 
-                if (price < 0) {
-                    throw new ProhibitedValueException(priceAsString);
+                if (streetNumber < 0) {
+                    throw new ProhibitedValueException(streetNumberAsString);
                 }
             } catch (NumberFormatException numberFormatException) {
-                throw new WrongTypeException("Prix");
+                throw new WrongTypeException("Numéro de rue");
             }
         }
 
-        // Date
+        // Unit number
+        if (!unitNumberAsString.isEmpty()) {
+            try {
+                unitNumber = Integer.parseInt(unitNumberAsString);
+
+                if (unitNumber < 0) {
+                    throw new ProhibitedValueException(unitNumberAsString);
+                }
+            } catch (NumberFormatException numberFormatException) {
+                throw new WrongTypeException("Numéro d'unité");
+            }
+        }
+
+        // Hire date
+        int day;
         try {
-            day = Integer.parseInt(stringDay);
+            day = Integer.parseInt(dayAsString);
         } catch (NumberFormatException numberFormatException) {
             throw new WrongTypeException("Jour");
         }
 
+        int month;
         try {
-            month = Integer.parseInt(stringMonth);
+            month = Integer.parseInt(monthAsString);
         } catch (NumberFormatException numberFormatException) {
             throw new WrongTypeException("Mois");
         }
 
+        int year;
         try {
-            year = Integer.parseInt(stringYear);
+            year = Integer.parseInt(yearAsString);
         } catch (NumberFormatException numberFormatException) {
             throw new WrongTypeException("Année");
         }
 
-        LocalDate startDate;
         try {
-            startDate = LocalDate.of(year, month, day);
+            hireDate = LocalDate.of(year, month, day);
         } catch (DateTimeException e) {
             throw new ProhibitedValueException(day + "/" + month + "/" + year);
         }
 
-        // Product creation
-        ProductManager.add(new Product(name, description, amount, isAvailable, vat, categoryId, brandId, price, startDate));
-    }*/
+        // Manager ID
+        if (!managerIdAsString.isEmpty()) {
+            try {
+                managerId = Integer.parseInt(managerIdAsString);
+
+                if (managerId < 0) {
+                    throw new ProhibitedValueException(managerIdAsString);
+                }
+            } catch (NumberFormatException numberFormatException) {
+                throw new WrongTypeException("Identifiant du gérant");
+            }
+        }
+
+        // Zip code
+        if (!zipCodeAsString.isEmpty()) {
+            try {
+                zipCode = Integer.parseInt(zipCodeAsString);
+
+                if (zipCode < 0) {
+                    throw new ProhibitedValueException(zipCodeAsString);
+                }
+            } catch (NumberFormatException numberFormatException) {
+                throw new WrongTypeException("Code postal");
+            }
+        }
+
+
+
+        EmployeeManager.add(
+                new Employee(firstName, lastName, passwordHash, isActive, street, streetNumber, unitNumber, roleLabel, hireDate, managerId, zipCode, cityName),
+                new City(zipCode, cityName)
+        );
+    }
+
+    public static boolean employeeLogin(String username, char[] passwordAttempt) throws HashFailedException, DAORetrievalFailedException, NotFoundException {
+        return EmployeeManager.checkPassword(passwordAttempt, Integer.parseInt(username));
+    }
 
 }
