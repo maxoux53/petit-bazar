@@ -87,7 +87,8 @@ public class Login extends JPanel {
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 username = usernameField.getText();
-                password = passwordField.getPassword();
+                char[] passwordArray = passwordField.getPassword();
+                password = (passwordArray.length == 0) ? null : passwordArray;
 
                 // Exemple : afficher dans la console
                 System.out.println("Nom d'utilisateur : " + username);
