@@ -1,9 +1,9 @@
 package controller;
 
-public class ProhibitedValue extends Exception {
+public class ProhibitedValueException extends Exception {
     private String value;
 
-    public ProhibitedValue(String value) {
+    public ProhibitedValueException(String value) {
         super("message"); // message MUST BE CHANGED!! ⚠️
     }
 }

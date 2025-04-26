@@ -1,8 +1,8 @@
 package controller;
 
-public class FieldIsEmpty extends Exception {
+public class FieldIsEmptyException extends Exception {
 
-    public FieldIsEmpty(String message) {
+    public FieldIsEmptyException(String message) {
         super(message);
     }
 
