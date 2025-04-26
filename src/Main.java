@@ -1,5 +1,7 @@
+import view.ViewCore;
+
 public class Main {
     public static void main(String[] args) {
-        //
+        ViewCore.init();
     }
 }
