@@ -4,7 +4,6 @@ import model.Category;
 import model.Product;
 import model.Vat;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public interface IProductDAO {
@@ -21,7 +20,7 @@ public interface IProductDAO {
 
     ArrayList<Category> getAllCategories() throws DAORetrievalFailedException;
 
-    int brand(String brandName) throws DAORetrievalFailedException;
+    Integer brand(String brandName) throws DAORetrievalFailedException;
 
     ArrayList<Vat> getAllVatTypes() throws DAORetrievalFailedException;
 }
