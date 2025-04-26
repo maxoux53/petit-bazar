@@ -1,15 +1,21 @@
 package dataAccess;
 
-import utils.Env;
+import Utils.Env;
 import java.sql.*;
 
 public class SingletonConnection {
     private static Connection connection;
+    private static final String user;
+    private static final String password;
+    private static final String dbName;
+    private static final String connectionURL;
 
-    private static final String user = Env.getDotenv().get("PG_USER");
-    private static final String password = Env.getDotenv().get("PG_PASSWORD");
-    private static final String dbName = Env.getDotenv().get("PG_DB");
-    private static final String connectionURL = "jdbc:postgresql://localhost:5432/" + dbName;
+    static {
+        user = Env.getDotenv().get("PG_USER");
+        password = Env.getDotenv().get("PG_PASSWORD");
+        dbName = Env.getDotenv().get("PG_DB");
+        connectionURL = "jdbc:postgresql://localhost:5432/" + dbName;
+    }
 
     public static Connection getInstance() throws DAORetrievalFailedException {
         if (connection == null) {
