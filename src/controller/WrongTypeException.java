@@ -1,8 +1,8 @@
 package controller;
 
-public class WrongType extends Exception {
+public class WrongTypeException extends Exception {
 
-    public WrongType(String message) {
+    public WrongTypeException(String message) {
         super(message);
     }
 
