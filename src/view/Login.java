@@ -55,7 +55,7 @@ public class Login extends JPanel {
         usernameLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, 35));
         formPanel.add(usernameLabel);
         usernameField = new JTextField();
-        usernameField.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, 25));
+        usernameField.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.MID_SIZE.getSize()));
         usernameField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         usernameField.setPreferredSize(new Dimension(20, 25));
         formPanel.add(usernameField);
@@ -66,7 +66,7 @@ public class Login extends JPanel {
         passwordLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, 35));
         formPanel.add(passwordLabel);
         passwordField = new JPasswordField();
-        passwordField.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, 25));
+        passwordField.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.MID_SIZE.getSize()));
         passwordField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         passwordField.setPreferredSize(new Dimension(passwordField.getPreferredSize().width, 10));
         formPanel.add(passwordField, BorderLayout.CENTER);
@@ -77,7 +77,7 @@ public class Login extends JPanel {
         buttonPanel = new JPanel();
         buttonPanel.setBackground(Color.WHITE);
         button = new JButton("Se connecter");
-        button.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.BOLD, 25));
+        button.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.BOLD, FontPreferences.MID_SIZE.getSize()));
         button.setBackground(Color.white);
         button.setFocusPainted(false);
         button.setPreferredSize(new Dimension(300, 50));
