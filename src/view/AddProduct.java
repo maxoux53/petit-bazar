@@ -1,9 +1,8 @@
 package view;
 
-import controller.ApplicationController;
-import controller.FieldIsEmpty;
-import controller.ProhibitedValue;
-import controller.WrongType;
+import controller.*;
+import dataAccess.DAORetrievalFailedException;
+import dataAccess.InsertionFailedException;
 import model.Category;
 import model.Vat;
 
@@ -162,8 +161,13 @@ public class AddProduct extends JPanel {
         vatTypeComboBox.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.NORMAL_SIZE.getSize()));
         vatTypeComboBox.setBackground(Color.white);
         vatTypeComboBox.setPreferredSize(new Dimension(20, 25));
-        
-        ArrayList<Vat> vats = ApplicationController.getVats();
+
+        final ArrayList<Vat> vats;
+            try {
+                vats = ProductController.getVats();
+            } catch (DAORetrievalFailedException e) {
+                throw new RuntimeException(e);         // TODO: handle exception !!
+            }
         for (Vat vat : vats) {
             vatTypeComboBox.addItem(vat.getType() + " (" + vat.getRate() + "%)");
         }
@@ -183,10 +187,15 @@ public class AddProduct extends JPanel {
         categoryComboBox.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.NORMAL_SIZE.getSize()));
         categoryComboBox.setBackground(Color.white);
         categoryComboBox.setPreferredSize(new Dimension(20, 25));
-        
-        ArrayList<Category> categories = ApplicationController.getCategories();
+
+        final ArrayList<Category> categories;
+            try {
+                categories = ProductController.getCategories();
+            } catch (DAORetrievalFailedException e) {
+                throw new RuntimeException(e);          // TODO: handle exception !!
+            }
         for (Category category : categories) {
-            categoryComboBox.addItem(category.getName());
+            categoryComboBox.addItem(category.getLabel());
         }
         
         categoryPanel.add(categoryLabel);
@@ -300,24 +309,22 @@ public class AddProduct extends JPanel {
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    ApplicationController.createProduct(
+                    ProductController.createProduct(
                             nameField.getText(),
                             descriptionField.getText(),
                             priceField.getText(),
                             (Integer)amountSpinner.getValue(),
                             availableRadioButtonYes.isSelected(),
-                            ((String)vatTypeComboBox.getSelectedItem()).charAt(0), // MUST BE CHANGED TO A BETTER WAY OF GETTING THE VAT CHAR
-                            1,                                             // }
-                            //(String)categoryComboBox.getSelectedItem(),  // } FOR TESTING PURPOSES ONLY,
-                            1,                                             // } MUST PROVIDES DIRECT IDs
-                            //brandField.getText(),                        // }
+                            ((String)vatTypeComboBox.getSelectedItem()).charAt(0),
+                            categories.get(categoryComboBox.getSelectedIndex()-1).getId(),
+                            ProductController.getBrandIdByName(brandField.getText()),
                             startDateDayField.getText(),
                             startDateMonthField.getText(),
                             startDateYearField.getText()
                     );
 
                     removeAllField();
-                } catch (FieldIsEmpty | WrongType | ProhibitedValue ex) {
+                } catch (FieldIsEmptyException | WrongTypeException | ProhibitedValueException | InsertionFailedException | DAORetrievalFailedException | NullPointerException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             }
