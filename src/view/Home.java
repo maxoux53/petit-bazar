@@ -1,6 +1,5 @@
 package view;
 
-import Utils.Env;
 import javax.swing.*;
 import java.awt.*;
 
@@ -15,10 +14,10 @@ public class Home extends JPanel {
         setBackground(Color.white);
         
         // Title
-        JLabel text = new JLabel("<html>Gestion du magasin<html>", SwingConstants.CENTER);
-        text.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.BOLD, 50));
-        JLabel storeName = new JLabel(Env.getDotenv().get("STORE_NAME"), SwingConstants.CENTER);
-        storeName.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.BOLD, 50));
+        JLabel text = new JLabel("Gestion du magasin", SwingConstants.CENTER);
+        text.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.BOLD, FontPreferences.TITLE_SIZE.getSize()));
+        JLabel storeName = new JLabel(ViewCore.NAME, SwingConstants.CENTER);
+        storeName.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.BOLD, FontPreferences.TITLE_SIZE.getSize()));
         add(text);
         add(storeName);
         
