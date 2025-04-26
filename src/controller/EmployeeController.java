@@ -1,11 +1,18 @@
 package controller;
 
-import model.*;
+import business.ProductManager;
+import dataAccess.DAORetrievalFailedException;
+import dataAccess.InsertionFailedException;
+import model.Brand;
+import model.Category;
+import model.Product;
+import model.Vat;
+
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class ApplicationController {
+public class EmployeeController {
 
     public static ArrayList<Vat> getVats() { // Will change
         ArrayList<Vat> vats = new ArrayList<>();
@@ -13,10 +20,10 @@ public class ApplicationController {
         vats.add(new Vat('B', 12));
         vats.add(new Vat('C', 6));
         vats.add(new Vat('D', 0));
-        
+
         return vats;
     }
-    
+
     public static ArrayList<Category> getCategories() { // Will change
         ArrayList<Category> categories = new ArrayList<>();
         categories.add(new Category(1, "Électronique"));
@@ -24,10 +31,10 @@ public class ApplicationController {
         categories.add(new Category(3, "Vêtements"));
         categories.add(new Category(4, "Jardinage"));
         categories.add(new Category(5, "Librairie"));
-        
+
         return categories;
     }
-    
+
     public static ArrayList<Brand> getBrands() {
         ArrayList<Brand> brands = new ArrayList<>();
         brands.add(new Brand(1, "Nike"));
@@ -38,7 +45,7 @@ public class ApplicationController {
 
         return brands;
     }
-    
+
     public static Product getProductByBarcode(int barcode) {
         // return méthodes pour récupérer un produit
         Product product = new Product(12345);
@@ -49,11 +56,11 @@ public class ApplicationController {
         product.setCategoryId(2);
         product.setBrandId(2);
         product.setAvailable(true);
-        
+
         return product;
     }
-    
-    public static void createProduct(String name, String description, String priceAsString, Integer amount, Boolean isAvailable, Character vat, Integer categoryId, Integer brandId, String stringDay, String stringMonth, String stringYear) throws FieldIsEmpty, WrongType, ProhibitedValue {
+
+    /*public static void createEmployee(String firstName, String lastName, byte[] password, boolean isActive, String street, int streetNumber, int unitNumber, String roleLabel, LocalDate hireDate, int managerId, int cityZipCode) {
         Double price = null; // why do i have to initialize it to null???
         int day;
         int month;
@@ -65,10 +72,10 @@ public class ApplicationController {
                 price = Double.parseDouble(priceAsString);
 
                 if (price < 0) {
-                    throw new ProhibitedValue(priceAsString);
+                    throw new ProhibitedValueException(priceAsString);
                 }
             } catch (NumberFormatException numberFormatException) {
-                throw new WrongType("Prix");
+                throw new WrongTypeException("Prix");
             }
         }
 
@@ -76,30 +83,30 @@ public class ApplicationController {
         try {
             day = Integer.parseInt(stringDay);
         } catch (NumberFormatException numberFormatException) {
-            throw new WrongType("Jour");
+            throw new WrongTypeException("Jour");
         }
 
         try {
             month = Integer.parseInt(stringMonth);
         } catch (NumberFormatException numberFormatException) {
-            throw new WrongType("Mois");
+            throw new WrongTypeException("Mois");
         }
 
         try {
             year = Integer.parseInt(stringYear);
         } catch (NumberFormatException numberFormatException) {
-            throw new WrongType("Année");
+            throw new WrongTypeException("Année");
         }
 
         LocalDate startDate;
         try {
             startDate = LocalDate.of(year, month, day);
         } catch (DateTimeException e) {
-            throw new ProhibitedValue(day + "/" + month + "/" + year);
+            throw new ProhibitedValueException(day + "/" + month + "/" + year);
         }
 
         // Product creation
-        /*businessMethod (*/new Product(name, description, amount, isAvailable, vat, categoryId, brandId, price, startDate);
-    }
+        ProductManager.add(new Product(name, description, amount, isAvailable, vat, categoryId, brandId, price, startDate));
+    }*/
 
 }
