@@ -46,9 +46,9 @@ public class EmployeeManager {                           // static?
         return digest.digest(password.getBytes());
     }
 
-    public static boolean checkPassword(String passwordAttempt, int id) throws HashFailedException, NotFoundException, DAORetrievalFailedException {
+    public static boolean checkPassword(char[] passwordAttempt, int id) throws HashFailedException, NotFoundException, DAORetrievalFailedException {
         return MessageDigest.isEqual(
-                hashPassword(passwordAttempt),
+                hashPassword(new String(passwordAttempt)),
                 dao.getPasswordHash(id)
         );
     }
