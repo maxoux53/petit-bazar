@@ -8,6 +8,13 @@ public class Category {
         this.id = id;
     }
 
+    // TESTING PURPOSES ONLY ↓↓
+    public Category(Integer id, String label) {
+        this.id = id;
+        this.label = label;
+    }
+    // REMOVE LATER, USELESS ↑↑
+
     public void setLabel(String label) {
         this.label = label;
     }
@@ -15,13 +22,8 @@ public class Category {
     public Integer getId() {
         return id;
     }
-    
-    // Getters
-    public Integer getId() {
-        return id;
-    }
 
-    public String getName() {
-        return name;
+    public String getLabel() {
+        return label;
     }
 }
