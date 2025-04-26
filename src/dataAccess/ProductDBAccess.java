@@ -1,12 +1,10 @@
 package dataAccess;
 
-import model.Brand;
 import model.Category;
 import model.Product;
 import model.Vat;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ProductDBAccess extends DBAccess implements IProductDAO {
@@ -425,7 +423,7 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
         }
     }
 
-    public int brand(String brandName) throws DAORetrievalFailedException {
+    public Integer brand(String brandName) throws DAORetrievalFailedException {
         boolean exists = true;
 
         do {
@@ -454,10 +452,11 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
                 throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
             }
         } while (!exists);
+        return null; // This line should never be reached
     }
 
     public ArrayList<Vat> getAllVatTypes() throws DAORetrievalFailedException {
-        sqlInstruction = "SELECT * FROM vat_type;";
+        sqlInstruction = "SELECT * FROM vat;";
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
