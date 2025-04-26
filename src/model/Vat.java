@@ -8,6 +8,13 @@ public class Vat {
         this.type = type;
     }
 
+    // TESTING PURPOSES ONLY ↓↓
+    public Vat(Character type, Integer rate) {
+        this.type = type;
+        this.rate = rate;
+    }
+    // REMOVE LATER, USELESS ↑↑
+
     public void setRate(Integer rate) {
         this.rate = rate;
     }
