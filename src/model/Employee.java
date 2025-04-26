@@ -21,6 +21,22 @@ public class Employee {
         this.id = id;
     }
 
+    public Employee(String firstName, String lastName, byte[] password, Boolean isActive, String street, Integer streetNumber, Integer unitNumber, String roleLabel, LocalDate hireDate, Integer managerId, Integer cityZipCode, String cityName) {
+        this(null); // useless, tho might be useful in the future (for the sake of point the modification unique)
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.isActive = isActive;
+        this.street = street;
+        this.streetNumber = streetNumber;
+        this.unitNumber = unitNumber;
+        this.roleLabel = roleLabel;
+        this.hireDate = hireDate;
+        this.managerId = managerId;
+        this.cityZipCode = cityZipCode;
+        this.cityName = cityName;
+    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
