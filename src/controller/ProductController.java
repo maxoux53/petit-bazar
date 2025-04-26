@@ -3,6 +3,7 @@ package controller;
 import business.ProductManager;
 import dataAccess.DAORetrievalFailedException;
 import dataAccess.InsertionFailedException;
+import dataAccess.NotFoundException;
 import model.*;
 import java.time.DateTimeException;
 import java.time.LocalDate;
@@ -34,25 +35,13 @@ public class ProductController {
 
         return ProductManager.getAllCategories();
     }
-    
-    public static ArrayList<Brand> getBrands() {
-        ArrayList<Brand> brands = new ArrayList<>();
-        brands.add(new Brand(1, "Nike"));
-        brands.add(new Brand(2, "Boni"));
-        brands.add(new Brand(3, "Moulinex"));
-        brands.add(new Brand(4, "Stihl"));
-        brands.add(new Brand(5, "Spinelle"));
-
-        return brands;
-    }
 
     public static int getBrandIdByName(String name) throws DAORetrievalFailedException {
         return ProductManager.setBrand(name);
     }
     
-    public static Product getProductByBarcode(int barcode) {
-        // return méthodes pour récupérer un produit
-        Product product = new Product(12345);
+    public static Product getProductByBarcode(int barcode) throws DAORetrievalFailedException, NotFoundException {
+        /*Product product = new Product(12345);
         product.setName("Chocolat");
         product.setDescription("C'est du chocolat");
         product.setAmount(3);
@@ -61,14 +50,13 @@ public class ProductController {
         product.setBrandId(2);
         product.setAvailable(true);
         
-        return product;
+        return product;*/
+
+        return ProductManager.getByBarcode(barcode);
     }
     
     public static void createProduct(String name, String description, String priceAsString, Integer amount, Boolean isAvailable, Character vat, Integer categoryId, Integer brandId, String stringDay, String stringMonth, String stringYear) throws FieldIsEmptyException, WrongTypeException, ProhibitedValueException, InsertionFailedException, DAORetrievalFailedException {
         Double price = null; // why do i have to initialize it to null???
-        int day;
-        int month;
-        int year;
 
         // Price
         if (!priceAsString.isEmpty()) {
@@ -84,18 +72,21 @@ public class ProductController {
         }
 
         // Date
+        int day;
         try {
             day = Integer.parseInt(stringDay);
         } catch (NumberFormatException numberFormatException) {
             throw new WrongTypeException("Jour");
         }
 
+        int month;
         try {
             month = Integer.parseInt(stringMonth);
         } catch (NumberFormatException numberFormatException) {
             throw new WrongTypeException("Mois");
         }
 
+        int year;
         try {
             year = Integer.parseInt(stringYear);
         } catch (NumberFormatException numberFormatException) {
