@@ -1,10 +1,8 @@
 package view;
 
-import Utils.Env;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 public class Window extends JFrame {
     // Attributes
@@ -16,19 +14,15 @@ public class Window extends JFrame {
     private AddProduct addProduct;
     private EditProduct editProduct;
 
-    static {
-        applyPlatformSpecificSettings();
-    }
-
     // Constructors
-    public Window() {
-        super(Env.getDotenv().get("STORE_NAME"));
+    public Window(String title) {
+        super(title);
 
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         addWindowListener(new WindowAdapter() {
             public void windowClosing (WindowEvent e) {
-                System.exit(0);
+                ViewCore.quit();
             }
         });
 
@@ -111,15 +105,5 @@ public class Window extends JFrame {
         }
 
         this.currentPanel = currentPanel;
-    }
-
-    private static void applyPlatformSpecificSettings() { // migration to final main
-
-        // Apple macOS
-        if (System.getProperty("os.name").toLowerCase().contains("mac")) {
-            System.setProperty("apple.laf.useScreenMenuBar", "true");
-            System.setProperty("apple.awt.application.name", Env.getDotenv().get("STORE_NAME"));
-            System.setProperty("apple.awt.application.appearance", "system");
-        }
     }
 }
