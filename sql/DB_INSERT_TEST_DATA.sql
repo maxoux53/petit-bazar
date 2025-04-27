@@ -59,40 +59,16 @@ INSERT INTO brand (name) VALUES
 ('Sony'),
 ('Philips');
 
--- Insertion des fournisseurs
-INSERT INTO supplier (vat_number, name, email, phone, country_name) VALUES 
-(123456789, 'ElectroDistri', 'contact@electrodistri.com', 025896325, 'Belgique'),
-(234567890, 'FoodSupply', 'info@foodsupply.be', 027854123, 'Belgique'),
-(345678901, 'Fashion Wholesale', 'sales@fashionwholesale.nl', 031245789, 'Pays-Bas'),
-(456789012, 'Garden Tools Inc.', 'contact@gardentools.de', 049785632, 'Allemagne'),
-(567890123, 'BookMaster', 'info@bookmaster.lu', 035214789, 'Luxembourg');
-
--- Insertion des produits
-INSERT INTO product (barcode, name, description, amount, is_available, vat_type, category_id, brand_id, supplier_vat_number) VALUES 
-(5901234123457, 'Smartphone Galaxy S22', 'Smartphone haut de gamme avec écran AMOLED 6.1"', 25, TRUE, 'A', 1, 1, 123456789),
-(4007817327098, 'Chocolat noir 70%', 'Tablette de chocolat noir pur beurre de cacao', 150, TRUE, 'B', 2, 2, 234567890),
-(2112345678900, 'T-shirt coton bio', 'T-shirt en coton bio, taille L, couleur noire', 75, TRUE, 'A', 3, 3, 345678901),
-(8711495392919, 'Sécateur Gardena', 'Sécateur de jardin ergonomique', 32, TRUE, 'A', 4, 4, 456789012),
-(9782205077940, 'BD Astérix', 'Astérix et la Transitalique', 45, TRUE, 'C', 5, 5, 567890123),
-(7350073733347, 'iPad Pro', 'Tablette tactile 11 pouces', 18, TRUE, 'A', 1, 6, 123456789),
-(4902505854453, 'Casque WH-1000XM5', 'Casque à réduction de bruit', 12, FALSE, 'A', 1, 7, 123456789),
-(8710103954798, 'Machine à café', 'Machine à café automatique', 8, TRUE, 'B', 1, 8, 123456789);
-
--- Insertion de l'historique des prix
-INSERT INTO price_history (excl_vat_price, discount, start_date, product_barcode) VALUES 
-('799.99', 0, '2023-01-01', 5901234123457),
-('899.99', 10, '2023-06-01', 5901234123457),
-('2.49', 0, '2023-01-01', 4007817327098),
-('2.99', 5, '2023-05-15', 4007817327098),
-('19.99', 0, '2023-01-01', 2112345678900),
-('24.99', 0, '2023-04-01', 8711495392919),
-('22.99', 5, '2023-07-01', 8711495392919),
-('12.99', 0, '2023-01-01', 9782205077940),
-('999.99', 0, '2023-01-01', 7350073733347),
-('1099.99', 15, '2023-08-01', 7350073733347),
-('349.99', 0, '2023-01-01', 4902505854453),
-('199.99', 0, '2023-01-01', 8710103954798),
-('229.99', 10, '2023-09-01', 8710103954798);
+-- Insertion des produits (avec excl_vat_price et start_date directement intégrés)
+INSERT INTO product (barcode, name, description, amount, is_available, vat_type, category_id, brand_id, excl_vat_price, start_date) VALUES 
+(5901234123457, 'Smartphone Galaxy S22', 'Smartphone haut de gamme avec écran AMOLED 6.1"', 25, TRUE, 'A', 1, 1, '799.99', '2023-01-01'),
+(4007817327098, 'Chocolat noir 70%', 'Tablette de chocolat noir pur beurre de cacao', 150, TRUE, 'B', 2, 2, '2.49', '2023-01-01'),
+(2112345678900, 'T-shirt coton bio', 'T-shirt en coton bio, taille L, couleur noire', 75, TRUE, 'A', 3, 3, '19.99', '2023-01-01'),
+(8711495392919, 'Sécateur Gardena', 'Sécateur de jardin ergonomique', 32, TRUE, 'A', 4, 4, '24.99', '2023-01-01'),
+(9782205077940, 'BD Astérix', 'Astérix et la Transitalique', 45, TRUE, 'C', 5, 5, '12.99', '2023-01-01'),
+(7350073733347, 'iPad Pro', 'Tablette tactile 11 pouces', 18, TRUE, 'A', 1, 6, '999.99', '2023-01-01'),
+(4902505854453, 'Casque WH-1000XM5', 'Casque à réduction de bruit', 12, FALSE, 'A', 1, 7, '349.99', '2023-01-01'),
+(8710103954798, 'Machine à café', 'Machine à café automatique', 8, TRUE, 'B', 1, 8, '199.99', '2023-01-01');
 
 -- Insertion des clients
 INSERT INTO customer (first_name, last_name, birth_date, email, phone, vat_number, loyalty_points) VALUES 
