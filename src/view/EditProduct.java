@@ -236,13 +236,15 @@ public class EditProduct extends JPanel {
         vatTypeComboBox.setPreferredSize(new Dimension(20, 25));
 
         final ArrayList<Vat> vats;
-            try {
-                vats = ProductController.getVats();
-            } catch (DAORetrievalFailedException e) {
-                throw new RuntimeException(e);
+        try {
+            vats = ProductController.getVats();
+
+            for (Vat vat : vats) {
+                vatTypeComboBox.addItem(vat.getType() + " (" + vat.getRate() + "%)");
             }
-        for (Vat vat : vats) {
-            vatTypeComboBox.addItem(vat.getType() + " (" + vat.getRate() + "%)");
+        } catch (DAORetrievalFailedException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            vatTypeComboBox.addItem("Veuillez reessayer");
         }
         
         vatTypePanel.add(vatTypeLabel);
@@ -261,14 +263,15 @@ public class EditProduct extends JPanel {
         categoryComboBox.setBackground(Color.white);
         categoryComboBox.setPreferredSize(new Dimension(20, 25));
 
-        final ArrayList<Category> categories;
-            try {
-                categories = ProductController.getCategories();
-            } catch (DAORetrievalFailedException e) {
-                throw new RuntimeException(e);
+        final ArrayList<Category> categories = new ArrayList<>();
+        try {
+            categories.addAll(ProductController.getCategories());
+
+            for (Category category : categories) {
+                categoryComboBox.addItem(category.getLabel());
             }
-        for (Category category : categories) {
-            categoryComboBox.addItem(category.getLabel());
+        } catch (DAORetrievalFailedException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         
         categoryPanel.add(categoryLabel);
