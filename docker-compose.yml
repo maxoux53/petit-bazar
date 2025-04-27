@@ -1,6 +1,6 @@
 services:
   db:
-    container_name: project_postgres_db
+    container_name: postgres_db
     image: postgres
     shm_size: 128mb # set shared memory limit
     environment:
