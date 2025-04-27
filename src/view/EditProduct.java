@@ -383,7 +383,7 @@ public class EditProduct extends JPanel {
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    ProductController.createProduct(
+                    ProductController.create(
                             nameField.getText(),
                             descriptionField.getText(),
                             priceField.getText(),
@@ -391,14 +391,14 @@ public class EditProduct extends JPanel {
                             availableRadioButtonYes.isSelected(),
                             ((String)vatTypeComboBox.getSelectedItem()).charAt(0),
                             categories.get(categoryComboBox.getSelectedIndex()-1).getId(),
-                            ProductController.getBrandIdByName(brandField.getText()),
+                            ProductController.getOrCreateBrand(brandField.getText()),
                             startDateDayField.getText(),
                             startDateMonthField.getText(),
                             startDateYearField.getText()
                     );
 
                     removeAllField();
-                } catch (FieldIsEmptyException | WrongTypeException | ProhibitedValueException |
+                } catch (WrongTypeException | ProhibitedValueException |
                          InsertionFailedException | DAORetrievalFailedException | NullPointerException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }

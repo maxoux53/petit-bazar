@@ -163,15 +163,17 @@ public class AddProduct extends JPanel {
         vatTypeComboBox.setPreferredSize(new Dimension(20, 25));
 
         final ArrayList<Vat> vats;
-            try {
-                vats = ProductController.getVats();
-            } catch (DAORetrievalFailedException e) {
-                throw new RuntimeException(e);         // TODO: handle exception !!
+        try {
+            vats = ProductController.getVats();
+
+            for (Vat vat : vats) {
+                vatTypeComboBox.addItem(vat.getType() + " (" + vat.getRate() + "%)");
             }
-        for (Vat vat : vats) {
-            vatTypeComboBox.addItem(vat.getType() + " (" + vat.getRate() + "%)");
+        } catch (DAORetrievalFailedException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            vatTypeComboBox.addItem("Veuillez reessayer");
         }
-        
+
         vatTypePanel.add(vatTypeLabel);
         vatTypePanel.add(vatTypeComboBox);
         
@@ -188,16 +190,17 @@ public class AddProduct extends JPanel {
         categoryComboBox.setBackground(Color.white);
         categoryComboBox.setPreferredSize(new Dimension(20, 25));
 
-        final ArrayList<Category> categories;
-            try {
-                categories = ProductController.getCategories();
-            } catch (DAORetrievalFailedException e) {
-                throw new RuntimeException(e);          // TODO: handle exception !!
+        final ArrayList<Category> categories = new ArrayList<>();
+        try {
+            categories.addAll(ProductController.getCategories());
+
+            for (Category category : categories) {
+                categoryComboBox.addItem(category.getLabel());
             }
-        for (Category category : categories) {
-            categoryComboBox.addItem(category.getLabel());
+        } catch (DAORetrievalFailedException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
-        
+
         categoryPanel.add(categoryLabel);
         categoryPanel.add(categoryComboBox);
 
@@ -309,7 +312,7 @@ public class AddProduct extends JPanel {
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    ProductController.createProduct(
+                    ProductController.create(
                             nameField.getText(),
                             descriptionField.getText(),
                             priceField.getText(),
@@ -317,14 +320,14 @@ public class AddProduct extends JPanel {
                             availableRadioButtonYes.isSelected(),
                             ((String)vatTypeComboBox.getSelectedItem()).charAt(0),
                             categories.get(categoryComboBox.getSelectedIndex()-1).getId(),
-                            ProductController.getBrandIdByName(brandField.getText()),
+                            ProductController.getOrCreateBrand(brandField.getText()),
                             startDateDayField.getText(),
                             startDateMonthField.getText(),
                             startDateYearField.getText()
                     );
 
                     removeAllField();
-                } catch (FieldIsEmptyException | WrongTypeException | ProhibitedValueException | InsertionFailedException | DAORetrievalFailedException | NullPointerException ex) {
+                } catch (WrongTypeException | ProhibitedValueException | InsertionFailedException | DAORetrievalFailedException | NullPointerException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             }
