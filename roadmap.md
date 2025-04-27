@@ -30,7 +30,7 @@
 
 ## Fonctionnalités métier
 
-- [ ] **Gérer le stock**
+- [ ] **Gestion (CRUD)**
   - [ ] Page de login
   - [ ] Partie dédiée au directeur
     - [ ] Créer d'un employé
@@ -42,15 +42,10 @@
     - [ ] Rechercher un article
       - [ ] Supprimer un article
       - [ ] Modifier un article
-      - [ ] Mdifier le prix (interaction avec la table `price_history`)
+      - [ ] Modifier le prix
     - [ ] Rechercher à partir de certains attributs (ex: nom, prix, etc)
     - [ ] Tri
     - [ ] Afficher les articles épuisés
-- [ ] **Gérer les clients et les achats**
-  - [ ] Créer un achat
-    - [ ] Gérer les quantités
-    - [ ] Modifier un achat (sur base du numéro unique d'achat)
-    - [ ] Supprimer un achat (sur base du numéro unique d'achat)
-    - [ ] Créer une carte de fidélité
-    - [ ] Modifier une carte de fidélité (sur base du numéro unique de la carte)
-    - [ ] Supprimer une carte de fidélité (sur base du numéro unique de la carte)
+- [ ] **Stats et fonctionnalités métier**
+  - [ ] Achats
+  - [ ] Clients
