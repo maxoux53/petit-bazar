@@ -3,10 +3,12 @@ package business;
 import dataAccess.*;
 import model.City;
 import model.Employee;
+import model.IEmployeeInfoWrapper;
+
 import java.security.MessageDigest;
 import java.util.ArrayList;
 
-public class EmployeeManager {                           // static?
+public class EmployeeManager {
     private static IEmployeeDAO dao;
     private static MessageDigest digest;
 
@@ -14,24 +16,24 @@ public class EmployeeManager {                           // static?
         dao = new EmployeeDBAccess();
     }
 
-    public static void add(Employee employee, City city) throws InsertionFailedException, DAORetrievalFailedException {
-        dao.create(employee, city);
+    public static int add(Employee employee, City city) throws InsertionFailedException, DAORetrievalFailedException {
+        return dao.create(employee, city);
     }
 
     public static void remove(int id) throws DeleteFailedException, DAORetrievalFailedException {
-        dao.deleteById(id);                                          // todo: handle returned int
+        dao.deleteById(id);
     }
 
-    public static Employee getById(int id) throws NotFoundException, DAORetrievalFailedException {
+    public static IEmployeeInfoWrapper[] getById(int id) throws NotFoundException, DAORetrievalFailedException {
         return dao.findById(id);
     }
 
-    public static ArrayList<Employee> getAll() throws DAORetrievalFailedException {
+    public static ArrayList<IEmployeeInfoWrapper[]> getAll() throws DAORetrievalFailedException {
         return dao.findAll();
     }
 
-    public static void update(Employee employee, City city) throws UpdateFailedException, DAORetrievalFailedException {
-        dao.edit(employee, city);
+    public static int update(Employee employee, City city) throws UpdateFailedException, DAORetrievalFailedException {
+        return dao.edit(employee, city);
     }
 
     public static byte[] hashPassword(String password) throws HashFailedException {

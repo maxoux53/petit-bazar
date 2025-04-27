@@ -2,6 +2,8 @@ package dataAccess;
 
 import model.City;
 import model.Employee;
+import model.IEmployeeInfoWrapper;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -29,7 +31,7 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
             preparedStatement.setDate(9, Date.valueOf(employee.getHireDate()));
             preparedStatement.setInt(10, employee.getManagerId());
 
-            city(city);
+            setCity(city);
 
             preparedStatement.setInt(11, employee.getCityZipCode());
             preparedStatement.setString(12, employee.getCityName());
@@ -116,7 +118,7 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
             preparedStatement.setDate(9, Date.valueOf(employee.getHireDate()));
             preparedStatement.setInt(10, employee.getManagerId());
 
-            city(city);
+            setCity(city);
 
             preparedStatement.setInt(11, employee.getCityZipCode());
             preparedStatement.setString(12, employee.getCityName());
@@ -136,7 +138,7 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
         }
     }
 
-    public Employee findById(int id) throws NotFoundException, DAORetrievalFailedException {
+    public IEmployeeInfoWrapper[] findById(int id) throws NotFoundException, DAORetrievalFailedException {
         sqlInstruction = "SElECT * FROM employee WHERE id = ?;";
 
         try {
@@ -159,6 +161,7 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
                 int cityZipCode;
                 String cityName;
 
+                IEmployeeInfoWrapper[] employeeInfo = new IEmployeeInfoWrapper[2]; // todo: rename
                 Employee employee = new Employee(data.getInt("id"));
 
                 firstName = data.getString("first_name");
@@ -221,9 +224,12 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
                     employee.setCityName(cityName);
                 }
 
-                return employee;
+                employeeInfo[0] = employee;
+                employeeInfo[1] = getCity(cityZipCode, cityName);
+
+                return employeeInfo;
             } else {
-                throw new NotFoundException(objectClassName, id, DBRetrievalFailure.NO_ROW.toString()); // EXCEPTION MESSAGE
+                throw new NotFoundException(objectClassName, id, DBRetrievalFailure.NO_ROW.toString());
             }
         } catch (SQLTimeoutException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
@@ -232,7 +238,7 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
         }
     }
 
-    public ArrayList<Employee> findAll() throws DAORetrievalFailedException {
+    public ArrayList<IEmployeeInfoWrapper[]> findAll() throws DAORetrievalFailedException {
         sqlInstruction = "SElECT * FROM employee;";
 
         try {
@@ -240,7 +246,7 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
 
             data = preparedStatement.executeQuery(); // add try-catch if notfoundexception changes
 
-            ArrayList<Employee> employees = new ArrayList<>();
+            ArrayList<IEmployeeInfoWrapper[]> employeesInfo = new ArrayList<>();
             Employee employee;
             String firstName;
             String lastName;
@@ -318,10 +324,13 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
                     employee.setCityName(cityName);
                 }
 
-                employees.add(employee);
+                employeesInfo.add(new IEmployeeInfoWrapper[]{ // must contain 2 ELEMENTS ONLY
+                        employee,
+                        getCity(cityZipCode, cityName)
+                });
             }
 
-            return employees;
+            return employeesInfo;
         } catch (SQLTimeoutException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
         } catch (SQLException e) {
@@ -350,9 +359,9 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
         }
     }
 
-    private void city(City city) throws DAORetrievalFailedException {
+    private void setCity(City city) throws DAORetrievalFailedException {
         String cityName = city.getName();
-        int cityZipCode = city.getZipCode();
+        Integer cityZipCode = city.getZipCode();
         
         sqlInstruction = "SELECT * FROM city WHERE name = ? AND zip_code = ?;";
 
@@ -363,7 +372,7 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
 
             data = preparedStatement.executeQuery();
 
-            if (data.next()) {
+            if (!data.next()) {
                 sqlInstruction = "INSERT INTO city VALUES(?, ?, ?);";
 
                 preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
@@ -373,6 +382,28 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
                 preparedStatement.executeUpdate();
             }
             
+        } catch (SQLTimeoutException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+        }
+    }
+
+    private City getCity(int zipCode, String name) throws DAORetrievalFailedException {
+        sqlInstruction = "SELECT * FROM city WHERE zip_code = ? AND name = ?;";
+
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, zipCode);
+            preparedStatement.setString(2, name);
+
+            data = preparedStatement.executeQuery();
+
+            if (data.next()) {
+                return new City(zipCode, name, data.getString("country"));
+            } else {
+                throw new DAORetrievalFailedException(DBRetrievalFailure.NO_ROW.toString());
+            }
         } catch (SQLTimeoutException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
         } catch (SQLException e) {
