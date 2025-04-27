@@ -386,14 +386,14 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
 
             ArrayList<Category> categories = new ArrayList<>();
             Category category;
-            String label;
+            String name;
 
             while (data.next()) {
-                category = new Category(data.getInt("category_id"));
+                category = new Category(data.getInt("id"));
 
-                label = data.getString("label");
+                name = data.getString("name");
                 if (!data.wasNull()) {
-                    category.setLabel(label);
+                    category.setLabel(name);
                 }
 
                 categories.add(category);
