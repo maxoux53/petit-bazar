@@ -8,19 +8,19 @@ import model.Vat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class ProductManager {                           // static?
+public class ProductManager {
     private static IProductDAO productDataAccess;
 
     static {
         productDataAccess = new ProductDBAccess();
     }
 
-    public static void add(Product product) throws InsertionFailedException, DAORetrievalFailedException {
-        productDataAccess.create(product);
+    public static int add(Product product) throws InsertionFailedException, DAORetrievalFailedException {
+        return productDataAccess.create(product);
     }
 
     public static void remove(int barcode) throws DeleteFailedException, DAORetrievalFailedException {
-        productDataAccess.deleteByBarcode(barcode);                                          // todo: handle returned int
+        productDataAccess.deleteByBarcode(barcode);
     }
 
     public static Product getByBarcode(int barcode) throws NotFoundException, DAORetrievalFailedException {
@@ -31,8 +31,8 @@ public class ProductManager {                           // static?
         return productDataAccess.findAll();
     }
 
-    public static void update(Product product) throws DAORetrievalFailedException, UpdateFailedException {
-        productDataAccess.edit(product);
+    public static int update(Product product) throws DAORetrievalFailedException, UpdateFailedException {
+        return productDataAccess.edit(product);
     }
 
     public static int getCurrentStock(int barcode) throws NotFoundException, DAORetrievalFailedException {

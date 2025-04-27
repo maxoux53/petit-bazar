@@ -1,10 +1,9 @@
 package model;
 
-public class City {
+public class City implements IEmployeeInfoWrapper {
     private Integer zipCode;
     private String name;
     private String country;
-
 
     public City(Integer zipCode) {
         this.zipCode = zipCode;

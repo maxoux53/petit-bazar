@@ -23,7 +23,7 @@ public class ProductController {
         return ProductManager.getAllVats();
     }
     
-    public static ArrayList<Category> getCategories() throws DAORetrievalFailedException { // Will change
+    public static ArrayList<Category> getCategories() throws DAORetrievalFailedException {
         /*ArrayList<Category> categories = new ArrayList<>();
         categories.add(new Category(1, "Électronique"));
         categories.add(new Category(2, "Alimentation"));

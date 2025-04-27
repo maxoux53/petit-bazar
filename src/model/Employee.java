@@ -2,7 +2,7 @@ package model;
 
 import java.time.LocalDate;
 
-public class Employee {
+public class Employee implements IEmployeeInfoWrapper {
     private Integer id;
     private String firstName;
     private String lastName;
@@ -21,8 +21,8 @@ public class Employee {
         this.id = id;
     }
 
-    public Employee(String firstName, String lastName, byte[] password, Boolean isActive, String street, Integer streetNumber, Integer unitNumber, String roleLabel, LocalDate hireDate, Integer managerId, Integer cityZipCode, String cityName) {
-        this(null); // useless, tho might be useful in the future (for the sake of point the modification unique)
+    public Employee(Integer id, String firstName, String lastName, byte[] password, Boolean isActive, String street, Integer streetNumber, Integer unitNumber, String roleLabel, LocalDate hireDate, Integer managerId, Integer cityZipCode, String cityName) {
+        this(id);
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
@@ -35,6 +35,10 @@ public class Employee {
         this.managerId = managerId;
         this.cityZipCode = cityZipCode;
         this.cityName = cityName;
+    }
+
+    public Employee(String firstName, String lastName, byte[] password, Boolean isActive, String street, Integer streetNumber, Integer unitNumber, String roleLabel, LocalDate hireDate, Integer managerId, Integer cityZipCode, String cityName) {
+        this(null, firstName, lastName, password, isActive, street, streetNumber, unitNumber, roleLabel, hireDate, managerId, cityZipCode, cityName);
     }
 
     public void setFirstName(String firstName) {
