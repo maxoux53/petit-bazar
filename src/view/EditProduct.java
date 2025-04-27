@@ -50,6 +50,7 @@ import java.util.ArrayList;
 
 public class EditProduct extends JPanel {
     // Attributes
+    /*
     private JPanel titlePanel;
     private JLabel titleLabel;
     private JPanel formPanel;
@@ -95,6 +96,17 @@ public class EditProduct extends JPanel {
     private JRadioButton availableRadioButtonNo;
     private JPanel buttonPanel;
     private JButton addButton;
+    */
+
+    private JPanel titlePanel, formPanel, barcodePanel, namePanel, descriptionPanel, pricePanel, amountPanel, vatTypePanel, categoryPanel, brandPanel, startDatePanel, startDateLabelSubPanel, startDateFieldsSubPanel, availablePanel, AvailablelabelSubPanel, AvailableRadioButtonSubPanel, buttonPanel;
+    private JLabel titleLabel, barcodeLabel, nameLabel, descriptionLabel, priceLabel, amountLabel, vatTypeLabel, categoryLabel, brandLabel, startDateLabel, availableLabel;
+    private JTextField barcodeField, nameField, descriptionField, priceField, brandField, startDateDayField, startDateMonthField, startDateYearField;
+    private JButton barcodeButton, addButton;
+    private boolean fieldsIsVisible;
+    private JSpinner amountSpinner;
+    private JComboBox<String> vatTypeComboBox, categoryComboBox;
+    private ButtonGroup availabilityGroup;
+    private JRadioButton availableRadioButtonYes, availableRadioButtonNo;
     
     // Constructors
     public EditProduct() {
@@ -107,7 +119,7 @@ public class EditProduct extends JPanel {
         titlePanel.setBackground(Color.white);
         
         titleLabel = new JLabel("Modifier un article");
-        titleLabel.setFont(new Font("SansSerif", Font.BOLD, 60));
+        titleLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.BOLD, 60));
 
         titlePanel.add(titleLabel);
 
@@ -121,16 +133,15 @@ public class EditProduct extends JPanel {
         barcodePanel.setBackground(Color.white);
         
         barcodeLabel = new JLabel("Code-barres", SwingConstants.RIGHT);
-        barcodeLabel.setFont(new Font("SansSerif", Font.PLAIN, 25));
+        barcodeLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.MID_SIZE.getSize()));
         
         barcodeField = new JTextField();
-        barcodeField.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        barcodeField.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.NORMAL_SIZE.getSize()));
         barcodeField.setBackground(Color.white);
         barcodeField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-        barcodeField.setPreferredSize(new Dimension(20, 25));
         
         barcodeButton = new JButton("Charger");
-        barcodeButton.setFont(new Font("SansSerif", Font.BOLD, 25));
+        barcodeButton.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.BOLD, FontPreferences.MID_SIZE.getSize()));
         barcodeButton.setBackground(Color.white);
         barcodeButton.setFocusPainted(false);
         
@@ -163,13 +174,12 @@ public class EditProduct extends JPanel {
         namePanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0 ,0));
         
         nameLabel = new JLabel("Nom", SwingConstants.RIGHT);
-        nameLabel.setFont(new Font("SansSerif", Font.PLAIN, 25));
+        nameLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.MID_SIZE.getSize()));
 
         nameField = new JTextField();
-        nameField.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        nameField.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.NORMAL_SIZE.getSize()));
         nameField.setBackground(Color.white);
         nameField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-        nameField.setPreferredSize(new Dimension(20, 25));
         
         namePanel.add(nameLabel);
         namePanel.add(nameField);
@@ -180,10 +190,10 @@ public class EditProduct extends JPanel {
         descriptionPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0 ,0));
         
         descriptionLabel = new JLabel("Description", SwingConstants.RIGHT);
-        descriptionLabel.setFont(new Font("SansSerif", Font.PLAIN, 25));
+        descriptionLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.MID_SIZE.getSize()));
 
         descriptionField = new JTextField();
-        descriptionField.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        descriptionField.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.NORMAL_SIZE.getSize()));
         descriptionField.setBackground(Color.white);
         descriptionField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
 
@@ -196,13 +206,12 @@ public class EditProduct extends JPanel {
         pricePanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0 ,0));
         
         priceLabel = new JLabel("Prix", SwingConstants.RIGHT);
-        priceLabel.setFont(new Font("SansSerif", Font.PLAIN, 25));
+        priceLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.MID_SIZE.getSize()));
 
         priceField = new JTextField();
-        priceField.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        priceField.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.NORMAL_SIZE.getSize()));
         priceField.setBackground(Color.white);
         priceField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-        priceField.setPreferredSize(new Dimension(20, 50));
         
         pricePanel.add(priceLabel);
         pricePanel.add(priceField);
@@ -213,10 +222,10 @@ public class EditProduct extends JPanel {
         amountPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0 ,0));
         
         amountLabel = new JLabel("Quantité", SwingConstants.RIGHT);
-        amountLabel.setFont(new Font("SansSerif", Font.PLAIN, 25));
+        amountLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.MID_SIZE.getSize()));
 
         amountSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
-        amountSpinner.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        amountSpinner.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.NORMAL_SIZE.getSize()));
         amountSpinner.setBackground(Color.white);
         
         amountPanel.add(amountLabel);
@@ -228,12 +237,11 @@ public class EditProduct extends JPanel {
         vatTypePanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0 ,0));
         
         vatTypeLabel = new JLabel("Type de TVA", SwingConstants.RIGHT);
-        vatTypeLabel.setFont(new Font("SansSerif", Font.PLAIN, 25));
+        vatTypeLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.MID_SIZE.getSize()));
         
         vatTypeComboBox = new JComboBox<String>();
-        vatTypeComboBox.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        vatTypeComboBox.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.NORMAL_SIZE.getSize()));
         vatTypeComboBox.setBackground(Color.white);
-        vatTypeComboBox.setPreferredSize(new Dimension(20, 25));
 
         final ArrayList<Vat> vats;
         try {
@@ -256,12 +264,11 @@ public class EditProduct extends JPanel {
         categoryPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0 ,0));
         
         categoryLabel = new JLabel("Catégorie", SwingConstants.RIGHT);
-        categoryLabel.setFont(new Font("SansSerif", Font.PLAIN, 25));
+        categoryLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.MID_SIZE.getSize()));
 
         categoryComboBox = new JComboBox<String>();
-        categoryComboBox.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        categoryComboBox.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.NORMAL_SIZE.getSize()));
         categoryComboBox.setBackground(Color.white);
-        categoryComboBox.setPreferredSize(new Dimension(20, 25));
 
         final ArrayList<Category> categories = new ArrayList<>();
         try {
@@ -283,13 +290,12 @@ public class EditProduct extends JPanel {
         brandPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0 ,0));
         
         brandLabel = new JLabel("Marque", SwingConstants.RIGHT);
-        brandLabel.setFont(new Font("SansSerif", Font.PLAIN, 25));
+        brandLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.MID_SIZE.getSize()));
 
         brandField = new JTextField();
-        brandField.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        brandField.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.NORMAL_SIZE.getSize()));
         brandField.setBackground(Color.white);
         brandField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-        brandField.setPreferredSize(new Dimension(20, 25));
         
         brandPanel.add(brandLabel);
         brandPanel.add(brandField);
@@ -304,10 +310,10 @@ public class EditProduct extends JPanel {
         startDateFieldsSubPanel.setBackground(Color.white);
         
         startDateLabel = new JLabel("Date de mise en rayon", SwingConstants.RIGHT);
-        startDateLabel.setFont(new Font("SansSerif", Font.PLAIN, 25));
+        startDateLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.MID_SIZE.getSize()));
         
         startDateDayField = new JTextField();
-        startDateDayField.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        startDateDayField.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.NORMAL_SIZE.getSize()));
         startDateDayField.setBackground(Color.white);
         startDateDayField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         startDateDayField.setText("Jour");
@@ -316,7 +322,7 @@ public class EditProduct extends JPanel {
         backgroundText(startDateDayField, "Jour");
         
         startDateMonthField = new JTextField();
-        startDateMonthField.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        startDateMonthField.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.NORMAL_SIZE.getSize()));
         startDateMonthField.setBackground(Color.white);
         startDateMonthField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         startDateMonthField.setText("Mois");
@@ -325,7 +331,7 @@ public class EditProduct extends JPanel {
         backgroundText(startDateMonthField, "Mois");
 
         startDateYearField = new JTextField();
-        startDateYearField.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        startDateYearField.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.NORMAL_SIZE.getSize()));
         startDateYearField.setBackground(Color.white);
         startDateYearField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         startDateYearField.setText("Année");
@@ -353,13 +359,13 @@ public class EditProduct extends JPanel {
         AvailableRadioButtonSubPanel.setBackground(Color.white);
         
         availableLabel = new JLabel("Disponible", SwingConstants.RIGHT);
-        availableLabel.setFont(new Font("SansSerif", Font.PLAIN, 25));
+        availableLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.MID_SIZE.getSize()));
 
         availableRadioButtonYes = new JRadioButton("oui");
-        availableRadioButtonYes.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        availableRadioButtonYes.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.NORMAL_SIZE.getSize()));
         availableRadioButtonYes.setSelected(true);
         availableRadioButtonNo = new JRadioButton("non");
-        availableRadioButtonNo.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        availableRadioButtonNo.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.NORMAL_SIZE.getSize()));
 
         availabilityGroup = new ButtonGroup();
         availabilityGroup.add(availableRadioButtonYes);
@@ -378,7 +384,7 @@ public class EditProduct extends JPanel {
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 500, 0, 500));
         
         addButton = new JButton("Modifier");
-        addButton.setFont(new Font("SansSerif", Font.BOLD, 25));
+        addButton.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.BOLD, FontPreferences.MID_SIZE.getSize()));
         addButton.setBackground(Color.white);
         addButton.setFocusPainted(false);
         addButton.setEnabled(false);
@@ -401,8 +407,7 @@ public class EditProduct extends JPanel {
                     );
 
                     removeAllField();
-                } catch (WrongTypeException | ProhibitedValueException |
-                         InsertionFailedException | DAORetrievalFailedException | NullPointerException ex) {
+                } catch (WrongTypeException | ProhibitedValueException | InsertionFailedException | DAORetrievalFailedException | NullPointerException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             }
