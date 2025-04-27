@@ -41,7 +41,7 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
         }
     }
 
-    public void deleteByBarcode(int barcode) throws DeleteFailedException, DAORetrievalFailedException {
+    public int delete(int barcode) throws DeleteFailedException, DAORetrievalFailedException {
         sqlInstruction = "DELETE FROM product WHERE barcode = ?;";
 
         nullifyProductReferencesFromOrderLine(barcode);
@@ -51,7 +51,7 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
             preparedStatement.setInt(1, barcode);
 
             try {
-                preparedStatement.executeUpdate();
+                return preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 throw new DeleteFailedException(objectClassName, barcode, e.getMessage());
             }
@@ -76,7 +76,7 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
         }
     }
 
-    public int edit(Product product) throws UpdateFailedException, DAORetrievalFailedException {
+    public int update(Product product) throws UpdateFailedException, DAORetrievalFailedException {
         sqlInstruction = "UPDATE product SET name = ?, description = ?, amount = ?, is_available = ?, vat_type = ?, category_id = ?, brand_id = ?, excl_vat_price = ?, start_date = ? WHERE barcode = ?;";
         int barcode = product.getBarcode();
 
@@ -345,6 +345,98 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
         }
     }
 
+    public Integer findOrCreateBrand(String brandName) throws DAORetrievalFailedException {
+        boolean exists = true;
+
+        do {
+            sqlInstruction = "SELECT id FROM brand WHERE name = ?;";
+
+            try {
+                preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+                preparedStatement.setString(1, brandName);
+                data = preparedStatement.executeQuery();
+
+                exists = data.next();
+
+                if (exists) {
+                    return data.getInt("id");
+                } else {
+                    sqlInstruction = "INSERT INTO brand (name) VALUES (?);";
+
+                    preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+                    preparedStatement.setString(1, brandName);
+                    preparedStatement.executeUpdate();
+                    data = preparedStatement.getGeneratedKeys();
+                }
+            } catch (SQLTimeoutException e) {
+                throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+            } catch (SQLException e) {
+                throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+            }
+        } while (!exists);
+        return null; // This line should never be reached
+    }
+
+    public ArrayList<Category> getAllCategories() throws DAORetrievalFailedException {
+        sqlInstruction = "SELECT * FROM category;";
+
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            data = preparedStatement.executeQuery();
+
+            ArrayList<Category> categories = new ArrayList<>();
+            Category category;
+            String label;
+
+            while (data.next()) {
+                category = new Category(data.getInt("category_id"));
+
+                label = data.getString("label");
+                if (!data.wasNull()) {
+                    category.setLabel(label);
+                }
+
+                categories.add(category);
+            }
+
+            return categories;
+        } catch (SQLTimeoutException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+        }
+    }
+
+    public ArrayList<Vat> getAllVatTypes() throws DAORetrievalFailedException {
+        sqlInstruction = "SELECT * FROM vat;";
+
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            data = preparedStatement.executeQuery();
+
+            ArrayList<Vat> vatTypes = new ArrayList<>();
+            Vat vatType;
+            int rate;
+
+            while (data.next()) {
+                vatType = new Vat(data.getString("type").charAt(0));
+
+                rate = data.getInt("rate");
+                if (!data.wasNull()) {
+                    vatType.setRate(rate);
+                }
+
+                vatTypes.add(vatType);
+            }
+
+            return vatTypes;
+        } catch (SQLTimeoutException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+        }
+    }
+
     public int currentStock(int barcode) throws NotFoundException, DAORetrievalFailedException {
         sqlInstruction = "SELECT amount FROM product WHERE barcode = ?;";
 
@@ -386,98 +478,6 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
             }
 
             return products;
-        } catch (SQLTimeoutException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
-        } catch (SQLException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
-        }
-    }
-
-    public ArrayList<Category> getAllCategories() throws DAORetrievalFailedException {
-        sqlInstruction = "SELECT * FROM category;";
-
-        try {
-            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-            data = preparedStatement.executeQuery();
-
-            ArrayList<Category> categories = new ArrayList<>();
-            Category category;
-            String label;
-
-            while (data.next()) {
-                category = new Category(data.getInt("category_id"));
-
-                label = data.getString("label");
-                if (!data.wasNull()) {
-                    category.setLabel(label);
-                }
-
-                categories.add(category);
-            }
-
-            return categories;
-        } catch (SQLTimeoutException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
-        } catch (SQLException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
-        }
-    }
-
-    public Integer brand(String brandName) throws DAORetrievalFailedException {
-        boolean exists = true;
-
-        do {
-            sqlInstruction = "SELECT id FROM brand WHERE name = ?;";
-
-            try {
-                preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-                preparedStatement.setString(1, brandName);
-                data = preparedStatement.executeQuery();
-
-                exists = data.next();
-
-                if (exists) {
-                    return data.getInt("id");
-                } else {
-                    sqlInstruction = "INSERT INTO brand (name) VALUES (?);";
-
-                    preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-                    preparedStatement.setString(1, brandName);
-                    preparedStatement.executeUpdate();
-                    data = preparedStatement.getGeneratedKeys();
-                }
-            } catch (SQLTimeoutException e) {
-                throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
-            } catch (SQLException e) {
-                throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
-            }
-        } while (!exists);
-        return null; // This line should never be reached
-    }
-
-    public ArrayList<Vat> getAllVatTypes() throws DAORetrievalFailedException {
-        sqlInstruction = "SELECT * FROM vat;";
-
-        try {
-            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-            data = preparedStatement.executeQuery();
-
-            ArrayList<Vat> vatTypes = new ArrayList<>();
-            Vat vatType;
-            int rate;
-
-            while (data.next()) {
-                vatType = new Vat(data.getString("type").charAt(0));
-
-                rate = data.getInt("rate");
-                if (!data.wasNull()) {
-                    vatType.setRate(rate);
-                }
-
-                vatTypes.add(vatType);
-            }
-
-            return vatTypes;
         } catch (SQLTimeoutException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
         } catch (SQLException e) {

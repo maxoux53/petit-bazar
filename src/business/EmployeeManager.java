@@ -16,12 +16,16 @@ public class EmployeeManager {
         dao = new EmployeeDBAccess();
     }
 
-    public static int add(Employee employee, City city) throws InsertionFailedException, DAORetrievalFailedException {
+    public static int create(Employee employee, City city) throws InsertionFailedException, DAORetrievalFailedException {
         return dao.create(employee, city);
     }
 
-    public static void remove(int id) throws DeleteFailedException, DAORetrievalFailedException {
-        dao.deleteById(id);
+    public static int remove(int id) throws DeleteFailedException, DAORetrievalFailedException {
+        return dao.delete(id);
+    }
+
+    public static int edit(Employee employee, City city) throws UpdateFailedException, DAORetrievalFailedException {
+        return dao.update(employee, city);
     }
 
     public static IEmployeeInfoWrapper[] getById(int id) throws NotFoundException, DAORetrievalFailedException {
@@ -30,10 +34,6 @@ public class EmployeeManager {
 
     public static ArrayList<IEmployeeInfoWrapper[]> getAll() throws DAORetrievalFailedException {
         return dao.findAll();
-    }
-
-    public static int update(Employee employee, City city) throws UpdateFailedException, DAORetrievalFailedException {
-        return dao.edit(employee, city);
     }
 
     public static byte[] hashPassword(String password) throws HashFailedException {
@@ -55,11 +55,11 @@ public class EmployeeManager {
         );
     }
 
-    public static ArrayList<String> getAllRoles() throws DAORetrievalFailedException {
-        return dao.getAllRoles();
-    }
-
     public static ArrayList<String> getAllCountries() throws DAORetrievalFailedException {
         return dao.getAllCountries();
+    }
+
+    public static ArrayList<String> getAllRoles() throws DAORetrievalFailedException {
+        return dao.getAllRoles();
     }
 }

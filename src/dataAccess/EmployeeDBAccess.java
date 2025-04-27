@@ -49,7 +49,7 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
         }
     }
 
-    public void deleteById(int id) throws DeleteFailedException, DAORetrievalFailedException {
+    public int delete(int id) throws DeleteFailedException, DAORetrievalFailedException {
         nullifyEmployeeReferencesFromPurchases(id);
         nullifyEmployeeReferencedAsManager(id);
 
@@ -60,7 +60,7 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
             preparedStatement.setInt(1, id);
 
             try {
-                preparedStatement.executeQuery();
+                return preparedStatement.executeUpdate();
             } catch (SQLTimeoutException e) {
                 throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
             } catch (SQLException e) {
@@ -100,7 +100,7 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
         }
     }
 
-    public int edit(Employee employee, City city) throws UpdateFailedException, DAORetrievalFailedException {
+    public int update(Employee employee, City city) throws UpdateFailedException, DAORetrievalFailedException {
         sqlInstruction = "UPDATE employee SET first_name = ?, last_name = ?, password = ?, is_active = ?, street = ?, street_number = ?, unit_number = ?, role_label = ?, hire_date = ?, manager_id = ?, city_zip_code = ?, city_name = ? WHERE id = ?;";
         int id = employee.getId();
 

@@ -5,7 +5,6 @@ import model.Category;
 import model.Product;
 import model.Vat;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ProductManager {
@@ -19,32 +18,28 @@ public class ProductManager {
         return productDataAccess.create(product);
     }
 
-    public static void remove(int barcode) throws DeleteFailedException, DAORetrievalFailedException {
-        productDataAccess.deleteByBarcode(barcode);
+    public static int remove(int barcode) throws DeleteFailedException, DAORetrievalFailedException {
+        return productDataAccess.delete(barcode);
+    }
+
+    public static int edit(Product product) throws DAORetrievalFailedException, UpdateFailedException {
+        return productDataAccess.update(product);
     }
 
     public static Product getByBarcode(int barcode) throws NotFoundException, DAORetrievalFailedException {
         return productDataAccess.findByBarcode(barcode);
     }
 
+    public static ArrayList<Product> searchByName(String name) throws NotFoundException, DAORetrievalFailedException {
+        return productDataAccess.findByName(name);
+    }
+
     public static ArrayList<Product> getAll() throws DAORetrievalFailedException {
         return productDataAccess.findAll();
     }
 
-    public static int update(Product product) throws DAORetrievalFailedException, UpdateFailedException {
-        return productDataAccess.edit(product);
-    }
-
-    public static int getCurrentStock(int barcode) throws NotFoundException, DAORetrievalFailedException {
-        return productDataAccess.currentStock(barcode);
-    }
-
-    public static ArrayList<Integer> getOutOfStock() throws NotFoundException, DAORetrievalFailedException {
-        return productDataAccess.outOfStock();
-    }
-
-    public static ArrayList<Product> searchByName(String name) throws NotFoundException, DAORetrievalFailedException {
-        return productDataAccess.findByName(name);
+    public static int getOrCreateBrand(String name) throws DAORetrievalFailedException {
+        return productDataAccess.findOrCreateBrand(name);
     }
 
     public static ArrayList<Category> getAllCategories() throws DAORetrievalFailedException {
@@ -55,7 +50,11 @@ public class ProductManager {
         return productDataAccess.getAllVatTypes();
     }
 
-    public static int setBrand(String name) throws DAORetrievalFailedException {
-        return productDataAccess.brand(name);
+    public static int getCurrentStock(int barcode) throws NotFoundException, DAORetrievalFailedException {
+        return productDataAccess.currentStock(barcode);
+    }
+
+    public static ArrayList<Integer> getOutOfStock() throws NotFoundException, DAORetrievalFailedException {
+        return productDataAccess.outOfStock();
     }
 }

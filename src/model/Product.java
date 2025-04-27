@@ -18,8 +18,8 @@ public class Product {
         this.barcode = barcode;
     }
 
-    public Product(String name, String description, Integer amount, Boolean isAvailable, Character vatType, Integer categoryId, Integer brandId, Double exclVatPrice, LocalDate startDate) {
-        this(null); // useless, tho might be useful in the future (for the sake of point the modification unique)
+    public Product(Integer barcode, String name, String description, Integer amount, Boolean isAvailable, Character vatType, Integer categoryId, Integer brandId, Double exclVatPrice, LocalDate startDate) {
+        this(barcode);
         this.name = name;
         this.description = description;
         this.amount = amount;
@@ -29,6 +29,10 @@ public class Product {
         this.brandId = brandId;
         this.exclVatPrice = exclVatPrice;
         this.startDate = startDate;
+    }
+
+    public Product(String name, String description, Integer amount, Boolean isAvailable, Character vatType, Integer categoryId, Integer brandId, Double exclVatPrice, LocalDate startDate) {
+        this(null, name, description, amount, isAvailable, vatType, categoryId, brandId, exclVatPrice, startDate);
     }
 
     public void setName(String name) {

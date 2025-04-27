@@ -4,74 +4,62 @@ import business.ProductManager;
 import dataAccess.DAORetrievalFailedException;
 import dataAccess.InsertionFailedException;
 import dataAccess.NotFoundException;
+import dataAccess.UpdateFailedException;
 import model.*;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ProductController {
-
-    public static ArrayList<Vat> getVats() throws DAORetrievalFailedException {
-        /*ArrayList<Vat> vats = new ArrayList<>();
-        vats.add(new Vat('A', 21));
-        vats.add(new Vat('B', 12));
-        vats.add(new Vat('C', 6));
-        vats.add(new Vat('D', 0));
-
-        return vats;*/
-
-        return ProductManager.getAllVats();
-    }
-    
-    public static ArrayList<Category> getCategories() throws DAORetrievalFailedException {
-        /*ArrayList<Category> categories = new ArrayList<>();
-        categories.add(new Category(1, "Électronique"));
-        categories.add(new Category(2, "Alimentation"));
-        categories.add(new Category(3, "Vêtements"));
-        categories.add(new Category(4, "Jardinage"));
-        categories.add(new Category(5, "Librairie"));
-        
-        return categories;*/
-
-        return ProductManager.getAllCategories();
+    public static void create(String name, String description, String priceAsString, Integer amount, Boolean isAvailable, Character vat, Integer categoryId, Integer brandId, String stringDay, String stringMonth, String stringYear) throws WrongTypeException, ProhibitedValueException, InsertionFailedException, DAORetrievalFailedException {
+        ProductManager.add(new Product(
+                name,
+                description,
+                amount,
+                isAvailable,
+                vat,
+                categoryId,
+                brandId,
+                stringToPrice(priceAsString),
+                stringToDate(stringDay, stringMonth, stringYear)
+        ));
     }
 
-    public static int getBrandIdByName(String name) throws DAORetrievalFailedException {
-        return ProductManager.setBrand(name);
+    public static void edit(String barcode, String name, String description, String priceAsString, Integer amount, Boolean isAvailable, Character vat, Integer categoryId, Integer brandId, String stringDay, String stringMonth, String stringYear) throws WrongTypeException, ProhibitedValueException, DAORetrievalFailedException, UpdateFailedException, FieldIsEmptyException {
+        ProductManager.edit(new Product(
+                stringToBarcode(barcode),
+                name,
+                description,
+                amount,
+                isAvailable,
+                vat,
+                categoryId,
+                brandId,
+                stringToPrice(priceAsString),
+                stringToDate(stringDay, stringMonth, stringYear)
+        ));
     }
-    
-    public static Product getProductByBarcode(int barcode) throws DAORetrievalFailedException, NotFoundException {
-        /*Product product = new Product(12345);
-        product.setName("Chocolat");
-        product.setDescription("C'est du chocolat");
-        product.setAmount(3);
-        product.setVatType('A');
-        product.setCategoryId(2);
-        product.setBrandId(2);
-        product.setAvailable(true);
-        
-        return product;*/
 
-        return ProductManager.getByBarcode(barcode);
-    }
-    
-    public static void createProduct(String name, String description, String priceAsString, Integer amount, Boolean isAvailable, Character vat, Integer categoryId, Integer brandId, String stringDay, String stringMonth, String stringYear) throws FieldIsEmptyException, WrongTypeException, ProhibitedValueException, InsertionFailedException, DAORetrievalFailedException {
-        Double price = null; // why do i have to initialize it to null???
-
-        // Price
+    private static Double stringToPrice(String priceAsString) throws WrongTypeException, ProhibitedValueException {
         if (!priceAsString.isEmpty()) {
+            double price;
+
             try {
                 price = Double.parseDouble(priceAsString);
 
                 if (price < 0) {
                     throw new ProhibitedValueException(priceAsString);
                 }
+
+                return price;
             } catch (NumberFormatException numberFormatException) {
                 throw new WrongTypeException("Prix");
             }
         }
+        return null;
+    }
 
-        // Date
+    private static LocalDate stringToDate(String stringDay, String stringMonth, String stringYear) throws WrongTypeException, ProhibitedValueException {
         int day;
         try {
             day = Integer.parseInt(stringDay);
@@ -93,15 +81,38 @@ public class ProductController {
             throw new WrongTypeException("Année");
         }
 
-        LocalDate startDate;
         try {
-            startDate = LocalDate.of(year, month, day);
+            return LocalDate.of(year, month, day);
         } catch (DateTimeException e) {
             throw new ProhibitedValueException(day + "/" + month + "/" + year);
         }
-
-        // Product creation
-        ProductManager.add(new Product(name, description, amount, isAvailable, vat, categoryId, brandId, price, startDate));
     }
 
+    private static int stringToBarcode(String barcodeAsString) throws WrongTypeException, FieldIsEmptyException {
+        if (!barcodeAsString.isEmpty()) {
+            try {
+                return Integer.parseInt(barcodeAsString);
+            } catch (NumberFormatException numberFormatException) {
+                throw new WrongTypeException("Code barre");
+            }
+        } else {
+            throw new FieldIsEmptyException("Code barre");
+        }
+    }
+
+    public static Product getProductByBarcode(String barcodeAsString) throws DAORetrievalFailedException, NotFoundException, WrongTypeException, FieldIsEmptyException {
+        return ProductManager.getByBarcode(stringToBarcode(barcodeAsString));
+    }
+
+    public static int getOrCreateBrand(String name) throws DAORetrievalFailedException {
+        return ProductManager.getOrCreateBrand(name);
+    }
+
+    public static ArrayList<Category> getCategories() throws DAORetrievalFailedException {
+        return ProductManager.getAllCategories();
+    }
+
+    public static ArrayList<Vat> getVats() throws DAORetrievalFailedException {
+        return ProductManager.getAllVats();
+    }
 }
