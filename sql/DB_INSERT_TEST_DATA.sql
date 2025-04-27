@@ -22,8 +22,8 @@ INSERT INTO city (zip_code, name, country) VALUES
 (1050, 'Ixelles', 'Belgique'),
 (4000, 'Liège', 'Belgique'),
 (5000, 'Namur', 'Belgique'),
-(75001, 'Paris', 'France'),
-(69001, 'Lyon', 'France');
+(7500, 'Paris', 'France'),
+(6901, 'Lyon', 'France');
 
 -- Insertion des employés (mot de passe en bytea "password123" pour tous par simplicité)
 INSERT INTO employee (first_name, last_name, password, is_active, street, street_number, unit_number, role_label, hire_date, manager_id, city_zip_code, city_name) VALUES 
