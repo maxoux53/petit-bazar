@@ -1,10 +1,7 @@
 package controller;
 
 import business.ProductManager;
-import dataAccess.DAORetrievalFailedException;
-import dataAccess.InsertionFailedException;
-import dataAccess.NotFoundException;
-import dataAccess.UpdateFailedException;
+import dataAccess.*;
 import model.*;
 
 import java.math.BigDecimal;
@@ -112,6 +109,10 @@ public class ProductController {
         }
     }
 
+    public static int remove(String barcodeAsString) throws DeleteFailedException, WrongTypeException, FieldIsEmptyException, DAORetrievalFailedException {
+        return ProductManager.remove(stringToBarcode(barcodeAsString));
+    }
+
     public static Product getProductByBarcode(String barcodeAsString) throws DAORetrievalFailedException, NotFoundException, WrongTypeException, FieldIsEmptyException {
         return ProductManager.getByBarcode(stringToBarcode(barcodeAsString));
     }
@@ -126,5 +127,13 @@ public class ProductController {
 
     public static ArrayList<Vat> getVats() throws DAORetrievalFailedException {
         return ProductManager.getAllVats();
+    }
+
+    public static int getCurrentStock(String barcodeAsString) throws NotFoundException, DAORetrievalFailedException, WrongTypeException, FieldIsEmptyException {
+        return ProductManager.getCurrentStock(stringToBarcode(barcodeAsString));
+    }
+
+    public static ArrayList<Integer> getOutOfStock() throws NotFoundException, DAORetrievalFailedException {
+        return ProductManager.getOutOfStock();
     }
 }
