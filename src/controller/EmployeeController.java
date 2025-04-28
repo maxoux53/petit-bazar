@@ -30,7 +30,7 @@ public class EmployeeController {
                 streetNumber = Integer.parseInt(streetNumberAsString);
 
                 if (streetNumber < 0) {
-                    throw new ProhibitedValueException(streetNumberAsString);
+                    throw new ProhibitedValueException("Numéro de rue");
                 }
             } catch (NumberFormatException numberFormatException) {
                 throw new WrongTypeException("Numéro de rue");
@@ -43,7 +43,7 @@ public class EmployeeController {
                 unitNumber = Integer.parseInt(unitNumberAsString);
 
                 if (unitNumber < 0) {
-                    throw new ProhibitedValueException(unitNumberAsString);
+                    throw new ProhibitedValueException("Numéro d'unité");
                 }
             } catch (NumberFormatException numberFormatException) {
                 throw new WrongTypeException("Numéro d'unité");
@@ -75,7 +75,7 @@ public class EmployeeController {
         try {
             hireDate = LocalDate.of(year, month, day);
         } catch (DateTimeException e) {
-            throw new ProhibitedValueException(day + "/" + month + "/" + year);
+            throw new ProhibitedValueException("Date d'embauche");
         }
 
         // Manager ID
@@ -84,7 +84,7 @@ public class EmployeeController {
                 managerId = Integer.parseInt(managerIdAsString);
 
                 if (managerId < 0) {
-                    throw new ProhibitedValueException(managerIdAsString);
+                    throw new ProhibitedValueException("Identifiant du gérant");
                 }
             } catch (NumberFormatException numberFormatException) {
                 throw new WrongTypeException("Identifiant du gérant");
@@ -97,7 +97,7 @@ public class EmployeeController {
                 zipCode = Integer.parseInt(zipCodeAsString);
 
                 if (zipCode < 0) {
-                    throw new ProhibitedValueException(zipCodeAsString);
+                    throw new ProhibitedValueException("Code postal");
                 }
             } catch (NumberFormatException numberFormatException) {
                 throw new WrongTypeException("Code postal");
@@ -135,7 +135,7 @@ public class EmployeeController {
                 streetNumber = Integer.parseInt(streetNumberAsString);
 
                 if (streetNumber < 0) {
-                    throw new ProhibitedValueException(streetNumberAsString);
+                    throw new ProhibitedValueException("Numéro de rue");
                 }
             } catch (NumberFormatException numberFormatException) {
                 throw new WrongTypeException("Numéro de rue");
@@ -148,7 +148,7 @@ public class EmployeeController {
                 unitNumber = Integer.parseInt(unitNumberAsString);
 
                 if (unitNumber < 0) {
-                    throw new ProhibitedValueException(unitNumberAsString);
+                    throw new ProhibitedValueException("Numéro d'unité");
                 }
             } catch (NumberFormatException numberFormatException) {
                 throw new WrongTypeException("Numéro d'unité");
@@ -180,7 +180,7 @@ public class EmployeeController {
         try {
             hireDate = LocalDate.of(year, month, day);
         } catch (DateTimeException e) {
-            throw new ProhibitedValueException(day + "/" + month + "/" + year);
+            throw new ProhibitedValueException("Date d'embauche");
         }
 
         // Manager ID
@@ -189,7 +189,7 @@ public class EmployeeController {
                 managerId = Integer.parseInt(managerIdAsString);
 
                 if (managerId < 0) {
-                    throw new ProhibitedValueException(managerIdAsString);
+                    throw new ProhibitedValueException("Identifiant du gérant");
                 }
             } catch (NumberFormatException numberFormatException) {
                 throw new WrongTypeException("Identifiant du gérant");
@@ -202,7 +202,7 @@ public class EmployeeController {
                 zipCode = Integer.parseInt(zipCodeAsString);
 
                 if (zipCode < 0) {
-                    throw new ProhibitedValueException(zipCodeAsString);
+                    throw new ProhibitedValueException("Code postal");
                 }
             } catch (NumberFormatException numberFormatException) {
                 throw new WrongTypeException("Code postal");
