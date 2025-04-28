@@ -412,7 +412,7 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
     }
 
     public ArrayList<String> getAllCountries() throws DAORetrievalFailedException {
-        sqlInstruction = "SELECT country FROM coutry;";
+        sqlInstruction = "SELECT country FROM country;";
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
