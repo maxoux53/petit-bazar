@@ -21,3 +21,4 @@ sql/.idea/*
 
 ### Environment Variables ###
 .env
+src/META-INF/
