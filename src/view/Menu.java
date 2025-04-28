@@ -111,6 +111,7 @@ public class Menu extends JPanel {
         home.setEnabled(status);
         
         addProduct.setEnabled(status);
+        editProduct.setEnabled(status);
 
         signOut.setEnabled(status);
 
