@@ -44,17 +44,17 @@ public class CustomerDBAccess extends DBAccess implements ICustomerDAO {
                     customer.setEmail(email);
                 }
                 
-                Integer phone = data.getInt("phone");
+                int phone = data.getInt("phone");
                 if (!data.wasNull()) {
                     customer.setPhone(phone);
                 }
                 
-                Integer vatNumber = data.getInt("vat_number");
+                long vatNumber = data.getLong("vat_number");
                 if (!data.wasNull()) {
                     customer.setVatNumber(vatNumber);
                 }
                 
-                Integer loyaltyPoints = data.getInt("loyalty_points");
+                int loyaltyPoints = data.getInt("loyalty_points");
                 if (!data.wasNull()) {
                     customer.setLoyaltyPoints(loyaltyPoints);
                 }
@@ -86,7 +86,7 @@ public class CustomerDBAccess extends DBAccess implements ICustomerDAO {
             Date birthDate;
             String email;
             int phone;
-            int vatNumber;
+            long vatNumber;
             int loyaltyPoints;
             
             while (data.next()) {
