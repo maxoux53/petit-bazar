@@ -2,10 +2,10 @@ package model;
 
 public class OrderLine {
     private Integer quantity;
-    private Integer productBarcode;
-    private Integer purchaseId;
+    private Long productBarcode;
+    private Long purchaseId;
 
-    public OrderLine(Integer quantity, Integer productBarcode, Integer purchaseId) {
+    public OrderLine(Integer quantity, Long productBarcode, Long purchaseId) {
         this.quantity = quantity;
         this.productBarcode = productBarcode;
         this.purchaseId = purchaseId;
