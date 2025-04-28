@@ -4,6 +4,7 @@ import model.Category;
 import model.Product;
 import model.Vat;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -15,24 +16,25 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
     }
 
     public int create(Product product) throws InsertionFailedException, DAORetrievalFailedException {
-        sqlInstruction = "INSERT INTO product (name, description, amount, is_available, vat_type, category_id, brand_id, excl_vat_price, start_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        sqlInstruction = "INSERT INTO product VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-            preparedStatement.setString(1, product.getName());
-            preparedStatement.setString(2, product.getDescription());
-            preparedStatement.setInt(3, product.getAmount());
-            preparedStatement.setBoolean(4, product.getAvailable());
-            preparedStatement.setString(5, String.valueOf(product.getVatType()));
-            preparedStatement.setInt(6, product.getCategoryId());
-            preparedStatement.setInt(7, product.getBrandId());
-            preparedStatement.setDouble(8, product.getExclVatPrice());
-            preparedStatement.setDate(9, Date.valueOf(product.getStartDate()));
+            preparedStatement.setLong(1, product.getBarcode());
+            preparedStatement.setString(2, product.getName());
+            preparedStatement.setString(3, product.getDescription());
+            preparedStatement.setInt(4, product.getAmount());
+            preparedStatement.setBoolean(5, product.getAvailable());
+            preparedStatement.setString(6, String.valueOf(product.getVatType()));
+            preparedStatement.setInt(7, product.getCategoryId());
+            preparedStatement.setInt(8, product.getBrandId());
+            preparedStatement.setBigDecimal(9, product.getExclVatPrice());
+            preparedStatement.setDate(10, Date.valueOf(product.getStartDate()));
 
             try {
                 return preparedStatement.executeUpdate();
             } catch (SQLException e) {
-                throw new InsertionFailedException(objectClassName, product.getBarcode(), e.getMessage());
+                throw new InsertionFailedException(objectClassName, -1, e.getMessage());
             }
         } catch (SQLTimeoutException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
@@ -89,7 +91,7 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
             preparedStatement.setString(5, String.valueOf(product.getVatType()));
             preparedStatement.setInt(6, product.getCategoryId());
             preparedStatement.setInt(7, product.getBrandId());
-            preparedStatement.setDouble(8, product.getExclVatPrice());
+            preparedStatement.setBigDecimal(8, product.getExclVatPrice());
             preparedStatement.setDate(9, Date.valueOf(product.getStartDate()));
             preparedStatement.setLong(10, barcode);
 
@@ -123,7 +125,7 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
                 char vatType;
                 int categoryId;
                 int brandId;
-                double exclVatPrice;
+                BigDecimal exclVatPrice;
                 Date startDate;
 
                 Product product = new Product(barcode);
@@ -163,7 +165,7 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
                     product.setBrandId(brandId);
                 }
 
-                exclVatPrice = data.getDouble("excl_vat_price");
+                exclVatPrice = data.getBigDecimal("excl_vat_price");
                 if (!data.wasNull()) {
                     product.setExclVatPrice(exclVatPrice);
                 }
@@ -202,7 +204,7 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
             char vatType;
             int categoryId;
             int brandId;
-            double exclVatPrice;
+            BigDecimal exclVatPrice;
             Date startDate;
 
 
@@ -244,7 +246,7 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
                     product.setBrandId(brandId);
                 }
 
-                exclVatPrice = data.getDouble("excl_vat_price");
+                exclVatPrice = data.getBigDecimal("excl_vat_price");
                 if (!data.wasNull()) {
                     product.setExclVatPrice(exclVatPrice);
                 }
@@ -282,7 +284,7 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
             char vatType;
             int categoryId;
             int brandId;
-            double exclVatPrice;
+            BigDecimal exclVatPrice;
             Date startDate;
 
             while (data.next()) {
@@ -323,7 +325,7 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
                     product.setBrandId(brandId);
                 }
 
-                exclVatPrice = data.getDouble("excl_vat_price");
+                exclVatPrice = data.getBigDecimal("excl_vat_price");
                 if (!data.wasNull()) {
                     product.setExclVatPrice(exclVatPrice);
                 }
