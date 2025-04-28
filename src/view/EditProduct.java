@@ -100,7 +100,7 @@ public class EditProduct extends JPanel {
         barcodePanel = new JPanel(new GridLayout(1, 3, 20, 0));
         barcodePanel.setBackground(Color.white);
         
-        barcodeLabel = new JLabel("Code-barres", SwingConstants.RIGHT);
+        barcodeLabel = new JLabel("Code barre", SwingConstants.RIGHT);
         barcodeLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.MID_SIZE.getSize()));
         
         barcodeField = new JTextField();
@@ -119,16 +119,13 @@ public class EditProduct extends JPanel {
                 if (!fieldsIsVisible) {
                     try {
                         ProductController.getProductByBarcode(barcodeField.getText());
-                        // DEBUG ONLY ↓↓
-                        System.out.println("Product found");
+                        setVisibleAll(true);
+                        barcodeButton.setText("Décharger");
+                        addButton.setEnabled(true);
+                        barcodeField.setEnabled(false);
                     } catch (WrongTypeException | DAORetrievalFailedException | NotFoundException | FieldIsEmptyException ex) {
                         JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                     }
-
-                    setVisibleAll(true);
-                    barcodeButton.setText("Décharger");
-                    addButton.setEnabled(true);
-                    barcodeField.setEnabled(false);
                 } else {
                     setVisibleAll(false);
                     barcodeButton.setText("Charger");
@@ -368,6 +365,7 @@ public class EditProduct extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     ProductController.create(
+                            1L, // A REMPLACER PAR L'OBTENTION DU CODE BARRE
                             nameField.getText(),
                             descriptionField.getText(),
                             priceField.getText(),
@@ -382,7 +380,7 @@ public class EditProduct extends JPanel {
                     );
 
                     removeAllField();
-                } catch (WrongTypeException | ProhibitedValueException | InsertionFailedException | DAORetrievalFailedException | NullPointerException ex) {
+                } catch (WrongTypeException | ProhibitedValueException | InsertionFailedException | DAORetrievalFailedException | NullPointerException | FieldIsEmptyException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             }
