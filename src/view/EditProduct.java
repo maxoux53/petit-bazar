@@ -1,42 +1,12 @@
 package view;
 
-
-
-
-
-
-
-
-
-
-
-// ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
-// A REVOIR SUR BASE DE ADDPRODUCT !!
-// ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import controller.ProductController;
 import controller.FieldIsEmptyException;
 import controller.ProhibitedValueException;
 import controller.WrongTypeException;
 import dataAccess.DAORetrievalFailedException;
 import dataAccess.InsertionFailedException;
+import dataAccess.NotFoundException;
 import model.Category;
 import model.Vat;
 
@@ -50,8 +20,7 @@ import java.util.ArrayList;
 
 public class EditProduct extends JPanel {
     // Attributes
-    /*
-    private JPanel titlePanel;
+    /*private JPanel titlePanel;
     private JLabel titleLabel;
     private JPanel formPanel;
     private JPanel barcodePanel;
@@ -95,19 +64,18 @@ public class EditProduct extends JPanel {
     private JRadioButton availableRadioButtonYes;
     private JRadioButton availableRadioButtonNo;
     private JPanel buttonPanel;
-    private JButton addButton;
-    */
+    private JButton addButton;*/
 
     private JPanel titlePanel, formPanel, barcodePanel, namePanel, descriptionPanel, pricePanel, amountPanel, vatTypePanel, categoryPanel, brandPanel, startDatePanel, startDateLabelSubPanel, startDateFieldsSubPanel, availablePanel, AvailablelabelSubPanel, AvailableRadioButtonSubPanel, buttonPanel;
     private JLabel titleLabel, barcodeLabel, nameLabel, descriptionLabel, priceLabel, amountLabel, vatTypeLabel, categoryLabel, brandLabel, startDateLabel, availableLabel;
     private JTextField barcodeField, nameField, descriptionField, priceField, brandField, startDateDayField, startDateMonthField, startDateYearField;
     private JButton barcodeButton, addButton;
-    private boolean fieldsIsVisible;
     private JSpinner amountSpinner;
     private JComboBox<String> vatTypeComboBox, categoryComboBox;
     private ButtonGroup availabilityGroup;
     private JRadioButton availableRadioButtonYes, availableRadioButtonNo;
-    
+    private boolean fieldsIsVisible;
+
     // Constructors
     public EditProduct() {
         setLayout(new BorderLayout(0, 100));
@@ -149,12 +117,19 @@ public class EditProduct extends JPanel {
         barcodeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (!fieldsIsVisible) {
+                    try {
+                        ProductController.getProductByBarcode(barcodeField.getText());
+                        // DEBUG ONLY ↓↓
+                        System.out.println("Product found");
+                    } catch (WrongTypeException | DAORetrievalFailedException | NotFoundException | FieldIsEmptyException ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+                    }
+
                     setVisibleAll(true);
                     barcodeButton.setText("Décharger");
                     addButton.setEnabled(true);
                     barcodeField.setEnabled(false);
-                }
-                else {
+                } else {
                     setVisibleAll(false);
                     barcodeButton.setText("Charger");
                     addButton.setEnabled(false);
@@ -399,7 +374,7 @@ public class EditProduct extends JPanel {
                             (Integer)amountSpinner.getValue(),
                             availableRadioButtonYes.isSelected(),
                             ((String)vatTypeComboBox.getSelectedItem()).charAt(0),
-                            categories.get(categoryComboBox.getSelectedIndex()-1).getId(),
+                            categories.get(categoryComboBox.getSelectedIndex()).getId(),
                             ProductController.getOrCreateBrand(brandField.getText()),
                             startDateDayField.getText(),
                             startDateMonthField.getText(),
