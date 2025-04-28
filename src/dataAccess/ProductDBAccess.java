@@ -41,14 +41,14 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
         }
     }
 
-    public int delete(int barcode) throws DeleteFailedException, DAORetrievalFailedException {
+    public int delete(Long barcode) throws DeleteFailedException, DAORetrievalFailedException {
         sqlInstruction = "DELETE FROM product WHERE barcode = ?;";
 
         nullifyProductReferencesFromOrderLine(barcode);
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-            preparedStatement.setInt(1, barcode);
+            preparedStatement.setLong(1, barcode);
 
             try {
                 return preparedStatement.executeUpdate();
@@ -62,12 +62,12 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
         }
     }
 
-    private void nullifyProductReferencesFromOrderLine(int barcode) throws DAORetrievalFailedException {
+    private void nullifyProductReferencesFromOrderLine(Long barcode) throws DAORetrievalFailedException {
         sqlInstruction = "UPDATE order_line SET product_barcode = NULL WHERE product_barcode = ?;";
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-            preparedStatement.setInt(1, barcode);
+            preparedStatement.setLong(1, barcode);
             preparedStatement.executeUpdate();
         } catch (SQLTimeoutException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
@@ -78,7 +78,7 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
 
     public int update(Product product) throws UpdateFailedException, DAORetrievalFailedException {
         sqlInstruction = "UPDATE product SET name = ?, description = ?, amount = ?, is_available = ?, vat_type = ?, category_id = ?, brand_id = ?, excl_vat_price = ?, start_date = ? WHERE barcode = ?;";
-        int barcode = product.getBarcode();
+        Long barcode = product.getBarcode();
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
@@ -91,7 +91,7 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
             preparedStatement.setInt(7, product.getBrandId());
             preparedStatement.setDouble(8, product.getExclVatPrice());
             preparedStatement.setDate(9, Date.valueOf(product.getStartDate()));
-            preparedStatement.setInt(10, barcode);
+            preparedStatement.setLong(10, barcode);
 
             try {
                 return preparedStatement.executeUpdate();
@@ -106,12 +106,12 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
         }
     }
 
-    public Product findByBarcode(int barcode) throws NotFoundException, DAORetrievalFailedException {
+    public Product findByBarcode(Long barcode) throws NotFoundException, DAORetrievalFailedException {
         sqlInstruction = "SELECT * FROM product WHERE barcode = ?;";
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-            preparedStatement.setInt(1, barcode);
+            preparedStatement.setLong(1, barcode);
 
             data = preparedStatement.executeQuery();
 
@@ -207,7 +207,7 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
 
 
             while (data.next()) {
-                product = new Product(data.getInt("barcode"));
+                product = new Product(data.getLong("barcode"));
 
                 name = data.getString("name");
                 if (!data.wasNull()) {
@@ -275,7 +275,6 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
             ArrayList<Product> products = new ArrayList<>();
 
             Product product;
-            int barcode;
             String name;
             String description;
             int amount;
@@ -287,7 +286,7 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
             Date startDate;
 
             while (data.next()) {
-                product = new Product(data.getInt("barcode"));
+                product = new Product(data.getLong("barcode"));
 
                 name = data.getString("name");
                 if (!data.wasNull()) {
@@ -437,12 +436,12 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
         }
     }
 
-    public int currentStock(int barcode) throws NotFoundException, DAORetrievalFailedException {
+    public int currentStock(Long barcode) throws NotFoundException, DAORetrievalFailedException {
         sqlInstruction = "SELECT amount FROM product WHERE barcode = ?;";
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-            preparedStatement.setInt(1, barcode);
+            preparedStatement.setLong(1, barcode);
 
             data = preparedStatement.executeQuery();
 

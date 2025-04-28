@@ -3,7 +3,7 @@ package model;
 import java.time.LocalDate;
 
 public class Product {
-    private Integer barcode;
+    private Long barcode;
     private String name;
     private String description;
     private Integer amount;
@@ -14,11 +14,11 @@ public class Product {
     private Double exclVatPrice;
     private LocalDate startDate;
 
-    public Product(Integer barcode) {
+    public Product(Long barcode) {
         this.barcode = barcode;
     }
 
-    public Product(Integer barcode, String name, String description, Integer amount, Boolean isAvailable, Character vatType, Integer categoryId, Integer brandId, Double exclVatPrice, LocalDate startDate) {
+    public Product(Long barcode, String name, String description, Integer amount, Boolean isAvailable, Character vatType, Integer categoryId, Integer brandId, Double exclVatPrice, LocalDate startDate) {
         this(barcode);
         this.name = name;
         this.description = description;
@@ -107,7 +107,7 @@ public class Product {
         return startDate;
     }
 
-    public Integer getBarcode() {
+    public Long getBarcode() {
         return barcode;
     }
 

@@ -96,8 +96,7 @@ public class AddProduct extends JPanel {
         nameField.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.NORMAL_SIZE.getSize()));
         nameField.setBackground(Color.white);
         nameField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-        nameField.setPreferredSize(new Dimension(20, 25));
-        
+
         namePanel.add(nameLabel);
         namePanel.add(nameField);
 
@@ -129,8 +128,7 @@ public class AddProduct extends JPanel {
         priceField.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.NORMAL_SIZE.getSize()));
         priceField.setBackground(Color.white);
         priceField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-        priceField.setPreferredSize(new Dimension(20, 50));
-        
+
         pricePanel.add(priceLabel);
         pricePanel.add(priceField);
         
@@ -160,7 +158,6 @@ public class AddProduct extends JPanel {
         vatTypeComboBox = new JComboBox<String>();
         vatTypeComboBox.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.NORMAL_SIZE.getSize()));
         vatTypeComboBox.setBackground(Color.white);
-        vatTypeComboBox.setPreferredSize(new Dimension(20, 25));
 
         final ArrayList<Vat> vats;
         try {
@@ -188,7 +185,6 @@ public class AddProduct extends JPanel {
         categoryComboBox = new JComboBox<String>();
         categoryComboBox.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.NORMAL_SIZE.getSize()));
         categoryComboBox.setBackground(Color.white);
-        categoryComboBox.setPreferredSize(new Dimension(20, 25));
 
         final ArrayList<Category> categories = new ArrayList<>();
         try {
@@ -216,8 +212,7 @@ public class AddProduct extends JPanel {
         brandField.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.NORMAL_SIZE.getSize()));
         brandField.setBackground(Color.white);
         brandField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-        brandField.setPreferredSize(new Dimension(20, 25));
-        
+
         brandPanel.add(brandLabel);
         brandPanel.add(brandField);
         
@@ -319,7 +314,7 @@ public class AddProduct extends JPanel {
                             (Integer)amountSpinner.getValue(),
                             availableRadioButtonYes.isSelected(),
                             ((String)vatTypeComboBox.getSelectedItem()).charAt(0),
-                            categories.get(categoryComboBox.getSelectedIndex()-1).getId(),
+                            categories.get(categoryComboBox.getSelectedIndex()).getId(),
                             ProductController.getOrCreateBrand(brandField.getText()),
                             startDateDayField.getText(),
                             startDateMonthField.getText(),

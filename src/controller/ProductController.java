@@ -88,11 +88,13 @@ public class ProductController {
         }
     }
 
-    private static int stringToBarcode(String barcodeAsString) throws WrongTypeException, FieldIsEmptyException {
+    private static Long stringToBarcode(String barcodeAsString) throws WrongTypeException, FieldIsEmptyException {
         if (!barcodeAsString.isEmpty()) {
             try {
-                return Integer.parseInt(barcodeAsString);
+                return Long.parseLong(barcodeAsString);
             } catch (NumberFormatException numberFormatException) {
+                // DEBUG ONLY ↓↓
+                System.out.println(numberFormatException.getMessage());
                 throw new WrongTypeException("Code barre");
             }
         } else {

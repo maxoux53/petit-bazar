@@ -18,7 +18,7 @@ public class ProductManager {
         return productDataAccess.create(product);
     }
 
-    public static int remove(int barcode) throws DeleteFailedException, DAORetrievalFailedException {
+    public static int remove(Long barcode) throws DeleteFailedException, DAORetrievalFailedException {
         return productDataAccess.delete(barcode);
     }
 
@@ -26,7 +26,7 @@ public class ProductManager {
         return productDataAccess.update(product);
     }
 
-    public static Product getByBarcode(int barcode) throws NotFoundException, DAORetrievalFailedException {
+    public static Product getByBarcode(Long barcode) throws NotFoundException, DAORetrievalFailedException {
         return productDataAccess.findByBarcode(barcode);
     }
 
@@ -50,7 +50,7 @@ public class ProductManager {
         return productDataAccess.getAllVatTypes();
     }
 
-    public static int getCurrentStock(int barcode) throws NotFoundException, DAORetrievalFailedException {
+    public static int getCurrentStock(Long barcode) throws NotFoundException, DAORetrievalFailedException {
         return productDataAccess.currentStock(barcode);
     }
 
