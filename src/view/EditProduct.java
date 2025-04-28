@@ -118,7 +118,7 @@ public class EditProduct extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if (!fieldsIsVisible) {
                     try {
-                        ProductController.getProductByBarcode(barcodeField.getText());
+                        ProductController.getProductByBarcode(barcodeField.getText()); // AFFICHER LE PRODUIT RETOURNÉ
                         setVisibleAll(true);
                         barcodeButton.setText("Décharger");
                         addButton.setEnabled(true);
