@@ -6,14 +6,17 @@ import dataAccess.InsertionFailedException;
 import dataAccess.NotFoundException;
 import dataAccess.UpdateFailedException;
 import model.*;
+
+import java.math.BigDecimal;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ProductController {
-    public static void create(String name, String description, String priceAsString, Integer amount, Boolean isAvailable, Character vat, Integer categoryId, Integer brandId, String stringDay, String stringMonth, String stringYear) throws WrongTypeException, ProhibitedValueException, InsertionFailedException, DAORetrievalFailedException {
+    public static void create(Long barcode, String name, String description, String priceAsString, Integer amount, Boolean isAvailable, Character vat, Integer categoryId, Integer brandId, String stringDay, String stringMonth, String stringYear) throws WrongTypeException, ProhibitedValueException, InsertionFailedException, DAORetrievalFailedException, FieldIsEmptyException {
         ProductManager.add(new Product(
-                name,
+                stringToBarcode(barcode.toString()),
+                nameInputValidation(name),
                 description,
                 amount,
                 isAvailable,
@@ -25,8 +28,8 @@ public class ProductController {
         ));
     }
 
-    public static void edit(String barcode, String name, String description, String priceAsString, Integer amount, Boolean isAvailable, Character vat, Integer categoryId, Integer brandId, String stringDay, String stringMonth, String stringYear) throws WrongTypeException, ProhibitedValueException, DAORetrievalFailedException, UpdateFailedException, FieldIsEmptyException {
-        ProductManager.edit(new Product(
+    public static int edit(String barcode, String name, String description, String priceAsString, Integer amount, Boolean isAvailable, Character vat, Integer categoryId, Integer brandId, String stringDay, String stringMonth, String stringYear) throws WrongTypeException, ProhibitedValueException, DAORetrievalFailedException, UpdateFailedException, FieldIsEmptyException {
+        return ProductManager.edit(new Product(
                 stringToBarcode(barcode),
                 name,
                 description,
@@ -40,15 +43,22 @@ public class ProductController {
         ));
     }
 
-    private static Double stringToPrice(String priceAsString) throws WrongTypeException, ProhibitedValueException {
+    private static String nameInputValidation(String name) {
+        if (!name.isEmpty()) {
+            return name;
+        }
+        return null;
+    }
+
+    private static BigDecimal stringToPrice(String priceAsString) throws WrongTypeException, ProhibitedValueException {
         if (!priceAsString.isEmpty()) {
-            double price;
+            BigDecimal price;
 
             try {
-                price = Double.parseDouble(priceAsString);
+                price = new BigDecimal(priceAsString);
 
-                if (price < 0) {
-                    throw new ProhibitedValueException(priceAsString);
+                if (price.compareTo(BigDecimal.ZERO) < 0) {
+                    throw new ProhibitedValueException("Prix");
                 }
 
                 return price;
@@ -84,7 +94,7 @@ public class ProductController {
         try {
             return LocalDate.of(year, month, day);
         } catch (DateTimeException e) {
-            throw new ProhibitedValueException(day + "/" + month + "/" + year);
+            throw new ProhibitedValueException("Date de mise en vente");
         }
     }
 

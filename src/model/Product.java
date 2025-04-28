@@ -1,5 +1,6 @@
 package model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Product {
@@ -11,14 +12,14 @@ public class Product {
     private Character vatType;
     private Integer categoryId;
     private Integer brandId;
-    private Double exclVatPrice;
+    private BigDecimal exclVatPrice;
     private LocalDate startDate;
 
     public Product(Long barcode) {
         this.barcode = barcode;
     }
 
-    public Product(Long barcode, String name, String description, Integer amount, Boolean isAvailable, Character vatType, Integer categoryId, Integer brandId, Double exclVatPrice, LocalDate startDate) {
+    public Product(Long barcode, String name, String description, Integer amount, Boolean isAvailable, Character vatType, Integer categoryId, Integer brandId, BigDecimal exclVatPrice, LocalDate startDate) {
         this(barcode);
         this.name = name;
         this.description = description;
@@ -31,7 +32,7 @@ public class Product {
         this.startDate = startDate;
     }
 
-    public Product(String name, String description, Integer amount, Boolean isAvailable, Character vatType, Integer categoryId, Integer brandId, Double exclVatPrice, LocalDate startDate) {
+    public Product(String name, String description, Integer amount, Boolean isAvailable, Character vatType, Integer categoryId, Integer brandId, BigDecimal exclVatPrice, LocalDate startDate) {
         this(null, name, description, amount, isAvailable, vatType, categoryId, brandId, exclVatPrice, startDate);
     }
 
@@ -63,7 +64,7 @@ public class Product {
         this.brandId = brandId;
     }
 
-    public void setExclVatPrice(Double exclVatPrice) {
+    public void setExclVatPrice(BigDecimal exclVatPrice) {
         this.exclVatPrice = exclVatPrice;
     }
 
@@ -99,7 +100,7 @@ public class Product {
         return brandId;
     }
 
-    public Double getExclVatPrice() {
+    public BigDecimal getExclVatPrice() {
         return exclVatPrice;
     }
 
