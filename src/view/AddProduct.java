@@ -308,6 +308,7 @@ public class AddProduct extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     ProductController.create(
+                            1L, // A REMPLACER PAR L'OBTENTION DU CODE BARRE
                             nameField.getText(),
                             descriptionField.getText(),
                             priceField.getText(),
@@ -322,7 +323,7 @@ public class AddProduct extends JPanel {
                     );
 
                     removeAllField();
-                } catch (WrongTypeException | ProhibitedValueException | InsertionFailedException | DAORetrievalFailedException | NullPointerException ex) {
+                } catch (WrongTypeException | ProhibitedValueException | InsertionFailedException | DAORetrievalFailedException | NullPointerException | FieldIsEmptyException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             }

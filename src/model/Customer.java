@@ -9,7 +9,7 @@ public class Customer {
     private LocalDate birthDate;
     private String email;
     private Integer phone;
-    private Integer vatNumber;
+    private Long vatNumber;
     private Integer loyaltyPoints;
 
     public Customer(Integer loyaltyCardNumber) {
@@ -36,7 +36,7 @@ public class Customer {
         this.phone = phone;
     }
 
-    public void setVatNumber(Integer vatNumber) {
+    public void setVatNumber(Long vatNumber) {
         this.vatNumber = vatNumber;
     }
 
@@ -64,7 +64,7 @@ public class Customer {
         return phone;
     }
 
-    public Integer getVatNumber() {
+    public Long getVatNumber() {
         return vatNumber;
     }
 

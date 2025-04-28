@@ -2,11 +2,11 @@ package dataAccess;
 
 public abstract class DAOOperationFailedException extends Exception {
     private String objectType;
-    private int objectId;
+    private long objectId;
     private String message;
     private String operationType;
 
-    public DAOOperationFailedException(String operationType, String objectType, int objectId, String message) {
+    public DAOOperationFailedException(String operationType, String objectType, long objectId, String message) {
         super(message);
         this.operationType = operationType;
         this.objectType = objectType;

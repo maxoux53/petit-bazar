@@ -3,12 +3,12 @@ package model;
 import java.time.LocalDate;
 
 public class Purchase {
-    private Integer id;
+    private Long id;
     private LocalDate date;
     private Integer employeeId;
     private Integer customerCardNumber;
 
-    public Purchase(Integer id, LocalDate date, Integer employeeId, Integer customerCardNumber) {
+    public Purchase(Long id, LocalDate date, Integer employeeId, Integer customerCardNumber) {
         this.id = id;
     }
 
