@@ -14,6 +14,6 @@ public class DAORetrievalFailedException extends Exception {
 
     @Override
     public String getMessage() {
-        return (additionalContext != null ? additionalContext + " " : "") + "See: " + super.getMessage();
+        return (additionalContext != null ? additionalContext + " " : "") + "Voir : " + super.getMessage();
     }
 }

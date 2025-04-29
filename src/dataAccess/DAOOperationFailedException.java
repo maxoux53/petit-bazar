@@ -2,11 +2,10 @@ package dataAccess;
 
 public abstract class DAOOperationFailedException extends Exception {
     private String objectType;
-    private long objectId;
-    private String message;
+    private Long objectId;
     private String operationType;
 
-    public DAOOperationFailedException(String operationType, String objectType, long objectId, String message) {
+    public DAOOperationFailedException(String operationType, String objectType, Long objectId, String message) {
         super(message);
         this.operationType = operationType;
         this.objectType = objectType;
@@ -15,13 +14,14 @@ public abstract class DAOOperationFailedException extends Exception {
 
     public String customMessage() {
         if (operationType == null) {
-            return "Data operation failed!";
+            return "L'opération a échoué !";
+        } else {
+            return "L'opération de " + operationType + " sur l'objet " + objectType + ((objectType != null) ? " dont l'identifiant est '" + objectId + "'" : "") + " a échoué !";
         }
-        return "Object " + operationType + " on " + objectType + " with given ID '" + objectId + "failed!";
     }
 
     @Override
     public String getMessage() {
-        return customMessage() + " See: " + super.getMessage();
+        return customMessage() + " Voir : " + super.getMessage();
     }
 }

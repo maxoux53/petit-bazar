@@ -34,7 +34,7 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
             try {
                 return preparedStatement.executeUpdate();
             } catch (SQLException e) {
-                throw new InsertionFailedException(objectClassName, -1, e.getMessage());
+                throw new InsertionFailedException(objectClassName, null, e.getMessage());
             }
         } catch (SQLTimeoutException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());

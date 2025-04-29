@@ -1,7 +1,7 @@
 package dataAccess;
 
 public class UpdateFailedException extends DAOOperationFailedException {
-    public UpdateFailedException(String objectType, long objectId, String message) {
-        super("update", objectType, objectId, message);
+    public UpdateFailedException(String objectType, Long objectId, String message) {
+        super("mise-à-jour", objectType, objectId, message);
     }
 }
