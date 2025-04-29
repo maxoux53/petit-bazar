@@ -5,6 +5,7 @@ import business.HashFailedException;
 import dataAccess.*;
 import model.*;
 
+import javax.swing.table.DefaultTableModel;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -155,4 +156,53 @@ public class EmployeeController extends Controller {
         return EmployeeManager.getAllRoles();
     }
 
+    public static DefaultTableModel infoTableModel() throws DAORetrievalFailedException {
+        String[] nomColonnes = {
+                "Matricule",
+                "Prénom",
+                "Nom",
+                "est actif",
+                "Rue",
+                "Numéro de rue",
+                "Numéro de boîte",
+                "Rôle",
+                "Date d'embauche",
+                "Identifiant du manager",
+                "Code postal de la ville",
+                "Nom de la ville"
+        };
+
+        DefaultTableModel modele = new DefaultTableModel(nomColonnes, 0);
+
+        ArrayList<IEmployeeInfoWrapper[]> employeesInfo = getAllEmployees();
+        Employee employee;
+        City city;
+        Object[] ligne = new Object[nomColonnes.length];
+
+        for (IEmployeeInfoWrapper[] employeeInfo : employeesInfo) {
+            employee = (Employee)employeeInfo[0];
+            city = (City)employeeInfo[1];
+
+            ligne[0] = employee.getId();
+            ligne[1] = employee.getFirstName();
+            ligne[2] = employee.getLastName();
+            ligne[3] = employee.getActive();
+            ligne[4] = employee.getStreet();
+            ligne[5] = employee.getStreetNumber();
+            ligne[6] = employee.getUnitNumber();
+            ligne[7] = employee.getRoleLabel();
+            ligne[8] = employee.getHireDate();
+            ligne[9] = employee.getManagerId();
+            ligne[10] = city.getZipCode();
+            ligne[11] = city.getName();
+
+            modele.addRow(ligne);
+        }
+
+        return modele;
+
+        /*table = new JTable(modele);
+        JScrollPane scrollPane = new JScrollPane(table);
+        add(scrollPane, BorderLayout.CENTER);*/
+    }
 }
