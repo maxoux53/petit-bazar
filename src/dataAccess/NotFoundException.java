@@ -1,7 +1,7 @@
 package dataAccess;
 
 public class NotFoundException extends DAOOperationFailedException {
-    public NotFoundException(String objectType, long objectId, String message) {
-        super("lookup", objectType, objectId, message);
+    public NotFoundException(String objectType, Long objectId, String message) {
+        super("consultation", objectType, objectId, message);
     }
 }

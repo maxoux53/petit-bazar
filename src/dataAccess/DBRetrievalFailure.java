@@ -1,10 +1,10 @@
 package dataAccess;
 
 public enum DBRetrievalFailure {
-    TIMEOUT("Database query timed out"),
-    ACCESS_ERROR("SQL data access failed"),
-    NO_ROW("There are no more rows"),
-    CLOSURE_ERROR("Database access error occurs while closing the connection");
+    TIMEOUT("La requête a pris trop de temps à s'exécuter"),
+    ACCESS_ERROR("L'accès SQL a échoué"),
+    NO_ROW("Aucune donnée disponible"),
+    CLOSURE_ERROR("Des erreurs se sont produites lors de la fermeture de la connexion");
 
     private String text;
 

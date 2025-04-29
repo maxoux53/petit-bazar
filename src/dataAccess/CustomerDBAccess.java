@@ -61,7 +61,7 @@ public class CustomerDBAccess extends DBAccess implements ICustomerDAO {
 
                 return customer;
             } else {
-                throw new NotFoundException(objectClassName, loyaltyCardNumber, DBRetrievalFailure.NO_ROW.toString());
+                throw new NotFoundException(objectClassName, (long)loyaltyCardNumber, DBRetrievalFailure.NO_ROW.toString());
             }
             
         } catch (SQLTimeoutException e) {
