@@ -1,9 +1,8 @@
 package view;
 
-import controller.ProductController;
-import controller.FieldIsEmptyException;
-import controller.ProhibitedValueException;
-import controller.WrongTypeException;
+
+import controller.*;
+
 import dataAccess.DAORetrievalFailedException;
 import dataAccess.InsertionFailedException;
 import dataAccess.NotFoundException;
@@ -12,10 +11,7 @@ import model.Vat;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 public class EditProduct extends JPanel {
@@ -388,7 +384,7 @@ public class EditProduct extends JPanel {
         
         buttonPanel.add(addButton);
         
-        // Add
+        // Add form
         formPanel.add(barcodePanel);
         
         setVisibleAll(false);
@@ -438,18 +434,18 @@ public class EditProduct extends JPanel {
         revalidate();
     }
     
-    private void backgroundText(JTextField jTextField, String text) {
-        jTextField.addFocusListener(new FocusAdapter() {
+    private void backgroundText(JTextField field, String text) {
+        field.addFocusListener(new FocusAdapter() {
             public void focusGained(FocusEvent e) {
-                if (jTextField.getText().equals(text)) {
-                    jTextField.setText("");
-                    jTextField.setForeground(Color.BLACK);
+                if (field.getText().equals(text)) {
+                    field.setText("");
+                    field.setForeground(Color.BLACK);
                 }
             }
             public void focusLost(FocusEvent e) {
-                if (jTextField.getText().isEmpty()) {
-                    jTextField.setForeground(Color.GRAY);
-                    jTextField.setText(text);
+                if (field.getText().isEmpty()) {
+                    field.setForeground(Color.GRAY);
+                    field.setText(text);
                 }
             }
         });
