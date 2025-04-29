@@ -9,128 +9,66 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class EmployeeController {
+public class EmployeeController extends Controller {
 
     public static int create(String firstName, String lastName, char[] password, Boolean isActive, String street, String streetNumberAsString, String unitNumberAsString, String roleLabel, String dayAsString, String monthAsString, String yearAsString, String managerIdAsString, String zipCodeAsString, String cityName, String countryName) throws HashFailedException, InsertionFailedException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException {
-        byte[] passwordHash = null;
-        Integer streetNumber = null;
-        Integer unitNumber = null;
-        LocalDate hireDate;
-        Integer managerId = null;
-        Integer zipCode = null;
-
-        // Password
-        if (password != null) {
-            passwordHash = EmployeeManager.hashPassword(new String(password));
-        }
-
-        // Street number
-        if (!streetNumberAsString.isEmpty()) {
-            try {
-                streetNumber = Integer.parseInt(streetNumberAsString);
-
-                if (streetNumber < 0) {
-                    throw new ProhibitedValueException("Numéro de rue");
-                }
-            } catch (NumberFormatException numberFormatException) {
-                throw new WrongTypeException("Numéro de rue");
-            }
-        }
-
-        // Unit number
-        if (!unitNumberAsString.isEmpty()) {
-            try {
-                unitNumber = Integer.parseInt(unitNumberAsString);
-
-                if (unitNumber < 0) {
-                    throw new ProhibitedValueException("Numéro d'unité");
-                }
-            } catch (NumberFormatException numberFormatException) {
-                throw new WrongTypeException("Numéro d'unité");
-            }
-        }
-
-        // Hire date
-        int day;
-        try {
-            day = Integer.parseInt(dayAsString);
-        } catch (NumberFormatException numberFormatException) {
-            throw new WrongTypeException("Jour");
-        }
-
-        int month;
-        try {
-            month = Integer.parseInt(monthAsString);
-        } catch (NumberFormatException numberFormatException) {
-            throw new WrongTypeException("Mois");
-        }
-
-        int year;
-        try {
-            year = Integer.parseInt(yearAsString);
-        } catch (NumberFormatException numberFormatException) {
-            throw new WrongTypeException("Année");
-        }
-
-        try {
-            hireDate = LocalDate.of(year, month, day);
-        } catch (DateTimeException e) {
-            throw new ProhibitedValueException("Date d'embauche");
-        }
-
-        // Manager ID
-        if (!managerIdAsString.isEmpty()) {
-            try {
-                managerId = Integer.parseInt(managerIdAsString);
-
-                if (managerId < 0) {
-                    throw new ProhibitedValueException("Identifiant du gérant");
-                }
-            } catch (NumberFormatException numberFormatException) {
-                throw new WrongTypeException("Identifiant du gérant");
-            }
-        }
-
-        // Zip code
-        if (!zipCodeAsString.isEmpty()) {
-            try {
-                zipCode = Integer.parseInt(zipCodeAsString);
-
-                if (zipCode < 0) {
-                    throw new ProhibitedValueException("Code postal");
-                }
-            } catch (NumberFormatException numberFormatException) {
-                throw new WrongTypeException("Code postal");
-            }
-        }
-
-
-
         return EmployeeManager.create(
-                new Employee(firstName, lastName, passwordHash, isActive, street, streetNumber, unitNumber, roleLabel, hireDate, managerId, zipCode, cityName),
-                new City(zipCode, cityName, countryName)
+                new Employee(
+                        firstName,
+                        lastName,
+                        stringToPassword(password),
+                        isActive,
+                        street,
+                        stringToStreetNumber(streetNumberAsString),
+                        stringToUnitNumber(unitNumberAsString),
+                        roleLabel,
+                        stringToDate(dayAsString, monthAsString, yearAsString),
+                        stringToId(managerIdAsString),
+                        stringToZipCode(zipCodeAsString),
+                        cityName
+                ),
+                new City(
+                        stringToZipCode(zipCodeAsString),
+                        cityName,
+                        countryName
+                )
         );
     }
 
-    public static int remove(int id) throws DeleteFailedException, DAORetrievalFailedException {
-        return EmployeeManager.remove(id);
+
+    public static int remove(String idAsString) throws DeleteFailedException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException {
+        return EmployeeManager.remove(stringToId(idAsString));
     }
 
     public static int edit(int id, String firstName, String lastName, char[] password, Boolean isActive, String street, String streetNumberAsString, String unitNumberAsString, String roleLabel, String dayAsString, String monthAsString, String yearAsString, String managerIdAsString, String zipCodeAsString, String cityName, String countryName) throws HashFailedException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException, UpdateFailedException {
-        byte[] passwordHash = null;
-        Integer streetNumber = null;
-        Integer unitNumber = null;
-        LocalDate hireDate;
-        Integer managerId = null;
-        Integer zipCode = null;
+        return EmployeeManager.edit(
+                new Employee(
+                        id,
+                        firstName,
+                        lastName,
+                        stringToPassword(password),
+                        isActive,
+                        street,
+                        stringToStreetNumber(streetNumberAsString),
+                        stringToUnitNumber(unitNumberAsString),
+                        roleLabel,
+                        stringToDate(dayAsString, monthAsString, yearAsString),
+                        stringToId(managerIdAsString),
+                        stringToZipCode(zipCodeAsString),
+                        cityName
+                ),
+                new City(
+                        stringToZipCode(zipCodeAsString),
+                        cityName,
+                        countryName
+                )
+        );
+    }
 
-        // Password
-        if (password != null) {
-            passwordHash = EmployeeManager.hashPassword(new String(password));
-        }
-
-        // Street number
+    private static Integer stringToStreetNumber(String streetNumberAsString) throws ProhibitedValueException, WrongTypeException {
         if (!streetNumberAsString.isEmpty()) {
+            int streetNumber;
+
             try {
                 streetNumber = Integer.parseInt(streetNumberAsString);
 
@@ -141,9 +79,13 @@ public class EmployeeController {
                 throw new WrongTypeException("Numéro de rue");
             }
         }
+        return null;
+    }
 
-        // Unit number
+    private static Integer stringToUnitNumber(String unitNumberAsString) throws ProhibitedValueException, WrongTypeException {
         if (!unitNumberAsString.isEmpty()) {
+            int unitNumber;
+
             try {
                 unitNumber = Integer.parseInt(unitNumberAsString);
 
@@ -153,51 +95,33 @@ public class EmployeeController {
             } catch (NumberFormatException numberFormatException) {
                 throw new WrongTypeException("Numéro d'unité");
             }
+            return unitNumber;
         }
+        return null;
+    }
 
-        // Hire date
-        int day;
-        try {
-            day = Integer.parseInt(dayAsString);
-        } catch (NumberFormatException numberFormatException) {
-            throw new WrongTypeException("Jour");
+    private static byte[] stringToPassword(char[] password) throws HashFailedException {
+        if (password != null) {
+            return EmployeeManager.hashPassword(new String(password));
         }
+        return null;
+    }
 
-        int month;
-        try {
-            month = Integer.parseInt(monthAsString);
-        } catch (NumberFormatException numberFormatException) {
-            throw new WrongTypeException("Mois");
-        }
-
-        int year;
-        try {
-            year = Integer.parseInt(yearAsString);
-        } catch (NumberFormatException numberFormatException) {
-            throw new WrongTypeException("Année");
-        }
-
-        try {
-            hireDate = LocalDate.of(year, month, day);
-        } catch (DateTimeException e) {
-            throw new ProhibitedValueException("Date d'embauche");
-        }
-
-        // Manager ID
-        if (!managerIdAsString.isEmpty()) {
+    private static Integer stringToId(String idAsString) throws ProhibitedValueException, WrongTypeException {
+        if (!idAsString.isEmpty()) {
             try {
-                managerId = Integer.parseInt(managerIdAsString);
-
-                if (managerId < 0) {
-                    throw new ProhibitedValueException("Identifiant du gérant");
-                }
+                return Integer.parseInt(idAsString);
             } catch (NumberFormatException numberFormatException) {
-                throw new WrongTypeException("Identifiant du gérant");
+                throw new WrongTypeException("Identifiant");
             }
         }
+        return null;
+    }
 
-        // Zip code
+    private static Integer stringToZipCode(String zipCodeAsString) throws ProhibitedValueException, WrongTypeException {
         if (!zipCodeAsString.isEmpty()) {
+            int zipCode;
+
             try {
                 zipCode = Integer.parseInt(zipCodeAsString);
 
@@ -208,17 +132,11 @@ public class EmployeeController {
                 throw new WrongTypeException("Code postal");
             }
         }
-
-
-
-        return EmployeeManager.edit(
-                new Employee(id, firstName, lastName, passwordHash, isActive, street, streetNumber, unitNumber, roleLabel, hireDate, managerId, zipCode, cityName),
-                new City(zipCode, cityName, countryName)
-        );
+        return null;
     }
 
-    public static IEmployeeInfoWrapper[] getEmployeeById(int id) throws NotFoundException, DAORetrievalFailedException {
-        return EmployeeManager.getById(id);
+    public static IEmployeeInfoWrapper[] getEmployeeById(String idAsString) throws NotFoundException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException {
+        return EmployeeManager.getById(stringToId(idAsString));
     }
 
     public static ArrayList<IEmployeeInfoWrapper[]> getAllEmployees() throws DAORetrievalFailedException {
