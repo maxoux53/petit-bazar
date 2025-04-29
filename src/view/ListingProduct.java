@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -17,6 +18,7 @@ public class ListingProduct extends JPanel {
     ArrayList<String> listingNameColumn;
     ArrayList<Product> listingValue;
     JTable listingTable;
+    JScrollPane scrollPane;
     
     // Constructors
     public ListingProduct() {
@@ -53,7 +55,7 @@ public class ListingProduct extends JPanel {
 
         // Produit 1
         Product product1 = new Product(
-                100001,                           // barcode
+                (long)100001,                           // barcode
                 "Ordinateur portable",             // name
                 "Ordinateur léger et rapide",       // description
                 50,                                // amount
@@ -61,13 +63,13 @@ public class ListingProduct extends JPanel {
                 'A',                               // vatType
                 1,                                 // categoryId
                 2,                                 // brandId
-                999.99,                            // exclVatPrice
+                BigDecimal.valueOf(999.99),                            // exclVatPrice
                 LocalDate.of(2025, 5, 1)            // startDate
         );
 
         // Produit 2
         Product product2 = new Product(
-                100002,
+                (long)100002,
                 "Casque audio",
                 "Casque sans fil avec réduction de bruit",
                 30,
@@ -75,13 +77,13 @@ public class ListingProduct extends JPanel {
                 'B',
                 2,
                 3,
-                199.99,
+                BigDecimal.valueOf(199.99),
                 LocalDate.of(2025, 6, 10)
         );
 
         // Produit 3
         Product product3 = new Product(
-                100003,
+                (long)100003,
                 "Clavier mécanique",
                 "Clavier RGB pour gamers",
                 80,
@@ -89,13 +91,13 @@ public class ListingProduct extends JPanel {
                 'A',
                 3,
                 4,
-                89.99,
+                BigDecimal.valueOf(89.99),
                 LocalDate.of(2025, 7, 5)
         );
 
         // Produit 4
         Product product4 = new Product(
-                100004,
+                (long)100004,
                 "Souris ergonomique",
                 "Souris confortable pour le bureau",
                 100,
@@ -103,7 +105,7 @@ public class ListingProduct extends JPanel {
                 'C',
                 4,
                 5,
-                49.99,
+                BigDecimal.valueOf(49.99),
                 LocalDate.of(2025, 8, 20)
         );
 
@@ -115,7 +117,7 @@ public class ListingProduct extends JPanel {
         
         listingTable = new JTable((TableModel) listingNameColumn, (TableColumnModel) listingValue);
         
-        JScrollPane scrollPane = new JScrollPane(listingTable);
+        scrollPane = new JScrollPane(listingTable);
         
         listingPanel.add(scrollPane);
         
