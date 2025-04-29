@@ -200,9 +200,5 @@ public class EmployeeController extends Controller {
         }
 
         return modele;
-
-        /*table = new JTable(modele);
-        JScrollPane scrollPane = new JScrollPane(table);
-        add(scrollPane, BorderLayout.CENTER);*/
     }
 }
