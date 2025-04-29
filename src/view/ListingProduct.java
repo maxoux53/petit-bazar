@@ -121,6 +121,6 @@ public class ListingProduct extends JPanel {
         
         // Add Main
         add(titlePanel, BorderLayout.NORTH);
-        add(listingPanel, BorderLayout.CENTER)
-;    }
+        add(listingPanel, BorderLayout.CENTER);
+    }
 }
