@@ -1,7 +1,5 @@
--- ⚠️ Se connecter à 'store_management' ⚠️ --
-
-/*CREATE SCHEMA store_management;
-SET search_path TO store_management;*/
+-- ⚠️ Se connecter à 'PG_DB' ⚠️ --
+/*SET search_path TO $PG_DB;*/
 
 CREATE TABLE role (
     label VARCHAR(25) PRIMARY KEY
