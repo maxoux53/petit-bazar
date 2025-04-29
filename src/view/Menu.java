@@ -19,7 +19,7 @@ public class Menu extends JPanel {
     private Window window;
     private JMenuBar menuBar;
     private JMenu application, product;
-    private JMenuItem home, leave, signOut, addProduct, editProduct;
+    private JMenuItem home, leave, signOut, addProduct, editProduct, listingProduct;
     
     // Constructors
     public Menu(Window window) {
@@ -89,12 +89,21 @@ public class Menu extends JPanel {
                 window.showEditProduct();
             }
         });
+        
+        // Listing
+        listingProduct = new JMenuItem("Liste des Articles");
+        
+        listingProduct.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                window.showListingProduct();
+            }
+        });
 
         // Add items to product submenu
         product.add(addProduct);
         product.add(editProduct);
-
-
+        product.add(listingProduct);
 
         // Add submenus to menu bar
         menuBar.add(application);
@@ -111,8 +120,11 @@ public class Menu extends JPanel {
         home.setEnabled(status);
         
         addProduct.setEnabled(status);
+        
         editProduct.setEnabled(status);
-
+        
+        listingProduct.setEnabled(status);
+        
         signOut.setEnabled(status);
 
         menuBar.repaint();
