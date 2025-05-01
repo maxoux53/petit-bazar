@@ -52,7 +52,7 @@ A roadmap with features to be implemented and progress is available [here](roadm
    - `PG_PASSWORD`: User password for the database
    - `PG_DB`: Database name
 
-   `.env` file example [here](./example.env).
+   You can use the [`.env` template file](./example.env), simply rename it to .env and edit the values as wanted.
 
 3. **Database configuration**
    - Use the compose command to create the PostgreSQL container
