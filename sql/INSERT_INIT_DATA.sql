@@ -219,3 +219,44 @@ INSERT INTO category (name) VALUES
 ('Bricolage'),
 ('Animalerie'),
 ('Automobile');
+
+INSERT INTO brand (name) VALUES
+('Samsung'),
+('Delhaize Selection'),
+('Gardena'),
+('Apple'),
+('Sony');
+
+INSERT INTO product (barcode, name, description, amount, is_available, vat_type, category_id, brand_id, excl_vat_price, start_date) VALUES
+(5901234123457, 'Smartphone Galaxy S22', 'Smartphone haut de gamme avec écran AMOLED 6.1"', 25, TRUE, 'A', 2, 1, '799.99', '2023-01-01'),
+(4007817327098, 'Chocolat noir 70%', 'Tablette de chocolat noir pur beurre de cacao', 150, TRUE, 'B', 1, 2, '2.49', '2023-01-01'),
+(8711495392919, 'Sécateur Gardena', 'Sécateur de jardin ergonomique', 32, TRUE, 'A', 9, 3, '24.99', '2023-01-01'),
+(7350073733347, 'iPad Pro', 'Tablette tactile 11 pouces', 18, TRUE, 'A', 2, 4, '999.99', '2023-01-01'),
+(4902505854453, 'Casque WH-1000XM5', 'Casque à réduction de bruit', 12, FALSE, 'A', 2, 5, '349.99', '2023-01-01');
+
+INSERT INTO role (label) VALUES
+('ADMIN'),
+('CASHIER');
+
+INSERT INTO city (zip_code, name, country) VALUES
+(1000, 'Bruxelles', '🇧🇪 Belgique'),
+(1050, 'Ixelles', '🇧🇪 Belgique');
+
+INSERT INTO employee (first_name, last_name, password, is_active, street, street_number, unit_number, role_label, hire_date, manager_id, city_zip_code, city_name) VALUES
+('Jean', 'Dupont', E'\\x70617373776F726431323300', TRUE, 'Rue de la Loi', 10, NULL, 'ADMIN', '2020-01-15', NULL, 1000, 'Bruxelles'),
+('Pierre', 'Durand', E'\\x70617373776F726431323300', TRUE, 'Rue Neuve', 42, NULL, 'CASHIER', '2021-03-10', 1, 1050, 'Ixelles');
+
+INSERT INTO customer (first_name, last_name, birth_date, email, phone, vat_number, loyalty_points) VALUES
+('Michel', 'Leroy', '1985-03-12', 'michel.leroy@email.com', 0471234567, NULL, 150),
+('Camille', 'Dubois', '1992-07-25', 'camille.dubois@email.com', 0489654321, NULL, 75);
+
+INSERT INTO purchase (date, employee_id, customer_card_number) VALUES
+('2023-10-15', 1, 1),
+('2023-10-16', 2, 2);
+
+INSERT INTO order_line (quantity, product_barcode, purchase_id) VALUES
+(1, 5901234123457, 1),  -- Smartphone dans achat 1
+(2, 4007817327098, 1),  -- Chocolat dans achat 1
+(1, 8711495392919, 1),  -- Sécateur dans achat 1
+(1, 7350073733347, 2),  -- iPad dans achat 2
+(1, 4902505854453, 2);  -- Casque dans achat 2
