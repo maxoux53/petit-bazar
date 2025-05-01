@@ -10,10 +10,13 @@
 
 ### JetBrains IDEs ###
 # IntelliJ
-.idea/*
-!.idea/sqldialects.xml
 out/
 target/
+.idea/*
+!.idea/sqldialects.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/libraries/*
 
 # DataGrip
 sql/.idea/*
