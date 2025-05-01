@@ -52,7 +52,7 @@ Une feuille de route avec les fonctionnalités à implémenter et leur avancemen
    - `PG_PASSWORD`: Mot de passe pour la base de données
    - `PG_DB`: Nom de la base de données
 
-   Exemple de fichier `.env` [ici](./example.env).
+   Possibilité d'utiliser le [fichier d'exemple `.env`](./example.env). Le renommer en .env et modifier les valeurs comme souhaité.
 
 3. **Configuration de la base de données**
    - Utiliser la commande compose pour créer le conteneur PostgreSQL
