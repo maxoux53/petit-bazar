@@ -8,7 +8,7 @@ public class Purchase {
     private Integer employeeId;
     private Integer customerCardNumber;
 
-    public Purchase(Long id, LocalDate date, Integer employeeId, Integer customerCardNumber) {
+    public Purchase(Long id) {
         this.id = id;
     }
 
