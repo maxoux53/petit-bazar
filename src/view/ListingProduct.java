@@ -115,7 +115,7 @@ public class ListingProduct extends JPanel {
         listingValue.add(product3);
         listingValue.add(product4);
         
-        listingTable = new JTable((TableModel) listingNameColumn, (TableColumnModel) listingValue);
+        //listingTable = new JTable((TableModel) listingNameColumn, (TableColumnModel) listingValue);
         
         scrollPane = new JScrollPane(listingTable);
         

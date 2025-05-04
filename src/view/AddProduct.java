@@ -54,9 +54,9 @@ public class AddProduct extends JPanel {
     private JPanel buttonPanel;
     private JButton addButton;*/
     
-    private JPanel titlePanel, formPanel, namePanel, descriptionPanel, pricePanel, amountPanel, vatTypePanel, categoryPanel, brandPanel, startDatePanel, availablePanel, buttonPanel;
-    private JLabel titleLabel, nameLabel, descriptionLabel, priceLabel, amountLabel, vatTypeLabel, categoryLabel, brandLabel, startDateLabel, availableLabel;
-    private JTextField nameField, descriptionField, priceField, brandField, startDateDayField, startDateMonthField, startDateYearField;
+    private JPanel titlePanel, formPanel, barcodePanel, namePanel, descriptionPanel, pricePanel, amountPanel, vatTypePanel, categoryPanel, brandPanel, startDatePanel, availablePanel, buttonPanel;
+    private JLabel titleLabel, barcodeLabel, nameLabel, descriptionLabel, priceLabel, amountLabel, vatTypeLabel, categoryLabel, brandLabel, startDateLabel, availableLabel;
+    private JTextField nameField, barcodeField, descriptionField, priceField, brandField, startDateDayField, startDateMonthField, startDateYearField;
     private JComboBox<String> vatTypeComboBox, categoryComboBox;
     private JSpinner amountSpinner;
     private JPanel startDateLabelSubPanel, startDateFieldsSubPanel, AvailablelabelSubPanel, AvailableRadioButtonSubPanel;
@@ -84,10 +84,24 @@ public class AddProduct extends JPanel {
         formPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 250));
         formPanel.setBackground(Color.white);
         
+        // Barcode
+        barcodePanel = new JPanel(new GridLayout(1, 2, 50, 0));
+        barcodePanel.setBackground(Color.white);
+        
+        barcodeLabel = new JLabel("Code-Barres", SwingConstants.RIGHT);
+        barcodeLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.MID_SIZE.getSize()));
+        
+        barcodeField = new JTextField();
+        barcodeField.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.NORMAL_SIZE.getSize()));
+        barcodeField.setBackground(Color.white);
+        barcodeField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+        
+        barcodePanel.add(barcodeLabel);
+        barcodePanel.add(barcodeField);
+        
         // Name
         namePanel = new JPanel(new GridLayout(1, 2, 50, 0));
         namePanel.setBackground(Color.white);
-        namePanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0 ,0));
         
         nameLabel = new JLabel("Nom", SwingConstants.RIGHT);
         nameLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.MID_SIZE.getSize()));
@@ -308,7 +322,7 @@ public class AddProduct extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     ProductController.create(
-                            1L, // A REMPLACER PAR L'OBTENTION DU CODE BARRE
+                            Long.valueOf(barcodeField.getText()),
                             nameField.getText(),
                             descriptionField.getText(),
                             priceField.getText(),
@@ -332,6 +346,8 @@ public class AddProduct extends JPanel {
         buttonPanel.add(addButton);
         
         // Add
+        formPanel.add(barcodePanel);
+        
         formPanel.add(namePanel);
 
         formPanel.add(descriptionPanel);
