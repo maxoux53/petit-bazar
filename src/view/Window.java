@@ -13,6 +13,7 @@ public class Window extends JFrame {
     private Home home;
     private AddProduct addProduct;
     private EditProduct editProduct;
+    private DeleteProduct deleteProduct;
     private ListingProduct listingProduct;
 
     // Constructors
@@ -37,6 +38,7 @@ public class Window extends JFrame {
         home = new Home();
         addProduct = new AddProduct();
         editProduct = new EditProduct();
+        deleteProduct = new DeleteProduct();
         listingProduct = new ListingProduct();
         
         container = getContentPane();
@@ -95,6 +97,18 @@ public class Window extends JFrame {
             
             container.add(editProduct);
             setCurrentPanel(editProduct);
+            
+            container.repaint();
+            container.revalidate();
+        }
+    }
+    
+    public void showDeleteProduct() {
+        if (currentPanel != deleteProduct) {
+            container.remove(currentPanel);
+            
+            container.add(deleteProduct);
+            setCurrentPanel(deleteProduct);
             
             container.repaint();
             container.revalidate();
