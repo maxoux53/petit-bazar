@@ -7,6 +7,7 @@ import dataAccess.DAORetrievalFailedException;
 import dataAccess.InsertionFailedException;
 import dataAccess.NotFoundException;
 import model.Category;
+import model.Product;
 import model.Vat;
 
 import javax.swing.*;
@@ -114,7 +115,7 @@ public class EditProduct extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if (!fieldsIsVisible) {
                     try {
-                        ProductController.getProductByBarcode(barcodeField.getText()); // AFFICHER LE PRODUIT RETOURNÉ
+                        fillAllFields(ProductController.getProductByBarcode(barcodeField.getText())); // AFFICHER LE PRODUIT RETOURNÉ
                         setVisibleAll(true);
                         barcodeButton.setText("Décharger");
                         addButton.setEnabled(true);
@@ -361,7 +362,7 @@ public class EditProduct extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     ProductController.create(
-                            1L, // A REMPLACER PAR L'OBTENTION DU CODE BARRE
+                            barcodeField.getText(),
                             nameField.getText(),
                             descriptionField.getText(),
                             priceField.getText(),
@@ -462,4 +463,19 @@ public class EditProduct extends JPanel {
         startDatePanel.setVisible(status);
         availablePanel.setVisible(status);
     }
+    
+    private void fillAllFields(Product product) {
+        nameField.setText(product.getName());
+        descriptionField.setText(product.getDescription());
+        priceField.setText(String.valueOf(product.getExclVatPrice()));
+        amountSpinner.setValue(product.getAmount());
+        try {
+            vatTypeComboBox.setSelectedIndex(ProductController.indexOfVatType(product.getVatType()));
+            categoryComboBox.setSelectedIndex(ProductController.indexOfCategoryName(product.getCategoryId()));
+        } catch (DAORetrievalFailedException e) {
+            System.out.println("test");
+        }
+        // brandField.setText(product.getBrandId());
+    }
+    
 }

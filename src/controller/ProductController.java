@@ -10,9 +10,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ProductController extends Controller {
-    public static void create(Long barcode, String name, String description, String priceAsString, Integer amount, Boolean isAvailable, Character vat, Integer categoryId, Integer brandId, String stringDay, String stringMonth, String stringYear) throws WrongTypeException, ProhibitedValueException, InsertionFailedException, DAORetrievalFailedException, FieldIsEmptyException {
+    public static void create(String barcode, String name, String description, String priceAsString, Integer amount, Boolean isAvailable, Character vat, Integer categoryId, Integer brandId, String stringDay, String stringMonth, String stringYear) throws WrongTypeException, ProhibitedValueException, InsertionFailedException, DAORetrievalFailedException, FieldIsEmptyException {
         ProductManager.add(new Product(
-                stringToBarcode(barcode.toString()),
+                stringToBarcode(barcode),
                 nameInputValidation(name),
                 description,
                 amount,
@@ -104,5 +104,29 @@ public class ProductController extends Controller {
 
     public static ArrayList<Integer> getOutOfStock() throws NotFoundException, DAORetrievalFailedException {
         return ProductManager.getOutOfStock();
+    }
+
+    public static int indexOfVatType(Character vatType) throws DAORetrievalFailedException {
+        ArrayList<Vat> vats = getVats();
+        ArrayList<Character> vatTypes = new ArrayList<>();
+        for (Vat vat : vats) {
+            vatTypes.add(vat.getType());
+        }
+        System.out.println(vatTypes.indexOf(vatType));
+        return vatTypes.indexOf(vatType);
+    }
+    
+    public static int indexOfCategoryName(int categoryId) throws DAORetrievalFailedException {
+        ArrayList<Category> categories = getCategories();
+        ArrayList<Integer> categoryIds = new ArrayList<>();
+        for (Category category : categories) {
+            categoryIds.add(category.getId());
+        }
+        return categoryIds.indexOf(categoryId);
+    }
+    
+    public static String getBrandLabelById(int brandId) {
+        //ArrayList<Brand> brands = getB;
+        return "";
     }
 }
