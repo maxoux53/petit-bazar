@@ -4,7 +4,7 @@ public class Role {
     private String id;
     private String name;
 
-    //CONSTRUCTOR
+    // CONSTRUCTOR
 
     public Role() {}
 
