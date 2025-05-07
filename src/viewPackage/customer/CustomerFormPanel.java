@@ -21,9 +21,8 @@ public class CustomerFormPanel extends JPanel {
     private JButton cancelButton;
 
     public CustomerFormPanel() {
-        setLayout(new GridLayout(9, 2, 10, 10)); // GridLayout avec 9 lignes et 2 colonnes
+        setLayout(new GridLayout(9, 2, 10, 10));
 
-        // Ajouter les labels et champs de texte pour chaque propriété
         add(new JLabel("Prénom:"));
         firstNameField = new JTextField();
         add(firstNameField);
@@ -52,23 +51,18 @@ public class CustomerFormPanel extends JPanel {
         birthDateField = new JTextField();
         add(birthDateField);
 
-        // Boutons pour soumettre ou annuler
-        submitButton = new JButton("Créer le client");
+        submitButton = new JButton("Ajouter un client");
         add(submitButton);
 
         cancelButton = new JButton("Annuler");
         add(cancelButton);
 
-        // Action du bouton "Annuler"
         cancelButton.addActionListener(e -> {
-            // Effacer les champs
             clearFields();
         });
 
-        // Action du bouton "Créer le client"
         submitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Récupérer les valeurs des champs
                 String firstName = firstNameField.getText();
                 String lastName = lastNameField.getText();
                 String email = emailField.getText();
@@ -78,7 +72,6 @@ public class CustomerFormPanel extends JPanel {
                 String birthDateStr = birthDateField.getText();
                 Date birthDate = parseDate(birthDateStr);
 
-                // Créer un nouveau client
                 Customer customer = new Customer();
                 customer.setFirstName(firstName);
                 customer.setLastName(lastName);
@@ -88,10 +81,8 @@ public class CustomerFormPanel extends JPanel {
                 customer.setLoyaltyPoints(loyaltyPoints);
                 customer.setBirthDate(birthDate);
 
-                // Vous pouvez maintenant utiliser le customer pour l'envoyer au contrôleur, etc.
-
-                JOptionPane.showMessageDialog(CustomerFormPanel.this, "Client créé avec succès!");
-                clearFields(); // Effacer les champs après la soumission
+                JOptionPane.showMessageDialog(CustomerFormPanel.this, "Client créé avec succès");
+                clearFields();
             }
         });
     }
@@ -111,7 +102,7 @@ public class CustomerFormPanel extends JPanel {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             return dateFormat.parse(dateStr);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Format de date invalide. Veuillez entrer la date au format YYYY-MM-DD.");
+            JOptionPane.showMessageDialog(this, "Format de date invalide. Veuillez entrer la date au format YYYY-MM-DD");
             return null;
         }
     }
