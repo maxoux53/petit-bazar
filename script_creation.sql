@@ -47,20 +47,20 @@ CREATE TABLE `employee` (
     `Street` varchar(50) NOT NULL,
     `StreetNumber` int NOT NULL,
     `UnitNumber` int DEFAULT NULL,
-    `IdRole` char(36) DEFAULT NULL,
     `HireDate` date NOT NULL,
-    `ManagerId` char(36) DEFAULT NULL,
-    `CityId` char(36) NOT NULL,
+    `IdRole` char(36) DEFAULT NULL,
+    `IdManager` char(36) DEFAULT NULL,
+    `IdCity` char(36) NOT NULL,
 
     PRIMARY KEY (`Id`),
 
     KEY `IdRole` (`IdRole`),
-    KEY `ManagerId` (`ManagerId`),
-    KEY `CityId` (`CityId`),
+    KEY `IdManager` (`IdManager`),
+    KEY `IdCity` (`IdCity`),
 
     CONSTRAINT `FK_EMPLOYEE_ROLE` FOREIGN KEY (`IdRole`) REFERENCES `role` (`Id`),
-    CONSTRAINT `FK_EMPLOYEE_EMPLOYEE` FOREIGN KEY (`ManagerId`) REFERENCES `employee` (`Id`),
-    CONSTRAINT `FK_EMPLOYEE_CITY` FOREIGN KEY (`CityId`) REFERENCES `city` (`Id`)
+    CONSTRAINT `FK_EMPLOYEE_EMPLOYEE` FOREIGN KEY (`IdManager`) REFERENCES `employee` (`Id`),
+    CONSTRAINT `FK_EMPLOYEE_CITY` FOREIGN KEY (`IdCity`) REFERENCES `city` (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 -- -- -- -- -- -- -- -- -- --
 
@@ -113,11 +113,11 @@ CREATE TABLE `brand` (
 -- -- -- -- -- -- -- -- -- --
 CREATE TABLE `category` (
     `Id` char(36) NOT NULL DEFAULT (uuid()),
-    `Label` varchar(25) NOT NULL,
+    `Name` varchar(25) NOT NULL,
 
     PRIMARY KEY (`Id`),
 
-    UNIQUE KEY `Label` (`Label`)
+    UNIQUE KEY `Name` (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 -- -- -- -- -- -- -- -- -- --
 
