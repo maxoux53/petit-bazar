@@ -1,13 +1,13 @@
 package modelPackage;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class Customer {
     private String id;
     private int loyaltyCardNumber;
     private String firstName;
     private String lastName;
-    private LocalDate birthDate;
+    private Date birthDate;
     private String email;
     private String phone;
     private int loyaltyPoints;
@@ -17,6 +17,10 @@ public class Customer {
     public Customer() {}
 
     // GETTER
+
+    public String getId() {
+        return id;
+    }
 
     public int getLoyaltyCardNumber() {
         return loyaltyCardNumber;
@@ -30,7 +34,7 @@ public class Customer {
         return lastName;
     }
 
-    public LocalDate getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
@@ -48,11 +52,24 @@ public class Customer {
 
     // SETTER
 
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public void setLoyaltyCardNumber(int loyaltyCardNumber) {
         this.loyaltyCardNumber = loyaltyCardNumber;
     }
 
-    public void setBirthDate(LocalDate birthDate) {
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 

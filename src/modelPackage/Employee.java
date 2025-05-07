@@ -1,6 +1,6 @@
 package modelPackage;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class Employee {
     private String id;
@@ -11,7 +11,7 @@ public class Employee {
     private String street;
     private int streetNumber;
     private int unitNumber;
-    private LocalDate hireDate;
+    private Date hireDate;
     private String idRole;
     private String idManager;
     private String idCity;
@@ -54,7 +54,7 @@ public class Employee {
         return unitNumber;
     }
 
-    public LocalDate getHireDate() {
+    public Date getHireDate() {
         return hireDate;
     }
 
@@ -72,6 +72,17 @@ public class Employee {
 
     // SETTER
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
     public void setPassword(byte[] password) {
         this.password = password;
@@ -91,5 +102,21 @@ public class Employee {
 
     public void setUnitNumber(int unitNumber) {
         this.unitNumber = unitNumber;
+    }
+
+    public void setHireDate(Date hireDate) {
+        this.hireDate = hireDate;
+    }
+
+    public void setIdRole(String idRole) {
+        this.idRole = idRole;
+    }
+
+    public void setIdManager(String idManager) {
+        this.idManager = idManager;
+    }
+
+    public void setIdCity(String idCity) {
+        this.idCity = idCity;
     }
 }

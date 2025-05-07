@@ -1,177 +1,177 @@
 -- -- -- -- -- -- -- -- -- --
 CREATE TABLE `role` (
-    `Id` char(36) NOT NULL DEFAULT (uuid()),
-    `Name` varchar(25) NOT NULL,
+    `id` char(36) NOT NULL DEFAULT (uuid()),
+    `name` varchar(25) NOT NULL,
 
-    PRIMARY KEY (`Id`),
+    PRIMARY KEY (`id`),
 
-    UNIQUE KEY `Name` (`Name`)
+    UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 -- -- -- -- -- -- -- -- -- --
 
 -- -- -- -- -- -- -- -- -- --
 CREATE TABLE `country` (
-    `Id` char(36) NOT NULL DEFAULT (uuid()),
-    `Name` varchar(25) NOT NULL,
+    `id` char(36) NOT NULL DEFAULT (uuid()),
+    `name` varchar(25) NOT NULL,
 
-    PRIMARY KEY (`Id`),
+    PRIMARY KEY (`id`),
 
-    UNIQUE KEY `Name` (`Name`)
+    UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 -- -- -- -- -- -- -- -- -- --
 
 -- -- -- -- -- -- -- -- -- --
 CREATE TABLE `city` (
-    `Id` char(36) NOT NULL DEFAULT (uuid()),
-    `Zipcode` int NOT NULL,
-    `Name` varchar(25) NOT NULL,
-    `IdCountry` char(36) DEFAULT NULL,
+    `id` char(36) NOT NULL DEFAULT (uuid()),
+    `zipCode` int NOT NULL,
+    `name` varchar(25) NOT NULL,
+    `idCountry` char(36) DEFAULT NULL,
 
-    PRIMARY KEY (`Id`),
+    PRIMARY KEY (`id`),
 
-    UNIQUE KEY `Zipcode` (`Zipcode`),
+    UNIQUE KEY `zipCode` (`zipCode`),
 
-    KEY `IdCountry` (`IdCountry`),
+    KEY `idCountry` (`idCountry`),
 
-    CONSTRAINT `FK_CITY_COUNTRY` FOREIGN KEY (`IdCountry`) REFERENCES `country` (`Id`)
+    CONSTRAINT `FK_CITY_COUNTRY` FOREIGN KEY (`idCountry`) REFERENCES `country` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 -- -- -- -- -- -- -- -- -- --
 
 -- -- -- -- -- -- -- -- -- --
 CREATE TABLE `employee` (
-    `Id` char(36) NOT NULL DEFAULT (uuid()),
-    `FirstName` varchar(25) NOT NULL,
-    `LastName` varchar(25) NOT NULL,
-    `Password` blob NOT NULL,
-    `IsActive` tinyint(1) NOT NULL DEFAULT '1',
-    `Street` varchar(50) NOT NULL,
-    `StreetNumber` int NOT NULL,
-    `UnitNumber` int DEFAULT NULL,
-    `HireDate` date NOT NULL,
-    `IdRole` char(36) DEFAULT NULL,
-    `IdManager` char(36) DEFAULT NULL,
-    `IdCity` char(36) NOT NULL,
+    `id` char(36) NOT NULL DEFAULT (uuid()),
+    `firstName` varchar(25) NOT NULL,
+    `lastName` varchar(25) NOT NULL,
+    `password` blob NOT NULL,
+    `isActive` tinyint(1) NOT NULL DEFAULT '1',
+    `street` varchar(50) NOT NULL,
+    `streetNumber` int NOT NULL,
+    `unitNumber` int DEFAULT NULL,
+    `hireDate` date NOT NULL,
+    `idRole` char(36) DEFAULT NULL,
+    `idManager` char(36) DEFAULT NULL,
+    `idCity` char(36) NOT NULL,
 
-    PRIMARY KEY (`Id`),
+    PRIMARY KEY (`id`),
 
-    KEY `IdRole` (`IdRole`),
-    KEY `IdManager` (`IdManager`),
-    KEY `IdCity` (`IdCity`),
+    KEY `idRole` (`idRole`),
+    KEY `idManager` (`idManager`),
+    KEY `idCity` (`idCity`),
 
-    CONSTRAINT `FK_EMPLOYEE_ROLE` FOREIGN KEY (`IdRole`) REFERENCES `role` (`Id`),
-    CONSTRAINT `FK_EMPLOYEE_EMPLOYEE` FOREIGN KEY (`IdManager`) REFERENCES `employee` (`Id`),
-    CONSTRAINT `FK_EMPLOYEE_CITY` FOREIGN KEY (`IdCity`) REFERENCES `city` (`Id`)
+    CONSTRAINT `FK_EMPLOYEE_ROLE` FOREIGN KEY (`idRole`) REFERENCES `role` (`id`),
+    CONSTRAINT `FK_EMPLOYEE_EMPLOYEE` FOREIGN KEY (`idManager`) REFERENCES `employee` (`id`),
+    CONSTRAINT `FK_EMPLOYEE_CITY` FOREIGN KEY (`idCity`) REFERENCES `city` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 -- -- -- -- -- -- -- -- -- --
 
 -- -- -- -- -- -- -- -- -- --
 CREATE TABLE `customer` (
-    `Id` char(36) NOT NULL DEFAULT (uuid()),
-    `LoyaltyCardNumber` int NOT NULL,
-    `FirstName` varchar(25) NOT NULL,
-    `LastName` varchar(25) NOT NULL,
-    `BirthDate` date NOT NULL,
-    `Email` varchar(50) NOT NULL,
-    `Phone` varchar(50) DEFAULT NULL,
-    `LoyaltyPoints` int NOT NULL DEFAULT '0',
+    `id` char(36) NOT NULL DEFAULT (uuid()),
+    `loyaltyCardNumber` int NOT NULL,
+    `firstName` varchar(25) NOT NULL,
+    `lastName` varchar(25) NOT NULL,
+    `birthDate` date NOT NULL,
+    `email` varchar(50) NOT NULL,
+    `phone` varchar(50) DEFAULT NULL,
+    `loyaltyPoints` int NOT NULL DEFAULT '0',
 
-    PRIMARY KEY (`Id`),
+    PRIMARY KEY (`id`),
 
-    UNIQUE KEY `LoyaltyCardNumber` (`LoyaltyCardNumber`),
-    UNIQUE KEY `Email` (`Email`)
+    UNIQUE KEY `loyaltyCardNumber` (`loyaltyCardNumber`),
+    UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 -- -- -- -- -- -- -- -- -- --
 
 -- -- -- -- -- -- -- -- -- --
 CREATE TABLE `purchase` (
-    `Id` char(36) NOT NULL DEFAULT (uuid()),
-    `Date` date NOT NULL,
-    `IdEmployee` char(36) DEFAULT NULL,
-    `IdCustomer` char(36) DEFAULT NULL,
+    `id` char(36) NOT NULL DEFAULT (uuid()),
+    `date` date NOT NULL,
+    `idEmployee` char(36) DEFAULT NULL,
+    `idCustomer` char(36) DEFAULT NULL,
 
-    PRIMARY KEY (`Id`),
+    PRIMARY KEY (`id`),
 
-    KEY `IdEmployee` (`IdEmployee`),
-    KEY `IdCustomer` (`IdCustomer`),
+    KEY `idEmployee` (`idEmployee`),
+    KEY `idCustomer` (`idCustomer`),
 
-    CONSTRAINT `FK_PURCHASE_EMPLOYEE` FOREIGN KEY (`IdEmployee`) REFERENCES `employee` (`Id`),
-    CONSTRAINT `FK_PURCHASE_CUSTOMER` FOREIGN KEY (`IdCustomer`) REFERENCES `customer` (`Id`)
+    CONSTRAINT `FK_PURCHASE_EMPLOYEE` FOREIGN KEY (`idEmployee`) REFERENCES `employee` (`id`),
+    CONSTRAINT `FK_PURCHASE_CUSTOMER` FOREIGN KEY (`idCustomer`) REFERENCES `customer` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 -- -- -- -- -- -- -- -- -- --
 
 -- -- -- -- -- -- -- -- -- --
 CREATE TABLE `brand` (
-    `Id` char(36) NOT NULL DEFAULT (uuid()),
-    `Name` varchar(25) NOT NULL,
+    `id` char(36) NOT NULL DEFAULT (uuid()),
+    `name` varchar(25) NOT NULL,
 
-    PRIMARY KEY (`Id`),
+    PRIMARY KEY (`id`),
 
-    UNIQUE KEY `Name` (`Name`)
+    UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 -- -- -- -- -- -- -- -- -- --
 
 -- -- -- -- -- -- -- -- -- --
 CREATE TABLE `category` (
-    `Id` char(36) NOT NULL DEFAULT (uuid()),
-    `Name` varchar(25) NOT NULL,
+    `id` char(36) NOT NULL DEFAULT (uuid()),
+    `name` varchar(25) NOT NULL,
 
-    PRIMARY KEY (`Id`),
+    PRIMARY KEY (`id`),
 
-    UNIQUE KEY `Name` (`Name`)
+    UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 -- -- -- -- -- -- -- -- -- --
 
 -- -- -- -- -- -- -- -- -- --
 CREATE TABLE `vat` (
-    `Id` char(36) NOT NULL DEFAULT (uuid()),
-    `Type` varchar(1) NOT NULL,
-    `Rate` int NOT NULL,
+    `id` char(36) NOT NULL DEFAULT (uuid()),
+    `type` varchar(1) NOT NULL,
+    `rate` int NOT NULL,
 
-    PRIMARY KEY (`Id`),
+    PRIMARY KEY (`id`),
 
-    UNIQUE KEY `Type` (`Type`)
+    UNIQUE KEY `type` (`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 -- -- -- -- -- -- -- -- -- --
 
 -- -- -- -- -- -- -- -- -- --
 CREATE TABLE `product` (
-    `Id` char(36) NOT NULL DEFAULT (uuid()),
-    `Barcode` int NOT NULL,
-    `Name` varchar(50) NOT NULL,
-    `Description` varchar(255) DEFAULT NULL,
-    `BasePrice` int NOT NULL,
-    `IsAvailable` tinyint(1) NOT NULL DEFAULT '1',
-    `IdVAT` char(36) DEFAULT NULL,
-    `IdCategory` char(36) DEFAULT NULL,
-    `IdBrand` char(36) DEFAULT NULL,
+    `id` char(36) NOT NULL DEFAULT (uuid()),
+    `barcode` int NOT NULL,
+    `name` varchar(50) NOT NULL,
+    `description` varchar(255) DEFAULT NULL,
+    `basePrice` int NOT NULL,
+    `isAvailable` tinyint(1) NOT NULL DEFAULT '1',
+    `idVAT` char(36) DEFAULT NULL,
+    `idCategory` char(36) DEFAULT NULL,
+    `idBrand` char(36) DEFAULT NULL,
 
-    PRIMARY KEY (`Id`),
+    PRIMARY KEY (`id`),
 
-    UNIQUE KEY `Barcode` (`Barcode`),
+    UNIQUE KEY `barcode` (`barcode`),
 
-    KEY `IdVAT` (`IdVAT`),
-    KEY `IdCategory` (`IdCategory`),
-    KEY `IdBrand` (`IdBrand`),
+    KEY `idVAT` (`idVAT`),
+    KEY `idCategory` (`idCategory`),
+    KEY `idBrand` (`idBrand`),
 
-    CONSTRAINT `FK_PRODUCT_VAT` FOREIGN KEY (`IdVAT`) REFERENCES `vat` (`Id`),
-    CONSTRAINT `FK_PRODUCT_CATEGORY` FOREIGN KEY (`IdCategory`) REFERENCES `category` (`Id`),
-    CONSTRAINT `FK_PRODUCT_BRAND` FOREIGN KEY (`IdBrand`) REFERENCES `brand` (`Id`)
+    CONSTRAINT `FK_PRODUCT_VAT` FOREIGN KEY (`idVAT`) REFERENCES `vat` (`id`),
+    CONSTRAINT `FK_PRODUCT_CATEGORY` FOREIGN KEY (`idCategory`) REFERENCES `category` (`id`),
+    CONSTRAINT `FK_PRODUCT_BRAND` FOREIGN KEY (`idBrand`) REFERENCES `brand` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 -- -- -- -- -- -- -- -- -- --
 
 -- -- -- -- -- -- -- -- -- --
 CREATE TABLE `order_line` (
-    `Id` char(36) NOT NULL DEFAULT (uuid()),
-    `Quantity` int NOT NULL,
-    `IdProduct` char(36) DEFAULT NULL,
-    `IdPurchase` char(36) DEFAULT NULL,
+    `id` char(36) NOT NULL DEFAULT (uuid()),
+    `quantity` int NOT NULL,
+    `idProduct` char(36) DEFAULT NULL,
+    `idPurchase` char(36) DEFAULT NULL,
 
-    PRIMARY KEY (`Id`),
+    PRIMARY KEY (`id`),
 
-    KEY `IdProduct` (`IdProduct`),
-    KEY `IdPurchase` (`IdPurchase`),
+    KEY `idProduct` (`idProduct`),
+    KEY `idPurchase` (`idPurchase`),
 
-    CONSTRAINT `FK_ORDER_LINE_PRODUCT` FOREIGN KEY (`IdProduct`) REFERENCES `product` (`Id`),
-    CONSTRAINT `FK_ORDER_LINE_PURCHASE` FOREIGN KEY (`IdPurchase`) REFERENCES `purchase` (`Id`)
+    CONSTRAINT `FK_ORDER_LINE_PRODUCT` FOREIGN KEY (`idProduct`) REFERENCES `product` (`id`),
+    CONSTRAINT `FK_ORDER_LINE_PURCHASE` FOREIGN KEY (`idPurchase`) REFERENCES `purchase` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 -- -- -- -- -- -- -- -- -- --

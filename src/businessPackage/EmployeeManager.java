@@ -2,11 +2,14 @@ package businessPackage;
 
 import dataAccessPackage.employee.EmployeeDBAccess;
 import dataAccessPackage.employee.IEmployeeDAO;
+import exceptionPackage.ConnectionException;
+import exceptionPackage.ExistingException;
+import exceptionPackage.NotFoundException;
 import modelPackage.Employee;
 
 import java.util.ArrayList;
 
-public class EmployeeManager { // PENSER A GERER LES EXCEPTIONS !!!
+public class EmployeeManager {
     private IEmployeeDAO dao;
 
     public EmployeeManager() {
@@ -19,23 +22,23 @@ public class EmployeeManager { // PENSER A GERER LES EXCEPTIONS !!!
 
     // CRUD
 
-    public void addEmployee(Employee employee) {
+    public void addEmployee(Employee employee) throws ConnectionException, ExistingException {
         dao.addEmployee(employee);
     }
 
-    public ArrayList<Employee> getAllEmployees() {
+    public ArrayList<Employee> getAllEmployees() throws ConnectionException, NotFoundException {
         return dao.getAllEmployees();
     }
 
-    public Employee getEmployeeById(String id) {
+    public Employee getEmployeeById(String id) throws ConnectionException, NotFoundException {
         return dao.getEmployeeById(id);
     }
 
-    public void updateEmployee(Employee employee) {
+    public void updateEmployee(Employee employee) throws ConnectionException, NotFoundException {
         dao.updateEmployee(employee);
     }
 
-    public void deleteEmployee(String id) {
+    public void deleteEmployee(String id) throws ConnectionException, NotFoundException {
         dao.deleteEmployee(id);
     }
 }
