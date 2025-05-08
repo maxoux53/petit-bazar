@@ -1,4 +1,4 @@
-package controller;
+package exceptions;
 
 public class ProhibitedValueException extends Exception {
     public ProhibitedValueException(String fieldName) {

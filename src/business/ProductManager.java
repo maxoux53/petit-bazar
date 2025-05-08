@@ -15,32 +15,32 @@ public class ProductManager {
         productDataAccess = new ProductDBAccess();
     }
 
-    public static int add(Product product) throws InsertionFailedException, DAORetrievalFailedException {
+    public static int create(Product product) throws InsertionFailedException, DAORetrievalFailedException {
         return productDataAccess.create(product);
     }
 
     public static int remove(Long barcode) throws DeleteFailedException, DAORetrievalFailedException {
-        return productDataAccess.delete(barcode);
+        return productDataAccess.remove(barcode);
     }
 
-    public static int edit(Product product) throws DAORetrievalFailedException, UpdateFailedException {
+    public static int update(Product product) throws DAORetrievalFailedException, UpdateFailedException {
         return productDataAccess.update(product);
     }
 
     public static Product getByBarcode(Long barcode) throws NotFoundException, DAORetrievalFailedException {
-        return productDataAccess.findByBarcode(barcode);
+        return productDataAccess.getByBarcode(barcode);
     }
 
     public static ArrayList<Product> searchByName(String name) throws NotFoundException, DAORetrievalFailedException {
-        return productDataAccess.findByName(name);
+        return productDataAccess.searchByName(name);
     }
 
     public static ArrayList<Product> getAll() throws DAORetrievalFailedException {
-        return productDataAccess.findAll();
+        return productDataAccess.getAll();
     }
 
     public static int getOrCreateBrand(String name) throws DAORetrievalFailedException {
-        return productDataAccess.findOrCreateBrand(name);
+        return productDataAccess.getOrCreateBrand(name);
     }
 
     public static ArrayList<Category> getAllCategories() throws DAORetrievalFailedException {
@@ -48,14 +48,14 @@ public class ProductManager {
     }
 
     public static ArrayList<Vat> getAllVats() throws DAORetrievalFailedException {
-        return productDataAccess.getAllVatTypes();
+        return productDataAccess.getAllVats();
     }
 
     public static int getCurrentStock(Long barcode) throws NotFoundException, DAORetrievalFailedException {
-        return productDataAccess.currentStock(barcode);
+        return productDataAccess.getCurrentStock(barcode);
     }
 
     public static ArrayList<Integer> getOutOfStock() throws NotFoundException, DAORetrievalFailedException {
-        return productDataAccess.outOfStock();
+        return productDataAccess.getOutOfStock();
     }
 }

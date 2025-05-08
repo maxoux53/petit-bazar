@@ -21,7 +21,7 @@ public class ViewCore {
 
     public static void quit() {
         try {
-            DataInteractionManager.terminate();
+            DataInteractionManager.close();
             System.exit(0);
         } catch (DAORetrievalFailedException e) {
             JOptionPane.showMessageDialog(null, "Une erreur est survenue lors de la fermeture ! Veuillez reessayer.\n" + e.getMessage(), "⛔️", JOptionPane.ERROR_MESSAGE);

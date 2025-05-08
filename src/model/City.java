@@ -1,6 +1,6 @@
 package model;
 
-public class City implements IEmployeeInfoWrapper {
+public class City implements EmployeeInfoWrapper {
     private Integer zipCode;
     private String name;
     private String country;

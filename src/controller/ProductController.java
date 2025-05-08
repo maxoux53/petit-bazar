@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class ProductController extends Controller {
     public static void create(String barcode, String name, String description, String priceAsString, Integer amount, Boolean isAvailable, Character vat, Integer categoryId, Integer brandId, String stringDay, String stringMonth, String stringYear) throws WrongTypeException, ProhibitedValueException, InsertionFailedException, DAORetrievalFailedException, FieldIsEmptyException {
-        ProductManager.add(new Product(
+        ProductManager.create(new Product(
                 stringToBarcode(barcode),
                 nameInputValidation(name),
                 description,
@@ -23,8 +23,8 @@ public class ProductController extends Controller {
         ));
     }
 
-    public static int edit(String barcode, String name, String description, String priceAsString, Integer amount, Boolean isAvailable, Character vat, Integer categoryId, Integer brandId, String stringDay, String stringMonth, String stringYear) throws WrongTypeException, ProhibitedValueException, DAORetrievalFailedException, UpdateFailedException, FieldIsEmptyException {
-        return ProductManager.edit(new Product(
+    public static int update(String barcode, String name, String description, String priceAsString, Integer amount, Boolean isAvailable, Character vat, Integer categoryId, Integer brandId, String stringDay, String stringMonth, String stringYear) throws WrongTypeException, ProhibitedValueException, DAORetrievalFailedException, UpdateFailedException, FieldIsEmptyException {
+        return ProductManager.update(new Product(
                 stringToBarcode(barcode),
                 name,
                 description,
@@ -80,7 +80,7 @@ public class ProductController extends Controller {
         return ProductManager.remove(stringToBarcode(barcodeAsString));
     }
 
-    public static Product getProductByBarcode(String barcodeAsString) throws DAORetrievalFailedException, NotFoundException, WrongTypeException, FieldIsEmptyException {
+    public static Product getByBarcode(String barcodeAsString) throws DAORetrievalFailedException, NotFoundException, WrongTypeException, FieldIsEmptyException {
         return ProductManager.getByBarcode(stringToBarcode(barcodeAsString));
     }
 
@@ -88,11 +88,11 @@ public class ProductController extends Controller {
         return ProductManager.getOrCreateBrand(name);
     }
 
-    public static ArrayList<Category> getCategories() throws DAORetrievalFailedException {
+    public static ArrayList<Category> getAllCategories() throws DAORetrievalFailedException {
         return ProductManager.getAllCategories();
     }
 
-    public static ArrayList<Vat> getVats() throws DAORetrievalFailedException {
+    public static ArrayList<Vat> getAllVats() throws DAORetrievalFailedException {
         return ProductManager.getAllVats();
     }
 
@@ -105,21 +105,25 @@ public class ProductController extends Controller {
     }
 
     public static int indexOfVatType(Character vatType) throws DAORetrievalFailedException {
-        ArrayList<Vat> vats = getVats();
+        ArrayList<Vat> vats = getAllVats();
         ArrayList<Character> vatTypes = new ArrayList<>();
+
         for (Vat vat : vats) {
             vatTypes.add(vat.getType());
         }
-        System.out.println(vatTypes.indexOf(vatType));
+        System.out.println(vatTypes.indexOf(vatType)); // DEBUG
+
         return vatTypes.indexOf(vatType);
     }
     
     public static int indexOfCategoryName(int categoryId) throws DAORetrievalFailedException {
-        ArrayList<Category> categories = getCategories();
+        ArrayList<Category> categories = getAllCategories();
         ArrayList<Integer> categoryIds = new ArrayList<>();
+
         for (Category category : categories) {
             categoryIds.add(category.getId());
         }
+
         return categoryIds.indexOf(categoryId);
     }
     

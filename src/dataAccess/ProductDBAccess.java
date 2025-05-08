@@ -44,7 +44,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         }
     }
 
-    public int delete(Long barcode) throws DeleteFailedException, DAORetrievalFailedException {
+    public int remove(Long barcode) throws DeleteFailedException, DAORetrievalFailedException {
         sqlInstruction = "DELETE FROM product WHERE barcode = ?;";
 
         nullifyProductReferencesFromOrderLine(barcode);
@@ -109,7 +109,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         }
     }
 
-    public Product findByBarcode(Long barcode) throws NotFoundException, DAORetrievalFailedException {
+    public Product getByBarcode(Long barcode) throws NotFoundException, DAORetrievalFailedException {
         sqlInstruction = "SELECT * FROM product WHERE barcode = ?;";
 
         try {
@@ -187,7 +187,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         }
     }
 
-    public ArrayList<Product> findByName(String name) throws DAORetrievalFailedException {
+    public ArrayList<Product> searchByName(String name) throws DAORetrievalFailedException {
         sqlInstruction = "SELECT * FROM product WHERE name ILIKE ?;";
 
         try {
@@ -268,7 +268,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         }
     }
 
-    public ArrayList<Product> findAll() throws DAORetrievalFailedException {
+    public ArrayList<Product> getAll() throws DAORetrievalFailedException {
         sqlInstruction = "SELECT * FROM product;";
 
         try {
@@ -347,7 +347,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         }
     }
 
-    public Integer findOrCreateBrand(String brandName) throws DAORetrievalFailedException {
+    public Integer getOrCreateBrand(String brandName) throws DAORetrievalFailedException {
         boolean exists = true;
 
         do {
@@ -409,7 +409,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         }
     }
 
-    public ArrayList<Vat> getAllVatTypes() throws DAORetrievalFailedException {
+    public ArrayList<Vat> getAllVats() throws DAORetrievalFailedException {
         sqlInstruction = "SELECT * FROM vat;";
 
         try {
@@ -439,7 +439,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         }
     }
 
-    public int currentStock(Long barcode) throws NotFoundException, DAORetrievalFailedException {
+    public int getCurrentStock(Long barcode) throws NotFoundException, DAORetrievalFailedException {
         sqlInstruction = "SELECT amount FROM product WHERE barcode = ?;";
 
         try {
@@ -461,7 +461,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         }
     }
 
-    public ArrayList<Integer> outOfStock() throws DAORetrievalFailedException {
+    public ArrayList<Integer> getOutOfStock() throws DAORetrievalFailedException {
         sqlInstruction = "SELECT barcode FROM product WHERE amount = 0;";
 
         try {

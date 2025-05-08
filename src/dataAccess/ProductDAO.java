@@ -9,18 +9,18 @@ import java.util.ArrayList;
 
 public interface ProductDAO {
     int create(Product product) throws InsertionFailedException, DAORetrievalFailedException;
-    int delete(Long barcode) throws DeleteFailedException, DAORetrievalFailedException;
+    int remove(Long barcode) throws DeleteFailedException, DAORetrievalFailedException;
     int update(Product product) throws UpdateFailedException, DAORetrievalFailedException;
 
-    Product findByBarcode(Long barcode) throws NotFoundException, DAORetrievalFailedException;
-    ArrayList<Product> findByName(String name) throws NotFoundException, DAORetrievalFailedException;
-    ArrayList<Product> findAll() throws DAORetrievalFailedException;
+    Product getByBarcode(Long barcode) throws NotFoundException, DAORetrievalFailedException;
+    ArrayList<Product> searchByName(String name) throws NotFoundException, DAORetrievalFailedException;
+    ArrayList<Product> getAll() throws DAORetrievalFailedException;
 
-    Integer findOrCreateBrand(String brandName) throws DAORetrievalFailedException;
+    Integer getOrCreateBrand(String brandName) throws DAORetrievalFailedException;
 
     ArrayList<Category> getAllCategories() throws DAORetrievalFailedException;
-    ArrayList<Vat> getAllVatTypes() throws DAORetrievalFailedException;
+    ArrayList<Vat> getAllVats() throws DAORetrievalFailedException;
 
-    int currentStock(Long barcode) throws NotFoundException, DAORetrievalFailedException;
-    ArrayList<Integer> outOfStock() throws NotFoundException, DAORetrievalFailedException;
+    int getCurrentStock(Long barcode) throws NotFoundException, DAORetrievalFailedException;
+    ArrayList<Integer> getOutOfStock() throws NotFoundException, DAORetrievalFailedException;
 }

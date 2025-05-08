@@ -1,4 +1,4 @@
-package controller;
+package exceptions;
 
 public class FieldIsEmptyException extends Exception {
 

@@ -2,7 +2,7 @@ package model;
 
 import java.time.LocalDate;
 
-public class Employee implements IEmployeeInfoWrapper {
+public class Employee implements EmployeeInfoWrapper {
     private Integer id;
     private String firstName;
     private String lastName;

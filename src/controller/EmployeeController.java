@@ -39,8 +39,8 @@ public class EmployeeController extends Controller {
         return EmployeeManager.remove(stringToId(idAsString));
     }
 
-    public static int edit(int id, String firstName, String lastName, char[] password, Boolean isActive, String street, String streetNumberAsString, String unitNumberAsString, String roleLabel, String dayAsString, String monthAsString, String yearAsString, String managerIdAsString, String zipCodeAsString, String cityName, String countryName) throws HashFailedException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException, UpdateFailedException {
-        return EmployeeManager.edit(
+    public static int update(int id, String firstName, String lastName, char[] password, Boolean isActive, String street, String streetNumberAsString, String unitNumberAsString, String roleLabel, String dayAsString, String monthAsString, String yearAsString, String managerIdAsString, String zipCodeAsString, String cityName, String countryName) throws HashFailedException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException, UpdateFailedException {
+        return EmployeeManager.update(
                 new Employee(
                         id,
                         firstName,
@@ -134,11 +134,11 @@ public class EmployeeController extends Controller {
         return null;
     }
 
-    public static IEmployeeInfoWrapper[] getEmployeeById(String idAsString) throws NotFoundException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException {
+    public static EmployeeInfoWrapper[] getEmployeeById(String idAsString) throws NotFoundException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException {
         return EmployeeManager.getById(stringToId(idAsString));
     }
 
-    public static ArrayList<IEmployeeInfoWrapper[]> getAllEmployees() throws DAORetrievalFailedException {
+    public static ArrayList<EmployeeInfoWrapper[]> getAllEmployees() throws DAORetrievalFailedException {
         return EmployeeManager.getAll();
     }
 
@@ -172,12 +172,12 @@ public class EmployeeController extends Controller {
 
         DefaultTableModel modele = new DefaultTableModel(nomColonnes, 0);
 
-        ArrayList<IEmployeeInfoWrapper[]> employeesInfo = getAllEmployees();
+        ArrayList<EmployeeInfoWrapper[]> employeesInfo = getAllEmployees();
         Employee employee;
         City city;
         Object[] ligne = new Object[nomColonnes.length];
 
-        for (IEmployeeInfoWrapper[] employeeInfo : employeesInfo) {
+        for (EmployeeInfoWrapper[] employeeInfo : employeesInfo) {
             employee = (Employee)employeeInfo[0];
             city = (City)employeeInfo[1];
 

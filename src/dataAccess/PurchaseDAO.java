@@ -6,5 +6,5 @@ import model.Purchase;
 import java.util.ArrayList;
 
 public interface PurchaseDAO {
-    ArrayList<Purchase> findAll() throws DAORetrievalFailedException;
+    ArrayList<Purchase> getAll() throws DAORetrievalFailedException;
 }

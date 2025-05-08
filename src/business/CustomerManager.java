@@ -14,10 +14,10 @@ public class CustomerManager {
     }
 
     public static Customer getByLoyaltyCardNumber(int loyaltyCardNumber) throws NotFoundException, DAORetrievalFailedException {
-        return dao.findByLoyaltyCardNumber(loyaltyCardNumber);
+        return dao.getByLoyaltyCardNumber(loyaltyCardNumber);
     }
 
     public static ArrayList<Customer> getAll() throws DAORetrievalFailedException {
-        return dao.findAll();
+        return dao.getAll();
     }
 }

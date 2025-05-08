@@ -4,14 +4,14 @@ import dataAccess.*;
 import exceptions.DAORetrievalFailedException;
 
 public class DataInteractionManager {
-    private static TerminateDAO dao;
+    private static CloseDAO dao;
 
     static {
         //dao = DBAccess;
         dao = new EmployeeDBAccess();
     }
 
-    public static void terminate() throws DAORetrievalFailedException {
+    public static void close() throws DAORetrievalFailedException {
         dao.close();
     }
 }
