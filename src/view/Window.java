@@ -14,7 +14,7 @@ public class Window extends JFrame {
     private AddProduct addProduct;
     private EditProduct editProduct;
     private DeleteProduct deleteProduct;
-    private ListingProduct listingProduct;
+    private ProductListing listingProduct;
 
     // Constructors
     public Window(String title) {
@@ -39,7 +39,7 @@ public class Window extends JFrame {
         addProduct = new AddProduct();
         editProduct = new EditProduct();
         deleteProduct = new DeleteProduct();
-        listingProduct = new ListingProduct();
+        listingProduct = new ProductListing();
         
         container = getContentPane();
         container.add(login);

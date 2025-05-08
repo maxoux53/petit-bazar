@@ -138,7 +138,7 @@ public class EmployeeController extends Controller {
         return EmployeeManager.getById(stringToId(idAsString));
     }
 
-    public static ArrayList<EmployeeInfoWrapper[]> getAllEmployees() throws DAORetrievalFailedException {
+    public static ArrayList<Employee> getAllEmployees() throws DAORetrievalFailedException {
         return EmployeeManager.getAll();
     }
 
@@ -155,7 +155,7 @@ public class EmployeeController extends Controller {
     }
 
     public static DefaultTableModel infoTableModel() throws DAORetrievalFailedException {
-        String[] nomColonnes = {
+        String[] ColumnNames = {
                 "Matricule",
                 "Prénom",
                 "Nom",
@@ -170,33 +170,29 @@ public class EmployeeController extends Controller {
                 "Nom de la ville"
         };
 
-        DefaultTableModel modele = new DefaultTableModel(nomColonnes, 0);
+        DefaultTableModel model = new DefaultTableModel(ColumnNames, 0);
 
-        ArrayList<EmployeeInfoWrapper[]> employeesInfo = getAllEmployees();
-        Employee employee;
-        City city;
-        Object[] ligne = new Object[nomColonnes.length];
-
-        for (EmployeeInfoWrapper[] employeeInfo : employeesInfo) {
-            employee = (Employee)employeeInfo[0];
-            city = (City)employeeInfo[1];
-
-            ligne[0] = employee.getId();
-            ligne[1] = employee.getFirstName();
-            ligne[2] = employee.getLastName();
-            ligne[3] = employee.getActive();
-            ligne[4] = employee.getStreet();
-            ligne[5] = employee.getStreetNumber();
-            ligne[6] = employee.getUnitNumber();
-            ligne[7] = employee.getRoleLabel();
-            ligne[8] = employee.getHireDate();
-            ligne[9] = employee.getManagerId();
-            ligne[10] = city.getZipCode();
-            ligne[11] = city.getName();
-
-            modele.addRow(ligne);
+        ArrayList<Employee> employees = getAllEmployees();
+        String[] employeeInfos = new String[ColumnNames.length];
+        
+        for (Employee employee : employees) {
+            
+            employeeInfos[0] = String.valueOf(employee.getId());
+            employeeInfos[1] = employee.getFirstName();
+            employeeInfos[2] = employee.getLastName();
+            employeeInfos[3] = (employee.getActive() ? "Oui" : "Non");
+            employeeInfos[4] = employee.getStreet();
+            employeeInfos[5] = String.valueOf(employee.getStreetNumber());
+            employeeInfos[6] = String.valueOf(employee.getUnitNumber());
+            employeeInfos[7] = employee.getRoleLabel();
+            employeeInfos[8] = employee.getHireDate().getDayOfMonth() + "/" + employee.getHireDate().getMonth() + "/" + employee.getHireDate().getYear();
+            employeeInfos[9] = String.valueOf(employee.getManagerId());
+            employeeInfos[10] = String.valueOf(employee.getCityZipCode());
+            employeeInfos[11] = employee.getCityName();
+            
+            model.addRow(employeeInfos);
         }
 
-        return modele;
+        return model;
     }
 }
