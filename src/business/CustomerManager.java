@@ -7,7 +7,7 @@ import model.Customer;
 import java.util.ArrayList;
 
 public class CustomerManager {
-    private static ICustomerDAO dao;
+    private static CustomerDAO dao;
 
     static {
         dao = new CustomerDBAccess();

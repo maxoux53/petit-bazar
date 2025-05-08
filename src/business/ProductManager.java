@@ -9,7 +9,7 @@ import model.Vat;
 import java.util.ArrayList;
 
 public class ProductManager {
-    private static IProductDAO productDataAccess;
+    private static ProductDAO productDataAccess;
 
     static {
         productDataAccess = new ProductDBAccess();

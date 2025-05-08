@@ -4,7 +4,7 @@ import dataAccess.*;
 import exceptions.DAORetrievalFailedException;
 
 public class DataInteractionManager {
-    private static ITerminateDAO dao;
+    private static TerminateDAO dao;
 
     static {
         //dao = DBAccess;

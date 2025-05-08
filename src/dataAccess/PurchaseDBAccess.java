@@ -7,7 +7,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class PurchaseDBAccess extends DBAccess implements IPurchaseDAO {
+public class PurchaseDBAccess extends DBAccess implements PurchaseDAO {
     private static final String objectClassName;
 
     static {

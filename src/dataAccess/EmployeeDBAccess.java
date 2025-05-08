@@ -8,7 +8,7 @@ import model.IEmployeeInfoWrapper;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
+public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
     private static final String objectClassName;
 
     static {

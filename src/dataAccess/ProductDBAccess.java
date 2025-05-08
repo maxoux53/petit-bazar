@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class ProductDBAccess extends DBAccess implements IProductDAO {
+public class ProductDBAccess extends DBAccess implements ProductDAO {
     private static final String objectClassName;
 
     static {
