@@ -10,7 +10,7 @@ import java.security.MessageDigest;
 import java.util.ArrayList;
 
 public class EmployeeManager {
-    private static IEmployeeDAO dao;
+    private static EmployeeDAO dao;
     private static MessageDigest digest;
 
     static {

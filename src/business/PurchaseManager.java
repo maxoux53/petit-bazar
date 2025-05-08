@@ -1,14 +1,14 @@
 package business;
 
 import exceptions.DAORetrievalFailedException;
-import dataAccess.IPurchaseDAO;
+import dataAccess.PurchaseDAO;
 import dataAccess.PurchaseDBAccess;
 import model.Purchase;
 
 import java.util.ArrayList;
 
 public class PurchaseManager {
-    private static IPurchaseDAO dao;
+    private static PurchaseDAO dao;
 
     static {
         dao = new PurchaseDBAccess();

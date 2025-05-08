@@ -1,5 +1,5 @@
 package dataAccess;
 
-public interface IDataInteraction {
+public interface DataInteraction {
     boolean close();
 }

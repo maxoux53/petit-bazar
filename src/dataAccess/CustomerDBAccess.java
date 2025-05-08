@@ -6,7 +6,7 @@ import model.Customer;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class CustomerDBAccess extends DBAccess implements ICustomerDAO {
+public class CustomerDBAccess extends DBAccess implements CustomerDAO {
     private static final String objectClassName;
 
     static {

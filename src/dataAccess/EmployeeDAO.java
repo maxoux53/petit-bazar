@@ -7,7 +7,7 @@ import model.IEmployeeInfoWrapper;
 
 import java.util.ArrayList;
 
-public interface IEmployeeDAO {
+public interface EmployeeDAO {
     int create(Employee employee, City city) throws InsertionFailedException, DAORetrievalFailedException;
     int delete(int id) throws DeleteFailedException, DAORetrievalFailedException;
     int update(Employee employee, City city) throws UpdateFailedException, DAORetrievalFailedException;

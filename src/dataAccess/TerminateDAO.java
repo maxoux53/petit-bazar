@@ -2,6 +2,6 @@ package dataAccess;
 
 import exceptions.DAORetrievalFailedException;
 
-public interface ITerminateDAO {
+public interface TerminateDAO {
     void close() throws DAORetrievalFailedException;
 }
