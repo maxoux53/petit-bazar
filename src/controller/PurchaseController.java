@@ -1,7 +1,7 @@
 package controller;
 
 import business.PurchaseManager;
-import dataAccess.DAORetrievalFailedException;
+import exceptions.DAORetrievalFailedException;
 import model.Purchase;
 
 import java.util.ArrayList;

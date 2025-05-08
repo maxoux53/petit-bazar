@@ -1,4 +1,4 @@
-package business;
+package exceptions;
 
 public class HashFailedException extends Exception {
     private String additionalContext;

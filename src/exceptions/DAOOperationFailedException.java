@@ -1,4 +1,4 @@
-package dataAccess;
+package exceptions;
 
 public abstract class DAOOperationFailedException extends Exception {
     private String objectType;

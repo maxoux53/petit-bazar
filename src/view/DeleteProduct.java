@@ -3,11 +3,9 @@ package view;
 
 import controller.FieldIsEmptyException;
 import controller.ProductController;
-import controller.ProhibitedValueException;
 import controller.WrongTypeException;
-import dataAccess.DAORetrievalFailedException;
-import dataAccess.InsertionFailedException;
-import dataAccess.NotFoundException;
+import exceptions.DAORetrievalFailedException;
+import exceptions.NotFoundException;
 import model.Category;
 import model.Vat;
 

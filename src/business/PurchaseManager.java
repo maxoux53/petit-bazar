@@ -1,6 +1,6 @@
 package business;
 
-import dataAccess.DAORetrievalFailedException;
+import exceptions.DAORetrievalFailedException;
 import dataAccess.IPurchaseDAO;
 import dataAccess.PurchaseDBAccess;
 import model.Purchase;
