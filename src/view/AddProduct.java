@@ -1,8 +1,7 @@
 package view;
 
 import controller.*;
-import exceptions.DAORetrievalFailedException;
-import exceptions.InsertionFailedException;
+import exceptions.*;
 import model.Category;
 import model.Vat;
 
@@ -175,7 +174,7 @@ public class AddProduct extends JPanel {
 
         final ArrayList<Vat> vats;
         try {
-            vats = ProductController.getVats();
+            vats = ProductController.getAllVats();
 
             for (Vat vat : vats) {
                 vatTypeComboBox.addItem(vat.getType() + " (" + vat.getRate() + "%)");
@@ -202,7 +201,7 @@ public class AddProduct extends JPanel {
 
         final ArrayList<Category> categories = new ArrayList<>();
         try {
-            categories.addAll(ProductController.getCategories());
+            categories.addAll(ProductController.getAllCategories());
 
             for (Category category : categories) {
                 categoryComboBox.addItem(category.getLabel());
@@ -337,7 +336,8 @@ public class AddProduct extends JPanel {
                     );
 
                     removeAllField();
-                } catch (WrongTypeException | ProhibitedValueException | InsertionFailedException | DAORetrievalFailedException | NullPointerException | FieldIsEmptyException ex) {
+                } catch (WrongTypeException | ProhibitedValueException | InsertionFailedException | DAORetrievalFailedException | NullPointerException |
+                         FieldIsEmptyException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             }

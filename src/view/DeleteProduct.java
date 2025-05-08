@@ -1,9 +1,9 @@
 package view;
 
 
-import controller.FieldIsEmptyException;
+import exceptions.FieldIsEmptyException;
 import controller.ProductController;
-import controller.WrongTypeException;
+import exceptions.WrongTypeException;
 import exceptions.DAORetrievalFailedException;
 import exceptions.NotFoundException;
 import model.Category;
@@ -117,7 +117,7 @@ public class DeleteProduct extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if (!fieldsIsVisible) {
                     try {
-                        ProductController.getProductByBarcode(barcodeField.getText()); // AFFICHER LE PRODUIT RETOURNÉ
+                        ProductController.getByBarcode(barcodeField.getText()); // AFFICHER LE PRODUIT RETOURNÉ
                         setVisibleAll(true);
                         barcodeButton.setText("Décharger");
                         addButton.setEnabled(true);
@@ -226,7 +226,7 @@ public class DeleteProduct extends JPanel {
 
         final ArrayList<Vat> vats;
         try {
-            vats = ProductController.getVats();
+            vats = ProductController.getAllVats();
 
             for (Vat vat : vats) {
                 vatTypeComboBox.addItem(vat.getType() + " (" + vat.getRate() + "%)");
@@ -255,7 +255,7 @@ public class DeleteProduct extends JPanel {
 
         final ArrayList<Category> categories = new ArrayList<>();
         try {
-            categories.addAll(ProductController.getCategories());
+            categories.addAll(ProductController.getAllCategories());
 
             for (Category category : categories) {
                 categoryComboBox.addItem(category.getLabel());

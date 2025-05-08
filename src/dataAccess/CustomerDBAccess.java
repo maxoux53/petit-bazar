@@ -13,7 +13,7 @@ public class CustomerDBAccess extends DBAccess implements CustomerDAO {
         objectClassName = Customer.class.getSimpleName().toLowerCase();
     }
 
-    public Customer findByLoyaltyCardNumber(int loyaltyCardNumber) throws NotFoundException, DAORetrievalFailedException {
+    public Customer getByLoyaltyCardNumber(int loyaltyCardNumber) throws NotFoundException, DAORetrievalFailedException {
         sqlInstruction = "SELECT * FROM customer WHERE loyalty_card_number = ?;";
         
         try {
@@ -72,7 +72,7 @@ public class CustomerDBAccess extends DBAccess implements CustomerDAO {
         }
     }
 
-    public ArrayList<Customer> findAll() throws DAORetrievalFailedException {
+    public ArrayList<Customer> getAll() throws DAORetrievalFailedException {
         sqlInstruction = "SELECT * FROM customer;";
         
         try {

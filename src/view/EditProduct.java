@@ -3,9 +3,7 @@ package view;
 
 import controller.*;
 
-import exceptions.DAORetrievalFailedException;
-import exceptions.InsertionFailedException;
-import exceptions.NotFoundException;
+import exceptions.*;
 import model.Category;
 import model.Product;
 import model.Vat;
@@ -115,12 +113,13 @@ public class EditProduct extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if (!fieldsIsVisible) {
                     try {
-                        fillAllFields(ProductController.getProductByBarcode(barcodeField.getText())); // AFFICHER LE PRODUIT RETOURNÉ
+                        fillAllFields(ProductController.getByBarcode(barcodeField.getText())); // AFFICHER LE PRODUIT RETOURNÉ
                         setVisibleAll(true);
                         barcodeButton.setText("Décharger");
                         addButton.setEnabled(true);
                         barcodeField.setEnabled(false);
-                    } catch (WrongTypeException | DAORetrievalFailedException | NotFoundException | FieldIsEmptyException ex) {
+                    } catch (WrongTypeException | DAORetrievalFailedException | NotFoundException |
+                             FieldIsEmptyException ex) {
                         JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
@@ -214,7 +213,7 @@ public class EditProduct extends JPanel {
 
         final ArrayList<Vat> vats;
         try {
-            vats = ProductController.getVats();
+            vats = ProductController.getAllVats();
 
             for (Vat vat : vats) {
                 vatTypeComboBox.addItem(vat.getType() + " (" + vat.getRate() + "%)");
@@ -241,7 +240,7 @@ public class EditProduct extends JPanel {
 
         final ArrayList<Category> categories = new ArrayList<>();
         try {
-            categories.addAll(ProductController.getCategories());
+            categories.addAll(ProductController.getAllCategories());
 
             for (Category category : categories) {
                 categoryComboBox.addItem(category.getLabel());

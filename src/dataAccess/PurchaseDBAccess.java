@@ -14,7 +14,7 @@ public class PurchaseDBAccess extends DBAccess implements PurchaseDAO {
         objectClassName = Purchase.class.getSimpleName().toLowerCase();
     }
 
-    public ArrayList<Purchase> findAll() throws DAORetrievalFailedException {
+    public ArrayList<Purchase> getAll() throws DAORetrievalFailedException {
         sqlInstruction = "SELECT * FROM purchase;";
         ArrayList<Purchase> purchases = new ArrayList<>();
         Purchase purchase;

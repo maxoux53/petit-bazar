@@ -4,7 +4,7 @@ import dataAccess.*;
 import exceptions.*;
 import model.City;
 import model.Employee;
-import model.IEmployeeInfoWrapper;
+import model.EmployeeInfoWrapper;
 
 import java.security.MessageDigest;
 import java.util.ArrayList;
@@ -22,19 +22,19 @@ public class EmployeeManager {
     }
 
     public static int remove(int id) throws DeleteFailedException, DAORetrievalFailedException {
-        return dao.delete(id);
+        return dao.remove(id);
     }
 
-    public static int edit(Employee employee, City city) throws UpdateFailedException, DAORetrievalFailedException {
+    public static int update(Employee employee, City city) throws UpdateFailedException, DAORetrievalFailedException {
         return dao.update(employee, city);
     }
 
-    public static IEmployeeInfoWrapper[] getById(int id) throws NotFoundException, DAORetrievalFailedException {
-        return dao.findById(id);
+    public static EmployeeInfoWrapper[] getById(int id) throws NotFoundException, DAORetrievalFailedException {
+        return dao.getById(id);
     }
 
-    public static ArrayList<IEmployeeInfoWrapper[]> getAll() throws DAORetrievalFailedException {
-        return dao.findAll();
+    public static ArrayList<EmployeeInfoWrapper[]> getAll() throws DAORetrievalFailedException {
+        return dao.getAll();
     }
 
     public static byte[] hashPassword(String password) throws HashFailedException {

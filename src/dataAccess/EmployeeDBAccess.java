@@ -3,7 +3,7 @@ package dataAccess;
 import exceptions.*;
 import model.City;
 import model.Employee;
-import model.IEmployeeInfoWrapper;
+import model.EmployeeInfoWrapper;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         }
     }
 
-    public int delete(int id) throws DeleteFailedException, DAORetrievalFailedException {
+    public int remove(int id) throws DeleteFailedException, DAORetrievalFailedException {
         nullifyEmployeeReferencesFromPurchases(id);
         nullifyEmployeeReferencedAsManager(id);
 
@@ -139,7 +139,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         }
     }
 
-    public IEmployeeInfoWrapper[] findById(int id) throws NotFoundException, DAORetrievalFailedException {
+    public EmployeeInfoWrapper[] getById(int id) throws NotFoundException, DAORetrievalFailedException {
         sqlInstruction = "SElECT * FROM employee WHERE id = ?;";
 
         try {
@@ -162,7 +162,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
                 int cityZipCode;
                 String cityName;
 
-                IEmployeeInfoWrapper[] employeeInfo = new IEmployeeInfoWrapper[2]; // todo: rename
+                EmployeeInfoWrapper[] employeeInfo = new EmployeeInfoWrapper[2]; // todo: rename
                 Employee employee = new Employee(data.getInt("id"));
 
                 firstName = data.getString("first_name");
@@ -239,7 +239,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         }
     }
 
-    public ArrayList<IEmployeeInfoWrapper[]> findAll() throws DAORetrievalFailedException {
+    public ArrayList<EmployeeInfoWrapper[]> getAll() throws DAORetrievalFailedException {
         sqlInstruction = "SElECT * FROM employee;";
 
         try {
@@ -247,7 +247,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
 
             data = preparedStatement.executeQuery(); // add try-catch if notfoundexception changes
 
-            ArrayList<IEmployeeInfoWrapper[]> employeesInfo = new ArrayList<>();
+            ArrayList<EmployeeInfoWrapper[]> employeesInfo = new ArrayList<>();
             Employee employee;
             String firstName;
             String lastName;
@@ -325,7 +325,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
                     employee.setCityName(cityName);
                 }
 
-                employeesInfo.add(new IEmployeeInfoWrapper[]{ // must contain 2 ELEMENTS ONLY
+                employeesInfo.add(new EmployeeInfoWrapper[]{ // must contain 2 ELEMENTS ONLY
                         employee,
                         getCity(cityZipCode, cityName)
                 });

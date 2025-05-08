@@ -15,6 +15,6 @@ public class PurchaseManager {
     }
 
     public static ArrayList<Purchase> getAll() throws DAORetrievalFailedException {
-        return dao.findAll();
+        return dao.getAll();
     }
 }
