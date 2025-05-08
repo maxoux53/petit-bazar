@@ -5,6 +5,7 @@ import model.Category;
 import model.Product;
 import model.Vat;
 
+import javax.naming.Name;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
@@ -267,6 +268,59 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
         }
     }
+    
+    public String getCategoryLabelById(int categoryId) throws NotFoundException, DAORetrievalFailedException {
+        sqlInstruction = "SELECT name FROM product WHERE id = ?";
+
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, categoryId);
+            
+            data = preparedStatement.executeQuery();
+
+            String name;
+
+            if (data.next()) {
+                name = data.getString("name");
+            }
+            else {
+                throw new NotFoundException(objectClassName, (long)categoryId, DBRetrievalFailure.NO_ROW.toString());
+            }
+            
+            return (!data.wasNull() ? name : null);
+        } catch (DAORetrievalFailedException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+        }
+    }
+    
+    public String getBrandLabelById(int brandId) throws NotFoundException, DAORetrievalFailedException {
+        sqlInstruction = "SELECT name FROM brand WHERE id = ?";
+        
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, brandId);
+            
+            data = preparedStatement.executeQuery();
+            
+            String name;
+            
+            if (data.next()) {
+                name = data.getString("name");
+            }
+            else {
+                throw new NotFoundException(objectClassName, (long)brandId, DBRetrievalFailure.NO_ROW.toString());
+            }
+
+            return (!data.wasNull() ? name : null);
+        } catch (DAORetrievalFailedException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+        }
+        
+    }
 
     public ArrayList<Product> getAll() throws DAORetrievalFailedException {
         sqlInstruction = "SELECT * FROM product;";
@@ -347,7 +401,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         }
     }
 
-    public Integer getOrCreateBrand(String brandName) throws DAORetrievalFailedException {
+    public Integer getOrCreateBrandByName(String brandName) throws DAORetrievalFailedException {
         boolean exists = true;
 
         do {

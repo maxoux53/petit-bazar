@@ -14,9 +14,11 @@ public interface ProductDAO {
 
     Product getByBarcode(Long barcode) throws NotFoundException, DAORetrievalFailedException;
     ArrayList<Product> searchByName(String name) throws NotFoundException, DAORetrievalFailedException;
+    String getCategoryLabelById(int categoryId) throws NotFoundException, DAORetrievalFailedException;
+    String getBrandLabelById(int brandId) throws NotFoundException, DAORetrievalFailedException;
     ArrayList<Product> getAll() throws DAORetrievalFailedException;
 
-    Integer getOrCreateBrand(String brandName) throws DAORetrievalFailedException;
+    Integer getOrCreateBrandByName(String brandName) throws DAORetrievalFailedException;
 
     ArrayList<Category> getAllCategories() throws DAORetrievalFailedException;
     ArrayList<Vat> getAllVats() throws DAORetrievalFailedException;

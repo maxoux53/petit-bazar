@@ -1,9 +1,11 @@
 package controller;
 
 import business.ProductManager;
+import com.sun.source.doctree.ThrowsTree;
 import exceptions.*;
 import model.*;
 
+import javax.swing.table.DefaultTableModel;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -83,6 +85,14 @@ public class ProductController extends Controller {
     public static Product getByBarcode(String barcodeAsString) throws DAORetrievalFailedException, NotFoundException, WrongTypeException, FieldIsEmptyException {
         return ProductManager.getByBarcode(stringToBarcode(barcodeAsString));
     }
+    
+    public static String getCategoryLabelById(int categoryId) throws DAORetrievalFailedException, NotFoundException {
+        return ProductManager.getCategoryLabelById(categoryId);
+    }
+    
+    public static String getBrandLabelById(int brandId) throws DAORetrievalFailedException, NotFoundException {
+        return ProductManager.getBrandLabelById(brandId);
+    }
 
     public static int getOrCreateBrand(String name) throws DAORetrievalFailedException {
         return ProductManager.getOrCreateBrand(name);
@@ -102,6 +112,50 @@ public class ProductController extends Controller {
 
     public static ArrayList<Integer> getOutOfStock() throws NotFoundException, DAORetrievalFailedException {
         return ProductManager.getOutOfStock();
+    }
+    
+    private static ArrayList<Product> getAllProducts() throws DAORetrievalFailedException {
+        return ProductManager.getAll();
+    }
+    
+    public static DefaultTableModel infoTableModel() throws DAORetrievalFailedException, NotFoundException {
+        String[] columnNames = {
+                "Code-barres",
+                "Nom",
+                "Description",
+                "Quantité",
+                "Disponible",
+                "Type de TVA",
+                "Catégorie",
+                "Marque",
+                "Prix",
+                "Date de mise en rayon"
+        };
+        
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        
+        ArrayList<Product> products = getAllProducts();
+        String[] productInfos = new String[columnNames.length];
+        
+        for (Product product : products) {
+            productInfos[0] = String.valueOf(product.getBarcode());
+            productInfos[1] = product.getName();
+            productInfos[2] = product.getDescription();
+            productInfos[3] = String.valueOf(product.getAmount());
+            productInfos[4] = (product.getAvailable() ? "Oui" : "Non");
+            productInfos[5] = String.valueOf(product.getVatType());
+            productInfos[6] = getCategoryLabelById(product.getCategoryId());
+            productInfos[7] = getBrandLabelById(product.getBrandId());
+            productInfos[8] = String.valueOf(product.getExclVatPrice());
+            productInfos[9] = String.format("%02d/%02d/%d",
+                    product.getStartDate().getDayOfMonth(),
+                    product.getStartDate().getMonth(),
+                    product.getStartDate().getYear());
+            
+            model.addRow(productInfos);
+        }
+        
+        return model;
     }
 
     public static int indexOfVatType(Character vatType) throws DAORetrievalFailedException {
@@ -125,10 +179,5 @@ public class ProductController extends Controller {
         }
 
         return categoryIds.indexOf(categoryId);
-    }
-    
-    public static String getBrandLabelById(int brandId) {
-        //ArrayList<Brand> brands = getB;
-        return "";
     }
 }

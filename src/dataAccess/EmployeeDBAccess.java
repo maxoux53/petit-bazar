@@ -239,7 +239,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         }
     }
 
-    public ArrayList<EmployeeInfoWrapper[]> getAll() throws DAORetrievalFailedException {
+    public ArrayList<Employee> getAll() throws DAORetrievalFailedException {
         sqlInstruction = "SElECT * FROM employee;";
 
         try {
@@ -247,7 +247,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
 
             data = preparedStatement.executeQuery(); // add try-catch if notfoundexception changes
 
-            ArrayList<EmployeeInfoWrapper[]> employeesInfo = new ArrayList<>();
+            ArrayList<Employee> employeesInfos = new ArrayList<>();
             Employee employee;
             String firstName;
             String lastName;
@@ -324,14 +324,11 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
                 if (!data.wasNull()) {
                     employee.setCityName(cityName);
                 }
-
-                employeesInfo.add(new EmployeeInfoWrapper[]{ // must contain 2 ELEMENTS ONLY
-                        employee,
-                        getCity(cityZipCode, cityName)
-                });
+                
+                employeesInfos.add(employee);
             }
 
-            return employeesInfo;
+            return employeesInfos;
         } catch (SQLTimeoutException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
         } catch (SQLException e) {

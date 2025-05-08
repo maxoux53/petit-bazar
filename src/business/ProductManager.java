@@ -34,13 +34,21 @@ public class ProductManager {
     public static ArrayList<Product> searchByName(String name) throws NotFoundException, DAORetrievalFailedException {
         return productDataAccess.searchByName(name);
     }
+    
+    public static String getCategoryLabelById(int categoryId) throws DAORetrievalFailedException, NotFoundException {
+        return productDataAccess.getCategoryLabelById(categoryId);
+    }
 
+    public static String getBrandLabelById(int brandId) throws DAORetrievalFailedException, NotFoundException {
+        return productDataAccess.getBrandLabelById(brandId);
+    }
+    
     public static ArrayList<Product> getAll() throws DAORetrievalFailedException {
         return productDataAccess.getAll();
     }
 
     public static int getOrCreateBrand(String name) throws DAORetrievalFailedException {
-        return productDataAccess.getOrCreateBrand(name);
+        return productDataAccess.getOrCreateBrandByName(name);
     }
 
     public static ArrayList<Category> getAllCategories() throws DAORetrievalFailedException {

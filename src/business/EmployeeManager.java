@@ -33,7 +33,7 @@ public class EmployeeManager {
         return dao.getById(id);
     }
 
-    public static ArrayList<EmployeeInfoWrapper[]> getAll() throws DAORetrievalFailedException {
+    public static ArrayList<Employee> getAll() throws DAORetrievalFailedException {
         return dao.getAll();
     }
 

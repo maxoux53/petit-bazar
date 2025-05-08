@@ -2,6 +2,7 @@ package dataAccess;
 
 import Utils.Env;
 import exceptions.DAORetrievalFailedException;
+import view.ViewCore;
 
 import java.sql.*;
 
@@ -25,7 +26,7 @@ public class SingletonConnection {
                 connection = DriverManager.getConnection(connectionURL, user, password);
                 System.out.println("Connection successful!");
             } catch (SQLException e) {
-                throw new DAORetrievalFailedException("SQL connection to database failed" + e.getMessage());
+                throw new DAORetrievalFailedException("La connexion à la base de donnée a échouée : " + e.getMessage());
             }
         }
 
