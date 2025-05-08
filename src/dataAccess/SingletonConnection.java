@@ -1,6 +1,8 @@
 package dataAccess;
 
 import Utils.Env;
+import exceptions.DAORetrievalFailedException;
+
 import java.sql.*;
 
 public class SingletonConnection {

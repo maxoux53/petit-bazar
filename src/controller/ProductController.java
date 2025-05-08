@@ -1,12 +1,10 @@
 package controller;
 
 import business.ProductManager;
-import dataAccess.*;
+import exceptions.*;
 import model.*;
 
 import java.math.BigDecimal;
-import java.time.DateTimeException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ProductController extends Controller {

@@ -1,4 +1,4 @@
-package dataAccess;
+package exceptions;
 
 public class DAORetrievalFailedException extends Exception {
     private String additionalContext;

@@ -1,8 +1,8 @@
 package controller;
 
 import business.CustomerManager;
-import dataAccess.DAORetrievalFailedException;
-import dataAccess.NotFoundException;
+import exceptions.DAORetrievalFailedException;
+import exceptions.NotFoundException;
 import model.Customer;
 
 import java.util.ArrayList;

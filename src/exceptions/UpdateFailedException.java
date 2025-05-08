@@ -1,4 +1,4 @@
-package dataAccess;
+package exceptions;
 
 public class UpdateFailedException extends DAOOperationFailedException {
     public UpdateFailedException(String objectType, Long objectId, String message) {

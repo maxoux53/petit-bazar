@@ -1,6 +1,7 @@
 package business;
 
 import dataAccess.*;
+import exceptions.DAORetrievalFailedException;
 
 public class DataInteractionManager {
     private static ITerminateDAO dao;

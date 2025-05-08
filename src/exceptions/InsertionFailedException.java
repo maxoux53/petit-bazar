@@ -1,4 +1,4 @@
-package dataAccess;
+package exceptions;
 
 public class InsertionFailedException extends DAOOperationFailedException {
     public InsertionFailedException(String objectType, Long objectId, String message) {

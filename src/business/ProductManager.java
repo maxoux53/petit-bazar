@@ -1,6 +1,7 @@
 package business;
 
 import dataAccess.*;
+import exceptions.*;
 import model.Category;
 import model.Product;
 import model.Vat;

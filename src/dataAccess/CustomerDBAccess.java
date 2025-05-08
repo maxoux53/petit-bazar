@@ -1,8 +1,9 @@
 package dataAccess;
 
+import exceptions.DAORetrievalFailedException;
+import exceptions.NotFoundException;
 import model.Customer;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class CustomerDBAccess extends DBAccess implements ICustomerDAO {

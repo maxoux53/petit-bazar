@@ -1,8 +1,8 @@
 package view;
 
 import controller.*;
-import dataAccess.DAORetrievalFailedException;
-import dataAccess.InsertionFailedException;
+import exceptions.DAORetrievalFailedException;
+import exceptions.InsertionFailedException;
 import model.Category;
 import model.Vat;
 

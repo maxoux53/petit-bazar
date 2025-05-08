@@ -1,4 +1,4 @@
-package dataAccess;
+package exceptions;
 
 public class NotFoundException extends DAOOperationFailedException {
     public NotFoundException(String objectType, Long objectId, String message) {

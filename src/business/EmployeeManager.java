@@ -1,6 +1,7 @@
 package business;
 
 import dataAccess.*;
+import exceptions.*;
 import model.City;
 import model.Employee;
 import model.IEmployeeInfoWrapper;

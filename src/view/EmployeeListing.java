@@ -1,7 +1,7 @@
 package view;
 
 import controller.EmployeeController;
-import dataAccess.DAORetrievalFailedException;
+import exceptions.DAORetrievalFailedException;
 
 import javax.swing.*;
 import java.awt.*;

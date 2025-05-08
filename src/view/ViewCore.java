@@ -2,7 +2,7 @@ package view;
 
 import Utils.Env;
 import business.DataInteractionManager;
-import dataAccess.DAORetrievalFailedException;
+import exceptions.DAORetrievalFailedException;
 
 import javax.swing.*;
 
