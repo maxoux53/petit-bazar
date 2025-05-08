@@ -38,8 +38,8 @@ public class ProductListing extends JPanel {
         titlePanel.add(titleLabel);
         
         // Listing
-        listingPanel = new JPanel();
-        listingPanel.setBackground(Color.red);
+        listingPanel = new JPanel(new BorderLayout());
+        listingPanel.setBackground(Color.white);
         
         try {
             listingTable = new JTable(ProductController.infoTableModel());

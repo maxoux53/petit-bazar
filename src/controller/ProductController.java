@@ -147,10 +147,7 @@ public class ProductController extends Controller {
             productInfos[6] = getCategoryLabelById(product.getCategoryId());
             productInfos[7] = getBrandLabelById(product.getBrandId());
             productInfos[8] = String.valueOf(product.getExclVatPrice());
-            productInfos[9] = String.format("%02d/%02d/%d",
-                    product.getStartDate().getDayOfMonth(),
-                    product.getStartDate().getMonth(),
-                    product.getStartDate().getYear());
+            productInfos[9] = product.getStartDate().getDayOfMonth() + 1 + "/" + product.getStartDate().getMonth() + "/" + product.getStartDate().getYear();
             
             model.addRow(productInfos);
         }

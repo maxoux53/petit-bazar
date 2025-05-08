@@ -270,7 +270,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
     }
     
     public String getCategoryLabelById(int categoryId) throws NotFoundException, DAORetrievalFailedException {
-        sqlInstruction = "SELECT name FROM product WHERE id = ?";
+        sqlInstruction = "SELECT name FROM category WHERE id = ?";
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
@@ -327,7 +327,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-            preparedStatement.executeQuery();
+            data = preparedStatement.executeQuery();
 
             ArrayList<Product> products = new ArrayList<>();
 
