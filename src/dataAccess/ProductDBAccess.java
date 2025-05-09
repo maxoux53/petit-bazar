@@ -1,6 +1,7 @@
 package dataAccess;
 
 import exceptions.*;
+import interfaces.ProductDAO;
 import model.Category;
 import model.Product;
 import model.Vat;

@@ -1,6 +1,7 @@
 package dataAccess;
 
 import exceptions.DAORetrievalFailedException;
+import interfaces.PurchaseDAO;
 import model.Purchase;
 
 import java.sql.*;

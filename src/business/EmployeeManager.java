@@ -2,6 +2,7 @@ package business;
 
 import dataAccess.*;
 import exceptions.*;
+import interfaces.EmployeeDAO;
 import model.City;
 import model.Employee;
 import model.EmployeeInfoWrapper;

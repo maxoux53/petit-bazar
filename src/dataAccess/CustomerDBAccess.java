@@ -2,6 +2,7 @@ package dataAccess;
 
 import exceptions.DAORetrievalFailedException;
 import exceptions.NotFoundException;
+import interfaces.CustomerDAO;
 import model.Customer;
 import java.sql.*;
 import java.util.ArrayList;

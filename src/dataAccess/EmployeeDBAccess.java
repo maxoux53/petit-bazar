@@ -1,6 +1,7 @@
 package dataAccess;
 
 import exceptions.*;
+import interfaces.EmployeeDAO;
 import model.City;
 import model.Employee;
 import model.EmployeeInfoWrapper;
@@ -146,7 +147,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, id);
 
-            data = preparedStatement.executeQuery();
+            ResultSet data = preparedStatement.executeQuery();
 
             if (data.next()) {
                 String firstName;
@@ -245,7 +246,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
 
-            data = preparedStatement.executeQuery(); // add try-catch if notfoundexception changes
+            ResultSet data = preparedStatement.executeQuery(); // add try-catch if notfoundexception changes
 
             ArrayList<Employee> employeesInfos = new ArrayList<>();
             Employee employee;
@@ -343,7 +344,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, id);
 
-            data = preparedStatement.executeQuery();
+            ResultSet data = preparedStatement.executeQuery();
 
             if (data.next()) {
                 return data.getBytes("password");
@@ -368,7 +369,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
             preparedStatement.setString(1, cityName);
             preparedStatement.setInt(2, cityZipCode);
 
-            data = preparedStatement.executeQuery();
+            ResultSet data = preparedStatement.executeQuery();
 
             if (!data.next()) {
                 sqlInstruction = "INSERT INTO city VALUES(?, ?, ?);";
@@ -395,7 +396,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
             preparedStatement.setInt(1, zipCode);
             preparedStatement.setString(2, name);
 
-            data = preparedStatement.executeQuery();
+            ResultSet data = preparedStatement.executeQuery();
 
             if (data.next()) {
                 return new City(zipCode, name, data.getString("country"));
@@ -415,7 +416,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
 
-            data = preparedStatement.executeQuery();
+            ResultSet data = preparedStatement.executeQuery();
 
             ArrayList<String> countries = new ArrayList<>();
 
@@ -437,7 +438,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
 
-            data = preparedStatement.executeQuery();
+            ResultSet data = preparedStatement.executeQuery();
 
             ArrayList<String> roles = new ArrayList<>();
 

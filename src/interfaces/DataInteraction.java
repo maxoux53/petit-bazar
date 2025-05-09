@@ -1,4 +1,4 @@
-package dataAccess;
+package interfaces;
 
 public interface DataInteraction {
     boolean close();
