@@ -5,7 +5,6 @@ import model.Category;
 import model.Product;
 import model.Vat;
 
-import javax.naming.Name;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
@@ -48,7 +47,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
     public int remove(Long barcode) throws DeleteFailedException, DAORetrievalFailedException {
         sqlInstruction = "DELETE FROM product WHERE barcode = ?;";
 
-        nullifyProductReferencesFromOrderLine(barcode);
+        removeOrderLineByBarcode(barcode);
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
@@ -66,8 +65,8 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         }
     }
 
-    private void nullifyProductReferencesFromOrderLine(Long barcode) throws DAORetrievalFailedException {
-        sqlInstruction = "UPDATE order_line SET product_barcode = NULL WHERE product_barcode = ?;";
+    private void removeOrderLineByBarcode(Long barcode) throws DAORetrievalFailedException {
+        sqlInstruction = "DELETE FROM order_line WHERE product_barcode = ?;";
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);

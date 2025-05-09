@@ -95,7 +95,7 @@ public class EditProduct extends JPanel {
         barcodePanel = new JPanel(new GridLayout(1, 3, 20, 0));
         barcodePanel.setBackground(Color.white);
         
-        barcodeLabel = new JLabel("Code barre", SwingConstants.RIGHT);
+        barcodeLabel = new JLabel("Code-barres", SwingConstants.RIGHT);
         barcodeLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.MID_SIZE.getSize()));
         
         barcodeField = new JTextField();
