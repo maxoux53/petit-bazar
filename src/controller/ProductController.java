@@ -71,10 +71,10 @@ public class ProductController extends Controller {
             try {
                 return Long.parseLong(barcodeAsString);
             } catch (NumberFormatException numberFormatException) {
-                throw new WrongTypeException("Code barre");
+                throw new WrongTypeException("Code-barres");
             }
         } else {
-            throw new FieldIsEmptyException("Code barre");
+            throw new FieldIsEmptyException("Code-barres");
         }
     }
 
