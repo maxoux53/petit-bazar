@@ -8,13 +8,13 @@ import model.Purchase;
 import java.util.ArrayList;
 
 public class PurchaseManager {
-    private static PurchaseDAO dao;
+    private PurchaseDAO dao;
 
-    static {
+    public PurchaseManager() {
         dao = new PurchaseDBAccess();
     }
 
-    public static ArrayList<Purchase> getAll() throws DAORetrievalFailedException {
+    public ArrayList<Purchase> getAll() throws DAORetrievalFailedException {
         return dao.getAll();
     }
 }
