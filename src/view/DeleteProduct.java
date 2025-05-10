@@ -85,7 +85,7 @@ public class DeleteProduct extends JPanel {
         titlePanel.setBackground(Color.white);
         
         titleLabel = new JLabel("Supprimer un article");
-        titleLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.BOLD, 60));
+        titleLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.BOLD, 60));
 
         titlePanel.add(titleLabel);
         
@@ -95,10 +95,10 @@ public class DeleteProduct extends JPanel {
         barcodePanel.setBackground(Color.white);
         
         barcodeLabel = new JLabel("Code-barres", SwingConstants.CENTER);
-        barcodeLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.MID_SIZE.getSize()));
+        barcodeLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.PLAIN, FontPreferences.MID_SIZE));
         
         barcodeField = new JTextField();
-        barcodeField.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.NORMAL_SIZE.getSize()));
+        barcodeField.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.PLAIN, FontPreferences.NORMAL_SIZE));
         barcodeField.setBackground(Color.white);
         barcodeField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         
@@ -112,7 +112,7 @@ public class DeleteProduct extends JPanel {
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 500, 0, 500));
         
         addButton = new JButton("Supprimer");
-        addButton.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.BOLD, FontPreferences.MID_SIZE.getSize()));
+        addButton.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.BOLD, FontPreferences.MID_SIZE));
         addButton.setBackground(Color.white);
         
         addButton.addActionListener(new ActionListener() {

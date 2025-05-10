@@ -33,7 +33,7 @@ public class ProductListing extends JPanel {
         titlePanel.setBackground(Color.white);
         
         titleLabel = new JLabel("Liste des articles", SwingConstants.CENTER);
-        titleLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.BOLD, FontPreferences.TITLE_SIZE.getSize()));
+        titleLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.BOLD, FontPreferences.TITLE_SIZE));
         
         titlePanel.add(titleLabel);
         

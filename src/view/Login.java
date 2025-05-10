@@ -37,7 +37,7 @@ public class Login extends JPanel {
         titlePanel = new JPanel();
         titlePanel.setBackground(Color.WHITE);
         title = new JLabel("Connexion");
-        title.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.BOLD, 60));
+        title.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.BOLD, 60));
         titlePanel.add(title);
         add(titlePanel, BorderLayout.NORTH);
         
@@ -52,10 +52,10 @@ public class Login extends JPanel {
         // User
         JLabel usernameLabel = new JLabel("👤 Nom d'utilisateur", SwingConstants.LEFT);
       
-        usernameLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, 35));
+        usernameLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.PLAIN, 35));
         formPanel.add(usernameLabel);
         usernameField = new JTextField();
-        usernameField.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.MID_SIZE.getSize()));
+        usernameField.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.PLAIN, FontPreferences.MID_SIZE));
         usernameField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         usernameField.setPreferredSize(new Dimension(20, 25));
         formPanel.add(usernameField);
@@ -63,10 +63,10 @@ public class Login extends JPanel {
         // Password
         JLabel passwordLabel = new JLabel("🔑 Mot de passe", SwingConstants.LEFT);
 
-        passwordLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, 35));
+        passwordLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.PLAIN, 35));
         formPanel.add(passwordLabel);
         passwordField = new JPasswordField();
-        passwordField.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.MID_SIZE.getSize()));
+        passwordField.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.PLAIN, FontPreferences.MID_SIZE));
         passwordField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         passwordField.setPreferredSize(new Dimension(passwordField.getPreferredSize().width, 10));
         formPanel.add(passwordField, BorderLayout.CENTER);
@@ -77,7 +77,7 @@ public class Login extends JPanel {
         buttonPanel = new JPanel();
         buttonPanel.setBackground(Color.WHITE);
         button = new JButton("Se connecter");
-        button.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.BOLD, FontPreferences.MID_SIZE.getSize()));
+        button.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.BOLD, FontPreferences.MID_SIZE));
         button.setBackground(Color.white);
         button.setFocusPainted(false);
         button.setPreferredSize(new Dimension(300, 50));

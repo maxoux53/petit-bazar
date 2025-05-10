@@ -15,9 +15,9 @@ public class Home extends JPanel {
         
         // Title
         JLabel text = new JLabel("Gestion du magasin", SwingConstants.CENTER);
-        text.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.BOLD, FontPreferences.TITLE_SIZE.getSize()));
+        text.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.BOLD, FontPreferences.TITLE_SIZE));
         JLabel storeName = new JLabel(ViewCore.NAME, SwingConstants.CENTER);
-        storeName.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.BOLD, FontPreferences.TITLE_SIZE.getSize()));
+        storeName.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.BOLD, FontPreferences.TITLE_SIZE));
         add(text);
         add(storeName);
         
