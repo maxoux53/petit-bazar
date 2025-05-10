@@ -7,11 +7,19 @@ import model.*;
 
 import javax.swing.table.DefaultTableModel;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
-public class ProductController extends Controller {
-    public static void create(String barcode, String name, String description, String priceAsString, Integer amount, Boolean isAvailable, Character vat, Integer categoryId, Integer brandId, String stringDay, String stringMonth, String stringYear) throws WrongTypeException, ProhibitedValueException, InsertionFailedException, DAORetrievalFailedException, FieldIsEmptyException {
-        ProductManager.create(new Product(
+public class ProductController {
+    private ProductManager manager;
+
+    public ProductController() {
+        this.manager = new ProductManager();
+    }
+
+    public void create(String barcode, String name, String description, String priceAsString, Integer amount, Boolean isAvailable, Character vat, Integer categoryId, Integer brandId, Date date) throws WrongTypeException, ProhibitedValueException, InsertionFailedException, DAORetrievalFailedException, FieldIsEmptyException {
+        manager.create(new Product(
                 stringToBarcode(barcode),
                 nameInputValidation(name),
                 description,
@@ -21,12 +29,12 @@ public class ProductController extends Controller {
                 categoryId,
                 brandId,
                 stringToPrice(priceAsString),
-                stringToDate(stringDay, stringMonth, stringYear)
+                date.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate()
         ));
     }
 
-    public static int update(String barcode, String name, String description, String priceAsString, Integer amount, Boolean isAvailable, Character vat, Integer categoryId, Integer brandId, String stringDay, String stringMonth, String stringYear) throws WrongTypeException, ProhibitedValueException, DAORetrievalFailedException, UpdateFailedException, FieldIsEmptyException {
-        return ProductManager.update(new Product(
+    public int update(String barcode, String name, String description, String priceAsString, Integer amount, Boolean isAvailable, Character vat, Integer categoryId, Integer brandId, Date date) throws WrongTypeException, ProhibitedValueException, DAORetrievalFailedException, UpdateFailedException, FieldIsEmptyException {
+        return manager.update(new Product(
                 stringToBarcode(barcode),
                 name,
                 description,
@@ -36,18 +44,18 @@ public class ProductController extends Controller {
                 categoryId,
                 brandId,
                 stringToPrice(priceAsString),
-                stringToDate(stringDay, stringMonth, stringYear)
+                date.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate()
         ));
     }
 
-    private static String nameInputValidation(String name) {
+    private String nameInputValidation(String name) {
         if (!name.isEmpty()) {
             return name;
         }
         return null;
     }
 
-    private static BigDecimal stringToPrice(String priceAsString) throws WrongTypeException, ProhibitedValueException {
+    private BigDecimal stringToPrice(String priceAsString) throws WrongTypeException, ProhibitedValueException {
         if (!priceAsString.isEmpty()) {
             BigDecimal price;
 
@@ -66,7 +74,7 @@ public class ProductController extends Controller {
         return null;
     }
 
-    private static Long stringToBarcode(String barcodeAsString) throws WrongTypeException, FieldIsEmptyException {
+    private Long stringToBarcode(String barcodeAsString) throws WrongTypeException, FieldIsEmptyException {
         if (!barcodeAsString.isEmpty()) {
             try {
                 return Long.parseLong(barcodeAsString);
@@ -78,47 +86,47 @@ public class ProductController extends Controller {
         }
     }
 
-    public static int remove(String barcodeAsString) throws DeleteFailedException, WrongTypeException, FieldIsEmptyException, DAORetrievalFailedException {
-        return ProductManager.remove(stringToBarcode(barcodeAsString));
+    public int remove(String barcodeAsString) throws DeleteFailedException, WrongTypeException, FieldIsEmptyException, DAORetrievalFailedException {
+        return manager.remove(stringToBarcode(barcodeAsString));
     }
 
-    public static Product getByBarcode(String barcodeAsString) throws DAORetrievalFailedException, NotFoundException, WrongTypeException, FieldIsEmptyException {
-        return ProductManager.getByBarcode(stringToBarcode(barcodeAsString));
+    public Product getByBarcode(String barcodeAsString) throws DAORetrievalFailedException, NotFoundException, WrongTypeException, FieldIsEmptyException {
+        return manager.getByBarcode(stringToBarcode(barcodeAsString));
     }
     
-    public static String getCategoryLabelById(int categoryId) throws DAORetrievalFailedException, NotFoundException {
-        return ProductManager.getCategoryLabelById(categoryId);
+    public String getCategoryLabelById(int categoryId) throws DAORetrievalFailedException, NotFoundException {
+        return manager.getCategoryLabelById(categoryId);
     }
     
-    public static String getBrandLabelById(int brandId) throws DAORetrievalFailedException, NotFoundException {
-        return ProductManager.getBrandLabelById(brandId);
+    public String getBrandLabelById(int brandId) throws DAORetrievalFailedException, NotFoundException {
+        return manager.getBrandLabelById(brandId);
     }
 
-    public static int getOrCreateBrand(String name) throws DAORetrievalFailedException {
-        return ProductManager.getOrCreateBrand(name);
+    public int getOrCreateBrand(String name) throws DAORetrievalFailedException {
+        return manager.getOrCreateBrand(name);
     }
 
-    public static ArrayList<Category> getAllCategories() throws DAORetrievalFailedException {
-        return ProductManager.getAllCategories();
+    public ArrayList<Category> getAllCategories() throws DAORetrievalFailedException {
+        return manager.getAllCategories();
     }
 
-    public static ArrayList<Vat> getAllVats() throws DAORetrievalFailedException {
-        return ProductManager.getAllVats();
+    public ArrayList<Vat> getAllVats() throws DAORetrievalFailedException {
+        return manager.getAllVats();
     }
 
-    public static int getCurrentStock(String barcodeAsString) throws NotFoundException, DAORetrievalFailedException, WrongTypeException, FieldIsEmptyException {
-        return ProductManager.getCurrentStock(stringToBarcode(barcodeAsString));
+    public int getCurrentStock(String barcodeAsString) throws NotFoundException, DAORetrievalFailedException, WrongTypeException, FieldIsEmptyException {
+        return manager.getCurrentStock(stringToBarcode(barcodeAsString));
     }
 
-    public static ArrayList<Integer> getOutOfStock() throws NotFoundException, DAORetrievalFailedException {
-        return ProductManager.getOutOfStock();
+    public ArrayList<Integer> getOutOfStock() throws NotFoundException, DAORetrievalFailedException {
+        return manager.getOutOfStock();
     }
     
-    private static ArrayList<Product> getAllProducts() throws DAORetrievalFailedException {
-        return ProductManager.getAll();
+    private ArrayList<Product> getAllProducts() throws DAORetrievalFailedException {
+        return manager.getAll();
     }
     
-    public static DefaultTableModel infoTableModel() throws DAORetrievalFailedException, NotFoundException {
+    public DefaultTableModel infoTableModel() throws DAORetrievalFailedException, NotFoundException {
         String[] columnNames = {
                 "Code-barres",
                 "Nom",
@@ -135,19 +143,19 @@ public class ProductController extends Controller {
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         
         ArrayList<Product> products = getAllProducts();
-        String[] productInfos = new String[columnNames.length];
+        Object[] productInfos = new Object[columnNames.length];
         
         for (Product product : products) {
-            productInfos[0] = String.valueOf(product.getBarcode());
+            productInfos[0] = product.getBarcode();
             productInfos[1] = product.getName();
             productInfos[2] = product.getDescription();
-            productInfos[3] = String.valueOf(product.getAmount());
-            productInfos[4] = (product.getAvailable() ? "Oui" : "Non");
-            productInfos[5] = String.valueOf(product.getVatType());
+            productInfos[3] = product.getAmount();
+            productInfos[4] = product.getAvailable();
+            productInfos[5] = product.getVatType();
             productInfos[6] = getCategoryLabelById(product.getCategoryId());
             productInfos[7] = getBrandLabelById(product.getBrandId());
-            productInfos[8] = String.valueOf(product.getExclVatPrice());
-            productInfos[9] = product.getStartDate().getDayOfMonth() + 1 + "/" + product.getStartDate().getMonth() + "/" + product.getStartDate().getYear();
+            productInfos[8] = product.getExclVatPrice();
+            productInfos[9] = product.getStartDate();
             
             model.addRow(productInfos);
         }
@@ -155,26 +163,27 @@ public class ProductController extends Controller {
         return model;
     }
 
-    public static int indexOfVatType(Character vatType) throws DAORetrievalFailedException {
+    public Integer indexOfVatType(char targetVatType) throws DAORetrievalFailedException {
         ArrayList<Vat> vats = getAllVats();
-        ArrayList<Character> vatTypes = new ArrayList<>();
 
-        for (Vat vat : vats) {
-            vatTypes.add(vat.getType());
+        int size = vats.size();
+        for (int i = 0; i < size; i++) {
+            if (vats.get(i).getType() == targetVatType) {
+                return i;
+            }
         }
-        System.out.println(vatTypes.indexOf(vatType)); // DEBUG
-
-        return vatTypes.indexOf(vatType);
+        return null;
     }
     
-    public static int indexOfCategoryName(int categoryId) throws DAORetrievalFailedException {
+    public Integer indexOfCategoryName(int targetCategoryId) throws DAORetrievalFailedException {
         ArrayList<Category> categories = getAllCategories();
-        ArrayList<Integer> categoryIds = new ArrayList<>();
 
-        for (Category category : categories) {
-            categoryIds.add(category.getId());
+        int size = categories.size();
+        for (int i = 0; i < size; i++) {
+            if (categories.get(i).getId() == targetCategoryId) {
+                return i;
+            }
         }
-
-        return categoryIds.indexOf(categoryId);
+        return null;
     }
 }

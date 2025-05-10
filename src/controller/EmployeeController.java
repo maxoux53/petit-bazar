@@ -7,11 +7,17 @@ import model.*;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
+import java.util.Date;
 
-public class EmployeeController extends Controller {
+public class EmployeeController {
+    private final EmployeeManager manager;
 
-    public static int create(String firstName, String lastName, char[] password, Boolean isActive, String street, String streetNumberAsString, String unitNumberAsString, String roleLabel, String dayAsString, String monthAsString, String yearAsString, String managerIdAsString, String zipCodeAsString, String cityName, String countryName) throws HashFailedException, InsertionFailedException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException {
-        return EmployeeManager.create(
+    public EmployeeController() {
+        this.manager = new EmployeeManager();
+    }
+
+    public int create(String firstName, String lastName, char[] password, Boolean isActive, String street, String streetNumberAsString, String unitNumberAsString, String roleLabel, Date date, String managerIdAsString, String zipCodeAsString, String cityName, String countryName) throws HashFailedException, InsertionFailedException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException {
+        return manager.create(
                 new Employee(
                         firstName,
                         lastName,
@@ -21,7 +27,7 @@ public class EmployeeController extends Controller {
                         stringToStreetNumber(streetNumberAsString),
                         stringToUnitNumber(unitNumberAsString),
                         roleLabel,
-                        stringToDate(dayAsString, monthAsString, yearAsString),
+                        date.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate(),
                         stringToId(managerIdAsString),
                         stringToZipCode(zipCodeAsString),
                         cityName
@@ -34,13 +40,12 @@ public class EmployeeController extends Controller {
         );
     }
 
-
-    public static int remove(String idAsString) throws DeleteFailedException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException {
-        return EmployeeManager.remove(stringToId(idAsString));
+    public int remove(String idAsString) throws DeleteFailedException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException {
+        return manager.remove(stringToId(idAsString));
     }
 
-    public static int update(int id, String firstName, String lastName, char[] password, Boolean isActive, String street, String streetNumberAsString, String unitNumberAsString, String roleLabel, String dayAsString, String monthAsString, String yearAsString, String managerIdAsString, String zipCodeAsString, String cityName, String countryName) throws HashFailedException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException, UpdateFailedException {
-        return EmployeeManager.update(
+    public int update(int id, String firstName, String lastName, char[] password, Boolean isActive, String street, String streetNumberAsString, String unitNumberAsString, String roleLabel, Date date, String managerIdAsString, String zipCodeAsString, String cityName, String countryName) throws HashFailedException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException, UpdateFailedException {
+        return manager.update(
                 new Employee(
                         id,
                         firstName,
@@ -51,7 +56,7 @@ public class EmployeeController extends Controller {
                         stringToStreetNumber(streetNumberAsString),
                         stringToUnitNumber(unitNumberAsString),
                         roleLabel,
-                        stringToDate(dayAsString, monthAsString, yearAsString),
+                        date.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate(),
                         stringToId(managerIdAsString),
                         stringToZipCode(zipCodeAsString),
                         cityName
@@ -64,7 +69,7 @@ public class EmployeeController extends Controller {
         );
     }
 
-    private static Integer stringToStreetNumber(String streetNumberAsString) throws ProhibitedValueException, WrongTypeException {
+    private Integer stringToStreetNumber(String streetNumberAsString) throws ProhibitedValueException, WrongTypeException {
         if (!streetNumberAsString.isEmpty()) {
             int streetNumber;
 
@@ -74,6 +79,7 @@ public class EmployeeController extends Controller {
                 if (streetNumber < 0) {
                     throw new ProhibitedValueException("Numéro de rue");
                 }
+                return streetNumber;
             } catch (NumberFormatException numberFormatException) {
                 throw new WrongTypeException("Numéro de rue");
             }
@@ -81,7 +87,7 @@ public class EmployeeController extends Controller {
         return null;
     }
 
-    private static Integer stringToUnitNumber(String unitNumberAsString) throws ProhibitedValueException, WrongTypeException {
+    private Integer stringToUnitNumber(String unitNumberAsString) throws ProhibitedValueException, WrongTypeException {
         if (!unitNumberAsString.isEmpty()) {
             int unitNumber;
 
@@ -91,22 +97,22 @@ public class EmployeeController extends Controller {
                 if (unitNumber < 0) {
                     throw new ProhibitedValueException("Numéro d'unité");
                 }
+                return unitNumber;
             } catch (NumberFormatException numberFormatException) {
                 throw new WrongTypeException("Numéro d'unité");
             }
-            return unitNumber;
         }
         return null;
     }
 
-    private static byte[] stringToPassword(char[] password) throws HashFailedException {
+    private byte[] stringToPassword(char[] password) throws HashFailedException {
         if (password != null) {
-            return EmployeeManager.hashPassword(new String(password));
+            return manager.hashPassword(new String(password));
         }
         return null;
     }
 
-    private static Integer stringToId(String idAsString) throws ProhibitedValueException, WrongTypeException {
+    private Integer stringToId(String idAsString) throws ProhibitedValueException, WrongTypeException {
         if (!idAsString.isEmpty()) {
             try {
                 return Integer.parseInt(idAsString);
@@ -117,7 +123,7 @@ public class EmployeeController extends Controller {
         return null;
     }
 
-    private static Integer stringToZipCode(String zipCodeAsString) throws ProhibitedValueException, WrongTypeException {
+    private Integer stringToZipCode(String zipCodeAsString) throws ProhibitedValueException, WrongTypeException {
         if (!zipCodeAsString.isEmpty()) {
             int zipCode;
 
@@ -127,6 +133,7 @@ public class EmployeeController extends Controller {
                 if (zipCode < 0) {
                     throw new ProhibitedValueException("Code postal");
                 }
+                return zipCode;
             } catch (NumberFormatException numberFormatException) {
                 throw new WrongTypeException("Code postal");
             }
@@ -134,28 +141,28 @@ public class EmployeeController extends Controller {
         return null;
     }
 
-    public static EmployeeInfoWrapper[] getEmployeeById(String idAsString) throws NotFoundException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException {
-        return EmployeeManager.getById(stringToId(idAsString));
+    public EmployeeInfoWrapper[] getEmployeeById(String idAsString) throws NotFoundException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException {
+        return manager.getById(stringToId(idAsString));
     }
 
-    public static ArrayList<Employee> getAllEmployees() throws DAORetrievalFailedException {
-        return EmployeeManager.getAll();
+    public ArrayList<Employee> getAllEmployees() throws DAORetrievalFailedException {
+        return manager.getAll();
     }
 
-    public static boolean isPasswordCorrect(String username, char[] passwordAttempt) throws HashFailedException, DAORetrievalFailedException, NotFoundException {
-        return EmployeeManager.checkPassword(passwordAttempt, Integer.parseInt(username));
+    public boolean isPasswordCorrect(String username, char[] passwordAttempt) throws HashFailedException, DAORetrievalFailedException, NotFoundException {
+        return manager.checkPassword(passwordAttempt, Integer.parseInt(username));
     }
 
-    public static ArrayList<String> getAllCountries() throws DAORetrievalFailedException {
-        return EmployeeManager.getAllCountries();
+    public ArrayList<String> getAllCountries() throws DAORetrievalFailedException {
+        return manager.getAllCountries();
     }
 
-    public static ArrayList<String> getAllRoles() throws DAORetrievalFailedException {
-        return EmployeeManager.getAllRoles();
+    public ArrayList<String> getAllRoles() throws DAORetrievalFailedException {
+        return manager.getAllRoles();
     }
 
-    public static DefaultTableModel infoTableModel() throws DAORetrievalFailedException {
-        String[] ColumnNames = {
+    public DefaultTableModel infoTableModel() throws DAORetrievalFailedException {
+        String[] columnNames = {
                 "Matricule",
                 "Prénom",
                 "Nom",
@@ -170,24 +177,24 @@ public class EmployeeController extends Controller {
                 "Nom de la ville"
         };
 
-        DefaultTableModel model = new DefaultTableModel(ColumnNames, 0);
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
         ArrayList<Employee> employees = getAllEmployees();
-        String[] employeeInfos = new String[ColumnNames.length];
+        Object[] employeeInfos = new Object[columnNames.length];
         
         for (Employee employee : employees) {
             
-            employeeInfos[0] = String.valueOf(employee.getId());
+            employeeInfos[0] = employee.getId();
             employeeInfos[1] = employee.getFirstName();
             employeeInfos[2] = employee.getLastName();
-            employeeInfos[3] = (employee.getActive() ? "Oui" : "Non");
+            employeeInfos[3] = employee.getActive();
             employeeInfos[4] = employee.getStreet();
-            employeeInfos[5] = String.valueOf(employee.getStreetNumber());
-            employeeInfos[6] = String.valueOf(employee.getUnitNumber());
+            employeeInfos[5] = employee.getStreetNumber();
+            employeeInfos[6] = employee.getUnitNumber();
             employeeInfos[7] = employee.getRoleLabel();
-            employeeInfos[8] = employee.getHireDate().getDayOfMonth() + "/" + employee.getHireDate().getMonth() + "/" + employee.getHireDate().getYear();
-            employeeInfos[9] = String.valueOf(employee.getManagerId());
-            employeeInfos[10] = String.valueOf(employee.getCityZipCode());
+            employeeInfos[8] = employee.getHireDate();
+            employeeInfos[9] = employee.getManagerId();
+            employeeInfos[10] = employee.getCityZipCode();
             employeeInfos[11] = employee.getCityName();
             
             model.addRow(employeeInfos);
