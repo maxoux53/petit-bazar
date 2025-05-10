@@ -21,7 +21,7 @@ public class CustomerDBAccess extends DBAccess implements CustomerDAO {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, loyaltyCardNumber);
             
-            data = preparedStatement.executeQuery();
+            ResultSet data = preparedStatement.executeQuery();
 
             if (data.next()) {
                 Customer customer = new Customer(data.getInt("loyalty_card_number"));
@@ -63,13 +63,13 @@ public class CustomerDBAccess extends DBAccess implements CustomerDAO {
 
                 return customer;
             } else {
-                throw new NotFoundException(objectClassName, (long)loyaltyCardNumber, DBRetrievalFailure.NO_ROW.toString());
+                throw new NotFoundException(objectClassName, (long)loyaltyCardNumber, DBRetrievalFailure.NO_ROW);
             }
             
         } catch (SQLTimeoutException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
     }
 
@@ -79,7 +79,7 @@ public class CustomerDBAccess extends DBAccess implements CustomerDAO {
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
             
-            data = preparedStatement.executeQuery();
+            ResultSet data = preparedStatement.executeQuery();
             
             ArrayList<Customer> customers = new ArrayList<>();
             Customer customer;
@@ -134,9 +134,10 @@ public class CustomerDBAccess extends DBAccess implements CustomerDAO {
             
             return customers;
         } catch (SQLTimeoutException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
     }
 }
+

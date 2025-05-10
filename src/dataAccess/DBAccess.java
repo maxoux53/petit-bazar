@@ -15,7 +15,8 @@ public abstract class DBAccess implements CloseDAO {
         try {
             SingletonConnection.getInstance().close();
         } catch (SQLException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.CLOSURE_ERROR.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.CLOSURE_ERROR, e.getMessage());
         }
     }
 }
+

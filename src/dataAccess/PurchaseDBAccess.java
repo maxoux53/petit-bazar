@@ -25,7 +25,7 @@ public class PurchaseDBAccess extends DBAccess implements PurchaseDAO {
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-            data = preparedStatement.executeQuery();
+            ResultSet data = preparedStatement.executeQuery();
 
             while (data.next()) {
                 purchase = new Purchase(data.getLong("purchase_id"));
@@ -50,9 +50,10 @@ public class PurchaseDBAccess extends DBAccess implements PurchaseDAO {
 
             return purchases;
         } catch (SQLTimeoutException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
     }
 }
+
