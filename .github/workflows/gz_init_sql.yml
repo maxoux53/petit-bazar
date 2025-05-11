@@ -2,6 +2,8 @@ name: Combine into a .sql.gz file
 
 on:
   push:
+    branches-ignore:
+      - 'main'
     paths:
       - 'sql/*'
 
