@@ -27,7 +27,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
             preparedStatement.setBytes(3, employee.getPassword());
             preparedStatement.setBoolean(4, employee.getActive());
             preparedStatement.setString(5, employee.getStreet());
-            preparedStatement.setInt(6, employee.getStreetNumber());
+            preparedStatement.setString(6, employee.getStreetNumber());
             preparedStatement.setInt(7, employee.getUnitNumber());
             preparedStatement.setString(8, employee.getRoleLabel());
             preparedStatement.setDate(9, Date.valueOf(employee.getHireDate()));
@@ -114,7 +114,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
             preparedStatement.setBytes(3, employee.getPassword());
             preparedStatement.setBoolean(4, employee.getActive());
             preparedStatement.setString(5, employee.getStreet());
-            preparedStatement.setInt(6, employee.getStreetNumber());
+            preparedStatement.setString(6, employee.getStreetNumber());
             preparedStatement.setInt(7, employee.getUnitNumber());
             preparedStatement.setString(8, employee.getRoleLabel());
             preparedStatement.setDate(9, Date.valueOf(employee.getHireDate()));
@@ -155,7 +155,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
                 byte[] password;
                 boolean isActive;
                 String street;
-                int streetNumber;
+                String streetNumber;
                 int unitNumber;
                 String roleLabel;
                 Date hireDate;
@@ -191,7 +191,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
                     employee.setStreet(street);
                 }
 
-                streetNumber = data.getInt("street_number");
+                streetNumber = data.getString("street_number");
                 if (!data.wasNull()) {
                     employee.setStreetNumber(streetNumber);
                 }
@@ -255,7 +255,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
             byte[] password;
             boolean isActive;
             String street;
-            int streetNumber;
+            String streetNumber;
             int unitNumber;
             String roleLabel;
             Date hireDate;
@@ -291,7 +291,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
                     employee.setStreet(street);
                 }
 
-                streetNumber = data.getInt("street_number");
+                streetNumber = data.getString("street_number");
                 if (!data.wasNull()) {
                     employee.setStreetNumber(streetNumber);
                 }

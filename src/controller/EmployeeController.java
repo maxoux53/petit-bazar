@@ -16,7 +16,7 @@ public class EmployeeController {
         this.manager = new EmployeeManager();
     }
 
-    public int create(String firstName, String lastName, char[] password, Boolean isActive, String street, String streetNumberAsString, String unitNumberAsString, String roleLabel, Date date, String managerIdAsString, String zipCodeAsString, String cityName, String countryName) throws HashFailedException, InsertionFailedException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException {
+    public int create(String firstName, String lastName, char[] password, Boolean isActive, String street, String streetNumber, String unitNumberAsString, String roleLabel, Date date, String managerIdAsString, String zipCodeAsString, String cityName, String countryName) throws HashFailedException, InsertionFailedException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException {
         return manager.create(
                 new Employee(
                         firstName,
@@ -24,7 +24,7 @@ public class EmployeeController {
                         stringToPassword(password),
                         isActive,
                         street,
-                        stringToStreetNumber(streetNumberAsString),
+                        streetNumber,
                         stringToUnitNumber(unitNumberAsString),
                         roleLabel,
                         date.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate(),
@@ -67,24 +67,6 @@ public class EmployeeController {
                         countryName
                 )
         );
-    }
-
-    private Integer stringToStreetNumber(String streetNumberAsString) throws ProhibitedValueException, WrongTypeException {
-        if (!streetNumberAsString.isEmpty()) {
-            int streetNumber;
-
-            try {
-                streetNumber = Integer.parseInt(streetNumberAsString);
-
-                if (streetNumber < 0) {
-                    throw new ProhibitedValueException("Numéro de rue");
-                }
-                return streetNumber;
-            } catch (NumberFormatException numberFormatException) {
-                throw new WrongTypeException("Numéro de rue");
-            }
-        }
-        return null;
     }
 
     private Integer stringToUnitNumber(String unitNumberAsString) throws ProhibitedValueException, WrongTypeException {
