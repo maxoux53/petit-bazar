@@ -237,6 +237,8 @@ public class ProductPanel extends JPanel {
         startDateLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.MID_SIZE.getSize()));
         
         startDateSpinner = new JSpinner(new SpinnerDateModel());
+        startDateSpinner.setEditor(new JSpinner.DateEditor(startDateSpinner, "dd/MM/yyyy"));
+        startDateSpinner.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.NORMAL_SIZE.getSize()));
         
         startDatePanel.add(startDateLabel);
         startDatePanel.add(startDateSpinner);
@@ -319,8 +321,8 @@ public class ProductPanel extends JPanel {
         return availableRadioButtonNo;
     }
 
-    public ButtonGroup getAvailabilityGroup() {
-        return availabilityGroup;
+    public JSpinner getStartDateSpinner() {
+        return startDateSpinner;
     }
 
     public JSpinner getAmountSpinner() {
