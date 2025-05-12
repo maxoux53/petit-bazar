@@ -101,7 +101,7 @@ public class Menu extends JPanel {
         });
         
         // Listing
-        listingProduct = new JMenuItem("Gestion des Articles");
+        listingProduct = new JMenuItem("Gestion des articles");
         
         listingProduct.addActionListener(new ActionListener() {
             @Override
