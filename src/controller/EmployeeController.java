@@ -31,11 +31,6 @@ public class EmployeeController {
                         stringToId(managerIdAsString),
                         stringToZipCode(zipCodeAsString),
                         cityName
-                ),
-                new City(
-                        stringToZipCode(zipCodeAsString),
-                        cityName,
-                        countryName
                 )
         );
     }
@@ -44,7 +39,7 @@ public class EmployeeController {
         return manager.remove(stringToId(idAsString));
     }
 
-    public int update(int id, String firstName, String lastName, char[] password, Boolean isActive, String street, String streetNumberAsString, String unitNumberAsString, String roleLabel, Date date, String managerIdAsString, String zipCodeAsString, String cityName, String countryName) throws HashFailedException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException, UpdateFailedException {
+    public int update(int id, String firstName, String lastName, char[] password, Boolean isActive, String street, String streetNumber, String unitNumberAsString, String roleLabel, Date date, String managerIdAsString, String zipCodeAsString, String cityName, String countryName) throws HashFailedException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException, UpdateFailedException {
         return manager.update(
                 new Employee(
                         id,
@@ -53,18 +48,13 @@ public class EmployeeController {
                         stringToPassword(password),
                         isActive,
                         street,
-                        stringToStreetNumber(streetNumberAsString),
+                        streetNumber,
                         stringToUnitNumber(unitNumberAsString),
                         roleLabel,
                         date.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate(),
                         stringToId(managerIdAsString),
                         stringToZipCode(zipCodeAsString),
                         cityName
-                ),
-                new City(
-                        stringToZipCode(zipCodeAsString),
-                        cityName,
-                        countryName
                 )
         );
     }
@@ -123,7 +113,7 @@ public class EmployeeController {
         return null;
     }
 
-    public EmployeeInfoWrapper[] getEmployeeById(String idAsString) throws NotFoundException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException {
+    public Employee getEmployeeById(String idAsString) throws NotFoundException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException {
         return manager.getById(stringToId(idAsString));
     }
 

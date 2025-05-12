@@ -5,7 +5,6 @@ import exceptions.*;
 import interfaces.EmployeeDAO;
 import model.City;
 import model.Employee;
-import model.EmployeeInfoWrapper;
 
 import java.security.MessageDigest;
 import java.util.ArrayList;
@@ -18,19 +17,19 @@ public class EmployeeManager {
         dao = new EmployeeDBAccess();
     }
 
-    public int create(Employee employee, City city) throws InsertionFailedException, DAORetrievalFailedException {
-        return dao.create(employee, city);
+    public int create(Employee employee) throws InsertionFailedException, DAORetrievalFailedException {
+        return dao.create(employee);
     }
 
     public int remove(int id) throws DeleteFailedException, DAORetrievalFailedException {
         return dao.remove(id);
     }
 
-    public int update(Employee employee, City city) throws UpdateFailedException, DAORetrievalFailedException {
-        return dao.update(employee, city);
+    public int update(Employee employee) throws UpdateFailedException, DAORetrievalFailedException {
+        return dao.update(employee);
     }
 
-    public EmployeeInfoWrapper[] getById(int id) throws NotFoundException, DAORetrievalFailedException {
+    public Employee getById(int id) throws NotFoundException, DAORetrievalFailedException {
         return dao.getById(id);
     }
 

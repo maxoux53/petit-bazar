@@ -4,7 +4,6 @@ import exceptions.*;
 import interfaces.EmployeeDAO;
 import model.City;
 import model.Employee;
-import model.EmployeeInfoWrapper;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -140,7 +139,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         }
     }
 
-    public EmployeeInfoWrapper[] getById(int id) throws NotFoundException, DAORetrievalFailedException {
+    public Employee getById(int id) throws NotFoundException, DAORetrievalFailedException {
         sqlInstruction = "SElECT * FROM employee WHERE id = ?;";
 
         try {
@@ -163,7 +162,6 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
                 int cityZipCode;
                 String cityName;
 
-                EmployeeInfoWrapper[] employeeInfo = new EmployeeInfoWrapper[2]; // todo: rename
                 Employee employee = new Employee(data.getInt("id"));
 
                 firstName = data.getString("first_name");
@@ -226,10 +224,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
                     employee.setCityName(cityName);
                 }
 
-                employeeInfo[0] = employee;
-                employeeInfo[1] = getCity(cityZipCode, cityName);
-
-                return employeeInfo;
+                return employee;
             } else {
                 throw new NotFoundException(objectClassName, (long)id, DBRetrievalFailure.NO_ROW);
             }

@@ -12,47 +12,6 @@ import java.util.ArrayList;
 
 public class AddProduct extends JPanel {
     // Attributes
-    /*private JPanel titlePanel;
-    private JLabel titleLabel;
-    private JPanel formPanel;
-    private JPanel namePanel;
-    private JLabel nameLabel;
-    private JTextField nameField;
-    private JPanel descriptionPanel;
-    private JLabel descriptionLabel;
-    private JTextField descriptionField;
-    private JPanel pricePanel;
-    private JLabel priceLabel;
-    private JTextField priceField;
-    private JPanel amountPanel;
-    private JLabel amountLabel;
-    private JSpinner amountSpinner;
-    private JPanel vatTypePanel;
-    private JLabel vatTypeLabel;
-    private JComboBox<String> vatTypeComboBox;
-    private JPanel categoryPanel;
-    private JLabel categoryLabel;
-    private JComboBox<String> categoryComboBox;
-    private JPanel brandPanel;
-    private JLabel brandLabel;
-    private JTextField brandField;
-    private JPanel startDatePanel;
-    private JPanel startDateLabelSubPanel;
-    private JLabel startDateLabel;
-    private JPanel startDateFieldsSubPanel;
-    private JTextField startDateDayField;
-    private JTextField startDateMonthField;
-    private JTextField startDateYearField;
-    private JPanel availablePanel;
-    private JPanel AvailablelabelSubPanel;
-    private JLabel availableLabel;
-    private JPanel AvailableRadioButtonSubPanel;
-    private ButtonGroup availabilityGroup;
-    private JRadioButton availableRadioButtonYes;
-    private JRadioButton availableRadioButtonNo;
-    private JPanel buttonPanel;
-    private JButton addButton;*/
-    
     private JPanel titlePanel, formPanel, barcodePanel, namePanel, descriptionPanel, pricePanel, amountPanel, vatTypePanel, categoryPanel, brandPanel, startDatePanel, availablePanel, buttonPanel;
     private JLabel titleLabel, barcodeLabel, nameLabel, descriptionLabel, priceLabel, amountLabel, vatTypeLabel, categoryLabel, brandLabel, startDateLabel, availableLabel;
     private JTextField nameField, barcodeField, descriptionField, priceField, brandField, startDateDayField, startDateMonthField, startDateYearField;
@@ -62,12 +21,15 @@ public class AddProduct extends JPanel {
     private JRadioButton availableRadioButtonYes, availableRadioButtonNo;
     private ButtonGroup availabilityGroup;
     private JButton addButton;
+    private ProductController productController;
 
     // Constructors
     public AddProduct() {
         setLayout(new BorderLayout(0, 100));
         setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
         setBackground(Color.white);
+
+        productController = new ProductController();
 
         // Title
         titlePanel = new JPanel();
@@ -174,7 +136,7 @@ public class AddProduct extends JPanel {
 
         final ArrayList<Vat> vats;
         try {
-            vats = ProductController.getAllVats();
+            vats = productController.getAllVats();
 
             for (Vat vat : vats) {
                 vatTypeComboBox.addItem(vat.getType() + " (" + vat.getRate() + "%)");
@@ -201,7 +163,7 @@ public class AddProduct extends JPanel {
 
         final ArrayList<Category> categories = new ArrayList<>();
         try {
-            categories.addAll(ProductController.getAllCategories());
+            categories.addAll(productController.getAllCategories());
 
             for (Category category : categories) {
                 categoryComboBox.addItem(category.getLabel());
@@ -320,7 +282,7 @@ public class AddProduct extends JPanel {
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    ProductController.create(
+                    productController.create(
                             barcodeField.getText(),
                             nameField.getText(),
                             descriptionField.getText(),
@@ -329,10 +291,8 @@ public class AddProduct extends JPanel {
                             availableRadioButtonYes.isSelected(),
                             ((String)vatTypeComboBox.getSelectedItem()).charAt(0),
                             categories.get(categoryComboBox.getSelectedIndex()).getId(),
-                            ProductController.getOrCreateBrand(brandField.getText()),
-                            startDateDayField.getText(),
-                            startDateMonthField.getText(),
-                            startDateYearField.getText()
+                            productController.getOrCreateBrand(brandField.getText()),
+                            startDateField.getText()
                     );
 
                     removeAllField();
@@ -410,3 +370,4 @@ public class AddProduct extends JPanel {
         });
     }
 }
+

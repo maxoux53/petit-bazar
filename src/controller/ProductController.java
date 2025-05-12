@@ -18,18 +18,18 @@ public class ProductController {
         this.manager = new ProductManager();
     }
 
-    public void create(String barcode, String name, String description, String priceAsString, Integer amount, Boolean isAvailable, Character vat, Integer categoryId, Integer brandId, Date date) throws WrongTypeException, ProhibitedValueException, InsertionFailedException, DAORetrievalFailedException, FieldIsEmptyException {
+    public void create(Long barcode, String name, String description, BigDecimal price, Integer amount, Boolean isAvailable, Character vat, Integer categoryId, Integer brandId, LocalDate date) throws WrongTypeException, ProhibitedValueException, InsertionFailedException, DAORetrievalFailedException, FieldIsEmptyException {
         manager.create(new Product(
-                stringToBarcode(barcode),
-                nameInputValidation(name),
+                barcode,
+                name,
                 description,
                 amount,
                 isAvailable,
                 vat,
                 categoryId,
                 brandId,
-                stringToPrice(priceAsString),
-                date.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate()
+                price,
+                date
         ));
     }
 

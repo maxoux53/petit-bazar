@@ -11,6 +11,7 @@ import model.Vat;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class EditProduct extends JPanel {
@@ -317,18 +318,18 @@ public class EditProduct extends JPanel {
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    productController.create(
-                            barcodeField.getText(),
-                            nameField.getText(),
+                    productController.create(new Product(
+                            stringToBarcode(barcodeField.getText()),
+                            nameInputValidation(nameField.getText()),
                             descriptionField.getText(),
-                            priceField.getText(),
+                            stringToPrice(priceField.getText()),
                             (Integer)amountSpinner.getValue(),
                             availableRadioButtonYes.isSelected(),
                             ((String)vatTypeComboBox.getSelectedItem()).charAt(0),
                             categories.get(categoryComboBox.getSelectedIndex()).getId(),
                             productController.getOrCreateBrand(brandField.getText()),
-                            startDateField.getText()
-                    );
+                            startDateField.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate()
+                    ));
 
                     removeAllField();
                 } catch (WrongTypeException | ProhibitedValueException | InsertionFailedException | DAORetrievalFailedException | NullPointerException | FieldIsEmptyException ex) {
@@ -431,6 +432,67 @@ public class EditProduct extends JPanel {
         }
         // brandField.setText(product.getBrandId());
     }
-    
+
+    public Integer indexOfVatType(char targetVatType) throws DAORetrievalFailedException {
+        ArrayList<Vat> vats = getAllVats();
+
+        int size = vats.size();
+        for (int i = 0; i < size; i++) {
+            if (vats.get(i).getType() == targetVatType) {
+                return i;
+            }
+        }
+        return null;
+    }
+
+    public Integer indexOfCategoryName(int targetCategoryId) throws DAORetrievalFailedException {
+        ArrayList<Category> categories = getAllCategories();
+
+        int size = categories.size();
+        for (int i = 0; i < size; i++) {
+            if (categories.get(i).getId() == targetCategoryId) {
+                return i;
+            }
+        }
+        return null;
+    }
+
+    private String nameInputValidation(String name) {
+        if (!name.isEmpty()) {
+            return name;
+        }
+        return null;
+    }
+
+    private BigDecimal stringToPrice(String priceAsString) throws WrongTypeException, ProhibitedValueException {
+        if (!priceAsString.isEmpty()) {
+            BigDecimal price;
+
+            try {
+                price = new BigDecimal(priceAsString);
+
+                if (price.compareTo(BigDecimal.ZERO) < 0) {
+                    throw new ProhibitedValueException("Prix");
+                }
+
+                return price;
+            } catch (NumberFormatException numberFormatException) {
+                throw new WrongTypeException("Prix");
+            }
+        }
+        return null;
+    }
+
+    private Long stringToBarcode(String barcodeAsString) throws WrongTypeException, FieldIsEmptyException {
+        if (!barcodeAsString.isEmpty()) {
+            try {
+                return Long.parseLong(barcodeAsString);
+            } catch (NumberFormatException numberFormatException) {
+                throw new WrongTypeException("Code-barres");
+            }
+        } else {
+            throw new FieldIsEmptyException("Code-barres");
+        }
+    }
 }
 
