@@ -128,30 +128,34 @@ public class ProductController extends Controller {
                 "Type de TVA",
                 "Catégorie",
                 "Marque",
-                "Prix",
+                "Prix (€)",
                 "Date de mise en rayon"
         };
-        
+
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-        
         ArrayList<Product> products = getAllProducts();
-        String[] productInfos = new String[columnNames.length];
-        
+
         for (Product product : products) {
-            productInfos[0] = String.valueOf(product.getBarcode());
+            Object[] productInfos = new Object[columnNames.length];
+
+            productInfos[0] = product.getBarcode();
             productInfos[1] = product.getName();
             productInfos[2] = product.getDescription();
-            productInfos[3] = String.valueOf(product.getAmount());
-            productInfos[4] = (product.getAvailable() ? "Oui" : "Non");
-            productInfos[5] = String.valueOf(product.getVatType());
+            productInfos[3] = product.getAmount();
+            productInfos[4] = product.getAvailable() ? "Oui" : "Non";
+            productInfos[5] = product.getVatType();
             productInfos[6] = getCategoryLabelById(product.getCategoryId());
             productInfos[7] = getBrandLabelById(product.getBrandId());
-            productInfos[8] = String.valueOf(product.getExclVatPrice());
-            productInfos[9] = product.getStartDate().getDayOfMonth() + 1 + "/" + product.getStartDate().getMonth() + "/" + product.getStartDate().getYear();
-            
+            productInfos[8] = String.format("%.2f", product.getExclVatPrice());
+
+            productInfos[9] = String.format("%02d/%02d/%04d",
+                    product.getStartDate().getDayOfMonth(),
+                    product.getStartDate().getMonthValue(),
+                    product.getStartDate().getYear());
+
             model.addRow(productInfos);
         }
-        
+
         return model;
     }
 
