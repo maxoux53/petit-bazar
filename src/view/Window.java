@@ -1,5 +1,9 @@
 package view;
 
+import view.product.AddProduct;
+import view.product.EditProduct;
+import view.product.ProductManagement;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -13,8 +17,7 @@ public class Window extends JFrame {
     private Home home;
     private AddProduct addProduct;
     private EditProduct editProduct;
-    private DeleteProduct deleteProduct;
-    private ProductListing listingProduct;
+    private ProductManagement productManagement;
 
     // Constructors
     public Window(String title) {
@@ -37,9 +40,8 @@ public class Window extends JFrame {
         login = new Login(this);
         home = new Home();
         addProduct = new AddProduct();
-        editProduct = new EditProduct();
-        deleteProduct = new DeleteProduct();
-        listingProduct = new ProductListing();
+        editProduct = new EditProduct(this);
+        productManagement = new ProductManagement(this);
         
         container = getContentPane();
         container.add(login);
@@ -48,6 +50,15 @@ public class Window extends JFrame {
         // Visible
         setVisible(true);
     }
+    
+    // Getters
+
+    public EditProduct getEditProduct() {
+        return editProduct;
+    }
+
+
+    // Methods
     
     public void showHome() {
         if (currentPanel != home) {
@@ -103,24 +114,12 @@ public class Window extends JFrame {
         }
     }
     
-    public void showDeleteProduct() {
-        if (currentPanel != deleteProduct) {
+    public void showProductManagement() {
+        if (currentPanel != productManagement) {
             container.remove(currentPanel);
             
-            container.add(deleteProduct);
-            setCurrentPanel(deleteProduct);
-            
-            container.repaint();
-            container.revalidate();
-        }
-    }
-    
-    public void showListingProduct() {
-        if (currentPanel != listingProduct) {
-            container.remove(currentPanel);
-            
-            container.add(listingProduct);
-            setCurrentPanel(listingProduct);
+            container.add(productManagement);
+            setCurrentPanel(productManagement);
             
             container.repaint();
             container.revalidate();

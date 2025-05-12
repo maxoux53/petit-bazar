@@ -86,7 +86,7 @@ public class Menu extends JPanel {
         editProduct.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                window.showEditProduct();
+                window.showProductManagement();
             }
         });
         
@@ -96,17 +96,17 @@ public class Menu extends JPanel {
         deleteProduct.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                window.showDeleteProduct();
+                window.showProductManagement();
             }
         });
         
         // Listing
-        listingProduct = new JMenuItem("Liste des Articles");
+        listingProduct = new JMenuItem("Gestion des Articles");
         
         listingProduct.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                window.showListingProduct();
+                window.showProductManagement();
             }
         });
 
