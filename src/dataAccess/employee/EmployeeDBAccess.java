@@ -76,7 +76,7 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
         }
     }
 
-    private void nullifyEmployeeReferencesFromPurchases(int employeeId) throws DAORetrievalFailedException {
+    public void nullifyEmployeeReferencesFromPurchases(int employeeId) throws DAORetrievalFailedException {
         sqlInstruction = "UPDATE purchase SET employee_id = NULL WHERE employee_id = ?;";
 
         try {
@@ -90,7 +90,7 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
         }
     }
 
-    private void nullifyEmployeeReferencedAsManager(int employeeId) throws DAORetrievalFailedException {
+    public void nullifyEmployeeReferencedAsManager(int employeeId) throws DAORetrievalFailedException {
         sqlInstruction = "UPDATE employee SET manager_id = NULL WHERE manager_id = ?;";
 
         try {
@@ -211,7 +211,7 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
         }
     }
 
-    private void setCity(City city) throws DAORetrievalFailedException {
+    public void setCity(City city) throws DAORetrievalFailedException {
         String cityName = city.getName();
         Integer cityZipCode = city.getZipCode();
         
@@ -241,7 +241,7 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
         }
     }
 
-    private City getCity(int zipCode, String name) throws DAORetrievalFailedException {
+    public City getCity(int zipCode, String name) throws DAORetrievalFailedException {
         sqlInstruction = "SELECT * FROM city WHERE zip_code = ? AND name = ?;";
 
         try {
@@ -307,7 +307,7 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
         }
     }
 
-    private Employee mapResultSetToEmployee(ResultSet data) throws SQLException {
+    public Employee mapResultSetToEmployee(ResultSet data) throws SQLException {
         Employee employee = new Employee(data.getInt("id"));
 
         String firstName = data.getString("first_name");

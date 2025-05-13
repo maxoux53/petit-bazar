@@ -68,7 +68,7 @@ public class ProductDBAccess extends DBAccess implements IProductDAO {
         }
     }
 
-    private void removeOrderLineByBarcode(Long barcode) throws DAORetrievalFailedException {
+    public void removeOrderLineByBarcode(Long barcode) throws DAORetrievalFailedException {
         sqlInstruction = "DELETE FROM order_line WHERE product_barcode = ?;";
 
         try {

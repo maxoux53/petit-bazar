@@ -61,7 +61,7 @@ public class CustomerDBAccess extends DBAccess implements ICustomerDAO {
         }
     }
 
-    private Customer mapResultSetToCustomer(ResultSet data) throws SQLException {
+    public Customer mapResultSetToCustomer(ResultSet data) throws SQLException {
         Customer customer = new Customer(data.getInt("loyalty_card_number"));
 
         String firstName = data.getString("first_name");

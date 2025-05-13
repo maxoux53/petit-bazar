@@ -50,14 +50,14 @@ public class ProductController extends Controller {
         ));
     }
 
-    private String nameInputValidation(String name) {
+    public String nameInputValidation(String name) {
         if (!name.isEmpty()) {
             return name;
         }
         return null;
     }
 
-    private BigDecimal stringToPrice(String priceAsString) throws WrongTypeException, ProhibitedValueException {
+    public BigDecimal stringToPrice(String priceAsString) throws WrongTypeException, ProhibitedValueException {
         if (!priceAsString.isEmpty()) {
             BigDecimal price;
 
@@ -76,7 +76,7 @@ public class ProductController extends Controller {
         return null;
     }
 
-    private Long stringToBarcode(String barcodeAsString) throws WrongTypeException, FieldIsEmptyException {
+    public Long stringToBarcode(String barcodeAsString) throws WrongTypeException, FieldIsEmptyException {
         if (!barcodeAsString.isEmpty()) {
             try {
                 return Long.parseLong(barcodeAsString);
@@ -124,7 +124,7 @@ public class ProductController extends Controller {
         return manager.getOutOfStock();
     }
     
-    private ArrayList<Product> getAllProducts() throws DAORetrievalFailedException {
+    public ArrayList<Product> getAllProducts() throws DAORetrievalFailedException {
         return manager.getAll();
     }
     

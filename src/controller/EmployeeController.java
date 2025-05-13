@@ -73,7 +73,7 @@ public class EmployeeController extends Controller {
         );
     }
 
-    private Integer stringToStreetNumber(String streetNumberAsString) throws ProhibitedValueException, WrongTypeException {
+    public Integer stringToStreetNumber(String streetNumberAsString) throws ProhibitedValueException, WrongTypeException {
         if (!streetNumberAsString.isEmpty()) {
             int streetNumber;
 
@@ -90,7 +90,7 @@ public class EmployeeController extends Controller {
         return null;
     }
 
-    private Integer stringToUnitNumber(String unitNumberAsString) throws ProhibitedValueException, WrongTypeException {
+    public Integer stringToUnitNumber(String unitNumberAsString) throws ProhibitedValueException, WrongTypeException {
         if (!unitNumberAsString.isEmpty()) {
             int unitNumber;
 
@@ -108,14 +108,14 @@ public class EmployeeController extends Controller {
         return null;
     }
 
-    private byte[] stringToPassword(char[] password) throws HashFailedException {
+    public byte[] stringToPassword(char[] password) throws HashFailedException {
         if (password != null) {
             return manager.hashPassword(new String(password));
         }
         return null;
     }
 
-    private Integer stringToId(String idAsString) throws ProhibitedValueException, WrongTypeException {
+    public Integer stringToId(String idAsString) throws ProhibitedValueException, WrongTypeException {
         if (!idAsString.isEmpty()) {
             try {
                 return Integer.parseInt(idAsString);
@@ -126,7 +126,7 @@ public class EmployeeController extends Controller {
         return null;
     }
 
-    private Integer stringToZipCode(String zipCodeAsString) throws ProhibitedValueException, WrongTypeException {
+    public Integer stringToZipCode(String zipCodeAsString) throws ProhibitedValueException, WrongTypeException {
         if (!zipCodeAsString.isEmpty()) {
             int zipCode;
 
