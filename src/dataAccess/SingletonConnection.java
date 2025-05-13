@@ -1,8 +1,7 @@
 package dataAccess;
 
-import Utils.Env;
+import utils.Env;
 import exceptions.DAORetrievalFailedException;
-import view.ViewCore;
 
 import java.sql.*;
 

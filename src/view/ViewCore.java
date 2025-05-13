@@ -1,6 +1,6 @@
 package view;
 
-import Utils.Env;
+import utils.Env;
 import business.DataInteractionManager;
 import exceptions.DAORetrievalFailedException;
 
