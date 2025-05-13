@@ -7,9 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public abstract class DBAccess implements ICloseDAO {
-    /*package-protected*/ String sqlInstruction;
-    /*package-protected*/ PreparedStatement preparedStatement;
-    /*package-protected*/ ResultSet data;
+    public String sqlInstruction;
+    public PreparedStatement preparedStatement;
+    public ResultSet data;
 
     public void close() throws DAORetrievalFailedException {
         try {

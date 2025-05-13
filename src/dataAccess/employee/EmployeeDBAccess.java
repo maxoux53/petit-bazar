@@ -143,93 +143,19 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
     }
 
     public IEmployeeInfoWrapper[] getById(int id) throws NotFoundException, DAORetrievalFailedException {
-        sqlInstruction = "SElECT * FROM employee WHERE id = ?;";
+        sqlInstruction = "SELECT * FROM employee WHERE id = ?;";
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, id);
-
             data = preparedStatement.executeQuery();
 
             if (data.next()) {
-                String firstName;
-                String lastName;
-                byte[] password;
-                boolean isActive;
-                String street;
-                int streetNumber;
-                int unitNumber;
-                String roleLabel;
-                Date hireDate;
-                int managerId;
-                int cityZipCode;
-                String cityName;
+                Employee employee = mapResultSetToEmployee(data);
 
-                IEmployeeInfoWrapper[] employeeInfo = new IEmployeeInfoWrapper[2]; // todo: rename
-                Employee employee = new Employee(data.getInt("id"));
-
-                firstName = data.getString("first_name");
-                if (!data.wasNull()) {
-                    employee.setFirstName(firstName);
-                }
-
-                lastName = data.getString("last_name");
-                if (!data.wasNull()) {
-                    employee.setLastName(lastName);
-                }
-
-                password = data.getBytes("password");
-                if (!data.wasNull()) {
-                    employee.setPassword(password);
-                }
-
-                isActive = data.getBoolean("is_active");
-                if (!data.wasNull()) {
-                    employee.setActive(isActive);
-                }
-
-                street = data.getString("street");
-                if (!data.wasNull()) {
-                    employee.setStreet(street);
-                }
-
-                streetNumber = data.getInt("street_number");
-                if (!data.wasNull()) {
-                    employee.setStreetNumber(streetNumber);
-                }
-
-                unitNumber = data.getInt("unit_number");
-                if (!data.wasNull()) {
-                    employee.setUnitNumber(unitNumber);
-                }
-
-                roleLabel = data.getString("role_label");
-                if (!data.wasNull()) {
-                    employee.setRoleLabel(roleLabel);
-                }
-
-                hireDate = data.getDate("hire_date");
-                if (!data.wasNull()) {
-                    employee.setHireDate(hireDate.toLocalDate());
-                }
-
-                managerId = data.getInt("manager_id");
-                if (!data.wasNull()) {
-                    employee.setManagerId(managerId);
-                }
-
-                cityZipCode = data.getInt("city_zip_code");
-                if (!data.wasNull()) {
-                    employee.setCityZipCode(cityZipCode);
-                }
-
-                cityName = data.getString("city_name");
-                if (!data.wasNull()) {
-                    employee.setCityName(cityName);
-                }
-
+                IEmployeeInfoWrapper[] employeeInfo = new IEmployeeInfoWrapper[2];
                 employeeInfo[0] = employee;
-                employeeInfo[1] = getCity(cityZipCode, cityName);
+                employeeInfo[1] = getCity(employee.getCityZipCode(), employee.getCityName());
 
                 return employeeInfo;
             } else {
@@ -243,91 +169,16 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
     }
 
     public ArrayList<Employee> getAll() throws DAORetrievalFailedException {
-        sqlInstruction = "SElECT * FROM employee;";
+        sqlInstruction = "SELECT * FROM employee;";
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-
-            data = preparedStatement.executeQuery(); // add try-catch if notfoundexception changes
+            data = preparedStatement.executeQuery();
 
             ArrayList<Employee> employeesInfos = new ArrayList<>();
-            Employee employee;
-            String firstName;
-            String lastName;
-            byte[] password;
-            boolean isActive;
-            String street;
-            int streetNumber;
-            int unitNumber;
-            String roleLabel;
-            Date hireDate;
-            int managerId;
-            int cityZipCode;
-            String cityName;
 
             while (data.next()) {
-                employee = new Employee(data.getInt("id"));
-
-                firstName = data.getString("first_name");
-                if (!data.wasNull()) {
-                    employee.setFirstName(firstName);
-                }
-
-                lastName = data.getString("last_name");
-                if (!data.wasNull()) {
-                    employee.setLastName(lastName);
-                }
-
-                password = data.getBytes("password");
-                if (!data.wasNull()) {
-                    employee.setPassword(password);
-                }
-
-                isActive = data.getBoolean("is_active");
-                if (!data.wasNull()) {
-                    employee.setActive(isActive);
-                }
-
-                street = data.getString("street");
-                if (!data.wasNull()) {
-                    employee.setStreet(street);
-                }
-
-                streetNumber = data.getInt("street_number");
-                if (!data.wasNull()) {
-                    employee.setStreetNumber(streetNumber);
-                }
-
-                unitNumber = data.getInt("unit_number");
-                if (!data.wasNull()) {
-                    employee.setUnitNumber(unitNumber);
-                }
-
-                roleLabel = data.getString("role_label");
-                if (!data.wasNull()) {
-                    employee.setRoleLabel(roleLabel);
-                }
-
-                hireDate = data.getDate("hire_date");
-                if (!data.wasNull()) {
-                    employee.setHireDate(hireDate.toLocalDate());
-                }
-
-                managerId = data.getInt("manager_id");
-                if (!data.wasNull()) {
-                    employee.setManagerId(managerId);
-                }
-
-                cityZipCode = data.getInt("city_zip_code");
-                if (!data.wasNull()) {
-                    employee.setCityZipCode(cityZipCode);
-                }
-
-                cityName = data.getString("city_name");
-                if (!data.wasNull()) {
-                    employee.setCityName(cityName);
-                }
-                
+                Employee employee = mapResultSetToEmployee(data);
                 employeesInfos.add(employee);
             }
 
@@ -454,5 +305,47 @@ public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
         } catch (SQLException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
         }
+    }
+
+    private Employee mapResultSetToEmployee(ResultSet data) throws SQLException {
+        Employee employee = new Employee(data.getInt("id"));
+
+        String firstName = data.getString("first_name");
+        if (!data.wasNull()) employee.setFirstName(firstName);
+
+        String lastName = data.getString("last_name");
+        if (!data.wasNull()) employee.setLastName(lastName);
+
+        byte[] password = data.getBytes("password");
+        if (!data.wasNull()) employee.setPassword(password);
+
+        boolean isActive = data.getBoolean("is_active");
+        if (!data.wasNull()) employee.setActive(isActive);
+
+        String street = data.getString("street");
+        if (!data.wasNull()) employee.setStreet(street);
+
+        int streetNumber = data.getInt("street_number");
+        if (!data.wasNull()) employee.setStreetNumber(streetNumber);
+
+        int unitNumber = data.getInt("unit_number");
+        if (!data.wasNull()) employee.setUnitNumber(unitNumber);
+
+        String roleLabel = data.getString("role_label");
+        if (!data.wasNull()) employee.setRoleLabel(roleLabel);
+
+        Date hireDate = data.getDate("hire_date");
+        if (!data.wasNull()) employee.setHireDate(hireDate.toLocalDate());
+
+        int managerId = data.getInt("manager_id");
+        if (!data.wasNull()) employee.setManagerId(managerId);
+
+        int cityZipCode = data.getInt("city_zip_code");
+        if (!data.wasNull()) employee.setCityZipCode(cityZipCode);
+
+        String cityName = data.getString("city_name");
+        if (!data.wasNull()) employee.setCityName(cityName);
+
+        return employee;
     }
 }
