@@ -1,5 +1,8 @@
-package dataAccess;
+package dataAccess.product;
 
+import dataAccess.DBAccess;
+import dataAccess.DBRetrievalFailure;
+import dataAccess.SingletonConnection;
 import exceptions.*;
 import model.Category;
 import model.Product;
@@ -9,7 +12,7 @@ import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class ProductDBAccess extends DBAccess implements ProductDAO {
+public class ProductDBAccess extends DBAccess implements IProductDAO {
     private static final String objectClassName;
 
     static {

@@ -1,14 +1,17 @@
-package dataAccess;
+package dataAccess.employee;
 
+import dataAccess.DBAccess;
+import dataAccess.DBRetrievalFailure;
+import dataAccess.SingletonConnection;
 import exceptions.*;
 import model.City;
 import model.Employee;
-import model.EmployeeInfoWrapper;
+import model.IEmployeeInfoWrapper;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
+public class EmployeeDBAccess extends DBAccess implements IEmployeeDAO {
     private static final String objectClassName;
 
     static {
@@ -139,7 +142,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         }
     }
 
-    public EmployeeInfoWrapper[] getById(int id) throws NotFoundException, DAORetrievalFailedException {
+    public IEmployeeInfoWrapper[] getById(int id) throws NotFoundException, DAORetrievalFailedException {
         sqlInstruction = "SElECT * FROM employee WHERE id = ?;";
 
         try {
@@ -162,7 +165,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
                 int cityZipCode;
                 String cityName;
 
-                EmployeeInfoWrapper[] employeeInfo = new EmployeeInfoWrapper[2]; // todo: rename
+                IEmployeeInfoWrapper[] employeeInfo = new IEmployeeInfoWrapper[2]; // todo: rename
                 Employee employee = new Employee(data.getInt("id"));
 
                 firstName = data.getString("first_name");

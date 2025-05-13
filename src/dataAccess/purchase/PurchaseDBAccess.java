@@ -1,5 +1,8 @@
-package dataAccess;
+package dataAccess.purchase;
 
+import dataAccess.DBAccess;
+import dataAccess.DBRetrievalFailure;
+import dataAccess.SingletonConnection;
 import exceptions.DAORetrievalFailedException;
 import model.Purchase;
 
@@ -7,7 +10,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class PurchaseDBAccess extends DBAccess implements PurchaseDAO {
+public class PurchaseDBAccess extends DBAccess implements IPurchaseDAO {
     private static final String objectClassName;
 
     static {

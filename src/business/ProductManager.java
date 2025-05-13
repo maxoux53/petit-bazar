@@ -1,6 +1,7 @@
 package business;
 
-import dataAccess.*;
+import dataAccess.product.IProductDAO;
+import dataAccess.product.ProductDBAccess;
 import exceptions.*;
 import model.Category;
 import model.Product;
@@ -9,7 +10,7 @@ import model.Vat;
 import java.util.ArrayList;
 
 public class ProductManager {
-    private static ProductDAO productDataAccess;
+    private static IProductDAO productDataAccess;
 
     static {
         productDataAccess = new ProductDBAccess();

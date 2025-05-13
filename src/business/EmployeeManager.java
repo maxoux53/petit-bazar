@@ -1,16 +1,17 @@
 package business;
 
-import dataAccess.*;
+import dataAccess.employee.IEmployeeDAO;
+import dataAccess.employee.EmployeeDBAccess;
 import exceptions.*;
 import model.City;
 import model.Employee;
-import model.EmployeeInfoWrapper;
+import model.IEmployeeInfoWrapper;
 
 import java.security.MessageDigest;
 import java.util.ArrayList;
 
 public class EmployeeManager {
-    private static EmployeeDAO dao;
+    private static IEmployeeDAO dao;
     private static MessageDigest digest;
 
     static {
@@ -29,7 +30,7 @@ public class EmployeeManager {
         return dao.update(employee, city);
     }
 
-    public static EmployeeInfoWrapper[] getById(int id) throws NotFoundException, DAORetrievalFailedException {
+    public static IEmployeeInfoWrapper[] getById(int id) throws NotFoundException, DAORetrievalFailedException {
         return dao.getById(id);
     }
 

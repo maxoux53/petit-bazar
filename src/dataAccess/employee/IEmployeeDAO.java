@@ -1,17 +1,17 @@
-package dataAccess;
+package dataAccess.employee;
 
 import exceptions.*;
 import model.City;
 import model.Employee;
-import model.EmployeeInfoWrapper;
+import model.IEmployeeInfoWrapper;
 
 import java.util.ArrayList;
 
-public interface EmployeeDAO {
+public interface IEmployeeDAO {
     int create(Employee employee, City city) throws InsertionFailedException, DAORetrievalFailedException;
     int remove(int id) throws DeleteFailedException, DAORetrievalFailedException;
     int update(Employee employee, City city) throws UpdateFailedException, DAORetrievalFailedException;
-    EmployeeInfoWrapper[] getById(int id) throws NotFoundException, DAORetrievalFailedException;
+    IEmployeeInfoWrapper[] getById(int id) throws NotFoundException, DAORetrievalFailedException;
     ArrayList<Employee> getAll() throws DAORetrievalFailedException;
     byte[] getPasswordHash(int id) throws NotFoundException, DAORetrievalFailedException;
     ArrayList<String> getAllCountries() throws DAORetrievalFailedException;

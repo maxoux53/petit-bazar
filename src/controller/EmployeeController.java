@@ -134,7 +134,7 @@ public class EmployeeController extends Controller {
         return null;
     }
 
-    public static EmployeeInfoWrapper[] getEmployeeById(String idAsString) throws NotFoundException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException {
+    public static IEmployeeInfoWrapper[] getEmployeeById(String idAsString) throws NotFoundException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException {
         return EmployeeManager.getById(stringToId(idAsString));
     }
 

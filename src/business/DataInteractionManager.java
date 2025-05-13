@@ -1,10 +1,11 @@
 package business;
 
 import dataAccess.*;
+import dataAccess.employee.EmployeeDBAccess;
 import exceptions.DAORetrievalFailedException;
 
 public class DataInteractionManager {
-    private static CloseDAO dao;
+    private static ICloseDAO dao;
 
     static {
         //dao = DBAccess;

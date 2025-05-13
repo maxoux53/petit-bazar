@@ -1,4 +1,4 @@
-package dataAccess;
+package dataAccess.product;
 
 import exceptions.*;
 import model.Category;
@@ -7,7 +7,7 @@ import model.Vat;
 
 import java.util.ArrayList;
 
-public interface ProductDAO {
+public interface IProductDAO {
     int create(Product product) throws InsertionFailedException, DAORetrievalFailedException;
     int remove(Long barcode) throws DeleteFailedException, DAORetrievalFailedException;
     int update(Product product) throws UpdateFailedException, DAORetrievalFailedException;

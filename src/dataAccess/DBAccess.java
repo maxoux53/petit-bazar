@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public abstract class DBAccess implements CloseDAO {
+public abstract class DBAccess implements ICloseDAO {
     /*package-protected*/ String sqlInstruction;
     /*package-protected*/ PreparedStatement preparedStatement;
     /*package-protected*/ ResultSet data;

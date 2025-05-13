@@ -1,12 +1,16 @@
-package dataAccess;
+package dataAccess.customer;
 
+import dataAccess.DBAccess;
+import dataAccess.DBRetrievalFailure;
+import dataAccess.SingletonConnection;
 import exceptions.DAORetrievalFailedException;
 import exceptions.NotFoundException;
 import model.Customer;
+
 import java.sql.*;
 import java.util.ArrayList;
 
-public class CustomerDBAccess extends DBAccess implements CustomerDAO {
+public class CustomerDBAccess extends DBAccess implements ICustomerDAO {
     private static final String objectClassName;
 
     static {
