@@ -9,17 +9,21 @@ import model.Customer;
 import java.util.ArrayList;
 
 public class CustomerManager {
-    private static ICustomerDAO dao;
+    private ICustomerDAO dao;
 
-    static {
-        dao = new CustomerDBAccess();
+    public CustomerManager() {
+        setDao(new CustomerDBAccess());
     }
 
-    public static Customer getByLoyaltyCardNumber(int loyaltyCardNumber) throws NotFoundException, DAORetrievalFailedException {
+    public void setDao(ICustomerDAO dao) {
+        this.dao = dao;
+    }
+
+    public Customer getByLoyaltyCardNumber(int loyaltyCardNumber) throws NotFoundException, DAORetrievalFailedException {
         return dao.getByLoyaltyCardNumber(loyaltyCardNumber);
     }
 
-    public static ArrayList<Customer> getAll() throws DAORetrievalFailedException {
+    public ArrayList<Customer> getAll() throws DAORetrievalFailedException {
         return dao.getAll();
     }
 }

@@ -5,14 +5,17 @@ import dataAccess.employee.EmployeeDBAccess;
 import exceptions.DAORetrievalFailedException;
 
 public class DataInteractionManager {
-    private static ICloseDAO dao;
+    private ICloseDAO dao;
 
-    static {
-        //dao = DBAccess;
-        dao = new EmployeeDBAccess();
+    public DataInteractionManager() {
+        setDao(new EmployeeDBAccess()); //A VERIFIER
     }
 
-    public static void close() throws DAORetrievalFailedException {
+    public void setDao(ICloseDAO dao) {
+        this.dao = dao;
+    }
+
+    public void close() throws DAORetrievalFailedException {
         dao.close();
     }
 }

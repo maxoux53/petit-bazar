@@ -7,8 +7,7 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 
 public abstract class Controller {
-
-    /*package-private*/ static LocalDate stringToDate(String stringDay, String stringMonth, String stringYear) throws WrongTypeException, ProhibitedValueException {
+    public LocalDate stringToDate(String stringDay, String stringMonth, String stringYear) throws WrongTypeException, ProhibitedValueException {
         int day;
         try {
             day = Integer.parseInt(stringDay);

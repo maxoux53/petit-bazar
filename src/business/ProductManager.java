@@ -10,61 +10,65 @@ import model.Vat;
 import java.util.ArrayList;
 
 public class ProductManager {
-    private static IProductDAO productDataAccess;
+    private IProductDAO dao;
 
-    static {
-        productDataAccess = new ProductDBAccess();
+    public ProductManager() {
+        setDao(new ProductDBAccess());
     }
 
-    public static int create(Product product) throws InsertionFailedException, DAORetrievalFailedException {
-        return productDataAccess.create(product);
+    public void setDao(IProductDAO productDataAccess) {
+        this.dao = productDataAccess;
     }
 
-    public static int remove(Long barcode) throws DeleteFailedException, DAORetrievalFailedException {
-        return productDataAccess.remove(barcode);
+    public int create(Product product) throws InsertionFailedException, DAORetrievalFailedException {
+        return dao.create(product);
     }
 
-    public static int update(Product product) throws DAORetrievalFailedException, UpdateFailedException {
-        return productDataAccess.update(product);
+    public int remove(Long barcode) throws DeleteFailedException, DAORetrievalFailedException {
+        return dao.remove(barcode);
     }
 
-    public static Product getByBarcode(Long barcode) throws NotFoundException, DAORetrievalFailedException {
-        return productDataAccess.getByBarcode(barcode);
+    public int update(Product product) throws DAORetrievalFailedException, UpdateFailedException {
+        return dao.update(product);
     }
 
-    public static ArrayList<Product> searchByName(String name) throws NotFoundException, DAORetrievalFailedException {
-        return productDataAccess.searchByName(name);
+    public Product getByBarcode(Long barcode) throws NotFoundException, DAORetrievalFailedException {
+        return dao.getByBarcode(barcode);
+    }
+
+    public ArrayList<Product> searchByName(String name) throws NotFoundException, DAORetrievalFailedException {
+        return dao.searchByName(name);
     }
     
-    public static String getCategoryLabelById(int categoryId) throws DAORetrievalFailedException, NotFoundException {
-        return productDataAccess.getCategoryLabelById(categoryId);
+    public String getCategoryLabelById(int categoryId) throws DAORetrievalFailedException, NotFoundException {
+        return dao.getCategoryLabelById(categoryId);
     }
 
-    public static String getBrandLabelById(int brandId) throws DAORetrievalFailedException, NotFoundException {
-        return productDataAccess.getBrandLabelById(brandId);
+    public String getBrandLabelById(int brandId) throws DAORetrievalFailedException, NotFoundException {
+        return dao.getBrandLabelById(brandId);
     }
     
-    public static ArrayList<Product> getAll() throws DAORetrievalFailedException {
-        return productDataAccess.getAll();
+    public ArrayList<Product> getAll() throws DAORetrievalFailedException {
+        return dao.getAll();
     }
 
-    public static int getOrCreateBrand(String name) throws DAORetrievalFailedException {
-        return productDataAccess.getOrCreateBrandByName(name);
+    public int getOrCreateBrand(String name) throws DAORetrievalFailedException {
+        return dao.getOrCreateBrandByName(name);
     }
 
-    public static ArrayList<Category> getAllCategories() throws DAORetrievalFailedException {
-        return productDataAccess.getAllCategories();
+    public ArrayList<Category> getAllCategories() throws DAORetrievalFailedException {
+        return dao.getAllCategories();
     }
 
-    public static ArrayList<Vat> getAllVats() throws DAORetrievalFailedException {
-        return productDataAccess.getAllVats();
+    public ArrayList<Vat> getAllVats() throws DAORetrievalFailedException {
+        return dao.getAllVats();
     }
 
-    public static int getCurrentStock(Long barcode) throws NotFoundException, DAORetrievalFailedException {
-        return productDataAccess.getCurrentStock(barcode);
+    public int getCurrentStock(Long barcode) throws NotFoundException, DAORetrievalFailedException {
+        return dao.getCurrentStock(barcode);
     }
 
-    public static ArrayList<Integer> getOutOfStock() throws NotFoundException, DAORetrievalFailedException {
-        return productDataAccess.getOutOfStock();
+    public ArrayList<Integer> getOutOfStock() throws NotFoundException, DAORetrievalFailedException {
+        return dao.getOutOfStock();
     }
 }

@@ -11,34 +11,38 @@ import java.security.MessageDigest;
 import java.util.ArrayList;
 
 public class EmployeeManager {
-    private static IEmployeeDAO dao;
-    private static MessageDigest digest;
+    private IEmployeeDAO dao;
+    private MessageDigest digest;
 
-    static {
-        dao = new EmployeeDBAccess();
+    public EmployeeManager() {
+        setDao(new EmployeeDBAccess());
     }
 
-    public static int create(Employee employee, City city) throws InsertionFailedException, DAORetrievalFailedException {
+    public void setDao(IEmployeeDAO dao) {
+        this.dao = dao;
+    }
+
+    public int create(Employee employee, City city) throws InsertionFailedException, DAORetrievalFailedException {
         return dao.create(employee, city);
     }
 
-    public static int remove(int id) throws DeleteFailedException, DAORetrievalFailedException {
+    public int remove(int id) throws DeleteFailedException, DAORetrievalFailedException {
         return dao.remove(id);
     }
 
-    public static int update(Employee employee, City city) throws UpdateFailedException, DAORetrievalFailedException {
+    public int update(Employee employee, City city) throws UpdateFailedException, DAORetrievalFailedException {
         return dao.update(employee, city);
     }
 
-    public static IEmployeeInfoWrapper[] getById(int id) throws NotFoundException, DAORetrievalFailedException {
+    public IEmployeeInfoWrapper[] getById(int id) throws NotFoundException, DAORetrievalFailedException {
         return dao.getById(id);
     }
 
-    public static ArrayList<Employee> getAll() throws DAORetrievalFailedException {
+    public ArrayList<Employee> getAll() throws DAORetrievalFailedException {
         return dao.getAll();
     }
 
-    public static byte[] hashPassword(String password) throws HashFailedException {
+    public byte[] hashPassword(String password) throws HashFailedException {
         if (digest == null) {
             try {
                 digest = MessageDigest.getInstance("SHA-256");
@@ -50,18 +54,18 @@ public class EmployeeManager {
         return digest.digest(password.getBytes());
     }
 
-    public static boolean checkPassword(char[] passwordAttempt, int id) throws HashFailedException, NotFoundException, DAORetrievalFailedException {
+    public boolean checkPassword(char[] passwordAttempt, int id) throws HashFailedException, NotFoundException, DAORetrievalFailedException {
         return MessageDigest.isEqual(
                 hashPassword(new String(passwordAttempt)),
                 dao.getPasswordHash(id)
         );
     }
 
-    public static ArrayList<String> getAllCountries() throws DAORetrievalFailedException {
+    public ArrayList<String> getAllCountries() throws DAORetrievalFailedException {
         return dao.getAllCountries();
     }
 
-    public static ArrayList<String> getAllRoles() throws DAORetrievalFailedException {
+    public ArrayList<String> getAllRoles() throws DAORetrievalFailedException {
         return dao.getAllRoles();
     }
 }
