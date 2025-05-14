@@ -11,7 +11,11 @@ public class CustomerManager {
     private CustomerDAO dao;
 
     public CustomerManager() {
-        dao = new CustomerDBAccess();
+        setDao(new CustomerDBAccess());
+    }
+
+    public void setDao(CustomerDAO dao) {
+        this.dao = dao;
     }
 
     public Customer getByLoyaltyCardNumber(int loyaltyCardNumber) throws NotFoundException, DAORetrievalFailedException {
