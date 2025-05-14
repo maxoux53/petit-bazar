@@ -2,14 +2,14 @@ package model;
 
 import java.time.LocalDate;
 
-public class Employee implements EmployeeInfoWrapper {
+public class Employee {
     private Integer id;
     private String firstName;
     private String lastName;
     private byte[] password;
     private Boolean isActive;
     private String street;
-    private Integer streetNumber;
+    private String streetNumber;
     private Integer unitNumber;
     private String roleLabel;
     private LocalDate hireDate;
@@ -17,12 +17,8 @@ public class Employee implements EmployeeInfoWrapper {
     private Integer cityZipCode;
     private String cityName;
 
-    public Employee(Integer id) {
+    public Employee(Integer id, String firstName, String lastName, byte[] password, Boolean isActive, String street, String streetNumber, Integer unitNumber, String roleLabel, LocalDate hireDate, Integer managerId, Integer cityZipCode, String cityName) {
         this.id = id;
-    }
-
-    public Employee(Integer id, String firstName, String lastName, byte[] password, Boolean isActive, String street, Integer streetNumber, Integer unitNumber, String roleLabel, LocalDate hireDate, Integer managerId, Integer cityZipCode, String cityName) {
-        this(id);
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
@@ -37,8 +33,12 @@ public class Employee implements EmployeeInfoWrapper {
         this.cityName = cityName;
     }
 
-    public Employee(String firstName, String lastName, byte[] password, Boolean isActive, String street, Integer streetNumber, Integer unitNumber, String roleLabel, LocalDate hireDate, Integer managerId, Integer cityZipCode, String cityName) {
+    public Employee(String firstName, String lastName, byte[] password, Boolean isActive, String street, String streetNumber, Integer unitNumber, String roleLabel, LocalDate hireDate, Integer managerId, Integer cityZipCode, String cityName) {
         this(null, firstName, lastName, password, isActive, street, streetNumber, unitNumber, roleLabel, hireDate, managerId, cityZipCode, cityName);
+    }
+
+    public Employee(Integer id, String firstName, String lastName, byte[] password, Boolean isActive, String street, String streetNumber, String roleLabel, LocalDate hireDate, Integer cityZipCode, String cityName) {
+        this(id, firstName, lastName, password, isActive, street, streetNumber, null, roleLabel, hireDate, null, cityZipCode, cityName);
     }
 
     public void setFirstName(String firstName) {
@@ -61,7 +61,7 @@ public class Employee implements EmployeeInfoWrapper {
         this.street = street;
     }
 
-    public void setStreetNumber(int streetNumber) {
+    public void setStreetNumber(String streetNumber) {
         this.streetNumber = streetNumber;
     }
 
@@ -109,7 +109,7 @@ public class Employee implements EmployeeInfoWrapper {
         return street;
     }
 
-    public Integer getStreetNumber() {
+    public String getStreetNumber() {
         return streetNumber;
     }
 

@@ -1,31 +1,9 @@
 package view;
 
-public enum FontPreferences {
-    // Enum
-    DEFAULT_STYLE("SansSerif"),
-    TITLE_SIZE(60),
-    MID_SIZE(25),
-    NORMAL_SIZE(20);
-
-    // Attributes
-    private String style;
-    private int size;
-
-    // Constructors
-    FontPreferences(String value) {
-        this.style = value;
-    }
-
-    FontPreferences(int value) {
-        this.size = value;
-    }
-
-    // Getters
-    public String getStyle() {
-        return style;
-    }
-
-    public int getSize() {
-        return size;
-    }
+public class FontPreferences {
+    // Constantes statiques
+    public static final String DEFAULT_STYLE = "SansSerif";
+    public static final int TITLE_SIZE = 60;
+    public static final int MID_SIZE = 25;
+    public static final int NORMAL_SIZE = 20;
 }

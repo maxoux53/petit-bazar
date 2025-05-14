@@ -27,11 +27,11 @@ INSERT INTO city (zip_code, name, country) VALUES
 
 -- Insertion des employés (mot de passe en bytea "password123" pour tous par simplicité)
 INSERT INTO employee (first_name, last_name, password, is_active, street, street_number, unit_number, role_label, hire_date, manager_id, city_zip_code, city_name) VALUES 
-('Jean', 'Dupont', E'\\x70617373776F726431323300', TRUE, 'Rue de la Loi', 10, NULL, 'ADMIN', '2020-01-15', NULL, 1000, 'Bruxelles'),
-('Marie', 'Martin', E'\\x70617373776F726431323300', TRUE, 'Avenue des Arts', 25, 3, 'MANAGER', '2020-02-01', 1, 1000, 'Bruxelles'),
-('Pierre', 'Durand', E'\\x70617373776F726431323300', TRUE, 'Rue Neuve', 42, NULL, 'CASHIER', '2021-03-10', 2, 1050, 'Ixelles'),
-('Sophie', 'Lefèvre', E'\\x70617373776F726431323300', TRUE, 'Boulevard Anspach', 15, 2, 'STOCK_MANAGER', '2021-04-05', 2, 1348, 'Louvain-la-Neuve'),
-('Lucas', 'Bernard', E'\\x70617373776F726431323300', FALSE, 'Rue Haute', 78, NULL, 'CASHIER', '2022-01-20', 2, 4000, 'Liège');
+('Jean', 'Dupont', E'\\x70617373776F726431323300', TRUE, 'Rue de la Loi', '10', NULL, 'ADMIN', '2020-01-15', NULL, 1000, 'Bruxelles'),
+('Marie', 'Martin', E'\\x70617373776F726431323300', TRUE, 'Avenue des Arts', '25', 3, 'MANAGER', '2020-02-01', 1, 1000, 'Bruxelles'),
+('Pierre', 'Durand', E'\\x70617373776F726431323300', TRUE, 'Rue Neuve', '42', NULL, 'CASHIER', '2021-03-10', 2, 1050, 'Ixelles'),
+('Sophie', 'Lefèvre', E'\\x70617373776F726431323300', TRUE, 'Boulevard Anspach', '15A', 2, 'STOCK_MANAGER', '2021-04-05', 2, 1348, 'Louvain-la-Neuve'),
+('Lucas', 'Bernard', E'\\x70617373776F726431323300', FALSE, 'Rue Haute', '78', NULL, 'CASHIER', '2022-01-20', 2, 4000, 'Liège');
 
 -- Insertion des taux de TVA
 INSERT INTO vat (type, rate) VALUES 

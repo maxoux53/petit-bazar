@@ -1,6 +1,7 @@
 package dataAccess;
 
 import exceptions.*;
+import interfaces.ProductDAO;
 import model.Category;
 import model.Product;
 import model.Vat;
@@ -38,9 +39,9 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
                 throw new InsertionFailedException(objectClassName, null, e.getMessage());
             }
         } catch (SQLTimeoutException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
     }
 
@@ -59,9 +60,9 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
                 throw new DeleteFailedException(objectClassName, barcode, e.getMessage());
             }
         } catch (SQLTimeoutException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
     }
 
@@ -73,9 +74,9 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             preparedStatement.setLong(1, barcode);
             preparedStatement.executeUpdate();
         } catch (SQLTimeoutException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
     }
 
@@ -99,13 +100,13 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             try {
                 return preparedStatement.executeUpdate();
             } catch (SQLTimeoutException e) {
-                throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+                throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
             } catch (SQLException e) {
                 throw new UpdateFailedException(objectClassName, barcode, e.getMessage());
             }
 
         } catch (SQLException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
     }
 
@@ -116,7 +117,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
             preparedStatement.setLong(1, barcode);
 
-            data = preparedStatement.executeQuery();
+            ResultSet data = preparedStatement.executeQuery();
 
             if (data.next()) {
                 String name;
@@ -178,12 +179,12 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
 
                 return product;
             } else {
-                throw new NotFoundException(objectClassName, barcode, DBRetrievalFailure.NO_ROW.toString());
+                throw new NotFoundException(objectClassName, barcode, DBRetrievalFailure.NO_ROW);
             }
         } catch (SQLTimeoutException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
     }
 
@@ -194,7 +195,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
             preparedStatement.setString(1, (name + "%"));
 
-            data = preparedStatement.executeQuery();
+            ResultSet data = preparedStatement.executeQuery();
 
             ArrayList<Product> products = new ArrayList<>();
 
@@ -262,9 +263,9 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
 
             return products;
         } catch (SQLTimeoutException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
     }
     
@@ -275,7 +276,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, categoryId);
             
-            data = preparedStatement.executeQuery();
+            ResultSet data = preparedStatement.executeQuery();
 
             String name;
 
@@ -283,14 +284,14 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
                 name = data.getString("name");
             }
             else {
-                throw new NotFoundException(objectClassName, (long)categoryId, DBRetrievalFailure.NO_ROW.toString());
+                throw new NotFoundException(objectClassName, (long)categoryId, DBRetrievalFailure.NO_ROW);
             }
             
             return (!data.wasNull() ? name : null);
         } catch (DAORetrievalFailedException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
     }
     
@@ -301,7 +302,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, brandId);
             
-            data = preparedStatement.executeQuery();
+            ResultSet data = preparedStatement.executeQuery();
             
             String name;
             
@@ -309,14 +310,14 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
                 name = data.getString("name");
             }
             else {
-                throw new NotFoundException(objectClassName, (long)brandId, DBRetrievalFailure.NO_ROW.toString());
+                throw new NotFoundException(objectClassName, (long)brandId, DBRetrievalFailure.NO_ROW);
             }
 
             return (!data.wasNull() ? name : null);
         } catch (DAORetrievalFailedException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
         
     }
@@ -326,7 +327,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-            data = preparedStatement.executeQuery();
+            ResultSet data = preparedStatement.executeQuery();
 
             ArrayList<Product> products = new ArrayList<>();
 
@@ -394,9 +395,9 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
 
             return products;
         } catch (SQLTimeoutException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
     }
 
@@ -409,7 +410,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             try {
                 preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
                 preparedStatement.setString(1, brandName);
-                data = preparedStatement.executeQuery();
+                ResultSet data = preparedStatement.executeQuery();
 
                 exists = data.next();
 
@@ -424,9 +425,9 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
                     data = preparedStatement.getGeneratedKeys();
                 }
             } catch (SQLTimeoutException e) {
-                throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+                throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
             } catch (SQLException e) {
-                throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+                throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
             }
         } while (!exists);
         return null; // This line should never be reached
@@ -437,7 +438,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-            data = preparedStatement.executeQuery();
+            ResultSet data = preparedStatement.executeQuery();
 
             ArrayList<Category> categories = new ArrayList<>();
             Category category;
@@ -456,9 +457,9 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
 
             return categories;
         } catch (SQLTimeoutException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
     }
 
@@ -467,7 +468,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-            data = preparedStatement.executeQuery();
+            ResultSet data = preparedStatement.executeQuery();
 
             ArrayList<Vat> vatTypes = new ArrayList<>();
             Vat vatType;
@@ -486,9 +487,9 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
 
             return vatTypes;
         } catch (SQLTimeoutException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
     }
 
@@ -499,18 +500,18 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
             preparedStatement.setLong(1, barcode);
 
-            data = preparedStatement.executeQuery();
+            ResultSet data = preparedStatement.executeQuery();
 
             if (data.next()) {
                 return data.getInt("amount");
             } else {
-                throw new NotFoundException(objectClassName, barcode, DBRetrievalFailure.NO_ROW.toString());
+                throw new NotFoundException(objectClassName, barcode, DBRetrievalFailure.NO_ROW);
             }
 
         } catch (SQLTimeoutException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
     }
 
@@ -520,7 +521,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
 
-            data = preparedStatement.executeQuery();
+            ResultSet data = preparedStatement.executeQuery();
 
             ArrayList<Integer> products = new ArrayList<>();
             int barcode;
@@ -534,9 +535,9 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
 
             return products;
         } catch (SQLTimeoutException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR.toString(), e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
     }
 }

@@ -243,8 +243,8 @@ INSERT INTO city (zip_code, name, country) VALUES
 (1050, 'Ixelles', '🇧🇪 Belgique');
 
 INSERT INTO employee (first_name, last_name, password, is_active, street, street_number, unit_number, role_label, hire_date, manager_id, city_zip_code, city_name) VALUES
-('Jean', 'Dupont', E'\\x70617373776F726431323300', TRUE, 'Rue de la Loi', 10, NULL, 'ADMIN', '2020-01-15', NULL, 1000, 'Bruxelles'),
-('Pierre', 'Durand', E'\\x70617373776F726431323300', TRUE, 'Rue Neuve', 42, NULL, 'CASHIER', '2021-03-10', 1, 1050, 'Ixelles');
+('Jean', 'Dupont', E'\\x70617373776F726431323300', TRUE, 'Rue de la Loi', '10', NULL, 'ADMIN', '2020-01-15', NULL, 1000, 'Bruxelles'),
+('Pierre', 'Durand', E'\\x70617373776F726431323300', TRUE, 'Rue Neuve', '42B', NULL, 'CASHIER', '2021-03-10', 1, 1050, 'Ixelles');
 
 INSERT INTO customer (first_name, last_name, birth_date, email, phone, vat_number, loyalty_points) VALUES
 ('Michel', 'Leroy', '1985-03-12', 'michel.leroy@email.com', 0471234567, NULL, 150),

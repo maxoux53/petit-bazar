@@ -6,8 +6,14 @@ import model.Purchase;
 
 import java.util.ArrayList;
 
-public class PurchaseController extends Controller {
-    public static ArrayList<Purchase> getAll() throws DAORetrievalFailedException {
-        return PurchaseManager.getAll();
+public class PurchaseController {
+    private PurchaseManager manager;
+
+    public PurchaseController() {
+        this.manager = new PurchaseManager();
+    }
+
+    public ArrayList<Purchase> getAll() throws DAORetrievalFailedException {
+        return manager.getAll();
     }
 }

@@ -2,16 +2,16 @@ package business;
 
 import dataAccess.*;
 import exceptions.DAORetrievalFailedException;
+import interfaces.CloseDAO;
 
 public class DataInteractionManager {
-    private static CloseDAO dao;
+    private CloseDAO dao;
 
-    static {
-        //dao = DBAccess;
+    public DataInteractionManager() {
         dao = new EmployeeDBAccess();
     }
 
-    public static void close() throws DAORetrievalFailedException {
+    public void close() throws DAORetrievalFailedException {
         dao.close();
     }
 }

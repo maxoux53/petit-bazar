@@ -1,6 +1,6 @@
 package model;
 
-public class City implements EmployeeInfoWrapper {
+public class City {
     private Integer zipCode;
     private String name;
     private String country;

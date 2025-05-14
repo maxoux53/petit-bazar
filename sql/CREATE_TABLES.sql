@@ -23,7 +23,7 @@ CREATE TABLE employee (
     password BYTEA NOT NULL,
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
     street VARCHAR(30) NOT NULL,
-    street_number SMALLINT NOT NULL,
+    street_number VARCHAR(4) NOT NULL,
     unit_number SMALLINT,
     role_label VARCHAR(25) NOT NULL,
     hire_date DATE NOT NULL,

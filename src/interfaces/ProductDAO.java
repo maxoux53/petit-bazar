@@ -1,4 +1,4 @@
-package dataAccess;
+package interfaces;
 
 import exceptions.*;
 import model.Category;
