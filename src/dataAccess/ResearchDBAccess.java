@@ -51,7 +51,7 @@ public class ResearchDBAccess extends DBAccess implements ResearchDAO {
     }
     
     
-    public ArrayList<Object> getEmployeeLocation(int id) throws DAORetrievalFailedException, NotFoundException {
+    public ArrayList<Object> getEmployeePlace(int id) throws DAORetrievalFailedException, NotFoundException {
         sqlInstruction = "SELECT employee.first_name, employee.last_name, city.name, city.zip_code, country.name " +
                 "FROM employee " +
                 "JOIN city ON employee.city_name = city.name AND employee.city_zip_code = city.zip_code " +
