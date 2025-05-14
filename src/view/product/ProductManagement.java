@@ -13,15 +13,16 @@ import java.awt.event.ActionListener;
 
 public class ProductManagement extends JPanel {
     // Attributes
-    JPanel titlePanel;
-    JLabel titleLabel;
-    JPanel listingPanel;
-    JTable listingTable;
-    JScrollPane scrollPane;
-    JPanel buttonsPanel;
-    JButton editButton;
-    JButton deleteButton;
-    Product selectedProduct;
+    private JPanel titlePanel;
+    private JLabel titleLabel;
+    private JPanel listingPanel;
+    private JTable listingTable;
+    private JScrollPane scrollPane;
+    private JPanel buttonsPanel;
+    private JButton editButton;
+    private JButton deleteButton;
+    private Product selectedProduct;
+    private ProductController productController;
     
     // Constructors
     public ProductManagement(Window window) {
@@ -30,12 +31,14 @@ public class ProductManagement extends JPanel {
         new GridLayout(3, 1, 0, 0);
         setBackground(Color.white);
         
+        productController = new ProductController();
+        
         // Title
         titlePanel = new JPanel();
         titlePanel.setBackground(Color.white);
         
         titleLabel = new JLabel("Gestion des articles", SwingConstants.CENTER);
-        titleLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.BOLD, FontPreferences.TITLE_SIZE.getSize()));
+        titleLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.BOLD, FontPreferences.TITLE_SIZE));
         
         titlePanel.add(titleLabel);
         
@@ -44,7 +47,7 @@ public class ProductManagement extends JPanel {
         listingPanel.setBackground(Color.white);
 
         try {
-            listingTable = new JTable(ProductController.infoTableModel());
+            listingTable = new JTable(productController.infoTableModel());
         } catch (DAORetrievalFailedException | NotFoundException exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
@@ -58,7 +61,7 @@ public class ProductManagement extends JPanel {
         buttonsPanel.setBackground(Color.white);
         
         editButton = new JButton("Modifier");
-        editButton.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.BOLD, FontPreferences.MID_SIZE.getSize()));
+        editButton.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.BOLD, FontPreferences.MID_SIZE));
         editButton.setBackground(Color.white);
         
         editButton.addActionListener(new ActionListener() {
@@ -72,7 +75,7 @@ public class ProductManagement extends JPanel {
         });
 
         deleteButton = new JButton("Supprimer");
-        deleteButton.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.BOLD, FontPreferences.MID_SIZE.getSize()));
+        deleteButton.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.BOLD, FontPreferences.MID_SIZE));
         deleteButton.setBackground(Color.white);
         
         deleteButton.addActionListener(new ActionListener() {
@@ -84,7 +87,7 @@ public class ProductManagement extends JPanel {
                     if (answer == 0) {
                         try {
 
-                            if (ProductController.remove(String.valueOf(selectedProduct.getBarcode())) == 0) {
+                            if (productController.remove(String.valueOf(selectedProduct.getBarcode())) == 0) {
                                 JOptionPane.showMessageDialog(null, "L'article a été supprimé avec succès !", "Succès", JOptionPane.INFORMATION_MESSAGE);
                             }
 
@@ -114,7 +117,7 @@ public class ProductManagement extends JPanel {
         }
         else {
             try {
-                selectedProduct = ProductController.getByBarcode(String.valueOf(listingTable.getValueAt(listingTable.getSelectedRow(), 0)));
+                selectedProduct = productController.getByBarcode(String.valueOf(listingTable.getValueAt(listingTable.getSelectedRow(), 0)));
             } catch (DAORetrievalFailedException | WrongTypeException exception) {
                 JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             } catch (NotFoundException | FieldIsEmptyException exception) {

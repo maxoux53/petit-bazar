@@ -64,9 +64,9 @@ public class EditProduct extends JPanel {
         productPanel.getAmountSpinner().setValue(product.getAmount());
 
         try {
-            productPanel.getVatTypeComboBox().setSelectedIndex(ProductController.indexOfVatType(product.getVatType()));
-            productPanel.getCategoryComboBox().setSelectedIndex(ProductController.indexOfCategoryName(product.getCategoryId()));
-            productPanel.getBrandField().setText(ProductController.getBrandLabelById(product.getBrandId()));
+            productPanel.getVatTypeComboBox().setSelectedIndex(productController.indexOfVatType(product.getVatType()));
+            productPanel.getCategoryComboBox().setSelectedIndex(productController.indexOfCategoryName(product.getCategoryId()));
+            productPanel.getBrandField().setText(productController.getBrandLabelById(product.getBrandId()));
         } catch (DAORetrievalFailedException | NotFoundException exception) {
             JOptionPane.showMessageDialog(null, exception.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
