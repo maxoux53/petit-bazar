@@ -5,13 +5,16 @@ import business.DataInteractionManager;
 import exceptions.DAORetrievalFailedException;
 
 import javax.swing.*;
+import java.util.zip.DataFormatException;
 
 public class ViewCore {
     public static final String NAME;
     private static Window window;
+    private static DataInteractionManager dataInteractionManager;
 
     static {
         NAME = Env.getDotenv().get("STORE_NAME");
+        dataInteractionManager = new DataInteractionManager();
     }
 
     public static void init() {
@@ -21,7 +24,7 @@ public class ViewCore {
 
     public static void quit() {
         try {
-            DataInteractionManager.close();
+            dataInteractionManager.close();
             System.exit(0);
         } catch (DAORetrievalFailedException e) {
             JOptionPane.showMessageDialog(null, "Une erreur est survenue lors de la fermeture ! Veuillez reessayer.\n" + e.getMessage(), "⛔️", JOptionPane.ERROR_MESSAGE);

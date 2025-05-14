@@ -200,7 +200,7 @@ public class ProductPanel extends JPanel {
         
         startDateSpinner = new JSpinner(new SpinnerDateModel());
         startDateSpinner.setEditor(new JSpinner.DateEditor(startDateSpinner, "dd/MM/yyyy"));
-        startDateSpinner.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.NORMAL_SIZE.getSize()));
+        startDateSpinner.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.PLAIN, FontPreferences.NORMAL_SIZE));
         
         startDatePanel.add(startDateLabel);
         startDatePanel.add(startDateSpinner);
@@ -241,7 +241,7 @@ public class ProductPanel extends JPanel {
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 450, 0, 450));
         
         button = new JButton(buttonString);
-        button.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.BOLD, FontPreferences.MID_SIZE.getSize()));
+        button.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.BOLD, FontPreferences.MID_SIZE));
         button.setBackground(Color.white);
         button.setFocusPainted(false);
         

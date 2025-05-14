@@ -12,6 +12,7 @@ public class EmployeeListing extends JPanel {
     JLabel titleLabel;
     JTable listingTable;
     JScrollPane listingScroll;
+    EmployeeController employeeController;
 
     // Constructor
     public EmployeeListing() {
@@ -19,6 +20,8 @@ public class EmployeeListing extends JPanel {
         setBorder(BorderFactory.createEmptyBorder(20, 100, 100, 100));
         new GridLayout(2, 1, 0, 0);
         setBackground(Color.white);
+        
+        employeeController = new EmployeeController();
 
         // Titles
         titlePanel = new JPanel();
@@ -34,7 +37,7 @@ public class EmployeeListing extends JPanel {
         listingPanel.setBackground(Color.red);
 
         try {
-            listingTable = new JTable(EmployeeController.infoTableModel());
+            listingTable = new JTable(employeeController.infoTableModel());
 
             // Scroll
             listingScroll = new JScrollPane(listingTable);
