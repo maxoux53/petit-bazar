@@ -86,6 +86,41 @@ public class ResearchDBAccess extends DBAccess implements ResearchDAO {
             throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, exception.getMessage());
         }
     }
-    
-    
+
+    public ArrayList<Object[]> getProductInformations(int brandId) throws DAORetrievalFailedException{
+        sqlInstruction = "SELECT product.name, category.name, vat.rate " +
+                "FROM product " +
+                "JOIN category ON product.category_id = category.id " +
+                "JOIN vat ON product.vat_type = vat.type " +
+                "WHERE product.brand_id = ?;";
+        
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, brandId);
+            
+            ResultSet data = preparedStatement.executeQuery();
+            
+            ArrayList<Object[]> productInformations = new ArrayList<>();
+            Object[] infoWrapper = new Object[3];
+            
+            while (data.next()) {
+                infoWrapper[0] = data.getString(1);
+                infoWrapper[1] = data.getString(2);
+                infoWrapper[2] = data.getInt(3);
+                
+                productInformations.add(infoWrapper.clone());
+            }
+
+            if (productInformations.isEmpty()) {
+                //throw new NotFoundException(DBRetrievalFailure.NO_ROW, Long.valueOf(date.toString(), ));
+            }
+            
+            return productInformations;
+            
+        } catch (SQLTimeoutException exception) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, exception.getMessage());
+        } catch (SQLException exception) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, exception.getMessage());
+        }
+    }
 }
