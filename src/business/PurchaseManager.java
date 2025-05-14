@@ -11,7 +11,11 @@ public class PurchaseManager {
     private PurchaseDAO dao;
 
     public PurchaseManager() {
-        dao = new PurchaseDBAccess();
+        setDao(new PurchaseDBAccess());
+    }
+
+    public void setDao(PurchaseDAO dao) {
+        this.dao = dao;
     }
 
     public ArrayList<Purchase> getAll() throws DAORetrievalFailedException {

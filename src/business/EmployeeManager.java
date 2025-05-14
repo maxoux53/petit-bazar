@@ -3,7 +3,6 @@ package business;
 import dataAccess.*;
 import exceptions.*;
 import interfaces.EmployeeDAO;
-import model.City;
 import model.Employee;
 
 import java.security.MessageDigest;
@@ -14,7 +13,11 @@ public class EmployeeManager {
     private MessageDigest digest;
 
     public EmployeeManager() {
-        dao = new EmployeeDBAccess();
+        setDao(new EmployeeDBAccess());
+    }
+
+    public void setDao(EmployeeDAO dao) {
+        this.dao = dao;
     }
 
     public int create(Employee employee) throws InsertionFailedException, DAORetrievalFailedException {
