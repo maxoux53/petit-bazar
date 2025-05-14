@@ -18,7 +18,7 @@ public class ResearchDBAccess extends DBAccess implements ResearchDAO {
                 "FROM purchase " +
                 "JOIN customer ON purchase.customer_card_number = customer.loyalty_card_number " +
                 "JOIN employee ON purchase.employee_id = employee.id " +
-                "AND purchase.date = ?;";
+                "WHERE purchase.date = ?;";
         
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
@@ -50,6 +50,42 @@ public class ResearchDBAccess extends DBAccess implements ResearchDAO {
         }
     }
     
+    
+    public ArrayList<Object> getEmployeeLocation(int id) throws DAORetrievalFailedException{
+        sqlInstruction = "SELECT employee.first_name, employee.last_name, city.name, city.zip_code, country.name " +
+                "FROM employee " +
+                "JOIN city ON employee.city_name = city.name AND employee.city_zip_code = city.zip_code " +
+                "JOIN country ON city.country = country.name " +
+                "WHERE employee.id = ?;";
+
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, id);
+
+            ResultSet data = preparedStatement.executeQuery();
+
+            ArrayList<Object> employeeInformations = new ArrayList<>();
+
+            if (data.next()) {
+                employeeInformations.add(data.getString(1));
+                employeeInformations.add(data.getString(2));
+                employeeInformations.add(data.getString(3));
+                employeeInformations.add(data.getInt(4));
+                employeeInformations.add(data.getString(5));
+            }
+
+            if (employeeInformations.isEmpty()) {
+                //throw new NotFoundException(DBRetrievalFailure.NO_ROW, Long.valueOf(date.toString(), ));
+            }
+
+            return employeeInformations;
+
+        } catch (SQLTimeoutException exception) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, exception.getMessage());
+        } catch (SQLException exception) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, exception.getMessage());
+        }
+    }
     
     
 }

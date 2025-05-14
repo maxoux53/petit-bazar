@@ -7,6 +7,6 @@ import java.util.ArrayList;
 
 public interface ResearchDAO {
     public ArrayList<Object[]> getPurchaseInformations(LocalDate date) throws DAORetrievalFailedException;
-    
-    
+
+    public ArrayList<Object> getEmployeeLocation(int id) throws DAORetrievalFailedException;
 }
