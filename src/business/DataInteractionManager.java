@@ -8,7 +8,6 @@ public class DataInteractionManager {
     private CloseDAO dao;
 
     public DataInteractionManager() {
-        //dao = DBAccess;
         dao = new EmployeeDBAccess();
     }
 
