@@ -3,7 +3,8 @@ name: Render .drawio files
 on:
   pull_request:
     paths:
-      - 'docs/DB/*.drawio'
+      - 'docs/db_design/*.drawio'
+  workflow_dispatch:
 
 jobs:
   render_drawio:
@@ -20,10 +21,10 @@ jobs:
     - name: Render .drawio files
       uses: docker://ghcr.io/racklet/render-drawio-action:v1
       with:
-        # Currently broken, see action repo issue #27
+        # Currently broken, see issue #27 in the action's repo
         # Keeping this here for when it will be fixed
         formats: 'png'
-        files: 'docs/DB/img_ER_diagram.png=docs/DB/ER_diagram.drawio,docs/DB/img_Relational_diagram.png=docs/DB/Relational_diagram.drawio'
+        files: 'docs/db_design/img_er_diagram.png=docs/db_design/er_diagram.drawio,docs/db_design/img_relational_schema.png=docs/db_design/relational_schema.drawio'
       id: render
 
     - name: List the rendered files
