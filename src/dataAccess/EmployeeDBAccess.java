@@ -15,7 +15,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         objectClassName = Employee.class.getSimpleName().toLowerCase();
     }
 
-    public int create(Employee employee, City city) throws InsertionFailedException, DAORetrievalFailedException {
+    public int create(Employee employee) throws InsertionFailedException, DAORetrievalFailedException {
         sqlInstruction = "INSERT INTO employee (first_name, last_name, password, is_active, street, street_number, unit_number, role_label, hire_date, manager_id, city_zip_code, city_name) VALUES(?,?,?,?,?,?,?,?,?,?,?,?);";
 
         try {
@@ -31,8 +31,6 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
             preparedStatement.setString(8, employee.getRoleLabel());
             preparedStatement.setDate(9, Date.valueOf(employee.getHireDate()));
             preparedStatement.setInt(10, employee.getManagerId());
-
-            setCity(city);
 
             preparedStatement.setInt(11, employee.getCityZipCode());
             preparedStatement.setString(12, employee.getCityName());
@@ -101,7 +99,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         }
     }
 
-    public int update(Employee employee, City city) throws UpdateFailedException, DAORetrievalFailedException {
+    public int update(Employee employee) throws UpdateFailedException, DAORetrievalFailedException {
         sqlInstruction = "UPDATE employee SET first_name = ?, last_name = ?, password = ?, is_active = ?, street = ?, street_number = ?, unit_number = ?, role_label = ?, hire_date = ?, manager_id = ?, city_zip_code = ?, city_name = ? WHERE id = ?;";
         int id = employee.getId();
 
@@ -118,9 +116,6 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
             preparedStatement.setString(8, employee.getRoleLabel());
             preparedStatement.setDate(9, Date.valueOf(employee.getHireDate()));
             preparedStatement.setInt(10, employee.getManagerId());
-
-            setCity(city);
-
             preparedStatement.setInt(11, employee.getCityZipCode());
             preparedStatement.setString(12, employee.getCityName());
 
@@ -149,82 +144,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
             ResultSet data = preparedStatement.executeQuery();
 
             if (data.next()) {
-                String firstName;
-                String lastName;
-                byte[] password;
-                boolean isActive;
-                String street;
-                String streetNumber;
-                int unitNumber;
-                String roleLabel;
-                Date hireDate;
-                int managerId;
-                int cityZipCode;
-                String cityName;
-
-                Employee employee = new Employee(data.getInt("id"));
-
-                firstName = data.getString("first_name");
-                if (!data.wasNull()) {
-                    employee.setFirstName(firstName);
-                }
-
-                lastName = data.getString("last_name");
-                if (!data.wasNull()) {
-                    employee.setLastName(lastName);
-                }
-
-                password = data.getBytes("password");
-                if (!data.wasNull()) {
-                    employee.setPassword(password);
-                }
-
-                isActive = data.getBoolean("is_active");
-                if (!data.wasNull()) {
-                    employee.setActive(isActive);
-                }
-
-                street = data.getString("street");
-                if (!data.wasNull()) {
-                    employee.setStreet(street);
-                }
-
-                streetNumber = data.getString("street_number");
-                if (!data.wasNull()) {
-                    employee.setStreetNumber(streetNumber);
-                }
-
-                unitNumber = data.getInt("unit_number");
-                if (!data.wasNull()) {
-                    employee.setUnitNumber(unitNumber);
-                }
-
-                roleLabel = data.getString("role_label");
-                if (!data.wasNull()) {
-                    employee.setRoleLabel(roleLabel);
-                }
-
-                hireDate = data.getDate("hire_date");
-                if (!data.wasNull()) {
-                    employee.setHireDate(hireDate.toLocalDate());
-                }
-
-                managerId = data.getInt("manager_id");
-                if (!data.wasNull()) {
-                    employee.setManagerId(managerId);
-                }
-
-                cityZipCode = data.getInt("city_zip_code");
-                if (!data.wasNull()) {
-                    employee.setCityZipCode(cityZipCode);
-                }
-
-                cityName = data.getString("city_name");
-                if (!data.wasNull()) {
-                    employee.setCityName(cityName);
-                }
-
-                return employee;
+                return resultSetToEmployee(data);
             } else {
                 throw new NotFoundException(objectClassName, (long)id, DBRetrievalFailure.NO_ROW);
             }
@@ -241,87 +161,11 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
 
-            ResultSet data = preparedStatement.executeQuery(); // add try-catch if notfoundexception changes
+            ResultSet data = preparedStatement.executeQuery();
 
             ArrayList<Employee> employeesInfos = new ArrayList<>();
-            Employee employee;
-            String firstName;
-            String lastName;
-            byte[] password;
-            boolean isActive;
-            String street;
-            String streetNumber;
-            int unitNumber;
-            String roleLabel;
-            Date hireDate;
-            int managerId;
-            int cityZipCode;
-            String cityName;
-
             while (data.next()) {
-                employee = new Employee(data.getInt("id"));
-
-                firstName = data.getString("first_name");
-                if (!data.wasNull()) {
-                    employee.setFirstName(firstName);
-                }
-
-                lastName = data.getString("last_name");
-                if (!data.wasNull()) {
-                    employee.setLastName(lastName);
-                }
-
-                password = data.getBytes("password");
-                if (!data.wasNull()) {
-                    employee.setPassword(password);
-                }
-
-                isActive = data.getBoolean("is_active");
-                if (!data.wasNull()) {
-                    employee.setActive(isActive);
-                }
-
-                street = data.getString("street");
-                if (!data.wasNull()) {
-                    employee.setStreet(street);
-                }
-
-                streetNumber = data.getString("street_number");
-                if (!data.wasNull()) {
-                    employee.setStreetNumber(streetNumber);
-                }
-
-                unitNumber = data.getInt("unit_number");
-                if (!data.wasNull()) {
-                    employee.setUnitNumber(unitNumber);
-                }
-
-                roleLabel = data.getString("role_label");
-                if (!data.wasNull()) {
-                    employee.setRoleLabel(roleLabel);
-                }
-
-                hireDate = data.getDate("hire_date");
-                if (!data.wasNull()) {
-                    employee.setHireDate(hireDate.toLocalDate());
-                }
-
-                managerId = data.getInt("manager_id");
-                if (!data.wasNull()) {
-                    employee.setManagerId(managerId);
-                }
-
-                cityZipCode = data.getInt("city_zip_code");
-                if (!data.wasNull()) {
-                    employee.setCityZipCode(cityZipCode);
-                }
-
-                cityName = data.getString("city_name");
-                if (!data.wasNull()) {
-                    employee.setCityName(cityName);
-                }
-                
-                employeesInfos.add(employee);
+                employeesInfos.add(resultSetToEmployee(data));
             }
 
             return employeesInfos;
@@ -353,10 +197,10 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         }
     }
 
-    private void setCity(City city) throws DAORetrievalFailedException {
+    public void setCity(City city) throws DAORetrievalFailedException {
         String cityName = city.getName();
         Integer cityZipCode = city.getZipCode();
-        
+
         sqlInstruction = "SELECT * FROM city WHERE name = ? AND zip_code = ?;";
 
         try {
@@ -375,7 +219,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
                 preparedStatement.setString(3, city.getCountry());
                 preparedStatement.executeUpdate();
             }
-            
+
         } catch (SQLTimeoutException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {
@@ -447,6 +291,42 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         } catch (SQLException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
+    }
+
+    private Employee resultSetToEmployee(ResultSet data) throws DAORetrievalFailedException {
+        Employee employee;
+        int unitNumber;
+        int managerId;
+
+        try {
+            employee = new Employee(
+                    data.getInt("id"),
+                    data.getString("first_name"),
+                    data.getString("last_name"),
+                    data.getBytes("password"),
+                    data.getBoolean("is_active"),
+                    data.getString("street"),
+                    data.getString("street_number"),
+                    data.getString("role_label"),
+                    data.getDate("hire_date").toLocalDate(),
+                    data.getInt("city_zip_code"),
+                    data.getString("city_name")
+            );
+
+            unitNumber = data.getInt("unit_number");
+            if (!data.wasNull()) {
+                employee.setUnitNumber(unitNumber);
+            }
+
+            managerId = data.getInt("manager_id");
+            if (!data.wasNull()) {
+                employee.setManagerId(managerId);
+            }
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
+        }
+
+        return employee;
     }
 }
 

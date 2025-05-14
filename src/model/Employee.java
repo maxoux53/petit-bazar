@@ -17,12 +17,8 @@ public class Employee {
     private Integer cityZipCode;
     private String cityName;
 
-    public Employee(Integer id) {
-        this.id = id;
-    }
-
     public Employee(Integer id, String firstName, String lastName, byte[] password, Boolean isActive, String street, String streetNumber, Integer unitNumber, String roleLabel, LocalDate hireDate, Integer managerId, Integer cityZipCode, String cityName) {
-        this(id);
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
@@ -39,6 +35,10 @@ public class Employee {
 
     public Employee(String firstName, String lastName, byte[] password, Boolean isActive, String street, String streetNumber, Integer unitNumber, String roleLabel, LocalDate hireDate, Integer managerId, Integer cityZipCode, String cityName) {
         this(null, firstName, lastName, password, isActive, street, streetNumber, unitNumber, roleLabel, hireDate, managerId, cityZipCode, cityName);
+    }
+
+    public Employee(Integer id, String firstName, String lastName, byte[] password, Boolean isActive, String street, String streetNumber, String roleLabel, LocalDate hireDate, Integer cityZipCode, String cityName) {
+        this(id, firstName, lastName, password, isActive, street, streetNumber, null, roleLabel, hireDate, null, cityZipCode, cityName);
     }
 
     public void setFirstName(String firstName) {
