@@ -24,5 +24,5 @@ public interface ProductDAO {
     ArrayList<Vat> getAllVats() throws DAORetrievalFailedException;
 
     int getCurrentStock(Long barcode) throws NotFoundException, DAORetrievalFailedException;
-    ArrayList<Integer> getOutOfStock() throws NotFoundException, DAORetrievalFailedException;
+    ArrayList<Product> getOutOfStock() throws NotFoundException, DAORetrievalFailedException;
 }
