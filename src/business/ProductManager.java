@@ -10,61 +10,65 @@ import model.Vat;
 import java.util.ArrayList;
 
 public class ProductManager {
-    private ProductDAO productDataAccess;
+    private ProductDAO dao;
 
     public ProductManager() {
-        productDataAccess = new ProductDBAccess();
+        setDao(new ProductDBAccess());
+    }
+
+    public void setDao (ProductDAO dao) {
+        this.dao = dao;
     }
 
     public int create(Product product) throws InsertionFailedException, DAORetrievalFailedException {
-        return productDataAccess.create(product);
+        return dao.create(product);
     }
 
     public int remove(Long barcode) throws DeleteFailedException, DAORetrievalFailedException {
-        return productDataAccess.remove(barcode);
+        return dao.remove(barcode);
     }
 
     public int update(Product product) throws DAORetrievalFailedException, UpdateFailedException {
-        return productDataAccess.update(product);
+        return dao.update(product);
     }
 
     public Product getByBarcode(Long barcode) throws NotFoundException, DAORetrievalFailedException {
-        return productDataAccess.getByBarcode(barcode);
+        return dao.getByBarcode(barcode);
     }
 
     public ArrayList<Product> searchByName(String name) throws NotFoundException, DAORetrievalFailedException {
-        return productDataAccess.searchByName(name);
+        return dao.searchByName(name);
     }
     
     public String getCategoryLabelById(int categoryId) throws DAORetrievalFailedException, NotFoundException {
-        return productDataAccess.getCategoryLabelById(categoryId);
+        return dao.getCategoryLabelById(categoryId);
     }
 
     public String getBrandLabelById(int brandId) throws DAORetrievalFailedException, NotFoundException {
-        return productDataAccess.getBrandLabelById(brandId);
+        return dao.getBrandLabelById(brandId);
     }
     
     public ArrayList<Product> getAll() throws DAORetrievalFailedException {
-        return productDataAccess.getAll();
+        return dao.getAll();
     }
 
     public int getOrCreateBrand(String name) throws DAORetrievalFailedException {
-        return productDataAccess.getOrCreateBrandByName(name);
+        return dao.getOrCreateBrandByName(name);
     }
 
     public ArrayList<Category> getAllCategories() throws DAORetrievalFailedException {
-        return productDataAccess.getAllCategories();
+        return dao.getAllCategories();
     }
 
     public ArrayList<Vat> getAllVats() throws DAORetrievalFailedException {
-        return productDataAccess.getAllVats();
+        return dao.getAllVats();
     }
 
     public int getCurrentStock(Long barcode) throws NotFoundException, DAORetrievalFailedException {
-        return productDataAccess.getCurrentStock(barcode);
+        return dao.getCurrentStock(barcode);
     }
 
     public ArrayList<Integer> getOutOfStock() throws NotFoundException, DAORetrievalFailedException {
-        return productDataAccess.getOutOfStock();
+        return dao.getOutOfStock();
     }
 }

@@ -8,7 +8,11 @@ public class DataInteractionManager {
     private CloseDAO dao;
 
     public DataInteractionManager() {
-        dao = new EmployeeDBAccess();
+        setDao(new EmployeeDBAccess());
+    }
+
+    public void setDao(CloseDAO dao) {
+        this.dao = dao;
     }
 
     public void close() throws DAORetrievalFailedException {
