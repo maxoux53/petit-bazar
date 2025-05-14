@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class ResearchDBAccess extends DBAccess implements ResearchDAO {
 
-    public ArrayList<Object[]> getPurchaseInformations(LocalDate date) throws DAORetrievalFailedException {
+    public ArrayList<Object[]> getPurchaseInformations(LocalDate date) throws DAORetrievalFailedException, NotFoundException {
         sqlInstruction = "SELECT purchase.id ,customer.first_name, customer.last_name, employee.first_name, employee.last_name " +
                 "FROM purchase " +
                 "JOIN customer ON purchase.customer_card_number = customer.loyalty_card_number " +
@@ -38,20 +38,20 @@ public class ResearchDBAccess extends DBAccess implements ResearchDAO {
             }
             
             if (purchaseInformations.isEmpty()) {
-                //throw new NotFoundException(DBRetrievalFailure.NO_ROW, Long.valueOf(date.toString(), ));
+                // throw new NotFoundException(DBRetrievalFailure.NO_ROW, (long) date, ));
             }
             
             return purchaseInformations;
             
-        } catch (SQLTimeoutException exception) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, exception.getMessage());
-        } catch (SQLException exception) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, exception.getMessage());
+        } catch (SQLTimeoutException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
     }
     
     
-    public ArrayList<Object> getEmployeeLocation(int id) throws DAORetrievalFailedException{
+    public ArrayList<Object> getEmployeeLocation(int id) throws DAORetrievalFailedException, NotFoundException {
         sqlInstruction = "SELECT employee.first_name, employee.last_name, city.name, city.zip_code, country.name " +
                 "FROM employee " +
                 "JOIN city ON employee.city_name = city.name AND employee.city_zip_code = city.zip_code " +
@@ -87,7 +87,7 @@ public class ResearchDBAccess extends DBAccess implements ResearchDAO {
         }
     }
 
-    public ArrayList<Object[]> getProductInformations(int brandId) throws DAORetrievalFailedException{
+    public ArrayList<Object[]> getProductInformations(int brandId) throws DAORetrievalFailedException, NotFoundException {
         sqlInstruction = "SELECT product.name, category.name, vat.rate " +
                 "FROM product " +
                 "JOIN category ON product.category_id = category.id " +
