@@ -13,7 +13,7 @@ public interface ProductDAO {
     int update(Product product) throws UpdateFailedException, DAORetrievalFailedException;
 
     Product getByBarcode(Long barcode) throws NotFoundException, DAORetrievalFailedException;
-    ArrayList<Product> searchByName(String name) throws DAORetrievalFailedException;
+    ArrayList<Product> searchByName(String name) throws DAORetrievalFailedException, NotFoundException;
     String getCategoryLabelById(int categoryId) throws NotFoundException, DAORetrievalFailedException;
     String getBrandLabelById(int brandId) throws NotFoundException, DAORetrievalFailedException;
     ArrayList<Product> getAll() throws DAORetrievalFailedException;
