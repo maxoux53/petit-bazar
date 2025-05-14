@@ -136,12 +136,11 @@ public class ProductController {
                 "Type de TVA",
                 "Catégorie",
                 "Marque",
-                "Prix",
+                "Prix (€)",
                 "Date de mise en rayon"
         };
-        
+
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-        
         ArrayList<Product> products = getAllProducts();
         Object[] productInfos = new Object[columnNames.length];
         
@@ -159,7 +158,7 @@ public class ProductController {
             
             model.addRow(productInfos);
         }
-        
+
         return model;
     }
 

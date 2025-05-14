@@ -1,30 +1,30 @@
-package view;
+package view.product;
 
-import controller.*;
+import controller.ProductController;
 import exceptions.*;
 import model.Category;
 import model.Vat;
+import view.FontPreferences;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.util.ArrayList;
 
-public class AddProduct extends JPanel {
+public class ProductPanel extends JPanel {
     // Attributes
     private JPanel titlePanel, formPanel, barcodePanel, namePanel, descriptionPanel, pricePanel, amountPanel, vatTypePanel, categoryPanel, brandPanel, startDatePanel, availablePanel, buttonPanel;
     private JLabel titleLabel, barcodeLabel, nameLabel, descriptionLabel, priceLabel, amountLabel, vatTypeLabel, categoryLabel, brandLabel, startDateLabel, availableLabel;
-    private JTextField nameField, barcodeField, descriptionField, priceField, brandField, startDateDayField, startDateMonthField, startDateYearField;
+    private JTextField nameField, barcodeField, descriptionField, priceField, brandField;
     private JComboBox<String> vatTypeComboBox, categoryComboBox;
-    private JSpinner amountSpinner;
-    private JPanel startDateLabelSubPanel, startDateFieldsSubPanel, AvailablelabelSubPanel, AvailableRadioButtonSubPanel;
+    private JSpinner amountSpinner, startDateSpinner;
+    private JPanel AvailablelabelSubPanel, AvailableRadioButtonSubPanel;
     private JRadioButton availableRadioButtonYes, availableRadioButtonNo;
     private ButtonGroup availabilityGroup;
-    private JButton addButton;
+    private JButton button;
     private ProductController productController;
 
     // Constructors
-    public AddProduct() {
+    public ProductPanel(String title, String buttonString) {
         setLayout(new BorderLayout(0, 100));
         setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
         setBackground(Color.white);
@@ -35,7 +35,7 @@ public class AddProduct extends JPanel {
         titlePanel = new JPanel();
         titlePanel.setBackground(Color.white);
         
-        titleLabel = new JLabel("Ajouter un article");
+        titleLabel = new JLabel(title);
         titleLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.BOLD, FontPreferences.TITLE_SIZE));
 
         titlePanel.add(titleLabel);
@@ -195,49 +195,15 @@ public class AddProduct extends JPanel {
         startDatePanel = new JPanel(new GridLayout(1, 2, 50, 0));
         startDatePanel.setBackground(Color.white);
         
-        startDateLabelSubPanel = new JPanel(new GridLayout(1, 1, 0, 0));
-        startDateLabelSubPanel.setBackground(Color.white);
-        startDateFieldsSubPanel = new JPanel(new GridLayout(1, 3, 10, 0));
-        startDateFieldsSubPanel.setBackground(Color.white);
-        
         startDateLabel = new JLabel("Date de mise en rayon", SwingConstants.RIGHT);
         startDateLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.PLAIN, FontPreferences.MID_SIZE));
         
-        startDateDayField = new JTextField();
-        startDateDayField.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.PLAIN, FontPreferences.NORMAL_SIZE));
-        startDateDayField.setBackground(Color.white);
-        startDateDayField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-        startDateDayField.setText("Jour");
-        startDateDayField.setForeground(Color.GRAY);
-
-        backgroundText(startDateDayField, "Jour");
+        startDateSpinner = new JSpinner(new SpinnerDateModel());
+        startDateSpinner.setEditor(new JSpinner.DateEditor(startDateSpinner, "dd/MM/yyyy"));
+        startDateSpinner.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.PLAIN, FontPreferences.NORMAL_SIZE.getSize()));
         
-        startDateMonthField = new JTextField();
-        startDateMonthField.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.PLAIN, FontPreferences.NORMAL_SIZE));
-        startDateMonthField.setBackground(Color.white);
-        startDateMonthField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-        startDateMonthField.setText("Mois");
-        startDateMonthField.setForeground(Color.GRAY);
-        
-        backgroundText(startDateMonthField, "Mois");
-
-        startDateYearField = new JTextField();
-        startDateYearField.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.PLAIN, FontPreferences.NORMAL_SIZE));
-        startDateYearField.setBackground(Color.white);
-        startDateYearField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-        startDateYearField.setText("Année");
-        startDateYearField.setForeground(Color.GRAY);
-        
-        backgroundText(startDateYearField, "Année");
-        
-        startDateLabelSubPanel.add(startDateLabel);
-
-        startDateFieldsSubPanel.add(startDateDayField);
-        startDateFieldsSubPanel.add(startDateMonthField);
-        startDateFieldsSubPanel.add(startDateYearField);
-        
-        startDatePanel.add(startDateLabelSubPanel);
-        startDatePanel.add(startDateFieldsSubPanel);
+        startDatePanel.add(startDateLabel);
+        startDatePanel.add(startDateSpinner);
         
         // Available
         availablePanel = new JPanel(new GridLayout(1, 2, 50, 0));
@@ -270,40 +236,16 @@ public class AddProduct extends JPanel {
         availablePanel.add(AvailableRadioButtonSubPanel);
         
         // Button
-        buttonPanel = new JPanel(new GridLayout(1, 2, 0, 0));
+        buttonPanel = new JPanel(new BorderLayout(0, 0));
         buttonPanel.setBackground(Color.white);
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 500, 0, 500));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 450, 0, 450));
         
-        addButton = new JButton("Ajouter");
-        addButton.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.BOLD, FontPreferences.MID_SIZE));
-        addButton.setBackground(Color.white);
-        addButton.setFocusPainted(false);
+        button = new JButton(buttonString);
+        button.setFont(new Font(FontPreferences.DEFAULT_STYLE.getStyle(), Font.BOLD, FontPreferences.MID_SIZE.getSize()));
+        button.setBackground(Color.white);
+        button.setFocusPainted(false);
         
-        addButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    productController.create(
-                            barcodeField.getText(),
-                            nameField.getText(),
-                            descriptionField.getText(),
-                            priceField.getText(),
-                            (Integer)amountSpinner.getValue(),
-                            availableRadioButtonYes.isSelected(),
-                            ((String)vatTypeComboBox.getSelectedItem()).charAt(0),
-                            categories.get(categoryComboBox.getSelectedIndex()).getId(),
-                            productController.getOrCreateBrand(brandField.getText()),
-                            startDateField.getText()
-                    );
-
-                    removeAllField();
-                } catch (WrongTypeException | ProhibitedValueException | InsertionFailedException | DAORetrievalFailedException | NullPointerException |
-                         FieldIsEmptyException ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
-        
-        buttonPanel.add(addButton);
+        buttonPanel.add(button);
         
         // Add
         formPanel.add(barcodePanel);
@@ -332,8 +274,57 @@ public class AddProduct extends JPanel {
         add(buttonPanel, BorderLayout.SOUTH);
     }
     
+    // Getters
+    public JRadioButton getAvailableRadioButtonYes() {
+        return availableRadioButtonYes;
+    }
+
+    public JRadioButton getAvailableRadioButtonNo() {
+        return availableRadioButtonNo;
+    }
+
+    public JSpinner getStartDateSpinner() {
+        return startDateSpinner;
+    }
+
+    public JSpinner getAmountSpinner() {
+        return amountSpinner;
+    }
+
+    public JComboBox<String> getCategoryComboBox() {
+        return categoryComboBox;
+    }
+
+    public JComboBox<String> getVatTypeComboBox() {
+        return vatTypeComboBox;
+    }
+    
+    public JTextField getBrandField() {
+        return brandField;
+    }
+
+    public JTextField getPriceField() {
+        return priceField;
+    }
+
+    public JTextField getDescriptionField() {
+        return descriptionField;
+    }
+
+    public JTextField getBarcodeField() {
+        return barcodeField;
+    }
+
+    public JTextField getNameField() {
+        return nameField;
+    }
+
+    public JButton getButton() {
+        return button;
+    }
+
     // Methods
-    private void removeAllField() {
+    public void removeAllField() {
         nameField.setText("");
         descriptionField.setText("");
         priceField.setText("");
@@ -341,33 +332,9 @@ public class AddProduct extends JPanel {
         vatTypeComboBox.setSelectedIndex(0);
         categoryComboBox.setSelectedIndex(0);
         brandField.setText("");
-        startDateDayField.setText("Jour");
-        startDateDayField.setForeground(Color.GRAY);
-        startDateMonthField.setText("Mois");
-        startDateMonthField.setForeground(Color.GRAY);
-        startDateYearField.setText("Année");
-        startDateYearField.setForeground(Color.GRAY);
         availableRadioButtonYes.setSelected(true);
         
         repaint();
         revalidate();
     }
-    
-    private void backgroundText(JTextField textField, String text) {
-        textField.addFocusListener(new FocusAdapter() {
-            public void focusGained(FocusEvent e) {
-                if (textField.getText().equals(text)) {
-                    textField.setText("");
-                    textField.setForeground(Color.BLACK);
-                }
-            }
-            public void focusLost(FocusEvent e) {
-                if (textField.getText().isEmpty()) {
-                    textField.setForeground(Color.GRAY);
-                    textField.setText(text);
-                }
-            }
-        });
-    }
 }
-
