@@ -366,9 +366,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
 
     private Product resultSetToProductObject(ResultSet data) throws DAORetrievalFailedException {
         Product product;
-
-        String description;
-
+        
         try {
             product = new Product(
                     data.getLong("barcode"),
@@ -382,7 +380,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
                     data.getDate("start_date").toLocalDate()
             );
 
-            description = data.getString("description");
+            String description = data.getString("description");
             if (!data.wasNull()) {
                 product.setDescription(description);
             }
