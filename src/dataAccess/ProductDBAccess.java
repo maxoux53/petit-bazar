@@ -382,7 +382,8 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         Date startDate;
 
         try {
-            product = new Product(data.getLong("barcode"),
+            product = new Product(
+                    data.getLong("barcode"),
                     data.getString("name"),
                     data.getInt("amount"),
                     data.getBoolean("is_available"),
@@ -390,7 +391,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
                     data.getInt("category_id"),
                     data.getInt("brand_id"),
                     data.getBigDecimal("excl_vat_price"),
-                    data.getDate("start_date")
+                    data.getDate("start_date").toLocalDate()
             );
 
             description = data.getString("description");
