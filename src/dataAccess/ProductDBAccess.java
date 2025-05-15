@@ -143,7 +143,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             ResultSet data = preparedStatement.executeQuery();
 
             ArrayList<Product> products = new ArrayList<>();
-            
+
             while (data.next()) {
                 products.add(resultSetToProductObject(data));
             }
@@ -155,14 +155,14 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
     }
-    
+
     public String getCategoryLabelById(int categoryId) throws NotFoundException, DAORetrievalFailedException {
         sqlInstruction = "SELECT name FROM category WHERE id = ?";
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, categoryId);
-            
+
             ResultSet data = preparedStatement.executeQuery();
 
             String name;
@@ -173,7 +173,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             else {
                 throw new NotFoundException(objectClassName, (long)categoryId, DBRetrievalFailure.NO_ROW);
             }
-            
+
             return (!data.wasNull() ? name : null);
         } catch (DAORetrievalFailedException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
@@ -181,18 +181,18 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
     }
-    
+
     public String getBrandLabelById(int brandId) throws NotFoundException, DAORetrievalFailedException {
         sqlInstruction = "SELECT name FROM brand WHERE id = ?";
-        
+
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, brandId);
-            
+
             ResultSet data = preparedStatement.executeQuery();
-            
+
             String name;
-            
+
             if (data.next()) {
                 name = data.getString("name");
             }
@@ -206,7 +206,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         } catch (SQLException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
-        
+
     }
 
     public ArrayList<Product> getAll() throws DAORetrievalFailedException {
@@ -217,7 +217,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             ResultSet data = preparedStatement.executeQuery();
 
             ArrayList<Product> products = new ArrayList<>();
-            
+
             while (data.next()) {
                 products.add(resultSetToProductObject(data));
             }
@@ -365,8 +365,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         } 
     }
-    
-    
+
     // Private Methods
 
     private Product resultSetToProductObject(ResultSet data) throws DAORetrievalFailedException {
@@ -398,7 +397,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             if (!data.wasNull()) {
                 product.setDescription(description);
             }
-            
+
         } catch (SQLException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
