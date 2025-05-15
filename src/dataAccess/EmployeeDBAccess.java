@@ -14,6 +14,8 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
     static {
         objectClassName = Employee.class.getSimpleName().toLowerCase();
     }
+    
+    // Public methods
 
     public int create(Employee employee) throws InsertionFailedException, DAORetrievalFailedException {
         sqlInstruction = "INSERT INTO employee (first_name, last_name, password, is_active, street, street_number, unit_number, role_label, hire_date, manager_id, city_zip_code, city_name) VALUES(?,?,?,?,?,?,?,?,?,?,?,?);";
@@ -292,6 +294,8 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
             throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
     }
+    
+    // Private methods
 
     private Employee resultSetToEmployee(ResultSet data) throws DAORetrievalFailedException {
         Employee employee;
