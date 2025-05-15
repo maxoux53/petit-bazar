@@ -1,5 +1,7 @@
 package model;
 
+import exceptions.ProhibitedValueException;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -15,28 +17,37 @@ public class Product {
     private BigDecimal exclVatPrice;
     private LocalDate startDate;
 
-    public Product(Long barcode) {
+    public Product(Long barcode, String name, String description, Integer amount, Boolean isAvailable, Character vatType, Integer categoryId, Integer brandId, BigDecimal exclVatPrice, LocalDate startDate) throws ProhibitedValueException {
         this.barcode = barcode;
-    }
-
-    public Product(Long barcode, String name, String description, Integer amount, Boolean isAvailable, Character vatType, Integer categoryId, Integer brandId, BigDecimal exclVatPrice, LocalDate startDate) {
-        this(barcode);
-        this.name = name;
-        this.description = description;
+        setName(name);
+        setDescription(description);
         this.amount = amount;
         this.isAvailable = isAvailable;
         this.vatType = vatType;
         this.categoryId = categoryId;
         this.brandId = brandId;
-        this.exclVatPrice = exclVatPrice;
+        setExclVatPrice(exclVatPrice);
         this.startDate = startDate;
     }
 
-    public Product(String name, String description, Integer amount, Boolean isAvailable, Character vatType, Integer categoryId, Integer brandId, BigDecimal exclVatPrice, LocalDate startDate) {
+    public Product(String name, String description, Integer amount, Boolean isAvailable, Character vatType, Integer categoryId, Integer brandId, BigDecimal exclVatPrice, LocalDate startDate) throws ProhibitedValueException {
         this(null, name, description, amount, isAvailable, vatType, categoryId, brandId, exclVatPrice, startDate);
     }
 
-    public void setName(String name) {
+    public Product(Long barcode, String name, Integer amount, Boolean isAvailable, Character vatType, Integer categoryId, Integer brandId, BigDecimal exclVatPrice, LocalDate startDate) throws ProhibitedValueException {
+        this(barcode, name, null, amount, isAvailable, vatType, categoryId, brandId, exclVatPrice, startDate);
+    }
+
+    public Product(Long barcode) throws ProhibitedValueException {
+        this(barcode, null, null, null, null, null, null, null, null, null);
+    }
+
+    // Setters
+    public void setName(String name) throws ProhibitedValueException {
+        if (name.length() > 60) {
+            throw new ProhibitedValueException("Le nom du produit ne peut pas dépasser 60 caractères");
+        }
+
         this.name = name;
     }
 
@@ -44,34 +55,15 @@ public class Product {
         this.description = description;
     }
 
-    public void setAmount(Integer amount) {
-        this.amount = amount;
-    }
+    public void setExclVatPrice(BigDecimal exclVatPrice) throws ProhibitedValueException {
+        if (exclVatPrice.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new ProhibitedValueException("Le prix hors TVA doit être supérieur à 0");
+        }
 
-    public void setAvailable(Boolean available) {
-        isAvailable = available;
-    }
-
-    public void setVatType(Character vatType) {
-        this.vatType = vatType;
-    }
-
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public void setBrandId(Integer brandId) {
-        this.brandId = brandId;
-    }
-
-    public void setExclVatPrice(BigDecimal exclVatPrice) {
         this.exclVatPrice = exclVatPrice;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
+    // Getters
     public String getName() {
         return name;
     }
@@ -111,5 +103,4 @@ public class Product {
     public Long getBarcode() {
         return barcode;
     }
-
 }
