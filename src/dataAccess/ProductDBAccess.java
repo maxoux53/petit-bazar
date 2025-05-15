@@ -229,7 +229,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         sqlInstruction = "SELECT id FROM brand WHERE name = ?;";
 
         try {
-            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction/*, Statement.RETURN_GENERATED_KEYS*/);
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
             preparedStatement.setString(1, brandName);
             ResultSet data = preparedStatement.executeQuery();
             
@@ -241,9 +241,8 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
                 preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
                 preparedStatement.setString(1, brandName);
                 preparedStatement.executeUpdate();
-                data = preparedStatement.getGeneratedKeys();
                 
-                return (data.next() ? data.getInt("id") : null);
+                return getOrCreateBrandByName(brandName);
             }
         } catch (SQLTimeoutException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
