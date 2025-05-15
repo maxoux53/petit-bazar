@@ -1,5 +1,7 @@
 package model;
 
+import exceptions.ProhibitedValueException;
+
 import java.time.LocalDate;
 
 public class Purchase {
@@ -8,19 +10,19 @@ public class Purchase {
     private Integer employeeId;
     private Integer customerCardNumber;
 
-    public Purchase(Long id) {
+    public Purchase(Long id, LocalDate date, Integer employeeId, Integer customerCardNumber) throws ProhibitedValueException {
         this.id = id;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public void setEmployeeId(Integer employeeId) {
+        setDate(date);
         this.employeeId = employeeId;
+        this.customerCardNumber = customerCardNumber;
     }
 
-    public void setCustomerCardNumber(Integer customerCardNumber) {
-        this.customerCardNumber = customerCardNumber;
+    // Setters
+    public void setDate(LocalDate date) throws ProhibitedValueException {
+        if (date.isAfter(LocalDate.now())) {
+            throw new ProhibitedValueException("La date d'achat ne peut pas être dans le futur");
+        }
+
+        this.date = date;
     }
 }

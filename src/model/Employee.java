@@ -1,5 +1,7 @@
 package model;
 
+import exceptions.ProhibitedValueException;
+
 import java.time.LocalDate;
 
 public class Employee {
@@ -17,78 +19,80 @@ public class Employee {
     private Integer cityZipCode;
     private String cityName;
 
-    public Employee(Integer id, String firstName, String lastName, byte[] password, Boolean isActive, String street, String streetNumber, Integer unitNumber, String roleLabel, LocalDate hireDate, Integer managerId, Integer cityZipCode, String cityName) {
+    public Employee(Integer id, String firstName, String lastName, byte[] password, Boolean isActive, String street, String streetNumber, Integer unitNumber, String roleLabel, LocalDate hireDate, Integer managerId, Integer cityZipCode, String cityName) throws ProhibitedValueException {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        setFirstName(firstName);
+        setLastName(lastName);
         this.password = password;
         this.isActive = isActive;
-        this.street = street;
-        this.streetNumber = streetNumber;
-        this.unitNumber = unitNumber;
-        this.roleLabel = roleLabel;
+        setStreet(street);
+        setStreetNumber(streetNumber);
+        setUnitNumber(unitNumber);
+        setRoleLabel(roleLabel);
         this.hireDate = hireDate;
         this.managerId = managerId;
         this.cityZipCode = cityZipCode;
         this.cityName = cityName;
     }
 
-    public Employee(String firstName, String lastName, byte[] password, Boolean isActive, String street, String streetNumber, Integer unitNumber, String roleLabel, LocalDate hireDate, Integer managerId, Integer cityZipCode, String cityName) {
+    public Employee(String firstName, String lastName, byte[] password, Boolean isActive, String street, String streetNumber, Integer unitNumber, String roleLabel, LocalDate hireDate, Integer managerId, Integer cityZipCode, String cityName) throws ProhibitedValueException {
         this(null, firstName, lastName, password, isActive, street, streetNumber, unitNumber, roleLabel, hireDate, managerId, cityZipCode, cityName);
     }
 
-    public Employee(Integer id, String firstName, String lastName, byte[] password, Boolean isActive, String street, String streetNumber, String roleLabel, LocalDate hireDate, Integer cityZipCode, String cityName) {
+    public Employee(Integer id, String firstName, String lastName, byte[] password, Boolean isActive, String street, String streetNumber, String roleLabel, LocalDate hireDate, Integer cityZipCode, String cityName) throws ProhibitedValueException {
         this(id, firstName, lastName, password, isActive, street, streetNumber, null, roleLabel, hireDate, null, cityZipCode, cityName);
     }
 
-    public void setFirstName(String firstName) {
+    // Setters
+    public void setFirstName(String firstName) throws ProhibitedValueException {
+        if (firstName.length() > 20) {
+            throw new ProhibitedValueException("Le prénom ne peut pas dépasser 20 caractères");
+        }
+
         this.firstName = firstName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(String lastName) throws ProhibitedValueException {
+        if (lastName.length() > 25) {
+            throw new ProhibitedValueException("Le nom ne peut pas dépasser 25 caractères");
+        }
+
         this.lastName = lastName;
     }
 
-    public void setPassword(byte[] password) {
-        this.password = password;
-    }
+    public void setStreet(String street) throws ProhibitedValueException {
+        if (street.length() > 30) {
+            throw new ProhibitedValueException("La rue ne peut pas dépasser 30 caractères");
+        }
 
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public void setStreet(String street) {
         this.street = street;
     }
 
-    public void setStreetNumber(String streetNumber) {
+    public void setStreetNumber(String streetNumber) throws ProhibitedValueException {
+        if (streetNumber.length() > 4) {
+            throw new ProhibitedValueException("Le numéro de rue ne peut pas dépasser 4 caractères");
+        }
+
         this.streetNumber = streetNumber;
     }
 
-    public void setUnitNumber(int unitNumber) {
+    public void setUnitNumber(int unitNumber) throws ProhibitedValueException {
+        if (unitNumber < 1) {
+            throw new ProhibitedValueException("Le numéro d'unité doit être supérieur ou égal à 1");
+        }
+
         this.unitNumber = unitNumber;
     }
 
-    public void setRoleLabel(String roleLabel) {
+    public void setRoleLabel(String roleLabel) throws ProhibitedValueException {
+        if (roleLabel.length() > 25) {
+            throw new ProhibitedValueException("Le rôle ne peut pas dépasser 25 caractères");
+        }
+
         this.roleLabel = roleLabel;
     }
 
-    public void setHireDate(LocalDate hireDate) {
-        this.hireDate = hireDate;
-    }
-
-    public void setManagerId(int managerId) {
-        this.managerId = managerId;
-    }
-
-    public void setCityZipCode(int cityZipCode) {
-        this.cityZipCode = cityZipCode;
-    }
-
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
-    }
-
+    // Getters
     public String getFirstName() {
         return firstName;
     }
