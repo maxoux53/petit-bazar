@@ -117,7 +117,7 @@ A roadmap with features to be implemented and progress is available [here](roadm
 
 ## Contribution and credit
 
-This project is developed by [Constant B.](https://github.com/Zencaaw/) and [Max N.](https://github.com/maxoux53/) as part of the 'Programmation orientée objet avancée' (Advanced Object-Oriented Programming) course (IG252).  
+This project is developed by [Constant B.](https://github.com/Zencaaw/), [Adrien D.](https://github.com/Tropicooooo/) and [Max N.](https://github.com/maxoux53/) as part of the 'Programmation orientée objet avancée' (Advanced Object-Oriented Programming) course (IG252).  
 The project name is inspired by Tisdo's illustrious [Grand Bazar](https://github.com/Tisdax/grand-bazar).
 
 ## License
