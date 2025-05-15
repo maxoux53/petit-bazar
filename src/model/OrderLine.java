@@ -15,7 +15,7 @@ public class OrderLine {
 
     public void setQuantity(Integer quantity) throws ProhibitedValueException {
         if (quantity <= 0) {
-            throw new ProhibitedValueException("La quantité ne peut pas être négative");
+            throw new ProhibitedValueException("La quantité ne peut être ni négative ni nulle");
         }
 
         this.quantity = quantity;
