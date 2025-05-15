@@ -355,27 +355,19 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             
             return preparedStatement.executeQuery().next();
             
-        }catch (SQLTimeoutException e) {
+        } catch (SQLTimeoutException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         } 
     }
 
-    // Private Methods
+    // Private methods
 
     private Product resultSetToProductObject(ResultSet data) throws DAORetrievalFailedException {
         Product product;
 
-        String name;
         String description;
-        int amount;
-        boolean isAvailable;
-        char vatType;
-        int categoryId;
-        int brandId;
-        BigDecimal exclVatPrice;
-        Date startDate;
 
         try {
             product = new Product(
