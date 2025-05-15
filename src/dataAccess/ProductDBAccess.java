@@ -346,7 +346,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         } 
     }
     
-    public boolean exist(long barcode) throws DAORetrievalFailedException {
+    public boolean exists(long barcode) throws DAORetrievalFailedException {
         sqlInstruction = "SELECT barcode FROM product WHERE barcode = ?";
         
         try {
