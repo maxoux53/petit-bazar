@@ -10,10 +10,11 @@ CREATE TABLE country (
 );
 
 CREATE TABLE city (
-    zip_code SMALLINT,
+    zip_code INT,
     name VARCHAR(20),
     country VARCHAR(20) NOT NULL REFERENCES country(name),
-    CONSTRAINT pk_city PRIMARY KEY (zip_code, name)
+    CONSTRAINT pk_city PRIMARY KEY (zip_code, name),
+    CONSTRAINT zip_code_length CHECK (zip_code BETWEEN 1 AND 99999)
 );
 
 CREATE TABLE employee (
@@ -28,14 +29,16 @@ CREATE TABLE employee (
     role_label VARCHAR(25) NOT NULL,
     hire_date DATE NOT NULL,
     manager_id SMALLINT REFERENCES employee(id),
-    city_zip_code SMALLINT NOT NULL,
+    city_zip_code INT NOT NULL,
     city_name VARCHAR(20) NOT NULL,
-    CONSTRAINT fk_employee_city FOREIGN KEY (city_zip_code, city_name) REFERENCES city(zip_code, name)
+    CONSTRAINT fk_employee_city FOREIGN KEY (city_zip_code, city_name) REFERENCES city(zip_code, name),
+    CONSTRAINT unit_number_length CHECK (unit_number >= 1)
 );
 
 CREATE TABLE vat (
     type CHAR(1) PRIMARY KEY,
-    rate SMALLINT NOT NULL
+    rate SMALLINT NOT NULL,
+    CONSTRAINT rate_range CHECK (rate BETWEEN 0 AND 100)
 );
 
 CREATE TABLE category (
@@ -58,7 +61,8 @@ CREATE TABLE product (
     category_id SMALLINT NOT NULL REFERENCES category(id),
     brand_id SMALLINT NOT NULL REFERENCES brand(id),
     excl_vat_price MONEY NOT NULL,
-    start_date DATE NOT NULL
+    start_date DATE NOT NULL,
+    CONSTRAINT excl_vat_price_range CHECK (excl_vat_price > 0)
 );
 
 CREATE TABLE customer (
@@ -69,19 +73,25 @@ CREATE TABLE customer (
     email VARCHAR(50) NOT NULL,
     phone INT,
     vat_number BIGINT,
-    loyalty_points SMALLINT NOT NULL DEFAULT 0
+    loyalty_points SMALLINT NOT NULL DEFAULT 0,
+    CONSTRAINT birth_date_past CHECK (birth_date < CURRENT_DATE),
+    CONSTRAINT phone_positive CHECK (phone > 0),
+    CONSTRAINT vat_number_positive CHECK (vat_number > 0),
+    CONSTRAINT loyalty_points_not_negative CHECK (loyalty_points >= 0)
 );
 
 CREATE TABLE purchase (
     id BIGSERIAL PRIMARY KEY,
     date DATE NOT NULL,
     employee_id SMALLINT REFERENCES employee(id),
-    customer_card_number INT REFERENCES customer(loyalty_card_number)
+    customer_card_number INT REFERENCES customer(loyalty_card_number),
+    CONSTRAINT date_check_not_future CHECK (date <= CURRENT_DATE)
 );
 
 CREATE TABLE order_line (
     quantity SMALLINT NOT NULL,
     product_barcode BIGINT REFERENCES product(barcode),
     purchase_id BIGINT NOT NULL REFERENCES purchase(id),
-    CONSTRAINT pk_order_line PRIMARY KEY (product_barcode, purchase_id)
+    CONSTRAINT pk_order_line PRIMARY KEY (product_barcode, purchase_id),
+    CONSTRAINT quantity_positive CHECK (quantity > 0)
 );
