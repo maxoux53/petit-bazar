@@ -6,6 +6,7 @@ import interfaces.EmployeeDAO;
 import model.Employee;
 
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 public class EmployeeManager {
@@ -44,7 +45,7 @@ public class EmployeeManager {
         if (digest == null) {
             try {
                 digest = MessageDigest.getInstance("SHA-256");
-            } catch (Exception e) {
+            } catch (NoSuchAlgorithmException | NullPointerException e) {
                 throw new HashFailedException(e.getMessage());
             }
         }
