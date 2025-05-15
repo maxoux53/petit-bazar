@@ -117,7 +117,7 @@ Une feuille de route avec les fonctionnalités à implémenter et leur avancemen
 
 ### Contributions et crédits
 
-Ce projet est réalisé par [Constant B.](https://github.com/Zencaaw/) et [Max N.](https://github.com/maxoux53/) dans le cadre du cours de Programmation orientée objet avancée (IG252).  
+Ce projet est réalisé par [Constant B.](https://github.com/Zencaaw/), [Adrien D.](https://github.com/Tropicooooo/) et [Max N.](https://github.com/maxoux53/) dans le cadre du cours de Programmation orientée objet avancée (IG252).  
 Nom inspiré de l'illustre [Grand Bazar](https://github.com/Tisdax/grand-bazar) par Tisdo.
 
 ### Licence
