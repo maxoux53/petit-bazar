@@ -242,9 +242,8 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
                 preparedStatement.setString(1, brandName);
                 preparedStatement.executeUpdate();
                 data = preparedStatement.getGeneratedKeys();
-                if (data.next()) {
-                    return data.getInt(1);
-                }
+                
+                return (data.next() ? data.getInt("id") : null);
             }
         } catch (SQLTimeoutException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
