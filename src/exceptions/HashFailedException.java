@@ -1,14 +1,12 @@
 package exceptions;
 
 public class HashFailedException extends Exception {
-    private String additionalContext;
-
     public HashFailedException(String message) {
         super(message);
     }
 
     @Override
     public String getMessage() {
-        return "Error interacting with hash algorithm: " + super.getMessage();
+        return "Échec lors du traitement du mot de passe avec l'algorithme de hachage !\nVoir: " + super.getMessage();
     }
 }
