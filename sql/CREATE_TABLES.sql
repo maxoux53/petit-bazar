@@ -48,7 +48,7 @@ CREATE TABLE category (
 
 CREATE TABLE brand (
     id SMALLSERIAL PRIMARY KEY,
-    name VARCHAR(20) NOT NULL
+    name VARCHAR(20) NOT NULL UNIQUE 
 );
 
 CREATE TABLE product (

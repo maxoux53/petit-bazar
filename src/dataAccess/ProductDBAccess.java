@@ -231,35 +231,31 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
     }
 
     public Integer getOrCreateBrandByName(String brandName) throws DAORetrievalFailedException {
-        boolean exists = true;
+        sqlInstruction = "SELECT id FROM brand WHERE name = ?;";
 
-        do {
-            sqlInstruction = "SELECT id FROM brand WHERE name = ?;";
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction/*, Statement.RETURN_GENERATED_KEYS*/);
+            preparedStatement.setString(1, brandName);
+            ResultSet data = preparedStatement.executeQuery();
+            
+            if (data.next()) {
+                return data.getInt("id");
+            } else {
+                sqlInstruction = "INSERT INTO brand (name) VALUES (?);";
 
-            try {
                 preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
                 preparedStatement.setString(1, brandName);
-                ResultSet data = preparedStatement.executeQuery();
-
-                exists = data.next();
-
-                if (exists) {
-                    return data.getInt("id");
-                } else {
-                    sqlInstruction = "INSERT INTO brand (name) VALUES (?);";
-
-                    preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-                    preparedStatement.setString(1, brandName);
-                    preparedStatement.executeUpdate();
-                    data = preparedStatement.getGeneratedKeys();
+                preparedStatement.executeUpdate();
+                data = preparedStatement.getGeneratedKeys();
+                if (data.next()) {
+                    return data.getInt(1);
                 }
-            } catch (SQLTimeoutException e) {
-                throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
-            } catch (SQLException e) {
-                throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
             }
-        } while (!exists);
-        return null; // This line should never be reached
+        } catch (SQLTimeoutException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
+        }
     }
 
     public ArrayList<Category> getAllCategories() throws DAORetrievalFailedException {
