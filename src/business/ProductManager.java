@@ -68,7 +68,7 @@ public class ProductManager {
         return dao.getCurrentStock(barcode);
     }
 
-    public ArrayList<Integer> getOutOfStock() throws NotFoundException, DAORetrievalFailedException {
+    public ArrayList<Product> getOutOfStock() throws NotFoundException, DAORetrievalFailedException {
         return dao.getOutOfStock();
     }
 }

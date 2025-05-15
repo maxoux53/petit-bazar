@@ -17,6 +17,8 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         objectClassName = Product.class.getSimpleName().toLowerCase();
     }
 
+    // Public methods
+
     public int create(Product product) throws InsertionFailedException, DAORetrievalFailedException {
         sqlInstruction = "INSERT INTO product VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
@@ -120,64 +122,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             ResultSet data = preparedStatement.executeQuery();
 
             if (data.next()) {
-                String name;
-                String description;
-                int amount;
-                boolean isAvailable;
-                char vatType;
-                int categoryId;
-                int brandId;
-                BigDecimal exclVatPrice;
-                Date startDate;
-
-                Product product = new Product(barcode);
-
-                name = data.getString("name");
-                if (!data.wasNull()) {
-                    product.setName(name);
-                }
-
-                description = data.getString("description");
-                if (!data.wasNull()) {
-                    product.setDescription(description);
-                }
-
-                amount = data.getInt("amount");
-                if (!data.wasNull()) {
-                    product.setAmount(amount);
-                }
-
-                isAvailable = data.getBoolean("is_available");
-                if (!data.wasNull()) {
-                    product.setAvailable(isAvailable);
-                }
-
-                vatType = data.getString("vat_type").charAt(0);
-                if (!data.wasNull()) {
-                    product.setVatType(vatType);
-                }
-
-                categoryId = data.getInt("category_id");
-                if (!data.wasNull()) {
-                    product.setCategoryId(categoryId);
-                }
-
-                brandId = data.getInt("brand_id");
-                if (!data.wasNull()) {
-                    product.setBrandId(brandId);
-                }
-
-                exclVatPrice = data.getBigDecimal("excl_vat_price");
-                if (!data.wasNull()) {
-                    product.setExclVatPrice(exclVatPrice);
-                }
-
-                startDate = data.getDate("start_date");
-                if (!data.wasNull()) {
-                    product.setStartDate(startDate.toLocalDate());
-                }
-
-                return product;
+                return resultSetToProductObject(data);
             } else {
                 throw new NotFoundException(objectClassName, barcode, DBRetrievalFailure.NO_ROW);
             }
@@ -188,7 +133,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         }
     }
 
-    public ArrayList<Product> searchByName(String name) throws DAORetrievalFailedException {
+    public ArrayList<Product> searchByName(String name) throws DAORetrievalFailedException, NotFoundException {
         sqlInstruction = "SELECT * FROM product WHERE name ILIKE ?;";
 
         try {
@@ -199,66 +144,8 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
 
             ArrayList<Product> products = new ArrayList<>();
 
-            Product product;
-            String description;
-            int amount;
-            boolean isAvailable;
-            char vatType;
-            int categoryId;
-            int brandId;
-            BigDecimal exclVatPrice;
-            Date startDate;
-
-
             while (data.next()) {
-                product = new Product(data.getLong("barcode"));
-
-                name = data.getString("name");
-                if (!data.wasNull()) {
-                    product.setName(name);
-                }
-
-                description = data.getString("description");
-                if (!data.wasNull()) {
-                    product.setDescription(description);
-                }
-
-                amount = data.getInt("amount");
-                if (!data.wasNull()) {
-                    product.setAmount(amount);
-                }
-
-                isAvailable = data.getBoolean("is_available");
-                if (!data.wasNull()) {
-                    product.setAvailable(isAvailable);
-                }
-
-                vatType = data.getString("vat_type").charAt(0);
-                if (!data.wasNull()) {
-                    product.setVatType(vatType);
-                }
-
-                categoryId = data.getInt("category_id");
-                if (!data.wasNull()) {
-                    product.setCategoryId(categoryId);
-                }
-
-                brandId = data.getInt("brand_id");
-                if (!data.wasNull()) {
-                    product.setBrandId(brandId);
-                }
-
-                exclVatPrice = data.getBigDecimal("excl_vat_price");
-                if (!data.wasNull()) {
-                    product.setExclVatPrice(exclVatPrice);
-                }
-
-                startDate = data.getDate("start_date");
-                if (!data.wasNull()) {
-                    product.setStartDate(startDate.toLocalDate());
-                }
-              
-                products.add(product);
+                products.add(resultSetToProductObject(data));
             }
 
             return products;
@@ -268,14 +155,14 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
     }
-    
+
     public String getCategoryLabelById(int categoryId) throws NotFoundException, DAORetrievalFailedException {
         sqlInstruction = "SELECT name FROM category WHERE id = ?";
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, categoryId);
-            
+
             ResultSet data = preparedStatement.executeQuery();
 
             String name;
@@ -286,7 +173,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             else {
                 throw new NotFoundException(objectClassName, (long)categoryId, DBRetrievalFailure.NO_ROW);
             }
-            
+
             return (!data.wasNull() ? name : null);
         } catch (DAORetrievalFailedException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
@@ -294,18 +181,18 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
     }
-    
+
     public String getBrandLabelById(int brandId) throws NotFoundException, DAORetrievalFailedException {
         sqlInstruction = "SELECT name FROM brand WHERE id = ?";
-        
+
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
             preparedStatement.setInt(1, brandId);
-            
+
             ResultSet data = preparedStatement.executeQuery();
-            
+
             String name;
-            
+
             if (data.next()) {
                 name = data.getString("name");
             }
@@ -319,7 +206,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         } catch (SQLException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
-        
+
     }
 
     public ArrayList<Product> getAll() throws DAORetrievalFailedException {
@@ -331,66 +218,8 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
 
             ArrayList<Product> products = new ArrayList<>();
 
-            Product product;
-            String name;
-            String description;
-            int amount;
-            boolean isAvailable;
-            char vatType;
-            int categoryId;
-            int brandId;
-            BigDecimal exclVatPrice;
-            Date startDate;
-
             while (data.next()) {
-                product = new Product(data.getLong("barcode"));
-
-                name = data.getString("name");
-                if (!data.wasNull()) {
-                    product.setName(name);
-                }
-
-                description = data.getString("description");
-                if (!data.wasNull()) {
-                    product.setDescription(description);
-                }
-
-                amount = data.getInt("amount");
-                if (!data.wasNull()) {
-                    product.setAmount(amount);
-                }
-
-                isAvailable = data.getBoolean("is_available");
-                if (!data.wasNull()) {
-                    product.setAvailable(isAvailable);
-                }
-
-                vatType = data.getString("vat_type").charAt(0);
-                if (!data.wasNull()) {
-                    product.setVatType(vatType);
-                }
-
-                categoryId = data.getInt("category_id");
-                if (!data.wasNull()) {
-                    product.setCategoryId(categoryId);
-                }
-
-                brandId = data.getInt("brand_id");
-                if (!data.wasNull()) {
-                    product.setBrandId(brandId);
-                }
-
-                exclVatPrice = data.getBigDecimal("excl_vat_price");
-                if (!data.wasNull()) {
-                    product.setExclVatPrice(exclVatPrice);
-                }
-
-                startDate = data.getDate("start_date");
-                if (!data.wasNull()) {
-                    product.setStartDate(startDate.toLocalDate());
-                }
-
-                products.add(product);
+                products.add(resultSetToProductObject(data));
             }
 
             return products;
@@ -515,22 +344,18 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         }
     }
 
-    public ArrayList<Integer> getOutOfStock() throws DAORetrievalFailedException {
-        sqlInstruction = "SELECT barcode FROM product WHERE amount = 0;";
+    public ArrayList<Product> getOutOfStock() throws DAORetrievalFailedException {
+        sqlInstruction = "SELECT * FROM product WHERE amount = 0;";
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
 
             ResultSet data = preparedStatement.executeQuery();
 
-            ArrayList<Integer> products = new ArrayList<>();
-            int barcode;
+            ArrayList<Product> products = new ArrayList<>();
 
             while (data.next()) {
-                barcode = data.getInt("barcode");
-                if (!data.wasNull()) {
-                    products.add(barcode);
-                }
+                products.add(resultSetToProductObject(data));
             }
 
             return products;
@@ -539,5 +364,45 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         } catch (SQLException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
+    }
+
+
+    // Private Methods
+
+    private Product resultSetToProductObject(ResultSet data) throws DAORetrievalFailedException {
+        Product product;
+
+        String name;
+        String description;
+        int amount;
+        boolean isAvailable;
+        char vatType;
+        int categoryId;
+        int brandId;
+        BigDecimal exclVatPrice;
+        Date startDate;
+
+        try {
+            product = new Product(data.getLong("barcode"),
+                    data.getString("name"),
+                    data.getInt("amount"),
+                    data.getBoolean("is_available"),
+                    data.getString("vat_type").charAt(0),
+                    data.getInt("category_id"),
+                    data.getInt("brand_id"),
+                    data.getBigDecimal("excl_vat_price"),
+                    data.getDate("start_date")
+            );
+
+            description = data.getString("description");
+            if (!data.wasNull()) {
+                product.setDescription(description);
+            }
+
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
+        }
+
+        return product;
     }
 }

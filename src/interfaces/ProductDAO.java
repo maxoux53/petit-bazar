@@ -13,7 +13,7 @@ public interface ProductDAO {
     int update(Product product) throws UpdateFailedException, DAORetrievalFailedException;
 
     Product getByBarcode(Long barcode) throws NotFoundException, DAORetrievalFailedException;
-    ArrayList<Product> searchByName(String name) throws NotFoundException, DAORetrievalFailedException;
+    ArrayList<Product> searchByName(String name) throws DAORetrievalFailedException;
     String getCategoryLabelById(int categoryId) throws NotFoundException, DAORetrievalFailedException;
     String getBrandLabelById(int brandId) throws NotFoundException, DAORetrievalFailedException;
     ArrayList<Product> getAll() throws DAORetrievalFailedException;
@@ -24,5 +24,5 @@ public interface ProductDAO {
     ArrayList<Vat> getAllVats() throws DAORetrievalFailedException;
 
     int getCurrentStock(Long barcode) throws NotFoundException, DAORetrievalFailedException;
-    ArrayList<Integer> getOutOfStock() throws NotFoundException, DAORetrievalFailedException;
+    ArrayList<Product> getOutOfStock() throws DAORetrievalFailedException;
 }

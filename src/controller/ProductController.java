@@ -118,7 +118,7 @@ public class ProductController {
         return manager.getCurrentStock(stringToBarcode(barcodeAsString));
     }
 
-    public ArrayList<Integer> getOutOfStock() throws NotFoundException, DAORetrievalFailedException {
+    public ArrayList<Product> getOutOfStock() throws NotFoundException, DAORetrievalFailedException {
         return manager.getOutOfStock();
     }
     
