@@ -8,12 +8,8 @@ public class DAORetrievalFailedException extends Exception {
         this.additionalContext = additionalContext;
     }
 
-    public DAORetrievalFailedException(String message) {
-        this(null, message);
-    }
-
     @Override
     public String getMessage() {
-        return (additionalContext != null ? additionalContext + " " : "") + "Voir : " + super.getMessage();
+        return additionalContext + "\nVoir: " + super.getMessage();
     }
 }

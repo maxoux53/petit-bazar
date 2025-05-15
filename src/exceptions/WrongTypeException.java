@@ -8,6 +8,6 @@ public class WrongTypeException extends Exception {
 
     @Override
     public String getMessage() {
-        return "Erreur de type dans le champ suivant : " + super.getMessage();
+        return "Erreur de conversion pour le champ suivant : " + super.getMessage();
     }
 }
