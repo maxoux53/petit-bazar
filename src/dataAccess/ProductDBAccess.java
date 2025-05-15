@@ -346,6 +346,22 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         } 
     }
+    
+    public boolean exist(long barcode) throws DAORetrievalFailedException {
+        sqlInstruction = "SELECT barcode FROM product WHERE barcode = ?";
+        
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            preparedStatement.setLong(1, barcode);
+            
+            return preparedStatement.executeQuery().next();
+            
+        }catch (SQLTimeoutException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
+        } 
+    }
 
     // Private Methods
 
