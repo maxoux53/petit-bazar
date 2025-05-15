@@ -1,6 +1,7 @@
 package interfaces;
 
 import exceptions.*;
+import model.Brand;
 import model.Category;
 import model.Product;
 import model.Vat;
@@ -14,8 +15,8 @@ public interface ProductDAO {
 
     Product getByBarcode(Long barcode) throws NotFoundException, DAORetrievalFailedException;
     ArrayList<Product> searchByName(String name) throws DAORetrievalFailedException, NotFoundException;
-    String getCategoryLabelById(int categoryId) throws NotFoundException, DAORetrievalFailedException;
-    String getBrandLabelById(int brandId) throws NotFoundException, DAORetrievalFailedException;
+    Category getCategoryById(int categoryId) throws NotFoundException, DAORetrievalFailedException;
+    Brand getBrandById(int brandId) throws NotFoundException, DAORetrievalFailedException;
     ArrayList<Product> getAll() throws DAORetrievalFailedException;
 
     Integer getOrCreateBrandByName(String brandName) throws DAORetrievalFailedException;

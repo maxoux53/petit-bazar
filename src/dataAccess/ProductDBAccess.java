@@ -2,6 +2,7 @@ package dataAccess;
 
 import exceptions.*;
 import interfaces.ProductDAO;
+import model.Brand;
 import model.Category;
 import model.Product;
 import model.Vat;
@@ -156,7 +157,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         }
     }
 
-    public String getCategoryLabelById(int categoryId) throws NotFoundException, DAORetrievalFailedException {
+    public Category getCategoryById(int categoryId) throws NotFoundException, DAORetrievalFailedException {
         sqlInstruction = "SELECT name FROM category WHERE id = ?";
 
         try {
@@ -164,17 +165,15 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             preparedStatement.setInt(1, categoryId);
 
             ResultSet data = preparedStatement.executeQuery();
-
-            String name;
+            
 
             if (data.next()) {
-                name = data.getString("name");
+                return new Category(data.getInt("id"), data.getString("name"));
             }
             else {
                 throw new NotFoundException(objectClassName, (long)categoryId, DBRetrievalFailure.NO_ROW);
             }
-
-            return (!data.wasNull() ? name : null);
+            
         } catch (DAORetrievalFailedException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {
@@ -182,7 +181,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         }
     }
 
-    public String getBrandLabelById(int brandId) throws NotFoundException, DAORetrievalFailedException {
+    public Brand getBrandById(int brandId) throws NotFoundException, DAORetrievalFailedException {
         sqlInstruction = "SELECT name FROM brand WHERE id = ?";
 
         try {
@@ -191,16 +190,12 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
 
             ResultSet data = preparedStatement.executeQuery();
 
-            String name;
-
             if (data.next()) {
-                name = data.getString("name");
+                return  new Brand(data.getInt("id"), data.getString("name"));
             }
             else {
                 throw new NotFoundException(objectClassName, (long)brandId, DBRetrievalFailure.NO_ROW);
             }
-
-            return (!data.wasNull() ? name : null);
         } catch (DAORetrievalFailedException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {
@@ -266,18 +261,13 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             ResultSet data = preparedStatement.executeQuery();
 
             ArrayList<Category> categories = new ArrayList<>();
-            Category category;
-            String name;
 
             while (data.next()) {
-                category = new Category(data.getInt("id"));
-
-                name = data.getString("name");
-                if (!data.wasNull()) {
-                    category.setLabel(name);
-                }
-
-                categories.add(category);
+                categories.add(new Category(
+                        data.getInt("id"), 
+                        data.getString("name")
+                        )
+                );
             }
 
             return categories;
@@ -295,22 +285,17 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
             ResultSet data = preparedStatement.executeQuery();
 
-            ArrayList<Vat> vatTypes = new ArrayList<>();
-            Vat vatType;
-            int rate;
+            ArrayList<Vat> vats = new ArrayList<>();
 
             while (data.next()) {
-                vatType = new Vat(data.getString("type").charAt(0));
-
-                rate = data.getInt("rate");
-                if (!data.wasNull()) {
-                    vatType.setRate(rate);
-                }
-
-                vatTypes.add(vatType);
+                vats.add(new Vat(
+                        data.getString("type").charAt(0),
+                        data.getInt("rate")
+                        )
+                );
             }
 
-            return vatTypes;
+            return vats;
         } catch (SQLTimeoutException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {
