@@ -157,7 +157,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         }
     }
 
-    public Category getCategoryById(int categoryId) throws NotFoundException, DAORetrievalFailedException {
+    public Category getCategoryById(Integer categoryId) throws NotFoundException, DAORetrievalFailedException {
         sqlInstruction = "SELECT name FROM category WHERE id = ?";
 
         try {
@@ -181,7 +181,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         }
     }
 
-    public Brand getBrandById(int brandId) throws NotFoundException, DAORetrievalFailedException {
+    public Brand getBrandById(Integer brandId) throws NotFoundException, DAORetrievalFailedException {
         sqlInstruction = "SELECT name FROM brand WHERE id = ?";
 
         try {
