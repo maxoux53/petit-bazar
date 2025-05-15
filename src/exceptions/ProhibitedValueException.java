@@ -1,7 +1,7 @@
 package exceptions;
 
 public class ProhibitedValueException extends Exception {
-    public ProhibitedValueException(String fieldName) {
-        super("Prohibited value for field: " + fieldName);
+    public ProhibitedValueException(String customMessage) {
+        super("Valeur interdite pour ce champ :\n" + customMessage);
     }
 }
