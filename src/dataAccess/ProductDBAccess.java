@@ -16,7 +16,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
     static {
         objectClassName = Product.class.getSimpleName().toLowerCase();
     }
-
+    
     // Public methods
 
     public int create(Product product) throws InsertionFailedException, DAORetrievalFailedException {
@@ -363,9 +363,8 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
-        }
+        } 
     }
-
 
     // Private Methods
 
