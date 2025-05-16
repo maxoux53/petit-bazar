@@ -3,6 +3,7 @@ package business;
 import dataAccess.*;
 import exceptions.*;
 import interfaces.ProductDAO;
+import model.Brand;
 import model.Category;
 import model.Product;
 import model.Vat;
@@ -28,7 +29,7 @@ public class ProductManager {
         return dao.remove(barcode);
     }
 
-    public int update(Product product) throws DAORetrievalFailedException, UpdateFailedException {
+    public int update(Product product) throws UpdateFailedException, DAORetrievalFailedException {
         return dao.update(product);
     }
 
@@ -40,12 +41,12 @@ public class ProductManager {
         return dao.searchByName(name);
     }
     
-    public String getCategoryLabelById(int categoryId) throws DAORetrievalFailedException, NotFoundException {
-        return dao.getCategoryLabelById(categoryId);
+    public Category getCategoryById(Integer categoryId) throws NotFoundException, DAORetrievalFailedException {
+        return dao.getCategoryById(categoryId);
     }
 
-    public String getBrandLabelById(int brandId) throws DAORetrievalFailedException, NotFoundException {
-        return dao.getBrandLabelById(brandId);
+    public Brand getBrandById(Integer brandId) throws NotFoundException, DAORetrievalFailedException {
+        return dao.getBrandById(brandId);
     }
     
     public ArrayList<Product> getAll() throws DAORetrievalFailedException {
@@ -68,7 +69,7 @@ public class ProductManager {
         return dao.getCurrentStock(barcode);
     }
 
-    public ArrayList<Product> getOutOfStock() throws NotFoundException, DAORetrievalFailedException {
+    public ArrayList<Product> getOutOfStock() throws DAORetrievalFailedException {
         return dao.getOutOfStock();
     }
 }

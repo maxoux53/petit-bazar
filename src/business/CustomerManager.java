@@ -18,7 +18,7 @@ public class CustomerManager {
         this.dao = dao;
     }
 
-    public Customer getByLoyaltyCardNumber(int loyaltyCardNumber) throws NotFoundException, DAORetrievalFailedException {
+    public Customer getByLoyaltyCardNumber(Integer loyaltyCardNumber) throws NotFoundException, DAORetrievalFailedException {
         return dao.getByLoyaltyCardNumber(loyaltyCardNumber);
     }
 
