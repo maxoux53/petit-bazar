@@ -24,7 +24,7 @@ public class EmployeeManager {
         return dao.create(employee);
     }
 
-    public int remove(int id) throws DeleteFailedException, DAORetrievalFailedException {
+    public int remove(Integer id) throws DeleteFailedException, DAORetrievalFailedException {
         return dao.remove(id);
     }
 
@@ -32,7 +32,7 @@ public class EmployeeManager {
         return dao.update(employee);
     }
 
-    public Employee getById(int id) throws NotFoundException, DAORetrievalFailedException {
+    public Employee getById(Integer id) throws NotFoundException, DAORetrievalFailedException {
         return dao.getById(id);
     }
 
@@ -52,7 +52,7 @@ public class EmployeeManager {
         return digest.digest(password.getBytes());
     }
 
-    public boolean checkPassword(char[] passwordAttempt, int id) throws HashFailedException, NotFoundException, DAORetrievalFailedException {
+    public boolean checkPassword(char[] passwordAttempt, Integer id) throws HashFailedException, NotFoundException, DAORetrievalFailedException {
         return MessageDigest.isEqual(
                 hashPassword(new String(passwordAttempt)),
                 dao.getPasswordHash(id)
