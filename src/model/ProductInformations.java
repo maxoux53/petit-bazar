@@ -3,10 +3,10 @@ package model;
 public class ProductInformations {
     // Attributes
     private String productName, categoryName;
-    private int vatRate;
+    private Integer vatRate;
     
     // Constructors
-    public ProductInformations(String productName, String categoryName, int vatRate) {
+    public ProductInformations(String productName, String categoryName, Integer vatRate) {
         this.productName = productName;
         this.categoryName = categoryName;
         this.vatRate = vatRate;
