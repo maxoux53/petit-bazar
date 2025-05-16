@@ -5,7 +5,6 @@ import exceptions.NotFoundException;
 import interfaces.ResearchDAO;
 import model.EmployeePlace;
 import model.ProductInformations;
-import model.Purchase;
 import model.PurchaseInformations;
 
 import java.sql.Date;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 
 public class ResearchDBAccess extends DBAccess implements ResearchDAO {
 
-    public ArrayList<PurchaseInformations> getPurchaseInformationsByDate(LocalDate date) throws DAORetrievalFailedException, NotFoundException {
+    public ArrayList<PurchaseInformations> getPurchaseInformationsByDate(LocalDate date) throws DAORetrievalFailedException {
         sqlInstruction = "SELECT purchase.id as \"purchase_id\",customer.first_name as \"customer_first_name\", customer.last_name as \"customer_last_name\", employee.first_name as \"employee_first_name\", employee.last_name as \"employee_last_name\" " +
                 "FROM purchase " +
                 "JOIN customer ON purchase.customer_card_number = customer.loyalty_card_number " +
@@ -43,10 +42,6 @@ public class ResearchDBAccess extends DBAccess implements ResearchDAO {
                 );
             }
             
-            if (purchaseInformations.isEmpty()) {
-                //throw new NotFoundException(Purchase.class.getSimpleName().toLowerCase(), (long) date, ));
-            }
-            
             return purchaseInformations;
             
         } catch (SQLTimeoutException e) {
@@ -57,7 +52,7 @@ public class ResearchDBAccess extends DBAccess implements ResearchDAO {
     }
     
     
-    public ArrayList<EmployeePlace> getEmployeePlaceByEmployee(int employeeId) throws DAORetrievalFailedException, NotFoundException {
+    public ArrayList<EmployeePlace> getEmployeePlaceByEmployee(int employeeId) throws DAORetrievalFailedException {
         sqlInstruction = "SELECT employee.first_name as \"employee_first_name\", employee.last_name as \"employee_last_name\", city.name \"city_name\", city.zip_code as \"city_zip_code\", country.name \"country_name\" " +
                 "FROM employee " +
                 "JOIN city ON employee.city_name = city.name AND employee.city_zip_code = city.zip_code " +
@@ -82,11 +77,7 @@ public class ResearchDBAccess extends DBAccess implements ResearchDAO {
                         )
                 );
             }
-
-            if (employeePlaces.isEmpty()) {
-                //throw new NotFoundException(DBRetrievalFailure.NO_ROW, Long.valueOf(date.toString(), ));
-            }
-
+            
             return employeePlaces;
 
         } catch (SQLTimeoutException exception) {
@@ -96,7 +87,7 @@ public class ResearchDBAccess extends DBAccess implements ResearchDAO {
         }
     }
 
-    public ArrayList<ProductInformations> getProductInformationsByBrand(int brandId) throws DAORetrievalFailedException, NotFoundException {
+    public ArrayList<ProductInformations> getProductInformationsByBrand(int brandId) throws DAORetrievalFailedException {
         sqlInstruction = "SELECT product.name as \"product_name\", category.name as \"category_name\", vat.rate \"vat_rate\" " +
                 "FROM product " +
                 "JOIN category ON product.category_id = category.id " +
@@ -118,10 +109,6 @@ public class ResearchDBAccess extends DBAccess implements ResearchDAO {
                         data.getInt("vat_rate")
                         )
                 );
-            }
-
-            if (productInformations.isEmpty()) {
-                //throw new NotFoundException(DBRetrievalFailure.NO_ROW, Long.valueOf(date.toString(), ));
             }
             
             return productInformations;
