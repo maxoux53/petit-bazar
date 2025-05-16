@@ -3,6 +3,7 @@ package dataAccess;
 import exceptions.DAORetrievalFailedException;
 import interfaces.PurchaseDAO;
 import model.Purchase;
+import model.SalesInfo;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -55,5 +56,29 @@ public class PurchaseDBAccess extends DBAccess implements PurchaseDAO {
             throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
     }
-}
 
+    public ArrayList<SalesInfo> salesRanking(String categoryLabel) throws DAORetrievalFailedException {
+        sqlInstruction = "SELECT p.barcode, p.name, SUM(a.quantity) AS total_sales_volume FROM product p INNER JOIN order_line a ON a.product_barcode = p.barcode WHERE p.category_id = (SELECT id FROM category WHERE label = ?) GROUP BY p.barcode, p.name ORDER BY SUM(a.quantity) DESC;";
+        ArrayList<SalesInfo> ranking = new ArrayList<>();
+
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            preparedStatement.setString(1, categoryLabel);
+            ResultSet data = preparedStatement.executeQuery();
+
+            while (data.next()) {
+                ranking.add(new SalesInfo(
+                        data.getLong("barcode"),
+                        data.getString("name"),
+                        data.getInt("total_sales_volume")
+                ));
+            }
+
+            return ranking;
+        } catch (SQLTimeoutException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
+        }
+    }
+}
