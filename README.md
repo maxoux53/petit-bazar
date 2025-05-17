@@ -42,8 +42,8 @@ A roadmap with features to be implemented and progress is available [here](roadm
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/maxoux53/projet-Java.git
-   cd projet-Java
+   git clone https://github.com/maxoux53/petit-bazar.git
+   cd petit-bazar
    ```
 
 2. **Set up environment variables**  
@@ -51,6 +51,7 @@ A roadmap with features to be implemented and progress is available [here](roadm
    - `PG_USER`: Database username
    - `PG_PASSWORD`: User password for the database
    - `PG_DB`: Database name
+   - `STORE_NAME`: Store name (displayed in the GUI)
 
    You can use the [`.env` template file](./example.env), simply rename it to .env and edit the values as wanted.
 
@@ -60,8 +61,6 @@ A roadmap with features to be implemented and progress is available [here](roadm
       ```bash
       docker compose up -d
       ```
-
-   - Run [this SQL script](./sql/DB_INIT_TABLES.sql) to create the database structure.
 
 4. **Run the software**
    - Open the project in IntelliJ
@@ -99,7 +98,6 @@ A roadmap with features to be implemented and progress is available [here](roadm
 
 ### Design
 
-- PlantUML to model the object-oriented design (class diagram)
 - Draw.io for the database design (ER & relational schemas)
 
 ## Database structure
@@ -115,11 +113,11 @@ A roadmap with features to be implemented and progress is available [here](roadm
 
 ## License information
 
-## Contribution and credit
+### Contribution and credit
 
 This project is developed by [Constant B.](https://github.com/Zencaaw/), [Adrien D.](https://github.com/Tropicooooo/) and [Max N.](https://github.com/maxoux53/) as part of the 'Programmation orientée objet avancée' (Advanced Object-Oriented Programming) course (IG252).  
 The project name is inspired by Tisdo's illustrious [Grand Bazar](https://github.com/Tisdax/grand-bazar).
 
-## License
+### License
 
 *This project is licensed under the GNU GPL v3. For more details, please refer to the [LICENSE](LICENSE) file.*

@@ -42,8 +42,8 @@ Une feuille de route avec les fonctionnalités à implémenter et leur avancemen
 1. **Cloner le dépôt**
 
    ```bash
-   git clone https://github.com/maxoux53/projet-Java.git
-   cd projet-Java
+   git clone https://github.com/maxoux53/petit-bazar.git
+   cd petit-bazar
    ```
 
 2. **Configurer les variables d'environnement**  
@@ -51,6 +51,7 @@ Une feuille de route avec les fonctionnalités à implémenter et leur avancemen
    - `PG_USER`: Nom d'utilisateur pour la base de données
    - `PG_PASSWORD`: Mot de passe pour la base de données
    - `PG_DB`: Nom de la base de données
+   - `STORE_NAME`: Nom du magasin (affiché dans l'interface graphique)
 
    Possibilité d'utiliser le [fichier d'exemple `.env`](./example.env). Le renommer en .env et modifier les valeurs comme souhaité.
 
@@ -60,8 +61,6 @@ Une feuille de route avec les fonctionnalités à implémenter et leur avancemen
       ```bash
       docker compose up -d
       ```
-
-   - Exécuter le script SQL de création de table disponible [ici](./sql/DB_INIT_TABLES.sql)
 
 4. **Lancer l'application**
    - Ouvrir le projet dans IntelliJ
@@ -99,7 +98,6 @@ Une feuille de route avec les fonctionnalités à implémenter et leur avancemen
 
 ### Conception
 
-- PlantUML pour la modélisation orientée objet.
 - Draw.io pour la modélisation de la base de données (EA + relationnel).
 
 ## Structure de la base de données
