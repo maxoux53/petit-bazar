@@ -236,13 +236,13 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             if (data.next()) {
                 return data.getInt("id");
             } else {
-                sqlInstruction = "INSERT INTO brand (name) VALUES (?);";
+                sqlInstruction = "INSERT INTO brand (name) VALUES (?) RETURNING id;";
 
                 preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
                 preparedStatement.setString(1, brandName);
-                preparedStatement.executeUpdate();
+                ResultSet generatedKey = preparedStatement.executeQuery();
                 
-                return getOrCreateBrandByName(brandName);
+                return (generatedKey.next() ? generatedKey.getInt("id") : getOrCreateBrandByName(brandName));
             }
         } catch (SQLTimeoutException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
