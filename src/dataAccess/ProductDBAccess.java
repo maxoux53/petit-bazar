@@ -39,7 +39,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             try {
                 return preparedStatement.executeUpdate();
             } catch (SQLException e) {
-                throw new InsertionFailedException(objectClassName, null, e.getMessage());
+                throw new InsertionFailedException(objectClassName, (Long)null, e.getMessage());
             }
         } catch (SQLTimeoutException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
@@ -171,7 +171,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
                 return new Category(data.getInt("id"), data.getString("name"));
             }
             else {
-                throw new NotFoundException(objectClassName, (long)categoryId, DBRetrievalFailure.NO_ROW);
+                throw new NotFoundException(objectClassName, categoryId, DBRetrievalFailure.NO_ROW);
             }
             
         } catch (DAORetrievalFailedException e) {
@@ -194,7 +194,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
                 return  new Brand(data.getInt("id"), data.getString("name"));
             }
             else {
-                throw new NotFoundException(objectClassName, (long)brandId, DBRetrievalFailure.NO_ROW);
+                throw new NotFoundException(objectClassName, brandId, DBRetrievalFailure.NO_ROW);
             }
         } catch (DAORetrievalFailedException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
