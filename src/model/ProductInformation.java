@@ -1,12 +1,12 @@
 package model;
 
-public class ProductInformations {
+public class ProductInformation {
     // Attributes
     private String productName, categoryName;
     private Integer vatRate;
     
     // Constructors
-    public ProductInformations(String productName, String categoryName, Integer vatRate) {
+    public ProductInformation(String productName, String categoryName, Integer vatRate) {
         this.productName = productName;
         this.categoryName = categoryName;
         this.vatRate = vatRate;

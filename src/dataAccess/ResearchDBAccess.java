@@ -1,11 +1,11 @@
 package dataAccess;
 
 import exceptions.DAORetrievalFailedException;
-import exceptions.NotFoundException;
+import exceptions.ProhibitedValueException;
 import interfaces.ResearchDAO;
 import model.EmployeePlace;
-import model.ProductInformations;
-import model.PurchaseInformations;
+import model.ProductInformation;
+import model.PurchaseInformation;
 
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -16,11 +16,11 @@ import java.util.ArrayList;
 
 public class ResearchDBAccess extends DBAccess implements ResearchDAO {
 
-    public ArrayList<PurchaseInformations> getPurchaseInformationsByDate(LocalDate date) throws DAORetrievalFailedException {
-        sqlInstruction = "SELECT purchase.id as \"purchase_id\",customer.first_name as \"customer_first_name\", customer.last_name as \"customer_last_name\", employee.first_name as \"employee_first_name\", employee.last_name as \"employee_last_name\" " +
+    public ArrayList<PurchaseInformation> getPurchaseInformationByDate(LocalDate date) throws DAORetrievalFailedException {
+        sqlInstruction = "SELECT purchase.id AS purchase_id,customer.first_name AS customer_first_name, customer.last_name AS customer_last_name, employee.first_name AS employee_first_name, employee.last_name AS employee_last_name " +
                 "FROM purchase " +
-                "JOIN customer ON purchase.customer_card_number = customer.loyalty_card_number " +
-                "JOIN employee ON purchase.employee_id = employee.id " +
+                "INNER JOIN customer ON purchase.customer_card_number = customer.loyalty_card_number " +
+                "INNER JOIN employee ON purchase.employee_id = employee.id " +
                 "WHERE purchase.date = ?;";
         
         try {
@@ -29,10 +29,10 @@ public class ResearchDBAccess extends DBAccess implements ResearchDAO {
 
             ResultSet data = preparedStatement.executeQuery();
             
-            ArrayList<PurchaseInformations> purchaseInformations = new ArrayList<>();
+            ArrayList<PurchaseInformation> purchaseInformations = new ArrayList<>();
             
             while (data.next()) {
-                purchaseInformations.add(new PurchaseInformations(
+                purchaseInformations.add(new PurchaseInformation(
                         data.getLong("purchase_id"),
                         data.getString("customer_first_name"),
                         data.getString("customer_last_name"),
@@ -52,11 +52,11 @@ public class ResearchDBAccess extends DBAccess implements ResearchDAO {
     }
     
     
-    public ArrayList<EmployeePlace> getEmployeePlaceByEmployee(int employeeId) throws DAORetrievalFailedException {
-        sqlInstruction = "SELECT employee.first_name as \"employee_first_name\", employee.last_name as \"employee_last_name\", city.name \"city_name\", city.zip_code as \"city_zip_code\", country.name \"country_name\" " +
+    public ArrayList<EmployeePlace> getEmployeePlaceByEmployee(int employeeId) throws ProhibitedValueException, DAORetrievalFailedException {
+        sqlInstruction = "SELECT employee.first_name AS employee_first_name, employee.last_name AS employee_last_name, city.name AS city_name, city.zip_code AS city_zip_code, country.name AS country_name " +
                 "FROM employee " +
-                "JOIN city ON employee.city_name = city.name AND employee.city_zip_code = city.zip_code " +
-                "JOIN country ON city.country = country.name " +
+                "INNER JOIN city ON employee.city_name = city.name AND employee.city_zip_code = city.zip_code " +
+                "INNER JOIN country ON city.country = country.name " +
                 "WHERE employee.id = ?;";
 
         try {
@@ -68,14 +68,19 @@ public class ResearchDBAccess extends DBAccess implements ResearchDAO {
             ArrayList<EmployeePlace> employeePlaces = new ArrayList<>();
 
             if (data.next()) {
-                employeePlaces.add(new EmployeePlace(
-                        data.getString("employee_first_name"),
-                        data.getString("employee_last_name"),
-                        data.getString("city_name"),
-                        data.getInt("city_zip_code"),
-                        data.getString("country_name")
-                        )
-                );
+                try {
+                    employeePlaces.add(new EmployeePlace(
+                                    data.getString("employee_first_name"),
+                                    data.getString("employee_last_name"),
+                                    data.getString("city_name"),
+                                    data.getInt("city_zip_code"),
+                                    data.getString("country_name")
+                            )
+                    );
+                } catch (ProhibitedValueException e) {
+                    throw new ProhibitedValueException("Valeur interdite !");
+                }
+                
             }
             
             return employeePlaces;
@@ -87,11 +92,11 @@ public class ResearchDBAccess extends DBAccess implements ResearchDAO {
         }
     }
 
-    public ArrayList<ProductInformations> getProductInformationsByBrand(int brandId) throws DAORetrievalFailedException {
-        sqlInstruction = "SELECT product.name as \"product_name\", category.name as \"category_name\", vat.rate \"vat_rate\" " +
+    public ArrayList<ProductInformation> getProductInformationByBrand(int brandId) throws DAORetrievalFailedException {
+        sqlInstruction = "SELECT product.name AS product_name, category.name AS category_name, vat.rate AS vat_rate " +
                 "FROM product " +
-                "JOIN category ON product.category_id = category.id " +
-                "JOIN vat ON product.vat_type = vat.type " +
+                "INNER JOIN category ON product.category_id = category.id " +
+                "INNER JOIN vat ON product.vat_type = vat.type " +
                 "WHERE product.brand_id = ?;";
         
         try {
@@ -100,10 +105,10 @@ public class ResearchDBAccess extends DBAccess implements ResearchDAO {
             
             ResultSet data = preparedStatement.executeQuery();
             
-            ArrayList<ProductInformations> productInformations = new ArrayList<>();
+            ArrayList<ProductInformation> productInformations = new ArrayList<>();
             
             while (data.next()) {
-                productInformations.add(new ProductInformations(
+                productInformations.add(new ProductInformation(
                         data.getString("product_name"),
                         data.getString("category_name"),
                         data.getInt("vat_rate")
