@@ -62,7 +62,7 @@ CREATE TABLE product (
     brand_id SMALLINT NOT NULL REFERENCES brand(id),
     excl_vat_price MONEY NOT NULL,
     start_date DATE NOT NULL,
-    CONSTRAINT excl_vat_price_range CHECK (excl_vat_price > 0)
+    CONSTRAINT excl_vat_price_range CHECK ((excl_vat_price::NUMERIC) > 0)
 );
 
 CREATE TABLE customer (
