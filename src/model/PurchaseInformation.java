@@ -1,12 +1,12 @@
 package model;
 
-public class PurchaseInformations {
+public class PurchaseInformation {
     // Attributes
     private Long purchaseId;
     private String customerFirstName, customerLastName, employeeFirstName, employeeLastName;
     
     // Constructors
-    public PurchaseInformations(Long purchaseId, String customerFirstName, String customerLastName, String employeeFirstName, String employeeLastName) {
+    public PurchaseInformation(Long purchaseId, String customerFirstName, String customerLastName, String employeeFirstName, String employeeLastName) {
         this.purchaseId = purchaseId;
         this.customerFirstName = customerFirstName;
         this.customerLastName = customerLastName;
