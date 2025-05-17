@@ -122,7 +122,9 @@ public class ProductManagement extends JPanel {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             } catch (NotFoundException | FieldIsEmptyException exception) {
                 JOptionPane.showMessageDialog(null, "Article inconnu !", "Erreur", JOptionPane.ERROR_MESSAGE);
-            } 
+            } catch (ProhibitedValueException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            }
         }
         return true;
     }
@@ -142,22 +144,31 @@ public class ProductManagement extends JPanel {
         };
 
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-        ArrayList<Product> products = controller.getAll();
+        ArrayList<Product> products = null;
+        try {
+            products = controller.getAll();
+        } catch (ProhibitedValueException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
         Object[] productInfos = new Object[columnNames.length];
 
-        for (Product product : products) {
-            productInfos[0] = product.getBarcode();
-            productInfos[1] = product.getName();
-            productInfos[2] = product.getDescription();
-            productInfos[3] = product.getAmount();
-            productInfos[4] = product.getAvailable();
-            productInfos[5] = product.getVatType();
-            productInfos[6] = controller.getCategoryById(product.getCategoryId());
-            productInfos[7] = controller.getBrandById(product.getBrandId());
-            productInfos[8] = product.getExclVatPrice();
-            productInfos[9] = product.getStartDate();
+        try {
+            for (Product product : products) {
+                productInfos[0] = product.getBarcode();
+                productInfos[1] = product.getName();
+                productInfos[2] = product.getDescription();
+                productInfos[3] = product.getAmount();
+                productInfos[4] = product.getAvailable();
+                productInfos[5] = product.getVatType();
+                productInfos[6] = controller.getCategoryById(product.getCategoryId());
+                productInfos[7] = controller.getBrandById(product.getBrandId());
+                productInfos[8] = product.getExclVatPrice();
+                productInfos[9] = product.getStartDate();
 
-            model.addRow(productInfos);
+                model.addRow(productInfos);
+            }
+        } catch (ProhibitedValueException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
 
         return model;

@@ -33,11 +33,11 @@ public class EmployeeManager {
         return dao.update(employee);
     }
 
-    public Employee getById(Integer id) throws NotFoundException, DAORetrievalFailedException {
+    public Employee getById(Integer id) throws NotFoundException, DAORetrievalFailedException, ProhibitedValueException {
         return dao.getById(id);
     }
 
-    public ArrayList<Employee> getAll() throws DAORetrievalFailedException {
+    public ArrayList<Employee> getAll() throws DAORetrievalFailedException, ProhibitedValueException {
         return dao.getAll();
     }
 

@@ -2,6 +2,7 @@ package view;
 
 import controller.EmployeeController;
 import exceptions.DAORetrievalFailedException;
+import exceptions.ProhibitedValueException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,6 +45,8 @@ public class EmployeeListing extends JPanel {
             add(listingScroll, BorderLayout.CENTER);
         } catch (DAORetrievalFailedException e) {
             JOptionPane.showMessageDialog(null, "Erreur de récupération des données", "Erreur", JOptionPane.ERROR_MESSAGE);
+        } catch (ProhibitedValueException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

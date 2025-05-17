@@ -108,6 +108,10 @@ public class Employee {
         this.cityName = name;
     }
 
+    public void setManagerId(Integer managerId) {
+        this.managerId = managerId;
+    }
+
     // Getters
     public String getFirstName() {
         return firstName;
