@@ -3,6 +3,7 @@ package controller;
 import business.CustomerManager;
 import exceptions.DAORetrievalFailedException;
 import exceptions.NotFoundException;
+import exceptions.ProhibitedValueException;
 import model.Customer;
 
 import java.util.ArrayList;
@@ -18,11 +19,11 @@ public class CustomerController {
         this.manager = manager;
     }
 
-    public Customer getByLoyaltyCardNumber(Integer loyaltyCardNumber) throws NotFoundException, DAORetrievalFailedException {
+    public Customer getByLoyaltyCardNumber(Integer loyaltyCardNumber) throws NotFoundException, DAORetrievalFailedException, ProhibitedValueException {
         return manager.getByLoyaltyCardNumber(loyaltyCardNumber);
     }
 
-    public ArrayList<Customer> getAll() throws DAORetrievalFailedException {
+    public ArrayList<Customer> getAll() throws DAORetrievalFailedException, ProhibitedValueException {
         return manager.getAll();
     }
 }

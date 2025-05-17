@@ -46,7 +46,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
             }
 
         } catch (SQLException e) {
-            throw new DAORetrievalFailedException(e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
     }
 
@@ -69,7 +69,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
             }
 
         } catch (SQLException e) {
-            throw new DAORetrievalFailedException(e.getMessage());
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
     }
 
@@ -136,7 +136,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         }
     }
 
-    public Employee getById(int id) throws NotFoundException, DAORetrievalFailedException {
+    public Employee getById(int id) throws NotFoundException, DAORetrievalFailedException, ProhibitedValueException {
         sqlInstruction = "SElECT * FROM employee WHERE id = ?;";
 
         try {
@@ -157,7 +157,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         }
     }
 
-    public ArrayList<Employee> getAll() throws DAORetrievalFailedException {
+    public ArrayList<Employee> getAll() throws DAORetrievalFailedException, ProhibitedValueException {
         sqlInstruction = "SElECT * FROM employee;";
 
         try {
@@ -229,7 +229,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         }
     }
 
-    private City getCity(int zipCode, String name) throws DAORetrievalFailedException {
+    private City getCity(int zipCode, String name) throws DAORetrievalFailedException, NotFoundException, ProhibitedValueException {
         sqlInstruction = "SELECT * FROM city WHERE zip_code = ? AND name = ?;";
 
         try {
@@ -242,7 +242,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
             if (data.next()) {
                 return new City(zipCode, name, data.getString("country"));
             } else {
-                throw new DAORetrievalFailedException(DBRetrievalFailure.NO_ROW);
+                throw new NotFoundException(objectClassName, zipCode, DBRetrievalFailure.NO_ROW);
             }
         } catch (SQLTimeoutException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
@@ -297,7 +297,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
     
     // Private methods
 
-    private Employee resultSetToEmployee(ResultSet data) throws DAORetrievalFailedException {
+    private Employee resultSetToEmployee(ResultSet data) throws DAORetrievalFailedException, ProhibitedValueException {
         Employee employee;
         int unitNumber;
         int managerId;

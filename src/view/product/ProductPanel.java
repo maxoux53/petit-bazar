@@ -145,6 +145,8 @@ public class ProductPanel extends JPanel {
         } catch (DAORetrievalFailedException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             vatTypeComboBox.addItem("Veuillez reessayer");
+        } catch (ProhibitedValueException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
 
         vatTypePanel.add(vatTypeLabel);
@@ -170,6 +172,8 @@ public class ProductPanel extends JPanel {
                 categoryComboBox.addItem(category.getLabel());
             }
         } catch (DAORetrievalFailedException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        } catch (ProhibitedValueException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
 

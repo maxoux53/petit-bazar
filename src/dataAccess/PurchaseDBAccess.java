@@ -1,6 +1,7 @@
 package dataAccess;
 
 import exceptions.DAORetrievalFailedException;
+import exceptions.ProhibitedValueException;
 import interfaces.PurchaseDAO;
 import model.LoyalCustomerPurchases;
 import model.Purchase;
@@ -17,7 +18,7 @@ public class PurchaseDBAccess extends DBAccess implements PurchaseDAO {
         objectClassName = Purchase.class.getSimpleName().toLowerCase();
     }
 
-    public ArrayList<Purchase> getAll() throws DAORetrievalFailedException {
+    public ArrayList<Purchase> getAll() throws DAORetrievalFailedException, ProhibitedValueException {
         sqlInstruction = "SELECT * FROM purchase;";
         ArrayList<Purchase> purchases = new ArrayList<>();
         Purchase purchase;
@@ -30,24 +31,12 @@ public class PurchaseDBAccess extends DBAccess implements PurchaseDAO {
             ResultSet data = preparedStatement.executeQuery();
 
             while (data.next()) {
-                purchase = new Purchase(data.getLong("purchase_id"));
-
-                date = data.getDate("date").toLocalDate();
-                if (!data.wasNull()) {
-                    purchase.setDate(date);
-                }
-
-                employeeId = data.getInt("employee_id");
-                if (!data.wasNull()) {
-                    purchase.setEmployeeId(employeeId);
-                }
-
-                customerCardNumber = data.getInt("customer_card_number");
-                if (!data.wasNull()) {
-                    purchase.setCustomerCardNumber(customerCardNumber);
-                }
-
-                purchases.add(purchase);
+                purchases.add(new Purchase(
+                        data.getLong("purchase_id"),
+                        data.getDate("date").toLocalDate(),
+                        data.getInt("employee_id"),
+                        data.getInt("customer_card_number")
+                ));
             }
 
             return purchases;

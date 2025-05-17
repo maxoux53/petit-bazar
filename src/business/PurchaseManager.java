@@ -1,6 +1,7 @@
 package business;
 
 import exceptions.DAORetrievalFailedException;
+import exceptions.ProhibitedValueException;
 import interfaces.PurchaseDAO;
 import dataAccess.PurchaseDBAccess;
 import model.LoyalCustomerPurchases;
@@ -20,7 +21,7 @@ public class PurchaseManager {
         this.dao = dao;
     }
 
-    public ArrayList<Purchase> getAll() throws DAORetrievalFailedException {
+    public ArrayList<Purchase> getAll() throws DAORetrievalFailedException, ProhibitedValueException {
         return dao.getAll();
     }
 

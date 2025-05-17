@@ -5,6 +5,7 @@ import exceptions.ProhibitedValueException;
 import java.time.LocalDate;
 
 public class Customer {
+    // Attributes
     private Integer loyaltyCardNumber;
     private String firstName;
     private String lastName;
@@ -14,10 +15,17 @@ public class Customer {
     private Long vatNumber;
     private Integer loyaltyPoints;
 
-    public Customer(Integer loyaltyCardNumber) {
+    // Constructor
+    public Customer(Integer loyaltyCardNumber, String firstName, String lastName, LocalDate birthDate, String email, Integer loyaltyPoints) throws ProhibitedValueException {
         this.loyaltyCardNumber = loyaltyCardNumber;
+        setFirstName(firstName);
+        setLastName(lastName);
+        setBirthDate(birthDate);
+        setEmail(email);
+        setLoyaltyPoints(loyaltyPoints);
     }
 
+    // Setters
     public void setFirstName(String firstName) throws ProhibitedValueException {
         if (firstName.length() > 20) {
             throw new ProhibitedValueException("Le prénom ne peut pas dépasser 20 caractères");
@@ -70,6 +78,7 @@ public class Customer {
         this.loyaltyPoints = loyaltyPoints;
     }
 
+    // Getters
     public String getFirstName() {
         return firstName;
     }

@@ -32,15 +32,15 @@ public class ProductController {
         return manager.remove(barcode);
     }
 
-    public Product getByBarcode(Long barcode) throws DAORetrievalFailedException, NotFoundException, WrongTypeException, FieldIsEmptyException {
+    public Product getByBarcode(Long barcode) throws DAORetrievalFailedException, NotFoundException, WrongTypeException, FieldIsEmptyException, ProhibitedValueException {
         return manager.getByBarcode(barcode);
     }
     
-    public Category getCategoryById(Integer categoryId) throws DAORetrievalFailedException, NotFoundException {
+    public Category getCategoryById(Integer categoryId) throws DAORetrievalFailedException, NotFoundException, ProhibitedValueException {
         return manager.getCategoryById(categoryId);
     }
     
-    public Brand getBrandById(Integer brandId) throws DAORetrievalFailedException, NotFoundException {
+    public Brand getBrandById(Integer brandId) throws DAORetrievalFailedException, NotFoundException, ProhibitedValueException {
         return manager.getBrandById(brandId);
     }
 
@@ -48,11 +48,11 @@ public class ProductController {
         return manager.getOrCreateBrand(name);
     }
 
-    public ArrayList<Category> getAllCategories() throws DAORetrievalFailedException {
+    public ArrayList<Category> getAllCategories() throws DAORetrievalFailedException, ProhibitedValueException {
         return manager.getAllCategories();
     }
 
-    public ArrayList<Vat> getAllVats() throws DAORetrievalFailedException {
+    public ArrayList<Vat> getAllVats() throws DAORetrievalFailedException, ProhibitedValueException {
         return manager.getAllVats();
     }
 
@@ -60,11 +60,11 @@ public class ProductController {
         return manager.getCurrentStock(barcode);
     }
 
-    public ArrayList<Product> getOutOfStock() throws NotFoundException, DAORetrievalFailedException {
+    public ArrayList<Product> getOutOfStock() throws DAORetrievalFailedException, ProhibitedValueException {
         return manager.getOutOfStock();
     }
     
-    public ArrayList<Product> getAll() throws DAORetrievalFailedException {
+    public ArrayList<Product> getAll() throws DAORetrievalFailedException, ProhibitedValueException {
         return manager.getAll();
     }
 }

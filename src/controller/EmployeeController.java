@@ -121,7 +121,7 @@ public class EmployeeController {
         return manager.getById(stringToId(idAsString));
     }
 
-    public ArrayList<Employee> getAllEmployees() throws DAORetrievalFailedException {
+    public ArrayList<Employee> getAllEmployees() throws DAORetrievalFailedException, ProhibitedValueException {
         return manager.getAll();
     }
 
@@ -137,7 +137,7 @@ public class EmployeeController {
         return manager.getAllRoles();
     }
 
-    public DefaultTableModel infoTableModel() throws DAORetrievalFailedException {
+    public DefaultTableModel infoTableModel() throws DAORetrievalFailedException, ProhibitedValueException {
         String[] columnNames = {
                 "Matricule",
                 "Prénom",

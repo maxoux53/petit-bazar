@@ -75,14 +75,21 @@ public class EditProduct extends JPanel {
             productPanel.getBrandField().setText(controller.getBrandById(product.getBrandId()).getName());
         } catch (DAORetrievalFailedException | NotFoundException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        } catch (ProhibitedValueException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
-        
+
         productPanel.getAvailableRadioButtonNo().setSelected(!product.getAvailable());
         lastLoadedProductBarcode = product.getBarcode();
     }
 
     private Integer indexOfVatType(Character targetVatType) throws DAORetrievalFailedException, NotFoundException {
-        ArrayList<Vat> vats = controller.getAllVats();
+        ArrayList<Vat> vats = null;
+        try {
+            vats = controller.getAllVats();
+        } catch (ProhibitedValueException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
         int size = vats.size();
 
         int i = 0;
@@ -98,7 +105,12 @@ public class EditProduct extends JPanel {
     }
 
     private Integer indexOfCategoryName(Integer targetCategoryId) throws DAORetrievalFailedException, NotFoundException {
-        ArrayList<Category> categories = controller.getAllCategories();
+        ArrayList<Category> categories = null;
+        try {
+            categories = controller.getAllCategories();
+        } catch (ProhibitedValueException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
         int size = categories.size();
 
         int i = 0;

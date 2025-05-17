@@ -2,6 +2,7 @@ package controller;
 
 import business.PurchaseManager;
 import exceptions.DAORetrievalFailedException;
+import exceptions.ProhibitedValueException;
 import model.LoyalCustomerPurchases;
 import model.Purchase;
 import model.SalesInfo;
@@ -15,7 +16,7 @@ public class PurchaseController {
         this.manager = new PurchaseManager();
     }
 
-    public ArrayList<Purchase> getAll() throws DAORetrievalFailedException {
+    public ArrayList<Purchase> getAll() throws DAORetrievalFailedException, ProhibitedValueException {
         return manager.getAll();
     }
 

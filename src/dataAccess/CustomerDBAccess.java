@@ -2,6 +2,7 @@ package dataAccess;
 
 import exceptions.DAORetrievalFailedException;
 import exceptions.NotFoundException;
+import exceptions.ProhibitedValueException;
 import interfaces.CustomerDAO;
 import model.Customer;
 import java.sql.*;
@@ -14,7 +15,7 @@ public class CustomerDBAccess extends DBAccess implements CustomerDAO {
         objectClassName = Customer.class.getSimpleName().toLowerCase();
     }
 
-    public Customer getByLoyaltyCardNumber(int loyaltyCardNumber) throws NotFoundException, DAORetrievalFailedException {
+    public Customer getByLoyaltyCardNumber(int loyaltyCardNumber) throws NotFoundException, DAORetrievalFailedException, ProhibitedValueException {
         sqlInstruction = "SELECT * FROM customer WHERE loyalty_card_number = ?;";
         
         try {
@@ -24,28 +25,15 @@ public class CustomerDBAccess extends DBAccess implements CustomerDAO {
             ResultSet data = preparedStatement.executeQuery();
 
             if (data.next()) {
-                Customer customer = new Customer(data.getInt("loyalty_card_number"));
-                
-                String firstName = data.getString("first_name");
-                if (!data.wasNull()) {
-                    customer.setFirstName(firstName);
-                }
-                
-                String lastName = data.getString("last_name");
-                if (!data.wasNull()) {
-                    customer.setLastName(lastName);
-                }
-                
-                Date birthDate = data.getDate("birth_date");
-                if (!data.wasNull()) {
-                    customer.setBirthDate(birthDate.toLocalDate());
-                }
-                
-                String email = data.getString("email");
-                if (!data.wasNull()) {
-                    customer.setEmail(email);
-                }
-                
+                Customer customer = new Customer(
+                        data.getInt("loyalty_card_number"),
+                        data.getString("first_name"),
+                        data.getString("last_name"),
+                        data.getDate("birth_date").toLocalDate(),
+                        data.getString("email"),
+                        data.getInt("loyalty_points")
+                );
+
                 int phone = data.getInt("phone");
                 if (!data.wasNull()) {
                     customer.setPhone(phone);
@@ -54,11 +42,6 @@ public class CustomerDBAccess extends DBAccess implements CustomerDAO {
                 long vatNumber = data.getLong("vat_number");
                 if (!data.wasNull()) {
                     customer.setVatNumber(vatNumber);
-                }
-                
-                int loyaltyPoints = data.getInt("loyalty_points");
-                if (!data.wasNull()) {
-                    customer.setLoyaltyPoints(loyaltyPoints);
                 }
 
                 return customer;
@@ -73,7 +56,7 @@ public class CustomerDBAccess extends DBAccess implements CustomerDAO {
         }
     }
 
-    public ArrayList<Customer> getAll() throws DAORetrievalFailedException {
+    public ArrayList<Customer> getAll() throws DAORetrievalFailedException, ProhibitedValueException {
         sqlInstruction = "SELECT * FROM customer;";
         
         try {
@@ -83,50 +66,27 @@ public class CustomerDBAccess extends DBAccess implements CustomerDAO {
             
             ArrayList<Customer> customers = new ArrayList<>();
             Customer customer;
-            String firstName;
-            String lastName;
-            Date birthDate;
-            String email;
             int phone;
             long vatNumber;
-            int loyaltyPoints;
-            
+
             while (data.next()) {
-                customer = new Customer(data.getInt("loyalty_card_number"));
-                
-                firstName = data.getString("first_name");
-                if (!data.wasNull()) {
-                    customer.setFirstName(firstName);
-                }
-                
-                lastName = data.getString("last_name");
-                if (!data.wasNull()) {
-                    customer.setLastName(lastName);
-                }
-                
-                birthDate = data.getDate("birth_date");
-                if (!data.wasNull()) {
-                    customer.setBirthDate(birthDate.toLocalDate());
-                }
-                
-                email = data.getString("email");
-                if (!data.wasNull()) {
-                    customer.setEmail(email);
-                }
-                
+                customer = new Customer(
+                        data.getInt("loyalty_card_number"),
+                        data.getString("first_name"),
+                        data.getString("last_name"),
+                        data.getDate("birth_date").toLocalDate(),
+                        data.getString("email"),
+                        data.getInt("loyalty_points")
+                );
+
                 phone = data.getInt("phone");
                 if (!data.wasNull()) {
                     customer.setPhone(phone);
                 }
-                
-                vatNumber = data.getInt("vat_number");
+
+                vatNumber = data.getLong("vat_number");
                 if (!data.wasNull()) {
                     customer.setVatNumber(vatNumber);
-                }
-                
-                loyaltyPoints = data.getInt("loyalty_points");
-                if (!data.wasNull()) {
-                    customer.setLoyaltyPoints(loyaltyPoints);
                 }
                 
                 customers.add(customer);

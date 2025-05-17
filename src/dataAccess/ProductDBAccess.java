@@ -113,7 +113,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         }
     }
 
-    public Product getByBarcode(Long barcode) throws NotFoundException, DAORetrievalFailedException {
+    public Product getByBarcode(Long barcode) throws NotFoundException, DAORetrievalFailedException, ProhibitedValueException {
         sqlInstruction = "SELECT * FROM product WHERE barcode = ?;";
 
         try {
@@ -134,7 +134,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         }
     }
 
-    public ArrayList<Product> searchByName(String name) throws DAORetrievalFailedException, NotFoundException {
+    public ArrayList<Product> searchByName(String name) throws DAORetrievalFailedException, NotFoundException, ProhibitedValueException {
         sqlInstruction = "SELECT * FROM product WHERE name ILIKE ?;";
 
         try {
@@ -157,7 +157,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         }
     }
 
-    public Category getCategoryById(Integer categoryId) throws NotFoundException, DAORetrievalFailedException {
+    public Category getCategoryById(Integer categoryId) throws NotFoundException, DAORetrievalFailedException, ProhibitedValueException {
         sqlInstruction = "SELECT name FROM category WHERE id = ?";
 
         try {
@@ -181,7 +181,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         }
     }
 
-    public Brand getBrandById(Integer brandId) throws NotFoundException, DAORetrievalFailedException {
+    public Brand getBrandById(Integer brandId) throws NotFoundException, DAORetrievalFailedException, ProhibitedValueException {
         sqlInstruction = "SELECT name FROM brand WHERE id = ?";
 
         try {
@@ -204,7 +204,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
 
     }
 
-    public ArrayList<Product> getAll() throws DAORetrievalFailedException {
+    public ArrayList<Product> getAll() throws DAORetrievalFailedException, ProhibitedValueException {
         sqlInstruction = "SELECT * FROM product;";
 
         try {
@@ -251,7 +251,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         }
     }
 
-    public ArrayList<Category> getAllCategories() throws DAORetrievalFailedException {
+    public ArrayList<Category> getAllCategories() throws DAORetrievalFailedException, ProhibitedValueException {
         sqlInstruction = "SELECT * FROM category;";
 
         try {
@@ -264,8 +264,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
                 categories.add(new Category(
                         data.getInt("id"), 
                         data.getString("name")
-                        )
-                );
+                ));
             }
 
             return categories;
@@ -276,7 +275,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         }
     }
 
-    public ArrayList<Vat> getAllVats() throws DAORetrievalFailedException {
+    public ArrayList<Vat> getAllVats() throws DAORetrievalFailedException, ProhibitedValueException {
         sqlInstruction = "SELECT * FROM vat;";
 
         try {
@@ -289,8 +288,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
                 vats.add(new Vat(
                         data.getString("type").charAt(0),
                         data.getInt("rate")
-                        )
-                );
+                ));
             }
 
             return vats;
@@ -323,7 +321,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         }
     }
 
-    public ArrayList<Product> getOutOfStock() throws DAORetrievalFailedException {
+    public ArrayList<Product> getOutOfStock() throws DAORetrievalFailedException, ProhibitedValueException {
         sqlInstruction = "SELECT * FROM product WHERE amount = 0;";
 
         try {
@@ -363,7 +361,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
 
     // Private methods
 
-    private Product resultSetToProductObject(ResultSet data) throws DAORetrievalFailedException {
+    private Product resultSetToProductObject(ResultSet data) throws DAORetrievalFailedException, ProhibitedValueException {
         Product product;
         
         try {
