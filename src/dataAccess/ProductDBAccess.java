@@ -158,7 +158,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
     }
 
     public Category getCategoryById(Integer categoryId) throws NotFoundException, DAORetrievalFailedException, ProhibitedValueException {
-        sqlInstruction = "SELECT name FROM category WHERE id = ?";
+        sqlInstruction = "SELECT id, name FROM category WHERE id = ?";
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
@@ -182,7 +182,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
     }
 
     public Brand getBrandById(Integer brandId) throws NotFoundException, DAORetrievalFailedException, ProhibitedValueException {
-        sqlInstruction = "SELECT name FROM brand WHERE id = ?";
+        sqlInstruction = "SELECT id, name FROM brand WHERE id = ?";
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
@@ -191,7 +191,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             ResultSet data = preparedStatement.executeQuery();
 
             if (data.next()) {
-                return  new Brand(data.getInt("id"), data.getString("name"));
+                return new Brand(data.getInt("id"), data.getString("name"));
             }
             else {
                 throw new NotFoundException(objectClassName, brandId, DBRetrievalFailure.NO_ROW);

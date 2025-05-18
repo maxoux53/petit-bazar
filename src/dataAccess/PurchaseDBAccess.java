@@ -32,7 +32,7 @@ public class PurchaseDBAccess extends DBAccess implements PurchaseDAO {
 
             while (data.next()) {
                 purchases.add(new Purchase(
-                        data.getLong("purchase_id"),
+                        data.getLong("id"),
                         data.getDate("date").toLocalDate(),
                         data.getInt("employee_id"),
                         data.getInt("customer_card_number")

@@ -6,13 +6,13 @@ CREATE TABLE role (
 );
 
 CREATE TABLE country (
-    name VARCHAR(20) PRIMARY KEY
+    name VARCHAR(50) PRIMARY KEY
 );
 
 CREATE TABLE city (
     zip_code INT,
     name VARCHAR(20),
-    country VARCHAR(20) NOT NULL REFERENCES country(name),
+    country VARCHAR(50) NOT NULL REFERENCES country(name),
     CONSTRAINT pk_city PRIMARY KEY (zip_code, name),
     CONSTRAINT zip_code_length CHECK (zip_code BETWEEN 1 AND 99999)
 );
