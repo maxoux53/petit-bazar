@@ -137,7 +137,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
     }
 
     public Employee getById(int id) throws NotFoundException, DAORetrievalFailedException, ProhibitedValueException {
-        sqlInstruction = "SElECT * FROM employee WHERE id = ?;";
+        sqlInstruction = "SELECT * FROM employee WHERE id = ?;";
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
@@ -158,7 +158,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
     }
 
     public ArrayList<Employee> getAll() throws DAORetrievalFailedException, ProhibitedValueException {
-        sqlInstruction = "SElECT * FROM employee;";
+        sqlInstruction = "SELECT * FROM employee;";
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
@@ -333,4 +333,3 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         return employee;
     }
 }
-
