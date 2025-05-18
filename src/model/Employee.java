@@ -45,7 +45,7 @@ public class Employee {
 
     // Setters
     public void setFirstName(String firstName) throws ProhibitedValueException {
-        if (firstName.length() > 20) {
+        if (firstName != null && firstName.length() > 20) {
             throw new ProhibitedValueException("Le prénom ne peut pas dépasser 20 caractères");
         }
 
@@ -53,7 +53,7 @@ public class Employee {
     }
 
     public void setLastName(String lastName) throws ProhibitedValueException {
-        if (lastName.length() > 25) {
+        if (lastName != null && lastName.length() > 25) {
             throw new ProhibitedValueException("Le nom ne peut pas dépasser 25 caractères");
         }
 
@@ -61,7 +61,7 @@ public class Employee {
     }
 
     public void setStreet(String street) throws ProhibitedValueException {
-        if (street.length() > 30) {
+        if (street != null && street.length() > 30) {
             throw new ProhibitedValueException("La rue ne peut pas dépasser 30 caractères");
         }
 
@@ -69,15 +69,15 @@ public class Employee {
     }
 
     public void setStreetNumber(String streetNumber) throws ProhibitedValueException {
-        if (streetNumber.length() > 4) {
+        if (streetNumber != null && streetNumber.length() > 4) {
             throw new ProhibitedValueException("Le numéro de rue ne peut pas dépasser 4 caractères");
         }
 
         this.streetNumber = streetNumber;
     }
 
-    public void setUnitNumber(int unitNumber) throws ProhibitedValueException {
-        if (unitNumber < 1) {
+    public void setUnitNumber(Integer unitNumber) throws ProhibitedValueException {
+        if (unitNumber != null && unitNumber < 1) {
             throw new ProhibitedValueException("Le numéro de boite postale doit être supérieur ou égal à 1");
         }
 
@@ -85,7 +85,7 @@ public class Employee {
     }
 
     public void setRoleLabel(String roleLabel) throws ProhibitedValueException {
-        if (roleLabel.length() > 25) {
+        if (roleLabel != null && roleLabel.length() > 25) {
             throw new ProhibitedValueException("Le rôle ne peut pas dépasser 25 caractères");
         }
 
@@ -93,7 +93,7 @@ public class Employee {
     }
 
     public void setCityZipCode(Integer zipCode) throws ProhibitedValueException {
-        if (zipCode < 1 || zipCode > 99999) {
+        if (zipCode != null && (zipCode < 1 || zipCode > 99999)) {
             throw new ProhibitedValueException("Le code postal doit être compris entre 1 et 99999");
         }
 
@@ -101,7 +101,7 @@ public class Employee {
     }
 
     public void setCityName(String name) throws ProhibitedValueException {
-        if (name.length() > 20) {
+        if (name != null && name.length() > 20) {
             throw new ProhibitedValueException("Le nom de la ville ne peut pas dépasser 20 caractères");
         }
 
