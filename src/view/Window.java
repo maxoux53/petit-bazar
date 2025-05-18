@@ -1,5 +1,7 @@
 package view;
 
+import view.employee.EditEmployee;
+import view.employee.EmployeeManagement;
 import view.product.AddProduct;
 import view.product.EditProduct;
 import view.product.ProductManagement;
@@ -48,7 +50,7 @@ public class Window extends JFrame {
         productManagement = new ProductManagement(this);
         addEmployee = new AddEmployee();
         editEmployee = new EditEmployee();
-        employeeManagement = new EmployeeManagement();
+        employeeManagement = new EmployeeManagement(this);
         
         container = getContentPane();
         container.add(login);
