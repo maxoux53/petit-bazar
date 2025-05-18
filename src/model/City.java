@@ -15,7 +15,7 @@ public class City {
 
     // Setters
     public void setZipCode(Integer zipCode) throws ProhibitedValueException {
-        if (zipCode < 1 || zipCode > 99999) {
+        if (zipCode != null && (zipCode < 1 || zipCode > 99999)) {
             throw new ProhibitedValueException("Le code postal doit être compris entre 1 et 99999");
         }
 
@@ -23,7 +23,7 @@ public class City {
     }
 
     public void setName(String name) throws ProhibitedValueException {
-        if (name.length() > 20) {
+        if (name != null && name.length() > 20) {
             throw new ProhibitedValueException("Le nom de la ville ne peut pas dépasser 20 caractères");
         }
 

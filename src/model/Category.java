@@ -13,7 +13,7 @@ public class Category {
 
     // Setters
     public void setLabel(String label) throws ProhibitedValueException {
-        if (label.length() > 20) {
+        if (label != null && label.length() > 20) {
             throw new ProhibitedValueException("Le label de la catégorie ne peut pas dépasser 20 caractères");
         }
 

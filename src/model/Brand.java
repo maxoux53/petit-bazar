@@ -13,7 +13,7 @@ public class Brand {
 
     // Setters
     public void setName(String name) throws ProhibitedValueException {
-        if (name.length() > 50) {
+        if (name != null && name.length() > 50) {
             throw new ProhibitedValueException("La longueur du nom de la marque ne peut pas dépasser 50 caractères");
         }
 
