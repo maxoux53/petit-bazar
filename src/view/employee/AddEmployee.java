@@ -10,9 +10,11 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 
 public class AddEmployee extends JPanel {
+    // Attributes
     private final EmployeePanel employeePanel;
     private EmployeeController controller;
 
+    // Constructors
     public AddEmployee() {
         setController(new EmployeeController());
         employeePanel = new EmployeePanel("Ajouter un employé", "Ajouter");
