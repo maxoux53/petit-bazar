@@ -11,12 +11,15 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 
 public class EditEmployee extends JPanel {
+    // Attributes
     private final EmployeePanel employeePanel;
     private EmployeeController controller;
     private int lastLoadedEmployeeId;
 
+    // Constructors
     public EditEmployee() {
         setController(new EmployeeController());
+
         employeePanel = new EmployeePanel("Modifier un employé", "Modifier");
 
         employeePanel.getButton().addActionListener(new ActionListener() {
@@ -37,7 +40,7 @@ public class EditEmployee extends JPanel {
                             employeePanel.getManagerIdField().getText().trim(),
                             employeePanel.getCityZipCodeField().getText().trim(),
                             employeePanel.getCityNameField().getText().trim(),
-                            "Belgique" // Pays par défaut
+                            "Belgique" // PAR DEFAUT ATTENTION !!!
                     );
 
                     JOptionPane.showMessageDialog(null, "Employé modifié avec succès !", "Succès", JOptionPane.INFORMATION_MESSAGE);
@@ -54,20 +57,15 @@ public class EditEmployee extends JPanel {
         add(employeePanel, BorderLayout.CENTER);
     }
 
+    // Methods
     public void setController(EmployeeController controller) {
         this.controller = controller;
     }
 
-    /**
-     * Remplit les champs avec les données de l'employé à modifier.
-     * @param employee Employé chargé à éditer
-     */
     public void fillAllFields(Employee employee) {
         lastLoadedEmployeeId = employee.getId();
-
         employeePanel.getFirstNameField().setText(employee.getFirstName());
         employeePanel.getLastNameField().setText(employee.getLastName());
-        // Ne pas pré-remplir le mot de passe pour des raisons de sécurité
         employeePanel.getPasswordField().setText("");
         employeePanel.getActiveYes().setSelected(employee.getActive());
         employeePanel.getStreetField().setText(employee.getStreet());
