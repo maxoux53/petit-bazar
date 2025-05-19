@@ -1,11 +1,11 @@
 package view;
 
-import view.employee.EditEmployee;
-import view.employee.EmployeeManagement;
 import view.product.AddProduct;
 import view.product.EditProduct;
 import view.product.ProductManagement;
 import view.employee.AddEmployee;
+import view.employee.EditEmployee;
+import view.employee.EmployeeManagement;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,9 +21,9 @@ public class Window extends JFrame {
     private AddProduct addProduct;
     private EditProduct editProduct;
     private ProductManagement productManagement;
-    private AddEmployee addEmployee;
-    private EditEmployee editEmployee;
-    private EmployeeManagement employeeManagement;
+    private AddEmployee addEmployee; // Attribut - Ajout d'un employé
+    private EditEmployee editEmployee; // Attribut - Modification d'un employé
+    private EmployeeManagement employeeManagement; // Attribut - Gestion d'un employé
 
     // Constructors
     public Window(String title) {
@@ -48,9 +48,9 @@ public class Window extends JFrame {
         addProduct = new AddProduct();
         editProduct = new EditProduct(this);
         productManagement = new ProductManagement(this);
-        addEmployee = new AddEmployee();
-        editEmployee = new EditEmployee();
-        employeeManagement = new EmployeeManagement(this);
+        addEmployee = new AddEmployee(); // Panel - Ajout d'un employé
+        editEmployee = new EditEmployee(); // Panel - Modification d'un employé
+        employeeManagement = new EmployeeManagement(this); // Panel - Gestion d'un employé
         
         container = getContentPane();
         container.add(login);
@@ -66,7 +66,7 @@ public class Window extends JFrame {
         return editProduct;
     }
 
-    public EditEmployee getEditEmployee() {
+    public EditEmployee getEditEmployee() { // Getter - Modification d'un employé
         return editEmployee;
     }
 
@@ -138,7 +138,7 @@ public class Window extends JFrame {
         }
     }
 
-    public void showAddEmployee() {
+    public void showAddEmployee() { // Show - Ajout d'un employé
         if (currentPanel != addEmployee) {
             container.remove(currentPanel);
 
@@ -150,7 +150,7 @@ public class Window extends JFrame {
         }
     }
 
-    public void showEditEmployee() {
+    public void showEditEmployee() { // Show - Modification d'un employé
         if (currentPanel != editEmployee) {
             container.remove(currentPanel);
 
@@ -162,7 +162,7 @@ public class Window extends JFrame {
         }
     }
 
-    public void showEmployeeManagement() {
+    public void showEmployeeManagement() { // Show - Gestion d'un employé
         if (currentPanel != employeeManagement) {
             container.remove(currentPanel);
 
