@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class EmployeeManagement extends JPanel {
+    // Attributes
     private JPanel titlePanel;
     private JLabel titleLabel;
     private JPanel listingPanel;
@@ -25,6 +26,7 @@ public class EmployeeManagement extends JPanel {
     private Employee selectedEmployee;
     private EmployeeController controller;
 
+    // Constructors
     public EmployeeManagement(Window window) {
         setController(new EmployeeController());
 
@@ -110,6 +112,7 @@ public class EmployeeManagement extends JPanel {
         add(buttonsPanel, BorderLayout.SOUTH);
     }
 
+    // Methods
     private boolean isSelectedEmployeeLoaded() {
         if (listingTable.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(null, "Aucune donnée sélectionnée !", "Erreur", JOptionPane.ERROR_MESSAGE);
