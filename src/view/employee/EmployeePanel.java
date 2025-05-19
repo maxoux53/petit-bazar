@@ -5,39 +5,43 @@ import view.FontPreferences;
 
 import javax.swing.*;
 import java.awt.*;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 
 public class EmployeePanel extends JPanel {
+    // Attributes
     private JPanel titlePanel, formPanel, firstNamePanel, lastNamePanel, passwordPanel, isActivePanel, streetPanel, streetNumberPanel, unitNumberPanel, rolePanel, hireDatePanel, managerIdPanel, cityZipCodePanel, cityNamePanel, buttonPanel;
-    private JLabel titleLabel, firstNameLabel, lastNameLabel, passwordLabel, isActiveLabel, streetLabel, streetNumberLabel, unitNumberLabel, roleLabel, hireDateLabel, managerIdLabel, cityZipCodeLabel, cityNameLabel;
+    private JLabel titleLabel, isActiveLabel, hireDateLabel;
     private JTextField firstNameField, lastNameField, streetField, streetNumberField, unitNumberField, roleField, managerIdField, cityZipCodeField, cityNameField;
     private JPasswordField passwordField;
     private JSpinner hireDateSpinner;
     private JRadioButton activeYes, activeNo;
     private ButtonGroup activeGroup;
     private JButton button;
+    private EmployeeController controller; // Controlleur non-utilisé !!!
 
-    private EmployeeController controller;
-
-    public EmployeePanel(String title, String buttonText) {
-        controller = new EmployeeController();
+    // Constructors
+    public EmployeePanel(String title, String buttonString) {
+        setController(new EmployeeController());
 
         setLayout(new BorderLayout(0, 100));
         setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
         setBackground(Color.white);
 
+        // Title
         titlePanel = new JPanel();
         titlePanel.setBackground(Color.white);
+
         titleLabel = new JLabel(title);
         titleLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.BOLD, FontPreferences.TITLE_SIZE));
+
         titlePanel.add(titleLabel);
 
+        // Form
         formPanel = new JPanel(new GridLayout(7, 2, 50, 40));
         formPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 250));
         formPanel.setBackground(Color.white);
 
+        // Panels
         firstNamePanel = buildInputPanel("Prénom", firstNameField = new JTextField());
         lastNamePanel = buildInputPanel("Nom", lastNameField = new JTextField());
         passwordPanel = buildInputPanel("Mot de passe", passwordField = new JPasswordField());
@@ -49,6 +53,7 @@ public class EmployeePanel extends JPanel {
         cityZipCodePanel = buildInputPanel("Code postal", cityZipCodeField = new JTextField());
         cityNamePanel = buildInputPanel("Ville", cityNameField = new JTextField());
 
+        // Date d'embauche
         hireDatePanel = new JPanel(new GridLayout(1, 2, 50, 0));
         hireDatePanel.setBackground(Color.white);
         hireDateLabel = new JLabel("Date d'embauche", SwingConstants.RIGHT);
@@ -59,6 +64,7 @@ public class EmployeePanel extends JPanel {
         hireDatePanel.add(hireDateLabel);
         hireDatePanel.add(hireDateSpinner);
 
+        // Est actif
         isActivePanel = new JPanel(new GridLayout(1, 2, 50, 0));
         isActivePanel.setBackground(Color.white);
         isActiveLabel = new JLabel("Actif", SwingConstants.RIGHT);
@@ -76,15 +82,17 @@ public class EmployeePanel extends JPanel {
         isActivePanel.add(isActiveLabel);
         isActivePanel.add(radioPanel);
 
+        // Button
         buttonPanel = new JPanel(new BorderLayout());
         buttonPanel.setBackground(Color.white);
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 450, 0, 450));
-        button = new JButton(buttonText);
+        button = new JButton(buttonString);
         button.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.BOLD, FontPreferences.MID_SIZE));
         button.setBackground(Color.white);
         button.setFocusPainted(false);
         buttonPanel.add(button);
 
+        // Add
         formPanel.add(firstNamePanel);
         formPanel.add(lastNamePanel);
         formPanel.add(passwordPanel);
@@ -98,11 +106,13 @@ public class EmployeePanel extends JPanel {
         formPanel.add(hireDatePanel);
         formPanel.add(isActivePanel);
 
+        // Main add
         add(titlePanel, BorderLayout.NORTH);
         add(formPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
+    // Méthods
     private JPanel buildInputPanel(String labelText, JTextField field) {
         JPanel panel = new JPanel(new GridLayout(1, 2, 50, 0));
         panel.setBackground(Color.white);
@@ -115,21 +125,6 @@ public class EmployeePanel extends JPanel {
         panel.add(field);
         return panel;
     }
-
-    public JTextField getFirstNameField() { return firstNameField; }
-    public JTextField getLastNameField() { return lastNameField; }
-    public JPasswordField getPasswordField() { return passwordField; }
-    public JTextField getStreetField() { return streetField; }
-    public JTextField getStreetNumberField() { return streetNumberField; }
-    public JTextField getUnitNumberField() { return unitNumberField; }
-    public JTextField getRoleField() { return roleField; }
-    public JTextField getManagerIdField() { return managerIdField; }
-    public JTextField getCityZipCodeField() { return cityZipCodeField; }
-    public JTextField getCityNameField() { return cityNameField; }
-    public JSpinner getHireDateSpinner() { return hireDateSpinner; }
-    public JRadioButton getActiveYes() { return activeYes; }
-    public JRadioButton getActiveNo() { return activeNo; }
-    public JButton getButton() { return button; }
 
     public void clearFields() {
         firstNameField.setText("");
@@ -146,8 +141,23 @@ public class EmployeePanel extends JPanel {
         activeYes.setSelected(true);
     }
 
-    public LocalDate getHireDate() {
-        Date date = (Date) hireDateSpinner.getValue();
-        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    public void setController(EmployeeController controller) {
+        this.controller = controller;
     }
+
+    // Getters
+    public JTextField getFirstNameField() { return firstNameField; }
+    public JTextField getLastNameField() { return lastNameField; }
+    public JPasswordField getPasswordField() { return passwordField; }
+    public JTextField getStreetField() { return streetField; }
+    public JTextField getStreetNumberField() { return streetNumberField; }
+    public JTextField getUnitNumberField() { return unitNumberField; }
+    public JTextField getRoleField() { return roleField; }
+    public JTextField getManagerIdField() { return managerIdField; }
+    public JTextField getCityZipCodeField() { return cityZipCodeField; }
+    public JTextField getCityNameField() { return cityNameField; }
+    public JSpinner getHireDateSpinner() { return hireDateSpinner; }
+    public JRadioButton getActiveYes() { return activeYes; }
+    public JRadioButton getActiveNo() { return activeNo; }
+    public JButton getButton() { return button; }
 }
