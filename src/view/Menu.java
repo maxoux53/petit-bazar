@@ -8,10 +8,10 @@ public class Menu extends JPanel {
     /* Attribut */
     private Window window;
     private JMenuBar menuBar;
-    private JMenu application, product, employee;
+    private JMenu application, product, employee; // Menu - Employé
     private JMenuItem home, leave, signOut;
     private JMenuItem addProduct, editProduct, deleteProduct, listingProduct;
-    private JMenuItem addEmployee, editEmployee, deleteEmployee, listingEmployee;
+    private JMenuItem addEmployee, editEmployee, deleteEmployee, listingEmployee; // Sous-menu - Ajout | Modification | Suppression | Gestion - Employé
     
     /* Constructeur */
     public Menu(Window window) {
@@ -19,7 +19,7 @@ public class Menu extends JPanel {
         menuBar = new JMenuBar();
         application = new JMenu("Application");
         product = new JMenu("Article");
-        employee = new JMenu("Employé");
+        employee = new JMenu("Employé"); // Element du constructeur - Employé
 
         setBackground(Color.WHITE);
 
@@ -55,7 +55,7 @@ public class Menu extends JPanel {
         application.add(signOut);
         application.add(leave);
 
-        /* Article */ /* Ajouter un article */
+        /* Article */ /* Ajout d'un article */
         addProduct = new JMenuItem("Ajouter un article");
 
         addProduct.addActionListener(new ActionListener() {
@@ -65,7 +65,7 @@ public class Menu extends JPanel {
             }
         });
 
-        /* Article */ /* Modifier un article */
+        /* Article */ /* Modification d'un article */
         editProduct = new JMenuItem("Modifier un article");
 
         editProduct.addActionListener(new ActionListener() {
@@ -75,7 +75,7 @@ public class Menu extends JPanel {
             }
         });
 
-        /* Article */ /* Supprimer un article */
+        /* Article */ /* Suppression d'un article */
         deleteProduct = new JMenuItem("Supprimer un article");
         
         deleteProduct.addActionListener(new ActionListener() {
@@ -85,7 +85,7 @@ public class Menu extends JPanel {
             }
         });
 
-        /* Article */ /* Gestion des articles */
+        /* Article */ /* Gestion d'un article */
         listingProduct = new JMenuItem("Gestion des articles");
         
         listingProduct.addActionListener(new ActionListener() {
@@ -100,7 +100,7 @@ public class Menu extends JPanel {
         product.add(deleteProduct);
         product.add(listingProduct);
 
-        /* Employé */ /* Ajouter un employé */
+        /* Employé */ /* Ajout d'un employé */
         addEmployee = new JMenuItem("Ajouter un employé");
 
         addEmployee.addActionListener(new ActionListener() {
@@ -112,7 +112,7 @@ public class Menu extends JPanel {
 
         /*
 
-        /* Employé */ /* Modifier un employé */
+        /* Employé */ /* Modification d'un employé */
         editEmployee = new JMenuItem("Modifier un employé");
 
         editEmployee.addActionListener(new ActionListener() {
@@ -122,7 +122,7 @@ public class Menu extends JPanel {
             }
         });
 
-        /* Employé */ /* Supprimer un employé */
+        /* Employé */ /* Suppression d'un employé */
         deleteEmployee = new JMenuItem("Supprimer un employé");
 
         deleteEmployee.addActionListener(new ActionListener() {
@@ -132,7 +132,7 @@ public class Menu extends JPanel {
             }
         });
 
-        /* Employé */ /* Gestion des employés */
+        /* Employé */ /* Gestion d'un employé */
         listingEmployee = new JMenuItem("Gestion des employés");
 
         listingEmployee.addActionListener(new ActionListener() {
@@ -142,14 +142,14 @@ public class Menu extends JPanel {
             }
         });
 
-        employee.add(addEmployee);
-        employee.add(editEmployee);
-        employee.add(deleteEmployee);
-        employee.add(listingEmployee);
+        employee.add(addEmployee); // Menu | sous-menus - Ajout d'un employé
+        employee.add(editEmployee); //  Menu | sous-menus - Modification d'un employé
+        employee.add(deleteEmployee); // Menu | sous-menus  - Suppression d'un employé
+        employee.add(listingEmployee); // Menu | sous-menus - Gestion d'un employé
 
         menuBar.add(application);
         menuBar.add(product);
-        menuBar.add(employee);
+        menuBar.add(employee); // Menu - Employé
     }
 
     // Getters
