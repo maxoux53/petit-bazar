@@ -49,9 +49,9 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
     }
 
     public int remove(Long barcode) throws DeleteFailedException, DAORetrievalFailedException {
-        sqlInstruction = "DELETE FROM product WHERE barcode = ?;";
-
         removeOrderLineByBarcode(barcode);
+
+        sqlInstruction = "DELETE FROM product WHERE barcode = ?;";
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
