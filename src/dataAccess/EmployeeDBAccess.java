@@ -19,47 +19,15 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
 
     public int create(Employee employee) throws InsertionFailedException, DAORetrievalFailedException {
         sqlInstruction = "INSERT INTO employee (first_name, last_name, password, is_active, street, street_number, unit_number, role_label, hire_date, manager_id, city_zip_code, city_name) VALUES(?,?,?,?,?,?,?,?,?,?,?,?);";
-
+        
+        setValues(employee, sqlInstruction);
+        
         try {
-            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-
-            preparedStatement.setString(1, employee.getFirstName());
-            preparedStatement.setString(2, employee.getLastName());
-            preparedStatement.setBytes(3, employee.getPassword());
-            preparedStatement.setBoolean(4, employee.getActive());
-            preparedStatement.setString(5, employee.getStreet());
-            preparedStatement.setString(6, employee.getStreetNumber());
-            
-            if (employee.getUnitNumber() == null) {
-                preparedStatement.setNull(7, Types.INTEGER);
-            } 
-            else {
-                preparedStatement.setInt(7, employee.getUnitNumber());
-            }
-            
-            preparedStatement.setString(8, employee.getRoleLabel());
-            preparedStatement.setDate(9, Date.valueOf(employee.getHireDate()));
-
-            if (employee.getManagerId() == null) {
-                preparedStatement.setNull(10, Types.INTEGER);
-            }
-            else {
-                preparedStatement.setInt(10, employee.getManagerId());
-            }
-            
-            preparedStatement.setInt(11, employee.getCityZipCode());
-            preparedStatement.setString(12, employee.getCityName());
-
-            try {
-                return preparedStatement.executeUpdate();
-            } catch (SQLTimeoutException e) {
-                throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
-            } catch (SQLException e) {
-                throw new InsertionFailedException(objectClassName, (Integer)null, e.getMessage());
-            }
-
+            return preparedStatement.executeUpdate();
+        } catch (SQLTimeoutException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
+            throw new InsertionFailedException(objectClassName, (Integer)null, e.getMessage());
         }
     }
 
@@ -116,50 +84,15 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
 
     public int update(Employee employee) throws UpdateFailedException, DAORetrievalFailedException {
         sqlInstruction = "UPDATE employee SET first_name = ?, last_name = ?, password = ?, is_active = ?, street = ?, street_number = ?, unit_number = ?, role_label = ?, hire_date = ?, manager_id = ?, city_zip_code = ?, city_name = ? WHERE id = ?;";
-        int id = employee.getId();
+
+        setValues(employee, sqlInstruction);
 
         try {
-            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-
-            preparedStatement.setString(1, employee.getFirstName());
-            preparedStatement.setString(2, employee.getLastName());
-            preparedStatement.setBytes(3, employee.getPassword());
-            preparedStatement.setBoolean(4, employee.getActive());
-            preparedStatement.setString(5, employee.getStreet());
-            preparedStatement.setString(6, employee.getStreetNumber());
-
-            if (employee.getUnitNumber() == null) {
-                preparedStatement.setNull(7, Types.INTEGER);
-            }
-            else {
-                preparedStatement.setInt(7, employee.getUnitNumber());
-            }
-            
-            preparedStatement.setString(8, employee.getRoleLabel());
-            preparedStatement.setDate(9, Date.valueOf(employee.getHireDate()));
-
-            if (employee.getManagerId() == null) {
-                preparedStatement.setNull(10, Types.INTEGER);
-            }
-            else {
-                preparedStatement.setInt(10, employee.getManagerId());
-            }
-            
-            preparedStatement.setInt(11, employee.getCityZipCode());
-            preparedStatement.setString(12, employee.getCityName());
-
-            preparedStatement.setInt(13, id);
-
-            try {
-                return preparedStatement.executeUpdate();
-            } catch (SQLTimeoutException e) {
-                throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
-            } catch (SQLException e) {
-                throw new UpdateFailedException(objectClassName, id, e.getMessage());
-            }
-
+            return preparedStatement.executeUpdate();
+        } catch (SQLTimeoutException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {
-            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
+            throw new UpdateFailedException(objectClassName, employee.getId(), e.getMessage());
         }
     }
 
@@ -359,4 +292,40 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
 
         return employee;
     }
+    
+private void setValues(Employee employee, String sqlInstruction) throws DAORetrievalFailedException {
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            
+            preparedStatement.setString(1, employee.getFirstName());
+            preparedStatement.setString(2, employee.getLastName());
+            preparedStatement.setBytes(3, employee.getPassword());
+            preparedStatement.setBoolean(4, employee.getActive());
+            preparedStatement.setString(5, employee.getStreet());
+            preparedStatement.setString(6, employee.getStreetNumber());
+
+            if (employee.getUnitNumber() == null) {
+                preparedStatement.setNull(7, Types.INTEGER);
+            }
+            else {
+                preparedStatement.setInt(7, employee.getUnitNumber());
+            }
+
+            preparedStatement.setString(8, employee.getRoleLabel());
+            preparedStatement.setDate(9, Date.valueOf(employee.getHireDate()));
+
+            if (employee.getManagerId() == null) {
+                preparedStatement.setNull(10, Types.INTEGER);
+            }
+            else {
+                preparedStatement.setInt(10, employee.getManagerId());
+            }
+
+            preparedStatement.setInt(11, employee.getCityZipCode());
+            preparedStatement.setString(12, employee.getCityName());
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
+        }
+    }
 }
+
