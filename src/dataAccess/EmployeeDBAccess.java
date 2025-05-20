@@ -293,7 +293,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         return employee;
     }
     
-private void setValues(Employee employee, String sqlInstruction) throws DAORetrievalFailedException {
+    private void setValues(Employee employee, String sqlInstruction) throws DAORetrievalFailedException {
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
             
