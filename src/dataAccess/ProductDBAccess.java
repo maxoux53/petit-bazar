@@ -7,7 +7,6 @@ import model.Category;
 import model.Product;
 import model.Vat;
 
-import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -27,7 +26,11 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
             preparedStatement.setLong(1, product.getBarcode());
             preparedStatement.setString(2, product.getName());
-            preparedStatement.setString(3, product.getDescription());
+            if (product.getDescription() == null) {
+                preparedStatement.setNull(3, Types.VARCHAR);
+            } else {
+                preparedStatement.setString(3, product.getDescription());
+            }
             preparedStatement.setInt(4, product.getAmount());
             preparedStatement.setBoolean(5, product.getAvailable());
             preparedStatement.setString(6, String.valueOf(product.getVatType()));
@@ -90,7 +93,11 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
             preparedStatement.setString(1, product.getName());
-            preparedStatement.setString(2, product.getDescription());
+            if (product.getDescription() == null) {
+                preparedStatement.setNull(2, java.sql.Types.VARCHAR);
+            } else {
+                preparedStatement.setString(2, product.getDescription());
+            }
             preparedStatement.setInt(3, product.getAmount());
             preparedStatement.setBoolean(4, product.getAvailable());
             preparedStatement.setString(5, String.valueOf(product.getVatType()));

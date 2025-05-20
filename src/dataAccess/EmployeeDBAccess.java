@@ -29,11 +29,24 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
             preparedStatement.setBoolean(4, employee.getActive());
             preparedStatement.setString(5, employee.getStreet());
             preparedStatement.setString(6, employee.getStreetNumber());
-            preparedStatement.setInt(7, employee.getUnitNumber());
+            
+            if (employee.getUnitNumber() == null) {
+                preparedStatement.setNull(7, Types.INTEGER);
+            } 
+            else {
+                preparedStatement.setInt(7, employee.getUnitNumber());
+            }
+            
             preparedStatement.setString(8, employee.getRoleLabel());
             preparedStatement.setDate(9, Date.valueOf(employee.getHireDate()));
-            preparedStatement.setInt(10, employee.getManagerId());
 
+            if (employee.getManagerId() == null) {
+                preparedStatement.setNull(10, Types.INTEGER);
+            }
+            else {
+                preparedStatement.setInt(10, employee.getManagerId());
+            }
+            
             preparedStatement.setInt(11, employee.getCityZipCode());
             preparedStatement.setString(12, employee.getCityName());
 
@@ -114,10 +127,24 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
             preparedStatement.setBoolean(4, employee.getActive());
             preparedStatement.setString(5, employee.getStreet());
             preparedStatement.setString(6, employee.getStreetNumber());
-            preparedStatement.setInt(7, employee.getUnitNumber());
+
+            if (employee.getUnitNumber() == null) {
+                preparedStatement.setNull(7, Types.INTEGER);
+            }
+            else {
+                preparedStatement.setInt(7, employee.getUnitNumber());
+            }
+            
             preparedStatement.setString(8, employee.getRoleLabel());
             preparedStatement.setDate(9, Date.valueOf(employee.getHireDate()));
-            preparedStatement.setInt(10, employee.getManagerId());
+
+            if (employee.getManagerId() == null) {
+                preparedStatement.setNull(10, Types.INTEGER);
+            }
+            else {
+                preparedStatement.setInt(10, employee.getManagerId());
+            }
+            
             preparedStatement.setInt(11, employee.getCityZipCode());
             preparedStatement.setString(12, employee.getCityName());
 
