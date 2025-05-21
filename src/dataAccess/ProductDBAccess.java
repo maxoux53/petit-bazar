@@ -94,7 +94,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
             preparedStatement.setString(1, product.getName());
             if (product.getDescription() == null) {
-                preparedStatement.setNull(2, java.sql.Types.VARCHAR);
+                preparedStatement.setNull(2, Types.VARCHAR);
             } else {
                 preparedStatement.setString(2, product.getDescription());
             }
