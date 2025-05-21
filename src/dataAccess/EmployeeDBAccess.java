@@ -306,8 +306,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
 
             if (employee.getUnitNumber() == null) {
                 preparedStatement.setNull(7, Types.INTEGER);
-            }
-            else {
+            } else {
                 preparedStatement.setInt(7, employee.getUnitNumber());
             }
 
@@ -316,8 +315,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
 
             if (employee.getManagerId() == null) {
                 preparedStatement.setNull(10, Types.INTEGER);
-            }
-            else {
+            } else {
                 preparedStatement.setInt(10, employee.getManagerId());
             }
 
