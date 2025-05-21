@@ -31,7 +31,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         }
     }
 
-    public int remove(int id) throws DeleteFailedException, DAORetrievalFailedException {
+    public int remove(Integer id) throws DeleteFailedException, DAORetrievalFailedException {
         nullifyEmployeeReferencesFromPurchases(id);
         nullifyEmployeeReferencedAsManager(id);
 
@@ -54,7 +54,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         }
     }
 
-    private void nullifyEmployeeReferencesFromPurchases(int employeeId) throws DAORetrievalFailedException {
+    private void nullifyEmployeeReferencesFromPurchases(Integer employeeId) throws DAORetrievalFailedException {
         sqlInstruction = "UPDATE purchase SET employee_id = NULL WHERE employee_id = ?;";
 
         try {
@@ -68,7 +68,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         }
     }
 
-    private void nullifyEmployeeReferencedAsManager(int employeeId) throws DAORetrievalFailedException {
+    private void nullifyEmployeeReferencedAsManager(Integer employeeId) throws DAORetrievalFailedException {
         sqlInstruction = "UPDATE employee SET manager_id = NULL WHERE manager_id = ?;";
 
         try {
@@ -96,7 +96,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         }
     }
 
-    public Employee getById(int id) throws NotFoundException, DAORetrievalFailedException, ProhibitedValueException {
+    public Employee getById(Integer id) throws NotFoundException, DAORetrievalFailedException, ProhibitedValueException {
         sqlInstruction = "SELECT * FROM employee WHERE id = ?;";
 
         try {
@@ -138,7 +138,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         }
     }
 
-    public byte[] getPasswordHash(int id) throws NotFoundException, DAORetrievalFailedException {
+    public byte[] getPasswordHash(Integer id) throws NotFoundException, DAORetrievalFailedException {
         sqlInstruction = "SELECT password FROM employee WHERE id = ?;";
 
         try {
@@ -150,7 +150,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
             if (data.next()) {
                 return data.getBytes("password");
             } else {
-                throw new NotFoundException(objectClassName, id, DBRetrievalFailure.NO_ROW);
+                throw new NotFoundException("password", id, DBRetrievalFailure.NO_ROW);
             }
         } catch (SQLTimeoutException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
@@ -163,12 +163,13 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         String cityName = city.getName();
         Integer cityZipCode = city.getZipCode();
 
-        sqlInstruction = "SELECT * FROM city WHERE name = ? AND zip_code = ?;";
+        sqlInstruction = "SELECT * FROM city WHERE zip_code = ? AND name = ?;";
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-            preparedStatement.setString(1, cityName);
-            preparedStatement.setInt(2, cityZipCode);
+            preparedStatement.setInt(1, cityZipCode);
+            preparedStatement.setString(2, cityName);
+            
 
             ResultSet data = preparedStatement.executeQuery();
 
@@ -176,8 +177,8 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
                 sqlInstruction = "INSERT INTO city VALUES(?, ?, ?);";
 
                 preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
-                preparedStatement.setString(1, cityName);
-                preparedStatement.setInt(2, cityZipCode);
+                preparedStatement.setInt(1, cityZipCode);
+                preparedStatement.setString(2, cityName);
                 preparedStatement.setString(3, city.getCountry());
                 preparedStatement.executeUpdate();
             }
@@ -189,7 +190,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         }
     }
 
-    private City getCity(int zipCode, String name) throws DAORetrievalFailedException, NotFoundException, ProhibitedValueException {
+    private City getCity(Integer zipCode, String name) throws DAORetrievalFailedException, NotFoundException, ProhibitedValueException {
         sqlInstruction = "SELECT * FROM city WHERE zip_code = ? AND name = ?;";
 
         try {
@@ -202,7 +203,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
             if (data.next()) {
                 return new City(zipCode, name, data.getString("country"));
             } else {
-                throw new NotFoundException(objectClassName, zipCode, DBRetrievalFailure.NO_ROW);
+                throw new NotFoundException(City.class.getSimpleName().toLowerCase(), zipCode, DBRetrievalFailure.NO_ROW);
             }
         } catch (SQLTimeoutException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
