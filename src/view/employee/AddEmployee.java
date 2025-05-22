@@ -26,18 +26,18 @@ public class AddEmployee extends JPanel {
                     String countryName = "Belgique"; // PAR DEFAUT ATTENTION !!!
 
                     controller.create(
-                            employeePanel.getFirstNameField().getText().trim(),
-                            employeePanel.getLastNameField().getText().trim(),
+                            employeePanel.getFirstNameField().getText(),
+                            employeePanel.getLastNameField().getText(),
                             employeePanel.getPasswordField().getPassword(),
                             employeePanel.getActiveYes().isSelected(),
-                            employeePanel.getStreetField().getText().trim(),
-                            employeePanel.getStreetNumberField().getText().trim(),
-                            employeePanel.getUnitNumberField().getText().trim(),
-                            employeePanel.getRoleField().getText().trim(),
+                            employeePanel.getStreetField().getText(),
+                            employeePanel.getStreetNumberField().getText(),
+                            employeePanel.getUnitNumberField().getText(),
+                            employeePanel.getRoleField().getText(),
                             (Date) employeePanel.getHireDateSpinner().getValue(),
-                            employeePanel.getManagerIdField().getText().trim(),
-                            employeePanel.getCityZipCodeField().getText().trim(),
-                            employeePanel.getCityNameField().getText().trim(),
+                            employeePanel.getManagerIdField().getText(),
+                            employeePanel.getCityZipCodeField().getText(),
+                            employeePanel.getCityNameField().getText(),
                             countryName
                     );
 
