@@ -120,14 +120,11 @@ public class EmployeeManagement extends JPanel {
         } else {
             try {
                 selectedEmployee = controller.getEmployeeById(listingTable.getValueAt(listingTable.getSelectedRow(), 0).toString());
-            } catch (DAORetrievalFailedException | WrongTypeException | NullPointerException e) {
+            } catch (DAORetrievalFailedException | WrongTypeException | NullPointerException | ProhibitedValueException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 return false;
             } catch (NotFoundException exception) {
                 JOptionPane.showMessageDialog(null, "Employé inconnu !", "Erreur", JOptionPane.ERROR_MESSAGE);
-                return false;
-            } catch (ProhibitedValueException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
@@ -147,7 +144,8 @@ public class EmployeeManagement extends JPanel {
                 "Date d'embauche",
                 "Identifiant du manager",
                 "Code postal",
-                "Nom de la ville"
+                "Nom de la ville",
+                "Pays"
         };
 
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);

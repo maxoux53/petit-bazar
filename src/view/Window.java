@@ -120,9 +120,9 @@ public class Window extends JFrame {
             
             container.add(editProduct);
             setCurrentPanel(editProduct);
-            
-            container.repaint();
+
             container.revalidate();
+            container.repaint();
         }
     }
     
@@ -132,9 +132,9 @@ public class Window extends JFrame {
             
             container.add(productManagement);
             setCurrentPanel(productManagement);
-            
-            container.repaint();
+
             container.revalidate();
+            container.repaint();
         }
     }
 
@@ -157,8 +157,8 @@ public class Window extends JFrame {
             container.add(editEmployee);
             setCurrentPanel(editEmployee);
 
-            container.repaint();
             container.revalidate();
+            container.repaint();
         }
     }
 
@@ -169,8 +169,8 @@ public class Window extends JFrame {
             container.add(employeeManagement);
             setCurrentPanel(employeeManagement);
 
-            container.repaint();
             container.revalidate();
+            container.repaint();
         }
     }
 

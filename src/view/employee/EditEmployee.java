@@ -11,12 +11,10 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 
 public class EditEmployee extends JPanel {
-    // Attributes
     private final EmployeePanel employeePanel;
     private EmployeeController controller;
     private int lastLoadedEmployeeId;
 
-    // Constructors
     public EditEmployee() {
         setController(new EmployeeController());
 
@@ -29,21 +27,20 @@ public class EditEmployee extends JPanel {
                     controller.update(
                             lastLoadedEmployeeId,
                             employeePanel.getFirstNameField().getText().trim(),
-                            employeePanel.getLastNameField().getText().trim(),
+                            employeePanel.getLastNameField().getText(),
                             employeePanel.getPasswordField().getPassword(),
                             employeePanel.getActiveYes().isSelected(),
-                            employeePanel.getStreetField().getText().trim(),
+                            employeePanel.getStreetField().getText(),
                             employeePanel.getStreetNumberField().getText().trim(),
                             employeePanel.getUnitNumberField().getText().trim(),
-                            employeePanel.getRoleField().getText().trim(),
+                            (String) employeePanel.getRoleComboBox().getSelectedItem(),
                             (Date) employeePanel.getHireDateSpinner().getValue(),
                             employeePanel.getManagerIdField().getText().trim(),
                             employeePanel.getCityZipCodeField().getText().trim(),
                             employeePanel.getCityNameField().getText().trim(),
-                            "Belgique" // PAR DEFAUT ATTENTION !!!
+                            "Belgique"
                     );
 
-                    JOptionPane.showMessageDialog(null, "Employé modifié avec succès !", "Succès", JOptionPane.INFORMATION_MESSAGE);
                     employeePanel.clearFields();
                 } catch (WrongTypeException | ProhibitedValueException | UpdateFailedException |
                          DAORetrievalFailedException | HashFailedException | NullPointerException ex) {
@@ -71,10 +68,10 @@ public class EditEmployee extends JPanel {
         employeePanel.getStreetField().setText(employee.getStreet());
         employeePanel.getStreetNumberField().setText(employee.getStreetNumber());
         employeePanel.getUnitNumberField().setText(employee.getUnitNumber() == null ? "" : employee.getUnitNumber().toString());
-        employeePanel.getRoleField().setText(employee.getRoleLabel());
+        employeePanel.getRoleComboBox().setSelectedItem(employee.getRoleLabel());
         employeePanel.getHireDateSpinner().setValue(java.sql.Date.valueOf(employee.getHireDate()));
         employeePanel.getManagerIdField().setText(employee.getManagerId() == null ? "" : employee.getManagerId().toString());
-        employeePanel.getCityZipCodeField().setText(employee.getCityZipCode() == null ? "" : employee.getCityZipCode().toString());
+        employeePanel.getCityZipCodeField().setText(employee.getCityZipCode().toString());
         employeePanel.getCityNameField().setText(employee.getCityName());
     }
 }
