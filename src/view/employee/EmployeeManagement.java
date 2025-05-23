@@ -15,14 +15,11 @@ import java.util.ArrayList;
 
 public class EmployeeManagement extends JPanel {
     // Attributes
-    private JPanel titlePanel;
+    private JPanel titlePanel, listingPanel, buttonsPanel;
     private JLabel titleLabel;
-    private JPanel listingPanel;
     private JTable listingTable;
     private JScrollPane scrollPane;
-    private JPanel buttonsPanel;
-    private JButton editButton;
-    private JButton deleteButton;
+    private JButton editButton, deleteButton;
     private Employee selectedEmployee;
     private EmployeeController controller;
 
@@ -49,7 +46,8 @@ public class EmployeeManagement extends JPanel {
 
         try {
             listingTable = new JTable(infoTableModel());
-        } catch (DAORetrievalFailedException | NotFoundException e) {
+            listingTable.setDefaultEditor(Object.class, null);
+        } catch (DAORetrievalFailedException | ProhibitedValueException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
 
@@ -89,7 +87,7 @@ public class EmployeeManagement extends JPanel {
                             JOptionPane.YES_NO_OPTION,
                             JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
                         try {
-                            if (controller.remove(String.valueOf(selectedEmployee.getId())) > 0) {
+                            if (controller.remove(selectedEmployee.getId()) > 0) {
                                 JOptionPane.showMessageDialog(null, "L'employé a été supprimé avec succès !", "Succès", JOptionPane.INFORMATION_MESSAGE);
                                 refreshTable();
                             } else {
@@ -117,47 +115,44 @@ public class EmployeeManagement extends JPanel {
         if (listingTable.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(null, "Aucune donnée sélectionnée !", "Erreur", JOptionPane.ERROR_MESSAGE);
             return false;
-        } else {
-            try {
-                selectedEmployee = controller.getEmployeeById(listingTable.getValueAt(listingTable.getSelectedRow(), 0).toString());
-            } catch (DAORetrievalFailedException | WrongTypeException | NullPointerException | ProhibitedValueException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-                return false;
-            } catch (NotFoundException exception) {
-                JOptionPane.showMessageDialog(null, "Employé inconnu !", "Erreur", JOptionPane.ERROR_MESSAGE);
-                return false;
-            }
         }
-        return true;
+
+        try {
+            selectedEmployee = controller.getEmployeeById(listingTable.getValueAt(listingTable.getSelectedRow(), 0).toString());
+            return true;
+        } catch (DAORetrievalFailedException | WrongTypeException | NullPointerException | ProhibitedValueException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        } catch (NotFoundException exception) {
+            JOptionPane.showMessageDialog(null, "Employé inconnu !", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return false;
     }
 
-    private DefaultTableModel infoTableModel() throws DAORetrievalFailedException, NotFoundException {
+    public DefaultTableModel infoTableModel() throws DAORetrievalFailedException, ProhibitedValueException {
         String[] columnNames = {
                 "Matricule",
                 "Prénom",
                 "Nom",
-                "Est actif",
+                "est actif",
                 "Rue",
                 "Numéro de rue",
                 "Numéro de boîte",
                 "Rôle",
                 "Date d'embauche",
-                "Identifiant du manager",
-                "Code postal",
+                "Matricule du manager",
+                "Code postal de la ville",
                 "Nom de la ville",
                 "Pays"
         };
 
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-        ArrayList<Employee> employees = null;
-        try {
-            employees = controller.getAllEmployees();
-        } catch (ProhibitedValueException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
+
+        ArrayList<Employee> employees = controller.getAllEmployees();
         Object[] employeeInfos = new Object[columnNames.length];
 
         for (Employee employee : employees) {
+
             employeeInfos[0] = employee.getId();
             employeeInfos[1] = employee.getFirstName();
             employeeInfos[2] = employee.getLastName();
@@ -180,7 +175,7 @@ public class EmployeeManagement extends JPanel {
     private void refreshTable() {
         try {
             listingTable.setModel(infoTableModel());
-        } catch (DAORetrievalFailedException | NotFoundException e) {
+        } catch (DAORetrievalFailedException | ProhibitedValueException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }

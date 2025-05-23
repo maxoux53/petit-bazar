@@ -89,6 +89,7 @@ public class ProductManagement extends JPanel {
                         try {
                             if (controller.remove(selectedProduct.getBarcode()) > 0) {
                                 JOptionPane.showMessageDialog(null, "L'article a été supprimé avec succès !", "Succès", JOptionPane.INFORMATION_MESSAGE);
+                                refreshTable();
                             } else {
                                 JOptionPane.showMessageDialog(null, "L'article n'a pas pu être supprimé !", "Échec", JOptionPane.ERROR_MESSAGE);
                             }
@@ -172,6 +173,14 @@ public class ProductManagement extends JPanel {
         }
 
         return model;
+    }
+
+    private void refreshTable() {
+        try {
+            listingTable.setModel(infoTableModel());
+        } catch (DAORetrievalFailedException | NotFoundException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void setController(ProductController productController) {

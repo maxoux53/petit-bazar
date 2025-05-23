@@ -18,7 +18,7 @@ public class EmployeePanel extends JPanel {
     private ButtonGroup activeGroup;
     private JButton button;
     private JComboBox<String> roleComboBox, countryComboBox;
-    private EmployeeController controller;
+    public EmployeeController controller;
 
     public EmployeePanel(String title, String buttonString) {
         setController(new EmployeeController());
@@ -177,4 +177,58 @@ public class EmployeePanel extends JPanel {
     public JButton getButton() { return button; }
     public JComboBox<String> getRoleComboBox() { return roleComboBox; }
     public JComboBox<String> getCountryComboBox() { return countryComboBox; }
+
+    public Integer stringToUnitNumber(String unitNumberAsString) throws ProhibitedValueException, WrongTypeException {
+        if (!unitNumberAsString.isEmpty()) {
+            int unitNumber;
+
+            try {
+                unitNumber = Integer.parseInt(unitNumberAsString);
+
+                if (unitNumber < 0) {
+                    throw new ProhibitedValueException("Numéro d'unité");
+                }
+                return unitNumber;
+            } catch (NumberFormatException numberFormatException) {
+                throw new WrongTypeException("Numéro d'unité");
+            }
+        }
+        return null;
+    }
+
+    public byte[] stringToPassword(char[] password) throws HashFailedException {
+        if (password != null) {
+            return manager.hashPassword(new String(password));
+        }
+        return null;
+    }
+
+    public Integer stringToId(String idAsString) throws ProhibitedValueException, WrongTypeException {
+        if (!idAsString.isEmpty()) {
+            try {
+                return Integer.parseInt(idAsString);
+            } catch (NumberFormatException numberFormatException) {
+                throw new WrongTypeException("Identifiant");
+            }
+        }
+        return null;
+    }
+
+    public Integer stringToZipCode(String zipCodeAsString) throws ProhibitedValueException, WrongTypeException {
+        if (!zipCodeAsString.isEmpty()) {
+            int zipCode;
+
+            try {
+                zipCode = Integer.parseInt(zipCodeAsString);
+
+                if (zipCode < 0) {
+                    throw new ProhibitedValueException("Code postal");
+                }
+                return zipCode;
+            } catch (NumberFormatException numberFormatException) {
+                throw new WrongTypeException("Code postal");
+            }
+        }
+        return null;
+    }
 }
