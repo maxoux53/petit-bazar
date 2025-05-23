@@ -6,6 +6,9 @@ import view.product.ProductManagement;
 import view.employee.AddEmployee;
 import view.employee.EditEmployee;
 import view.employee.EmployeeManagement;
+import view.research.AddressResearch;
+import view.research.ProductResearch;
+import view.research.TransactionResearch;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,6 +27,9 @@ public class Window extends JFrame {
     private AddEmployee addEmployee; // Attribut - Ajout d'un employé
     private EditEmployee editEmployee; // Attribut - Modification d'un employé
     private EmployeeManagement employeeManagement; // Attribut - Gestion d'un employé
+    private AddressResearch addressResearch; // Attribut - Recherche 1
+    private ProductResearch productResearch; // Attribut - Recherche 2
+    private TransactionResearch transactionResearch; // Attribut - Recherche 3
 
     // Constructors
     public Window(String title) {
@@ -51,6 +57,9 @@ public class Window extends JFrame {
         addEmployee = new AddEmployee(); // Panel - Ajout d'un employé
         editEmployee = new EditEmployee(); // Panel - Modification d'un employé
         employeeManagement = new EmployeeManagement(this); // Panel - Gestion d'un employé
+        addressResearch = new AddressResearch(); // Panel - Recherche 1
+        productResearch = new ProductResearch(); // Panel - Recherche 2
+        transactionResearch = new TransactionResearch(); // Panel - Recherche 3
         
         container = getContentPane();
         container.add(login);
@@ -168,6 +177,42 @@ public class Window extends JFrame {
 
             container.add(employeeManagement);
             setCurrentPanel(employeeManagement);
+
+            container.revalidate();
+            container.repaint();
+        }
+    }
+
+    public void showAddressResearch() { // Show - Recherche 1
+        if (currentPanel != addressResearch) {
+            container.remove(currentPanel);
+
+            container.add(addressResearch);
+            setCurrentPanel(addressResearch);
+
+            container.revalidate();
+            container.repaint();
+        }
+    }
+
+    public void showProductResearch() { // Show - Recherche 2
+        if (currentPanel != productResearch) {
+            container.remove(currentPanel);
+
+            container.add(productResearch);
+            setCurrentPanel(productResearch);
+
+            container.revalidate();
+            container.repaint();
+        }
+    }
+
+    public void showTransactionResearch() { // Show - Recherche 3
+        if (currentPanel != transactionResearch) {
+            container.remove(currentPanel);
+
+            container.add(transactionResearch);
+            setCurrentPanel(transactionResearch);
 
             container.revalidate();
             container.repaint();
