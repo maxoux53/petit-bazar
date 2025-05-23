@@ -110,8 +110,6 @@ public class Menu extends JPanel {
             }
         });
 
-        /*
-
         /* Employé */ /* Modification d'un employé */
         editEmployee = new JMenuItem("Modifier un employé");
 

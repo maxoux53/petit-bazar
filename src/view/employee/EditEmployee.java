@@ -38,7 +38,7 @@ public class EditEmployee extends JPanel {
                             employeePanel.getManagerIdField().getText().trim(),
                             employeePanel.getCityZipCodeField().getText().trim(),
                             employeePanel.getCityNameField().getText().trim(),
-                            "Belgique"
+                            "🇧🇪 Belgique"
                     );
 
                     employeePanel.clearFields();
