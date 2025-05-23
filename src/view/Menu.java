@@ -8,10 +8,11 @@ public class Menu extends JPanel {
     /* Attribut */
     private Window window;
     private JMenuBar menuBar;
-    private JMenu application, product, employee; // Menu - Employé
+    private JMenu application, product, employee, research; // Menu - Employé | Recherche
     private JMenuItem home, leave, signOut;
     private JMenuItem addProduct, editProduct, deleteProduct, listingProduct;
     private JMenuItem addEmployee, editEmployee, deleteEmployee, listingEmployee; // Sous-menu - Ajout | Modification | Suppression | Gestion - Employé
+    private JMenuItem addressResearch, productResearch, transactionResearch; // Sous-menu - Recherche 1 | Recherche 2 | Recherche 3
     
     /* Constructeur */
     public Menu(Window window) {
@@ -20,6 +21,7 @@ public class Menu extends JPanel {
         application = new JMenu("Application");
         product = new JMenu("Article");
         employee = new JMenu("Employé"); // Element du constructeur - Employé
+        research = new JMenu("Recherche"); // Element du constructeur - Recherche
 
         setBackground(Color.WHITE);
 
@@ -145,9 +147,44 @@ public class Menu extends JPanel {
         employee.add(deleteEmployee); // Menu | sous-menus  - Suppression d'un employé
         employee.add(listingEmployee); // Menu | sous-menus - Gestion d'un employé
 
+        /* Recherche */ /* Recherche 1 */
+        addressResearch = new JMenuItem("Recherche des adresses");
+
+        addressResearch.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                window.showAddressResearch();
+            }
+        });
+
+        /* Recherche */ /* Recherche 2 */
+        productResearch = new JMenuItem("Recherche des produits");
+
+        productResearch.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                window.showProductResearch();
+            }
+        });
+
+        /* Recherche */ /* Recherche 3 */
+        transactionResearch = new JMenuItem("Recherche des transactions");
+
+        transactionResearch.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                window.showTransactionResearch();
+            }
+        });
+
+        research.add(addressResearch); // Menu | sous-menus - Recherche 1
+        research.add(productResearch); // Menu | sous-menus - Recherche 2
+        research.add(transactionResearch); // Menu | sous-menus - Recherche 3
+
         menuBar.add(application);
         menuBar.add(product);
         menuBar.add(employee); // Menu - Employé
+        menuBar.add(research); // Menu - Recherche
     }
 
     // Getters
