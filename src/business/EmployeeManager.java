@@ -22,7 +22,9 @@ public class EmployeeManager {
     }
 
     public int create(Employee employee) throws InsertionFailedException, DAORetrievalFailedException {
-        return dao.create(employee);
+        dao.create(employee);
+
+        return 0;
     }
 
     public int remove(Integer id) throws DeleteFailedException, DAORetrievalFailedException {
