@@ -174,7 +174,6 @@ public class EmployeePanel extends JPanel {
     public JTextField getCityNameField() { return cityNameField; }
     public JSpinner getHireDateSpinner() { return hireDateSpinner; }
     public JRadioButton getActiveYes() { return activeYes; }
-    public JRadioButton getActiveNo() { return activeNo; }
     public JButton getButton() { return button; }
     public JComboBox<String> getRoleComboBox() { return roleComboBox; }
     public JComboBox<String> getCountryComboBox() { return countryComboBox; }
