@@ -160,8 +160,8 @@ public class ProductManagement extends JPanel {
                 productInfos[3] = product.getAmount();
                 productInfos[4] = product.getAvailable();
                 productInfos[5] = product.getVatType();
-                productInfos[6] = controller.getCategoryById(product.getCategoryId());
-                productInfos[7] = controller.getBrandById(product.getBrandId());
+                productInfos[6] = controller.getCategoryById(product.getCategoryId()).getLabel();
+                productInfos[7] = controller.getBrandById(product.getBrandId()).getName();
                 productInfos[8] = product.getExclVatPrice();
                 productInfos[9] = product.getStartDate();
 
