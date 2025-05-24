@@ -21,8 +21,8 @@ public class ProductManager {
         this.dao = dao;
     }
 
-    public int create(Product product) throws InsertionFailedException, DAORetrievalFailedException {
-        return dao.create(product);
+    public void create(Product product) throws InsertionFailedException, DAORetrievalFailedException {
+        dao.create(product);
     }
 
     public int remove(Long barcode) throws DeleteFailedException, DAORetrievalFailedException {

@@ -19,7 +19,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
     
     // Public methods
 
-    public int create(Product product) throws InsertionFailedException, DAORetrievalFailedException {
+    public void create(Product product) throws InsertionFailedException, DAORetrievalFailedException {
         sqlInstruction = "INSERT INTO product VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         try {
@@ -40,7 +40,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             preparedStatement.setDate(10, Date.valueOf(product.getStartDate()));
 
             try {
-                return preparedStatement.executeUpdate();
+                preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 throw new InsertionFailedException(objectClassName, (Long)null, e.getMessage());
             }

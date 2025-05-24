@@ -9,7 +9,7 @@ import model.Vat;
 import java.util.ArrayList;
 
 public interface ProductDAO {
-    int create(Product product) throws InsertionFailedException, DAORetrievalFailedException;
+    void create(Product product) throws InsertionFailedException, DAORetrievalFailedException;
     int remove(Long barcode) throws DeleteFailedException, DAORetrievalFailedException;
     int update(Product product) throws UpdateFailedException, DAORetrievalFailedException;
 

@@ -3,6 +3,7 @@ package business;
 import dataAccess.*;
 import exceptions.*;
 import interfaces.EmployeeDAO;
+import model.City;
 import model.Employee;
 
 import java.security.MessageDigest;
@@ -21,10 +22,8 @@ public class EmployeeManager {
         this.dao = dao;
     }
 
-    public int create(Employee employee) throws InsertionFailedException, DAORetrievalFailedException {
+    public void create(Employee employee) throws InsertionFailedException, DAORetrievalFailedException {
         dao.create(employee);
-
-        return 0;
     }
 
     public int remove(Integer id) throws DeleteFailedException, DAORetrievalFailedException {
@@ -60,6 +59,14 @@ public class EmployeeManager {
                 hashPassword(new String(passwordAttempt)),
                 dao.getPasswordHash(id)
         );
+    }
+
+    public void setCity(City city) throws DAORetrievalFailedException {
+        dao.setCity(city);
+    }
+    
+    public City getCity(Integer zipCode, String name) throws DAORetrievalFailedException, NotFoundException, ProhibitedValueException {
+        return dao.getCity(zipCode, name);
     }
 
     public ArrayList<String> getAllCountries() throws DAORetrievalFailedException {
