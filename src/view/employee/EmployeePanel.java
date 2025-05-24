@@ -198,7 +198,7 @@ public class EmployeePanel extends JPanel {
 
     public byte[] stringToPassword(char[] password) throws HashFailedException {
         if (password != null) {
-            return manager.hashPassword(new String(password));
+            return controller.hashPassword(new String(password));
         }
         return null;
     }
