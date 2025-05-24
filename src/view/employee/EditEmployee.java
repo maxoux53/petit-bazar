@@ -2,6 +2,7 @@ package view.employee;
 
 import controller.EmployeeController;
 import exceptions.*;
+import model.Category;
 import model.City;
 import model.Employee;
 
@@ -10,15 +11,16 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class EditEmployee extends EmployeePanel {
     private int lastLoadedEmployeeId;
 
     public EditEmployee() {
-        setController(new EmployeeController());
-        new EmployeePanel("Modifier un employé", "Modifier");
+        super("Modifier un employé", "Modifier");
+        super.setController(new EmployeeController());
 
-        getButton().addActionListener(new ActionListener() {
+        super.getButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {

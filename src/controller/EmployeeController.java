@@ -34,8 +34,8 @@ public class EmployeeController {
         return manager.update(employee);
     }
 
-    public Employee getEmployeeById(String idAsString) throws NotFoundException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException {
-        return manager.getById(stringToId(idAsString));
+    public Employee getEmployeeById(Integer id) throws NotFoundException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException {
+        return manager.getById(id);
     }
 
     public ArrayList<Employee> getAllEmployees() throws DAORetrievalFailedException, ProhibitedValueException {
@@ -52,5 +52,9 @@ public class EmployeeController {
 
     public ArrayList<String> getAllRoles() throws DAORetrievalFailedException {
         return manager.getAllRoles();
+    }
+
+    public byte[] hashPassword(String password) throws HashFailedException {
+        return manager.hashPassword(password);
     }
 }

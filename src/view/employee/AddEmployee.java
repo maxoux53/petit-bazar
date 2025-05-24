@@ -12,8 +12,8 @@ import java.time.LocalDate;
 
 public class AddEmployee extends EmployeePanel {
     public AddEmployee() {
+        super("Ajouter un employé", "Ajouter");
         setController(new EmployeeController());
-        new EmployeePanel("Ajouter un employé", "Ajouter");
 
         getButton().addActionListener((ActionEvent e) -> {
             try {
