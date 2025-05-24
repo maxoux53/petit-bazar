@@ -118,7 +118,7 @@ public class EmployeeManagement extends JPanel {
         }
 
         try {
-            selectedEmployee = controller.getEmployeeById(listingTable.getValueAt(listingTable.getSelectedRow(), 0).toString());
+            selectedEmployee = controller.getEmployeeById((Integer) listingTable.getValueAt(listingTable.getSelectedRow(), 0));
             return true;
         } catch (DAORetrievalFailedException | WrongTypeException | NullPointerException | ProhibitedValueException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
