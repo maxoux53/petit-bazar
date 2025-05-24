@@ -20,10 +20,8 @@ public class EmployeeController {
         this.manager = manager;
     }
 
-    public int create(Employee employee) throws HashFailedException, InsertionFailedException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException {
+    public void create(Employee employee) throws HashFailedException, InsertionFailedException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException {
         manager.create(employee);
-
-        return 0;
     }
 
     public int remove(Integer id) throws DeleteFailedException, DAORetrievalFailedException, WrongTypeException, ProhibitedValueException {
@@ -44,6 +42,14 @@ public class EmployeeController {
 
     public boolean isPasswordCorrect(String username, char[] passwordAttempt) throws HashFailedException, DAORetrievalFailedException, NotFoundException {
         return manager.checkPassword(passwordAttempt, Integer.parseInt(username));
+    }
+
+    public void setCity(City city) throws DAORetrievalFailedException {
+        manager.setCity(city);
+    }
+
+    public City getCity(Integer zipCode, String name) throws DAORetrievalFailedException, NotFoundException, ProhibitedValueException {
+        return manager.getCity(zipCode, name);
     }
 
     public ArrayList<String> getAllCountries() throws DAORetrievalFailedException {

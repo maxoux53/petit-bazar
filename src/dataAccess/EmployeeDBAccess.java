@@ -17,13 +17,13 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
     
     // Public methods
 
-    public int create(Employee employee) throws InsertionFailedException, DAORetrievalFailedException {
+    public void create(Employee employee) throws InsertionFailedException, DAORetrievalFailedException {
         sqlInstruction = "INSERT INTO employee (first_name, last_name, password, is_active, street, street_number, unit_number, role_label, hire_date, manager_id, city_zip_code, city_name) VALUES(?,?,?,?,?,?,?,?,?,?,?,?);";
         
         setValues(employee, sqlInstruction);
         
         try {
-            return preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
         } catch (SQLTimeoutException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {
@@ -190,7 +190,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         }
     }
 
-    private City getCity(Integer zipCode, String name) throws DAORetrievalFailedException, NotFoundException, ProhibitedValueException {
+    public City getCity(Integer zipCode, String name) throws DAORetrievalFailedException, NotFoundException, ProhibitedValueException {
         sqlInstruction = "SELECT * FROM city WHERE zip_code = ? AND name = ?;";
 
         try {
