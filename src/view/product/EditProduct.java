@@ -13,7 +13,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class EditProduct extends JPanel {

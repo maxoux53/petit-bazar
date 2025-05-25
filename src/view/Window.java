@@ -139,6 +139,7 @@ public class Window extends JFrame {
         if (currentPanel != productManagement) {
             container.remove(currentPanel);
             
+            productManagement.refreshTable();
             container.add(productManagement);
             setCurrentPanel(productManagement);
 
@@ -175,6 +176,7 @@ public class Window extends JFrame {
         if (currentPanel != employeeManagement) {
             container.remove(currentPanel);
 
+            employeeManagement.refreshTable();
             container.add(employeeManagement);
             setCurrentPanel(employeeManagement);
 

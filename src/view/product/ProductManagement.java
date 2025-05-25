@@ -175,7 +175,7 @@ public class ProductManagement extends JPanel {
         return model;
     }
 
-    private void refreshTable() {
+    public void refreshTable() {
         try {
             listingTable.setModel(infoTableModel());
         } catch (DAORetrievalFailedException | NotFoundException e) {
