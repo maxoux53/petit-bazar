@@ -19,7 +19,7 @@ public class EmployeePanel extends JPanel {
     private ButtonGroup activeGroup;
     private JButton button;
     private JComboBox<String> roleComboBox, countryComboBox;
-    private ArrayList<String> coutriesList;
+    private ArrayList<String> countriesList;
     public EmployeeController controller;
 
     public EmployeePanel(String title, String buttonString) {
@@ -68,8 +68,8 @@ public class EmployeePanel extends JPanel {
         JLabel countryLabel = new JLabel("Pays", SwingConstants.RIGHT);
         countryLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.PLAIN, FontPreferences.MID_SIZE));
         try {
-            coutriesList = controller.getAllCountries();
-            countryComboBox = new JComboBox<>(coutriesList.toArray(new String[0]));
+            countriesList = controller.getAllCountries();
+            countryComboBox = new JComboBox<>(countriesList.toArray(new String[0]));
         } catch (DAORetrievalFailedException e) {
             countryComboBox = new JComboBox<>();
             JOptionPane.showMessageDialog(this, "Erreur lors du chargement des pays.", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -185,7 +185,7 @@ public class EmployeePanel extends JPanel {
     public JComboBox<String> getRoleComboBox() { return roleComboBox; }
     public JComboBox<String> getCountryComboBox() { return countryComboBox; }
     public ArrayList<String> getCoutriesList() {
-        return coutriesList;
+        return countriesList;
     }
 
     public Integer stringToUnitNumber(String unitNumberAsString) throws ProhibitedValueException, WrongTypeException {
