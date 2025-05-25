@@ -68,6 +68,7 @@ public class EditEmployee extends EmployeePanel {
         getLastNameField().setText(employee.getLastName());
         getPasswordField().setText("");
         getActiveYes().setSelected(employee.getActive());
+        getActiveNo().setSelected(!employee.getActive());
         getStreetField().setText(employee.getStreet());
         getStreetNumberField().setText(employee.getStreetNumber());
         getUnitNumberField().setText(employee.getUnitNumber() == null ? "" : employee.getUnitNumber().toString());

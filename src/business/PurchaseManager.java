@@ -6,8 +6,10 @@ import interfaces.PurchaseDAO;
 import dataAccess.PurchaseDBAccess;
 import model.LoyalCustomerPurchases;
 import model.Purchase;
+import model.PurchaseInformation;
 import model.SalesInfo;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class PurchaseManager {
