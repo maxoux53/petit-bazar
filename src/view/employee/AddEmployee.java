@@ -31,7 +31,9 @@ public class AddEmployee extends EmployeePanel {
                         getStreetNumberField().getText().trim(),
                         stringToUnitNumber(getUnitNumberField().getText().trim()),
                         (String)getRoleComboBox().getSelectedItem(),
-                        (LocalDate)getHireDateSpinner().getValue(),
+                        ((java.util.Date)getHireDateSpinner().getValue()).toInstant()
+                                .atZone(java.time.ZoneId.systemDefault())
+                                .toLocalDate(),
                         stringToId(getManagerIdField().getText().trim()),
                         zipCode,
                         cityName
