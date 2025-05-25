@@ -3,10 +3,7 @@ package business;
 import dataAccess.*;
 import exceptions.*;
 import interfaces.ProductDAO;
-import model.Brand;
-import model.Category;
-import model.Product;
-import model.Vat;
+import model.*;
 
 import java.util.ArrayList;
 
@@ -71,5 +68,13 @@ public class ProductManager {
 
     public ArrayList<Product> getOutOfStock() throws DAORetrievalFailedException, ProhibitedValueException {
         return dao.getOutOfStock();
+    }
+
+    public boolean exists(long barcode) throws DAORetrievalFailedException {
+        return dao.exists(barcode);
+    }
+
+    public ArrayList<ProductInformation> getProductInformationByBrand(int brandId) throws DAORetrievalFailedException {
+        return dao.getProductInformationByBrand(brandId);
     }
 }

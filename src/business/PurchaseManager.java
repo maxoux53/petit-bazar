@@ -34,4 +34,8 @@ public class PurchaseManager {
     public ArrayList<LoyalCustomerPurchases> loyalCustomerPurchasesRankingByEmployee(Integer employeeId) throws DAORetrievalFailedException {
         return dao.loyalCustomerPurchasesRankingByEmployee(employeeId);
     }
+    
+    public ArrayList<PurchaseInformation> getPurchaseInformationByDate(LocalDate date) throws DAORetrievalFailedException {
+        return dao.getPurchaseInformationByDate(date);
+    }
 }

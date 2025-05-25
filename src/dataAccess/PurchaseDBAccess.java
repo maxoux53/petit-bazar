@@ -5,6 +5,7 @@ import exceptions.ProhibitedValueException;
 import interfaces.PurchaseDAO;
 import model.LoyalCustomerPurchases;
 import model.Purchase;
+import model.PurchaseInformation;
 import model.SalesInfo;
 
 import java.sql.*;
@@ -90,6 +91,42 @@ public class PurchaseDBAccess extends DBAccess implements PurchaseDAO {
             }
 
             return ranking;
+        } catch (SQLTimeoutException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
+        }
+    }
+    
+    // Research
+    public ArrayList<PurchaseInformation> getPurchaseInformationByDate(LocalDate date) throws DAORetrievalFailedException {
+        sqlInstruction = "SELECT purchase.id AS purchase_id,customer.first_name AS customer_first_name, customer.last_name AS customer_last_name, employee.first_name AS employee_first_name, employee.last_name AS employee_last_name " +
+                "FROM purchase " +
+                "INNER JOIN customer ON purchase.customer_card_number = customer.loyalty_card_number " +
+                "INNER JOIN employee ON purchase.employee_id = employee.id " +
+                "WHERE purchase.date = ?;";
+
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            preparedStatement.setDate(1, Date.valueOf(date));
+
+            ResultSet data = preparedStatement.executeQuery();
+
+            ArrayList<PurchaseInformation> purchaseInformations = new ArrayList<>();
+
+            while (data.next()) {
+                purchaseInformations.add(new PurchaseInformation(
+                                data.getLong("purchase_id"),
+                                data.getString("customer_first_name"),
+                                data.getString("customer_last_name"),
+                                data.getString("employee_first_name"),
+                                data.getString("employee_last_name")
+                        )
+                );
+            }
+
+            return purchaseInformations;
+
         } catch (SQLTimeoutException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {

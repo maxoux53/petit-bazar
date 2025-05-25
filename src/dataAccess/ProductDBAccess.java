@@ -2,10 +2,7 @@ package dataAccess;
 
 import exceptions.*;
 import interfaces.ProductDAO;
-import model.Brand;
-import model.Category;
-import model.Product;
-import model.Vat;
+import model.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -364,6 +361,41 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         } catch (SQLException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         } 
+    }
+
+    // Research
+    
+    public ArrayList<ProductInformation> getProductInformationByBrand(int brandId) throws DAORetrievalFailedException {
+        sqlInstruction = "SELECT product.name AS product_name, category.name AS category_name, vat.rate AS vat_rate " +
+                "FROM product " +
+                "INNER JOIN category ON product.category_id = category.id " +
+                "INNER JOIN vat ON product.vat_type = vat.type " +
+                "WHERE product.brand_id = ?;";
+
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, brandId);
+
+            ResultSet data = preparedStatement.executeQuery();
+
+            ArrayList<ProductInformation> productInformations = new ArrayList<>();
+
+            while (data.next()) {
+                productInformations.add(new ProductInformation(
+                                data.getString("product_name"),
+                                data.getString("category_name"),
+                                data.getInt("vat_rate")
+                        )
+                );
+            }
+
+            return productInformations;
+
+        } catch (SQLTimeoutException exception) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, exception.getMessage());
+        } catch (SQLException exception) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, exception.getMessage());
+        }
     }
 
     // Private methods

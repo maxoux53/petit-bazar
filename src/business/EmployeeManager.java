@@ -5,6 +5,7 @@ import exceptions.*;
 import interfaces.EmployeeDAO;
 import model.City;
 import model.Employee;
+import model.EmployeePlace;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -75,5 +76,9 @@ public class EmployeeManager {
 
     public ArrayList<String> getAllRoles() throws DAORetrievalFailedException {
         return dao.getAllRoles();
+    }
+
+    public ArrayList<EmployeePlace> getEmployeePlaceByEmployee(int employeeId) throws ProhibitedValueException, DAORetrievalFailedException {
+        return dao.getEmployeePlaceByEmployee(employeeId);
     }
 }
