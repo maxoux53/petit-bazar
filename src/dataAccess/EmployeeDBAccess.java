@@ -86,8 +86,9 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
         sqlInstruction = "UPDATE employee SET first_name = ?, last_name = ?, password = ?, is_active = ?, street = ?, street_number = ?, unit_number = ?, role_label = ?, hire_date = ?, manager_id = ?, city_zip_code = ?, city_name = ? WHERE id = ?;";
 
         setValues(employee, sqlInstruction);
-
+        
         try {
+            preparedStatement.setInt(13, employee.getId());
             return preparedStatement.executeUpdate();
         } catch (SQLTimeoutException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
