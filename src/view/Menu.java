@@ -196,13 +196,22 @@ public class Menu extends JPanel {
     public void toggleMenu(boolean status) {
         home.setEnabled(status);
         
+        // Product
         addProduct.setEnabled(status);
-        
         editProduct.setEnabled(status);
-        
         deleteProduct.setEnabled(status);
-        
         listingProduct.setEnabled(status);
+        
+        // Employee
+        addEmployee.setEnabled(status);
+        editEmployee.setEnabled(status);
+        deleteEmployee.setEnabled(status);
+        listingEmployee.setEnabled(status);
+        
+        // Research
+        addressResearch.setEnabled(status);
+        productResearch.setEnabled(status);
+        transactionResearch.setEnabled(status);
         
         signOut.setEnabled(status);
 

@@ -69,7 +69,6 @@ public class EmployeePanel extends JPanel {
         countryLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.PLAIN, FontPreferences.MID_SIZE));
         try {
             coutriesList = controller.getAllCountries();
-            System.out.println(coutriesList);
             countryComboBox = new JComboBox<>(coutriesList.toArray(new String[0]));
         } catch (DAORetrievalFailedException e) {
             countryComboBox = new JComboBox<>();
