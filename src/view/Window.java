@@ -55,7 +55,7 @@ public class Window extends JFrame {
         editProduct = new EditProduct(this);
         productManagement = new ProductManagement(this);
         addEmployee = new AddEmployee(); // Panel - Ajout d'un employé
-        editEmployee = new EditEmployee(); // Panel - Modification d'un employé
+        editEmployee = new EditEmployee(this); // Panel - Modification d'un employé
         employeeManagement = new EmployeeManagement(this); // Panel - Gestion d'un employé
         addressResearch = new AddressResearch(); // Panel - Recherche 1
         productResearch = new ProductResearch(); // Panel - Recherche 2

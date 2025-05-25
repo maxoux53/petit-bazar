@@ -6,6 +6,7 @@ import view.FontPreferences;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class EmployeePanel extends JPanel {
@@ -18,6 +19,7 @@ public class EmployeePanel extends JPanel {
     private ButtonGroup activeGroup;
     private JButton button;
     private JComboBox<String> roleComboBox, countryComboBox;
+    private ArrayList<String> coutriesList;
     public EmployeeController controller;
 
     public EmployeePanel(String title, String buttonString) {
@@ -66,7 +68,8 @@ public class EmployeePanel extends JPanel {
         JLabel countryLabel = new JLabel("Pays", SwingConstants.RIGHT);
         countryLabel.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.PLAIN, FontPreferences.MID_SIZE));
         try {
-            countryComboBox = new JComboBox<>(controller.getAllCountries().toArray(new String[0]));
+            coutriesList = controller.getAllCountries();
+            countryComboBox = new JComboBox<>(coutriesList.toArray(new String[0]));
         } catch (DAORetrievalFailedException e) {
             countryComboBox = new JComboBox<>();
             JOptionPane.showMessageDialog(this, "Erreur lors du chargement des pays.", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -163,6 +166,10 @@ public class EmployeePanel extends JPanel {
         this.controller = controller;
     }
 
+    public JPanel getCountryPanel() {
+        return countryPanel;
+    }
+
     public JTextField getFirstNameField() { return firstNameField; }
     public JTextField getLastNameField() { return lastNameField; }
     public JPasswordField getPasswordField() { return passwordField; }
@@ -177,6 +184,9 @@ public class EmployeePanel extends JPanel {
     public JButton getButton() { return button; }
     public JComboBox<String> getRoleComboBox() { return roleComboBox; }
     public JComboBox<String> getCountryComboBox() { return countryComboBox; }
+    public ArrayList<String> getCoutriesList() {
+        return coutriesList;
+    }
 
     public Integer stringToUnitNumber(String unitNumberAsString) throws ProhibitedValueException, WrongTypeException {
         if (!unitNumberAsString.isEmpty()) {
