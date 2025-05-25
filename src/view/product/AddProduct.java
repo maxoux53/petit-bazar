@@ -23,6 +23,7 @@ public class AddProduct extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    System.out.println(productPanel.getStartDateSpinner().getValue().toString());
                     controller.create(new Product(
                             productPanel.stringToBarcode(productPanel.getBarcodeField().getText()),
                             productPanel.nullIfEmptyName(productPanel.getNameField().getText()),
@@ -33,7 +34,9 @@ public class AddProduct extends JPanel {
                             controller.getAllCategories().get(productPanel.getCategoryComboBox().getSelectedIndex()).getId(),
                             controller.getOrCreateBrand(productPanel.getBrandField().getText()),
                             productPanel.stringToPrice(productPanel.getPriceField().getText()),
-                            (LocalDate)productPanel.getStartDateSpinner().getValue()
+                            ((java.util.Date)productPanel.getStartDateSpinner().getValue()).toInstant()
+                                    .atZone(java.time.ZoneId.systemDefault())
+                                    .toLocalDate()
                     ));
 
                     productPanel.removeAllField();

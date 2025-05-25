@@ -42,7 +42,9 @@ public class EditProduct extends JPanel {
                             controller.getAllCategories().get(productPanel.getCategoryComboBox().getSelectedIndex()).getId(),
                             controller.getOrCreateBrand(productPanel.getBrandField().getText()),
                             productPanel.stringToPrice(productPanel.getPriceField().getText()),
-                            (LocalDate)productPanel.getStartDateSpinner().getValue()
+                            ((java.util.Date)productPanel.getStartDateSpinner().getValue()).toInstant()
+                                    .atZone(java.time.ZoneId.systemDefault())
+                                    .toLocalDate()
                     ));
 
                     productPanel.removeAllField();
@@ -82,6 +84,7 @@ public class EditProduct extends JPanel {
         
         productPanel.getStartDateSpinner().setValue(Date.valueOf(product.getStartDate()));
 
+        productPanel.getAvailableRadioButtonYes().setSelected(product.getAvailable());
         productPanel.getAvailableRadioButtonNo().setSelected(!product.getAvailable());
         lastLoadedProductBarcode = product.getBarcode();
     }
