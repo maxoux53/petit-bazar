@@ -347,7 +347,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
         } 
     }
     
-    public boolean exists(long barcode) throws DAORetrievalFailedException {
+    public boolean exists(Long barcode) throws DAORetrievalFailedException {
         sqlInstruction = "SELECT barcode FROM product WHERE barcode = ?";
         
         try {
@@ -365,7 +365,7 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
 
     // Research
     
-    public ArrayList<ProductInformation> getProductInformationByBrand(int brandId) throws DAORetrievalFailedException {
+    public ArrayList<ProductInformation> getProductInformationByBrand(Integer brandId) throws DAORetrievalFailedException {
         sqlInstruction = "SELECT product.name AS product_name, category.name AS category_name, vat.rate AS vat_rate " +
                 "FROM product " +
                 "INNER JOIN category ON product.category_id = category.id " +

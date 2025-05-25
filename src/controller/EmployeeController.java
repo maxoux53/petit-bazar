@@ -60,7 +60,7 @@ public class EmployeeController {
         return manager.getAllRoles();
     }
 
-    public ArrayList<EmployeePlace> getEmployeePlaceByEmployee(int employeeId) throws ProhibitedValueException, DAORetrievalFailedException {
+    public ArrayList<EmployeePlace> getEmployeePlaceByEmployee(Integer employeeId) throws ProhibitedValueException, DAORetrievalFailedException {
         return manager.getEmployeePlaceByEmployee(employeeId);
     }
 

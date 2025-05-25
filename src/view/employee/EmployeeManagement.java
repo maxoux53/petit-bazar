@@ -155,7 +155,6 @@ public class EmployeeManagement extends JPanel {
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
         ArrayList<Employee> employees = controller.getAllEmployees();
-        City city;
         
         Object[] employeeInfos = new Object[columnNames.length];
 
@@ -174,8 +173,7 @@ public class EmployeeManagement extends JPanel {
             employeeInfos[11] = employee.getCityName();
 
             try {
-                city = controller.getCity(employee.getCityZipCode(), employee.getCityName());
-                employeeInfos[12] = city.getCountry();
+                employeeInfos[12] = controller.getCity(employee.getCityZipCode(), employee.getCityName()).getCountry();
             } catch (NotFoundException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur (" + employee.getId() + ") " + employee.getFirstName(), JOptionPane.ERROR_MESSAGE);
             }

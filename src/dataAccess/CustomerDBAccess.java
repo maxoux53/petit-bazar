@@ -15,7 +15,7 @@ public class CustomerDBAccess extends DBAccess implements CustomerDAO {
         objectClassName = Customer.class.getSimpleName().toLowerCase();
     }
 
-    public Customer getByLoyaltyCardNumber(int loyaltyCardNumber) throws NotFoundException, DAORetrievalFailedException, ProhibitedValueException {
+    public Customer getByLoyaltyCardNumber(Integer loyaltyCardNumber) throws NotFoundException, DAORetrievalFailedException, ProhibitedValueException {
         sqlInstruction = "SELECT * FROM customer WHERE loyalty_card_number = ?;";
         
         try {

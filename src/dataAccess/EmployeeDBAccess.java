@@ -260,7 +260,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
     
     // Research
     
-    public ArrayList<EmployeePlace> getEmployeePlaceByEmployee(int employeeId) throws ProhibitedValueException, DAORetrievalFailedException {
+    public ArrayList<EmployeePlace> getEmployeePlaceByEmployee(Integer employeeId) throws ProhibitedValueException, DAORetrievalFailedException {
         sqlInstruction = "SELECT employee.first_name AS employee_first_name, employee.last_name AS employee_last_name, city.name AS city_name, city.zip_code AS city_zip_code, country.name AS country_name " +
                 "FROM employee " +
                 "INNER JOIN city ON employee.city_name = city.name AND employee.city_zip_code = city.zip_code " +

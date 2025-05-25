@@ -18,5 +18,5 @@ public interface EmployeeDAO {
     City getCity(Integer zipCode, String name) throws DAORetrievalFailedException, NotFoundException, ProhibitedValueException;
     ArrayList<String> getAllCountries() throws DAORetrievalFailedException;
     ArrayList<String> getAllRoles() throws DAORetrievalFailedException;
-    public ArrayList<EmployeePlace> getEmployeePlaceByEmployee(int employeeId) throws ProhibitedValueException, DAORetrievalFailedException;
+    ArrayList<EmployeePlace> getEmployeePlaceByEmployee(Integer employeeId) throws ProhibitedValueException, DAORetrievalFailedException;
 }

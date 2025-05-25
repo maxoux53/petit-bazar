@@ -78,7 +78,7 @@ public class EmployeeManager {
         return dao.getAllRoles();
     }
 
-    public ArrayList<EmployeePlace> getEmployeePlaceByEmployee(int employeeId) throws ProhibitedValueException, DAORetrievalFailedException {
+    public ArrayList<EmployeePlace> getEmployeePlaceByEmployee(Integer employeeId) throws ProhibitedValueException, DAORetrievalFailedException {
         return dao.getEmployeePlaceByEmployee(employeeId);
     }
 }

@@ -14,5 +14,5 @@ public interface PurchaseDAO {
     ArrayList<Purchase> getAll() throws DAORetrievalFailedException, ProhibitedValueException;
     ArrayList<SalesInfo> salesRanking(String categoryLabel) throws DAORetrievalFailedException;
     ArrayList<LoyalCustomerPurchases> loyalCustomerPurchasesRankingByEmployee(Integer employeeId) throws DAORetrievalFailedException;
-    public ArrayList<PurchaseInformation> getPurchaseInformationByDate(LocalDate date) throws DAORetrievalFailedException;
+    ArrayList<PurchaseInformation> getPurchaseInformationByDate(LocalDate date) throws DAORetrievalFailedException;
 }
