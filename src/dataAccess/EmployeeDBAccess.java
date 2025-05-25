@@ -224,7 +224,6 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
 
             while (data.next()) {
                 countries.add(data.getString("name"));
-                System.out.println(data.getString("name"));
             }
 
             return countries;
