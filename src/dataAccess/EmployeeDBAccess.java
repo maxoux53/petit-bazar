@@ -213,7 +213,7 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
     }
 
     public ArrayList<String> getAllCountries() throws DAORetrievalFailedException {
-        sqlInstruction = "SELECT country FROM country;";
+        sqlInstruction = "SELECT name FROM country;";
 
         try {
             preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
@@ -223,7 +223,8 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
             ArrayList<String> countries = new ArrayList<>();
 
             while (data.next()) {
-                countries.add(data.getString("country"));
+                countries.add(data.getString("name"));
+                System.out.println(data.getString("name"));
             }
 
             return countries;
