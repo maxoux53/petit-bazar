@@ -330,6 +330,7 @@ public class ProductPanel extends JPanel {
 
     // Methods
     public void removeAllField() {
+        barcodeField.setText("");
         nameField.setText("");
         descriptionField.setText("");
         priceField.setText("");
