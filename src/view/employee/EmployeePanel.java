@@ -187,7 +187,7 @@ public class EmployeePanel extends JPanel {
     public JButton getButton() { return button; }
     public JComboBox<String> getRoleComboBox() { return roleComboBox; }
     public JComboBox<String> getCountryComboBox() { return countryComboBox; }
-    public ArrayList<String> getCoutriesList() {
+    public ArrayList<String> getCountriesList() {
         return countriesList;
     }
 

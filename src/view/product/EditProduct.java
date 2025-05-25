@@ -12,8 +12,9 @@ import view.Window;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.Date;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class EditProduct extends JPanel {
     // Attributes
@@ -81,7 +82,7 @@ public class EditProduct extends JPanel {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         
-        productPanel.getStartDateSpinner().setValue(Date.valueOf(product.getStartDate()));
+        productPanel.getStartDateSpinner().setValue(Date.from(product.getStartDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
         productPanel.getAvailableRadioButtonYes().setSelected(product.getAvailable());
         productPanel.getAvailableRadioButtonNo().setSelected(!product.getAvailable());

@@ -68,11 +68,11 @@ public class ProductController {
         return manager.getAll();
     }
 
-    public boolean exists(long barcode) throws DAORetrievalFailedException {
+    public boolean exists(Long barcode) throws DAORetrievalFailedException {
         return manager.exists(barcode);
     }
 
-    public ArrayList<ProductInformation> getProductInformationByBrand(int brandId) throws DAORetrievalFailedException {
+    public ArrayList<ProductInformation> getProductInformationByBrand(Integer brandId) throws DAORetrievalFailedException {
         return manager.getProductInformationByBrand(brandId);
     }
 }

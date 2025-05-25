@@ -7,6 +7,6 @@ import model.Customer;
 import java.util.ArrayList;
 
 public interface CustomerDAO {
-    Customer getByLoyaltyCardNumber(int loyaltyCardNumber) throws NotFoundException, DAORetrievalFailedException, ProhibitedValueException;
+    Customer getByLoyaltyCardNumber(Integer loyaltyCardNumber) throws NotFoundException, DAORetrievalFailedException, ProhibitedValueException;
     ArrayList<Customer> getAll() throws DAORetrievalFailedException, ProhibitedValueException;
 }

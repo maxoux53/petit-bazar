@@ -23,6 +23,6 @@ public interface ProductDAO {
 
     int getCurrentStock(Long barcode) throws NotFoundException, DAORetrievalFailedException;
     ArrayList<Product> getOutOfStock() throws DAORetrievalFailedException, ProhibitedValueException;
-    public boolean exists(long barcode) throws DAORetrievalFailedException;
-    public ArrayList<ProductInformation> getProductInformationByBrand(int brandId) throws DAORetrievalFailedException;
+    boolean exists(Long barcode) throws DAORetrievalFailedException;
+    ArrayList<ProductInformation> getProductInformationByBrand(Integer brandId) throws DAORetrievalFailedException;
 }

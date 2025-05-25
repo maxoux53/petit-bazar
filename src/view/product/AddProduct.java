@@ -23,7 +23,6 @@ public class AddProduct extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    System.out.println(productPanel.getStartDateSpinner().getValue().toString());
                     controller.create(new Product(
                             productPanel.stringToBarcode(productPanel.getBarcodeField().getText()),
                             productPanel.nullIfEmptyName(productPanel.getNameField().getText()),

@@ -70,11 +70,11 @@ public class ProductManager {
         return dao.getOutOfStock();
     }
 
-    public boolean exists(long barcode) throws DAORetrievalFailedException {
+    public boolean exists(Long barcode) throws DAORetrievalFailedException {
         return dao.exists(barcode);
     }
 
-    public ArrayList<ProductInformation> getProductInformationByBrand(int brandId) throws DAORetrievalFailedException {
+    public ArrayList<ProductInformation> getProductInformationByBrand(Integer brandId) throws DAORetrievalFailedException {
         return dao.getProductInformationByBrand(brandId);
     }
 }

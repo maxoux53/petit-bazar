@@ -2,27 +2,24 @@ package view.employee;
 
 import controller.EmployeeController;
 import exceptions.*;
-import model.Category;
 import model.City;
 import model.Employee;
 import view.Window;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.ZoneId;
+import java.util.Date;
 
 public class EditEmployee extends EmployeePanel {
     private int lastLoadedEmployeeId;
 
     public EditEmployee(Window window) {
         super("Modifier un employé", "Modifier");
-        super.setController(new EmployeeController());
+        setController(new EmployeeController());
 
-        super.getButton().addActionListener(new ActionListener() {
+        getButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -73,10 +70,10 @@ public class EditEmployee extends EmployeePanel {
         getStreetNumberField().setText(employee.getStreetNumber());
         getUnitNumberField().setText(employee.getUnitNumber() == null ? "" : employee.getUnitNumber().toString());
         getRoleComboBox().setSelectedItem(employee.getRoleLabel());
-        getHireDateSpinner().setValue(Date.valueOf(employee.getHireDate()));
+        getHireDateSpinner().setValue(Date.from(employee.getHireDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
         getManagerIdField().setText(employee.getManagerId() == null ? "" : employee.getManagerId().toString());
         getCityZipCodeField().setText(cityZipCode.toString());
         getCityNameField().setText(cityName);
-        getCountryComboBox().setSelectedItem(getCoutriesList().indexOf(controller.getCity(cityZipCode, cityName).getCountry()));
+        getCountryComboBox().setSelectedItem(getCountriesList().indexOf(controller.getCity(cityZipCode, cityName).getCountry()));
     }
 }
