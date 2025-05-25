@@ -67,4 +67,12 @@ public class ProductController {
     public ArrayList<Product> getAll() throws DAORetrievalFailedException, ProhibitedValueException {
         return manager.getAll();
     }
+
+    public boolean exists(long barcode) throws DAORetrievalFailedException {
+        return manager.exists(barcode);
+    }
+
+    public ArrayList<ProductInformation> getProductInformationByBrand(int brandId) throws DAORetrievalFailedException {
+        return manager.getProductInformationByBrand(brandId);
+    }
 }

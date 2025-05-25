@@ -60,6 +60,10 @@ public class EmployeeController {
         return manager.getAllRoles();
     }
 
+    public ArrayList<EmployeePlace> getEmployeePlaceByEmployee(int employeeId) throws ProhibitedValueException, DAORetrievalFailedException {
+        return manager.getEmployeePlaceByEmployee(employeeId);
+    }
+
     public byte[] hashPassword(String password) throws HashFailedException {
         return manager.hashPassword(password);
     }

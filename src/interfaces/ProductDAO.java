@@ -1,10 +1,7 @@
 package interfaces;
 
 import exceptions.*;
-import model.Brand;
-import model.Category;
-import model.Product;
-import model.Vat;
+import model.*;
 
 import java.util.ArrayList;
 
@@ -26,4 +23,6 @@ public interface ProductDAO {
 
     int getCurrentStock(Long barcode) throws NotFoundException, DAORetrievalFailedException;
     ArrayList<Product> getOutOfStock() throws DAORetrievalFailedException, ProhibitedValueException;
+    public boolean exists(long barcode) throws DAORetrievalFailedException;
+    public ArrayList<ProductInformation> getProductInformationByBrand(int brandId) throws DAORetrievalFailedException;
 }

@@ -3,6 +3,7 @@ package interfaces;
 import exceptions.*;
 import model.City;
 import model.Employee;
+import model.EmployeePlace;
 
 import java.util.ArrayList;
 
@@ -17,4 +18,5 @@ public interface EmployeeDAO {
     City getCity(Integer zipCode, String name) throws DAORetrievalFailedException, NotFoundException, ProhibitedValueException;
     ArrayList<String> getAllCountries() throws DAORetrievalFailedException;
     ArrayList<String> getAllRoles() throws DAORetrievalFailedException;
+    public ArrayList<EmployeePlace> getEmployeePlaceByEmployee(int employeeId) throws ProhibitedValueException, DAORetrievalFailedException;
 }

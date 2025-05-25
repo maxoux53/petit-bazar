@@ -4,6 +4,7 @@ import exceptions.*;
 import interfaces.EmployeeDAO;
 import model.City;
 import model.Employee;
+import model.EmployeePlace;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -254,6 +255,48 @@ public class EmployeeDBAccess extends DBAccess implements EmployeeDAO {
             throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
         } catch (SQLException e) {
             throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
+        }
+    }
+    
+    // Research
+    
+    public ArrayList<EmployeePlace> getEmployeePlaceByEmployee(int employeeId) throws ProhibitedValueException, DAORetrievalFailedException {
+        sqlInstruction = "SELECT employee.first_name AS employee_first_name, employee.last_name AS employee_last_name, city.name AS city_name, city.zip_code AS city_zip_code, country.name AS country_name " +
+                "FROM employee " +
+                "INNER JOIN city ON employee.city_name = city.name AND employee.city_zip_code = city.zip_code " +
+                "INNER JOIN country ON city.country = country.name " +
+                "WHERE employee.id = ?;";
+
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            preparedStatement.setInt(1, employeeId);
+
+            ResultSet data = preparedStatement.executeQuery();
+
+            ArrayList<EmployeePlace> employeePlaces = new ArrayList<>();
+
+            if (data.next()) {
+                try {
+                    employeePlaces.add(new EmployeePlace(
+                                    data.getString("employee_first_name"),
+                                    data.getString("employee_last_name"),
+                                    data.getString("city_name"),
+                                    data.getInt("city_zip_code"),
+                                    data.getString("country_name")
+                            )
+                    );
+                } catch (ProhibitedValueException e) {
+                    throw new ProhibitedValueException("Valeur interdite !");
+                }
+
+            }
+
+            return employeePlaces;
+
+        } catch (SQLTimeoutException exception) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, exception.getMessage());
+        } catch (SQLException exception) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, exception.getMessage());
         }
     }
     
