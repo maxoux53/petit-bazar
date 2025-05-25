@@ -5,18 +5,20 @@ import exceptions.*;
 import model.Category;
 import model.City;
 import model.Employee;
+import view.Window;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class EditEmployee extends EmployeePanel {
     private int lastLoadedEmployeeId;
 
-    public EditEmployee() {
+    public EditEmployee(Window window) {
         super("Modifier un employé", "Modifier");
         super.setController(new EmployeeController());
 
@@ -46,19 +48,16 @@ public class EditEmployee extends EmployeePanel {
                     ));
 
                     clearFields();
+                    window.showEmployeeManagement();
                 } catch (WrongTypeException | ProhibitedValueException | UpdateFailedException | DAORetrievalFailedException | HashFailedException | NullPointerException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
-
-        setLayout(new BorderLayout());
-        setBackground(Color.white);
-        add(this, BorderLayout.CENTER);
     }
 
     // Methods
-    public void fillAllFields(Employee employee) {
+    public void fillAllFields(Employee employee) throws DAORetrievalFailedException, NotFoundException, ProhibitedValueException {
         Integer cityZipCode = employee.getCityZipCode();
         String cityName = employee.getCityName();
 
@@ -71,10 +70,10 @@ public class EditEmployee extends EmployeePanel {
         getStreetNumberField().setText(employee.getStreetNumber());
         getUnitNumberField().setText(employee.getUnitNumber() == null ? "" : employee.getUnitNumber().toString());
         getRoleComboBox().setSelectedItem(employee.getRoleLabel());
-        getHireDateSpinner().setValue(employee.getHireDate());
+        getHireDateSpinner().setValue(Date.valueOf(employee.getHireDate()));
         getManagerIdField().setText(employee.getManagerId() == null ? "" : employee.getManagerId().toString());
         getCityZipCodeField().setText(cityZipCode.toString());
         getCityNameField().setText(cityName);
-        getCountryComboBox().setSelectedItem(controller.getCountry(cityZipCode, cityName));
+        getCountryComboBox().setSelectedItem(getCoutriesList().indexOf(controller.getCity(cityZipCode, cityName).getCountry()));
     }
 }

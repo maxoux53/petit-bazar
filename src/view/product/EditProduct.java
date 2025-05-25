@@ -12,6 +12,7 @@ import view.Window;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -78,6 +79,8 @@ public class EditProduct extends JPanel {
         } catch (ProhibitedValueException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
+        
+        productPanel.getStartDateSpinner().setValue(Date.valueOf(product.getStartDate()));
 
         productPanel.getAvailableRadioButtonNo().setSelected(!product.getAvailable());
         lastLoadedProductBarcode = product.getBarcode();

@@ -2,6 +2,7 @@ package view.employee;
 
 import controller.EmployeeController;
 import exceptions.*;
+import model.City;
 import model.Employee;
 import view.FontPreferences;
 import view.Window;
@@ -67,8 +68,13 @@ public class EmployeeManagement extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (isSelectedEmployeeLoaded()) {
-                    window.getEditEmployee().fillAllFields(selectedEmployee);
-                    window.showEditEmployee();
+                    try {
+                        window.getEditEmployee().fillAllFields(selectedEmployee);
+                        window.showEditEmployee();
+                    } catch (DAORetrievalFailedException | NotFoundException | ProhibitedValueException ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Échec", JOptionPane.ERROR_MESSAGE);
+                    }
+                    
                 }
             }
         });
@@ -149,14 +155,15 @@ public class EmployeeManagement extends JPanel {
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
         ArrayList<Employee> employees = controller.getAllEmployees();
+        City city;
+        
         Object[] employeeInfos = new Object[columnNames.length];
 
         for (Employee employee : employees) {
-
             employeeInfos[0] = employee.getId();
             employeeInfos[1] = employee.getFirstName();
             employeeInfos[2] = employee.getLastName();
-            employeeInfos[3] = employee.getActive();
+            employeeInfos[3] = employee.getActive() ? "Oui" : "Non";
             employeeInfos[4] = employee.getStreet();
             employeeInfos[5] = employee.getStreetNumber();
             employeeInfos[6] = employee.getUnitNumber();
@@ -165,6 +172,13 @@ public class EmployeeManagement extends JPanel {
             employeeInfos[9] = employee.getManagerId();
             employeeInfos[10] = employee.getCityZipCode();
             employeeInfos[11] = employee.getCityName();
+
+            try {
+                city = controller.getCity(employee.getCityZipCode(), employee.getCityName());
+                employeeInfos[12] = city.getCountry();
+            } catch (NotFoundException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur (" + employee.getId() + ") " + employee.getFirstName(), JOptionPane.ERROR_MESSAGE);
+            }
 
             model.addRow(employeeInfos);
         }

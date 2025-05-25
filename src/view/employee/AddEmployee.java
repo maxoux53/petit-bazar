@@ -42,9 +42,5 @@ public class AddEmployee extends EmployeePanel {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         });
-
-        setLayout(new BorderLayout());
-        setBackground(Color.white);
-        add(this, BorderLayout.CENTER);
     }
 }
