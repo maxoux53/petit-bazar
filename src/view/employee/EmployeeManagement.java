@@ -186,7 +186,7 @@ public class EmployeeManagement extends JPanel {
         return model;
     }
 
-    private void refreshTable() {
+    public void refreshTable() {
         try {
             listingTable.setModel(infoTableModel());
         } catch (DAORetrievalFailedException | ProhibitedValueException e) {
