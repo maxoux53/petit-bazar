@@ -41,6 +41,7 @@ public class TransactionResearch extends JPanel {
                 "Nom de l'employé"},
                 0
         );
+
         resultTable = new JTable(tableModel);
 
         // Initialisation du JPanel (dateSpinner + searchButton)
@@ -53,22 +54,22 @@ public class TransactionResearch extends JPanel {
         add(new JScrollPane(resultTable), BorderLayout.CENTER);
 
         // Mise en fonction du JButton (searchButton)
-        searchButton.addActionListener(e -> rechercherTransactions());
+        searchButton.addActionListener(e -> searchTransaction());
     }
 
-    private void rechercherTransactions() {
+    private void searchTransaction() {
         Date selectedDate = (Date) dateSpinner.getValue(); // Récupération de la date
         LocalDate localDate = selectedDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(); // Transformation de la date (Date -> LocalDate)
 
         try {
             ArrayList<PurchaseInformation> results = controller.getPurchaseInformationByDate(localDate); // Récupération des données
-            remplirTable(results);
+            fillTable(results);
         } catch (DAORetrievalFailedException e) {
             JOptionPane.showMessageDialog(this, "Erreur lors de la récupération des données : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private void remplirTable(ArrayList<PurchaseInformation> results) {
+    private void fillTable(ArrayList<PurchaseInformation> results) {
         tableModel.setRowCount(0); // Réinitialisation du tableau
 
         for (PurchaseInformation pi : results) { // Remplissage du tableau avec les données
