@@ -34,7 +34,7 @@ public class TransactionResearch extends JPanel {
 
         // Initialisation du modèle du tableau des transactions
         tableModel = new DefaultTableModel(new Object[]{
-                "ID de la transaction",
+                "Identifiant de la transaction",
                 "Prénom du client",
                 "Nom du client",
                 "Prénom de l'employé",
