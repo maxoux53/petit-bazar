@@ -148,7 +148,7 @@ public class Menu extends JPanel {
         employee.add(listingEmployee); // Menu | sous-menus - Gestion d'un employé
 
         /* Recherche */ /* Recherche 1 */
-        addressResearch = new JMenuItem("Recherche des adresses");
+        addressResearch = new JMenuItem("Recherche de l'adresse");
 
         addressResearch.addActionListener(new ActionListener() {
             @Override
