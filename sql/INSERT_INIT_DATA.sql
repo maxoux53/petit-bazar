@@ -315,25 +315,25 @@ INSERT INTO employee (first_name, last_name, password, is_active, street, street
 
 INSERT INTO customer (first_name, last_name, birth_date, email, phone, vat_number, loyalty_points) VALUES
 ('Michel', 'Leroy', '1985-03-12', 'michel.leroy@email.com', 0471234567, NULL, 150),
-('Camille', 'Dubois', '1992-07-25', 'camille.dubois@email.com', 0489654321, NULL, 75),
+('Camille', 'Dubois', '1992-07-25', 'camille.dubois@email.com', 0489654321, 0823456780, 75),
 ('Sophie', 'Martin', '1990-01-15', 'sophie.martin@email.com', 0471122334, NULL, 120),
 ('Lucas', 'Bernard', '1988-06-22', 'lucas.bernard@email.com', 0471987654, NULL, 60),
 ('Emma', 'Petit', '1995-09-10', 'emma.petit@email.com', 0471765432, NULL, 90),
 ('Louis', 'Robert', '1982-11-30', 'louis.robert@email.com', 0471345678, NULL, 30),
-('Chloé', 'Richard', '1993-04-18', 'chloe.richard@email.com', 0471456789, NULL, 110),
+('Chloé', 'Richard', '1993-04-18', 'chloe.richard@email.com', 0471456789, 0412123456, 110),
 ('Nathan', 'Durand', '1987-08-27', 'nathan.durand@email.com', 0471567890, NULL, 80),
 ('Léa', 'Moreau', '1991-12-05', 'lea.moreau@email.com', 0471678901, NULL, 55),
 ('Hugo', 'Simon', '1989-03-14', 'hugo.simon@email.com', 0471789012, NULL, 40),
 ('Manon', 'Laurent', '1994-07-21', 'manon.laurent@email.com', 0471890123, NULL, 95),
 ('Arthur', 'Lefebvre', '1986-10-02', 'arthur.lefebvre@email.com', 0471901234, NULL, 70),
 ('Julie', 'Michel', '1996-02-28', 'julie.michel@email.com', 0471012345, NULL, 85),
-('Gabriel', 'Garcia', '1984-05-19', 'gabriel.garcia@email.com', 0471123456, NULL, 65),
+('Gabriel', 'Garcia', '1984-05-19', 'gabriel.garcia@email.com', 0471123456, 0123456789, 65),
 ('Alice', 'David', '1993-11-11', 'alice.david@email.com', 0471234568, NULL, 100),
 ('Tom', 'Roux', '1990-08-08', 'tom.roux@email.com', 0471345679, NULL, 50),
 ('Sarah', 'Vincent', '1987-01-23', 'sarah.vincent@email.com', 0471456780, NULL, 115),
 ('Maxime', 'Fontaine', '1992-03-30', 'maxime.fontaine@email.com', 0471567891, NULL, 77),
 ('Laura', 'Chevalier', '1995-06-17', 'laura.chevalier@email.com', 0471678902, NULL, 82),
-('Antoine', 'Lambert', '1983-09-25', 'antoine.lambert@email.com', 0471789013, NULL, 68);
+('Antoine', 'Lambert', '1983-09-25', 'antoine.lambert@email.com', 0471789013, 0999999991, 68);
 
 INSERT INTO purchase (date, employee_id, customer_card_number) VALUES
 ('2023-10-15', 1, 1),
