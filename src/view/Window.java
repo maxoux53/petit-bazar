@@ -1,5 +1,7 @@
 package view;
 
+import view.function.CustomerFunction;
+import view.function.PurchaseFunction;
 import view.product.AddProduct;
 import view.product.EditProduct;
 import view.product.ProductManagement;
@@ -30,6 +32,8 @@ public class Window extends JFrame {
     private AddressResearch addressResearch; // Attribut - Recherche 1
     private ProductResearch productResearch; // Attribut - Recherche 2
     private TransactionResearch transactionResearch; // Attribut - Recherche 3
+    private CustomerFunction customerFunction; // Attribut - Fonctionnalité métier 1
+    private PurchaseFunction purchaseFunction; // Attribut - Fonctionnalité métier 2
 
     // Constructors
     public Window(String title) {
@@ -60,6 +64,8 @@ public class Window extends JFrame {
         addressResearch = new AddressResearch(); // Panel - Recherche 1
         productResearch = new ProductResearch(); // Panel - Recherche 2
         transactionResearch = new TransactionResearch(); // Panel - Recherche 3
+        customerFunction = new CustomerFunction(); // Panel - Fonctionnalité métier 1
+        purchaseFunction = new PurchaseFunction(); // Panel - Fonctionnalité métier 2
         
         container = getContentPane();
         container.add(login);
@@ -215,6 +221,30 @@ public class Window extends JFrame {
 
             container.add(transactionResearch);
             setCurrentPanel(transactionResearch);
+
+            container.revalidate();
+            container.repaint();
+        }
+    }
+
+    public void showCustomerFunction() { // Show - Fonctionnalité Métier 1
+        if (currentPanel != customerFunction) {
+            container.remove(currentPanel);
+
+            container.add(customerFunction);
+            setCurrentPanel(customerFunction);
+
+            container.revalidate();
+            container.repaint();
+        }
+    }
+
+    public void showPurchaseFunction() { // Show - Fonctionnalité Métier 2
+        if (currentPanel != purchaseFunction) {
+            container.remove(currentPanel);
+
+            container.add(purchaseFunction);
+            setCurrentPanel(purchaseFunction);
 
             container.revalidate();
             container.repaint();
