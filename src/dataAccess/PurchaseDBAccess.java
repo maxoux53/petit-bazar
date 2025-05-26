@@ -49,7 +49,7 @@ public class PurchaseDBAccess extends DBAccess implements PurchaseDAO {
     }
 
     public ArrayList<SalesInfo> salesRanking(String categoryLabel) throws DAORetrievalFailedException {
-        sqlInstruction = "SELECT p.barcode, p.name, SUM(a.quantity) AS total_sales_volume FROM product p INNER JOIN order_line a ON a.product_barcode = p.barcode WHERE p.category_id = (SELECT id FROM category WHERE label = ?) GROUP BY p.barcode, p.name ORDER BY SUM(a.quantity) DESC;";
+        sqlInstruction = "SELECT p.barcode, p.name, SUM(a.quantity) AS total_sales_volume FROM product p INNER JOIN order_line a ON a.product_barcode = p.barcode WHERE p.category_id = (SELECT id FROM category WHERE name = ?) GROUP BY p.barcode, p.name ORDER BY SUM(a.quantity) DESC;";
         ArrayList<SalesInfo> ranking = new ArrayList<>();
 
         try {
