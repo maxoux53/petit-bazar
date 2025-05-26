@@ -10,4 +10,16 @@ public class SalesInfo {
         this.productName = productName;
         this.sumQuantity = sumQuantity;
     }
+
+    public Long getProductBarcode() {
+        return productBarcode;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public int getSumQuantity() {
+        return sumQuantity;
+    }
 }

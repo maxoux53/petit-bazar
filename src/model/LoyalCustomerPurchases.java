@@ -10,4 +10,16 @@ public class LoyalCustomerPurchases {
         this.customerFirstName = customerFirstName;
         this.purchaseNb = purchaseNb;
     }
+
+    public String getCustomerLastName() {
+        return customerLastName;
+    }
+
+    public String getCustomerFirstName() {
+        return customerFirstName;
+    }
+
+    public int getPurchaseNb() {
+        return purchaseNb;
+    }
 }

@@ -8,12 +8,13 @@ public class Menu extends JPanel {
     /* Attribut */
     private Window window;
     private JMenuBar menuBar;
-    private JMenu application, product, employee, research; // Menu - Employé | Recherche
+    private JMenu application, product, employee, research, function; // Menu - Employé | Recherche | Fonction
     private JMenuItem home, leave, signOut;
     private JMenuItem addProduct, editProduct, deleteProduct, listingProduct;
     private JMenuItem addEmployee, editEmployee, deleteEmployee, listingEmployee; // Sous-menu - Ajout | Modification | Suppression | Gestion - Employé
     private JMenuItem addressResearch, productResearch, transactionResearch; // Sous-menu - Recherche 1 | Recherche 2 | Recherche 3
-    
+    private JMenuItem customerFunction, purchaseFunction; // Sous-menu - Fonctionnalité métier 1 | Fonctionnalité métier 2
+
     /* Constructeur */
     public Menu(Window window) {
         this.window = window;
@@ -22,6 +23,7 @@ public class Menu extends JPanel {
         product = new JMenu("Article");
         employee = new JMenu("Employé"); // Element du constructeur - Employé
         research = new JMenu("Recherche"); // Element du constructeur - Recherche
+        function = new JMenu("Fonction"); // Element du constructeur - Fonction
 
         setBackground(Color.WHITE);
 
@@ -181,10 +183,34 @@ public class Menu extends JPanel {
         research.add(productResearch); // Menu | sous-menus - Recherche 2
         research.add(transactionResearch); // Menu | sous-menus - Recherche 3
 
+        /* Fonction */ /* Fonctionnalité métier 1 */
+        customerFunction = new JMenuItem("Fonction des clients");
+
+        customerFunction.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                window.showCustomerFunction();
+            }
+        });
+
+        /* Fonction */ /* Fonctionnalité métier 2 */
+        purchaseFunction = new JMenuItem("Fonction des achats");
+
+        purchaseFunction.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                window.showPurchaseFunction();
+            }
+        });
+
+        function.add(customerFunction); // Menu | sous-menus - Fonctionnalité métier 1
+        function.add(purchaseFunction); // Menu | sous-menus - Fonctionnalité métier 2
+
         menuBar.add(application);
         menuBar.add(product);
         menuBar.add(employee); // Menu - Employé
         menuBar.add(research); // Menu - Recherche
+        menuBar.add(function); // Menu - Fonction
     }
 
     // Getters
