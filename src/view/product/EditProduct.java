@@ -1,6 +1,5 @@
 package view.product;
 
-
 import controller.*;
 
 import exceptions.*;
@@ -74,11 +73,9 @@ public class EditProduct extends JPanel {
 
         try {
             productPanel.getVatTypeComboBox().setSelectedIndex(indexOfVatType(product.getVatType()));
-            productPanel.getCategoryComboBox().setSelectedIndex(indexOfCategoryName(product.getCategoryId()));
+            productPanel.getCategoryComboBox().setSelectedItem(controller.getCategoryById(product.getCategoryId()).getLabel());
             productPanel.getBrandField().setText(controller.getBrandById(product.getBrandId()).getName());
-        } catch (DAORetrievalFailedException | NotFoundException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-        } catch (ProhibitedValueException e) {
+        } catch (DAORetrievalFailedException | NotFoundException | ProhibitedValueException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         
@@ -89,13 +86,8 @@ public class EditProduct extends JPanel {
         lastLoadedProductBarcode = product.getBarcode();
     }
 
-    private Integer indexOfVatType(Character targetVatType) throws DAORetrievalFailedException, NotFoundException {
-        ArrayList<Vat> vats = null;
-        try {
-            vats = controller.getAllVats();
-        } catch (ProhibitedValueException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
+    private Integer indexOfVatType(Character targetVatType) throws NotFoundException {
+        ArrayList<Vat> vats = productPanel.getVats();
         int size = vats.size();
 
         int i = 0;
@@ -106,28 +98,6 @@ public class EditProduct extends JPanel {
         if (i < size) {
             return i;
         }
-
         throw new NotFoundException("TVA", targetVatType, "Type de TVA inconnu");
-    }
-
-    private Integer indexOfCategoryName(Integer targetCategoryId) throws DAORetrievalFailedException, NotFoundException {
-        ArrayList<Category> categories = null;
-        try {
-            categories = controller.getAllCategories();
-        } catch (ProhibitedValueException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-        }
-        int size = categories.size();
-
-        int i = 0;
-        while (i < size && !categories.get(i).getId().equals(targetCategoryId)) {
-            i++;
-        }
-
-        if (i < size) {
-            return i;
-        }
-
-        throw new NotFoundException("Catégorie", targetCategoryId, "Catégorie inconnue");
     }
 }
