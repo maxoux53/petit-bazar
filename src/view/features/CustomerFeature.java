@@ -49,7 +49,7 @@ public class CustomerFeature extends JPanel {
         String idText = idEmployeeField.getText().trim();
 
         if (idText.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Veuillez entrer un ID employé", "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Veuillez entrer un matricule employé", "Erreur", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -57,7 +57,7 @@ public class CustomerFeature extends JPanel {
         try {
             employeeId = Integer.parseInt(idText);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "L'ID doit être un nombre entier", "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Le matricule doit être un nombre entier", "Erreur", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
