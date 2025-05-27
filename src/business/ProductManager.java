@@ -62,6 +62,10 @@ public class ProductManager {
         return dao.getAllVats();
     }
 
+    public ArrayList<Brand> getAllBrands() throws DAORetrievalFailedException, ProhibitedValueException {
+        return dao.getAllBrands();
+    }
+
     public int getCurrentStock(Long barcode) throws NotFoundException, DAORetrievalFailedException {
         return dao.getCurrentStock(barcode);
     }

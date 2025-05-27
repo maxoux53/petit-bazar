@@ -56,6 +56,10 @@ public class ProductController {
         return manager.getAllVats();
     }
 
+    public ArrayList<Brand> getAllBrands() throws DAORetrievalFailedException, ProhibitedValueException {
+        return manager.getAllBrands();
+    }
+
     public int getCurrentStock(Long barcode) throws NotFoundException, DAORetrievalFailedException, WrongTypeException, FieldIsEmptyException {
         return manager.getCurrentStock(barcode);
     }

@@ -302,6 +302,30 @@ public class ProductDBAccess extends DBAccess implements ProductDAO {
             throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
         }
     }
+    
+    public ArrayList<Brand> getAllBrands() throws DAORetrievalFailedException, ProhibitedValueException {
+        sqlInstruction = "SELECT * FROM brand;";
+        
+        try {
+            preparedStatement = SingletonConnection.getInstance().prepareStatement(sqlInstruction);
+            ResultSet data = preparedStatement.executeQuery();
+            
+            ArrayList<Brand> brands = new ArrayList<>();
+            
+            while (data.next()) {
+                brands.add(new Brand(
+                        data.getInt("id"),
+                        data.getString("name")
+                ));
+            }
+            
+            return brands;
+        } catch (SQLTimeoutException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.TIMEOUT, e.getMessage());
+        } catch (SQLException e) {
+            throw new DAORetrievalFailedException(DBRetrievalFailure.ACCESS_ERROR, e.getMessage());
+        }
+    }
 
     public int getCurrentStock(Long barcode) throws NotFoundException, DAORetrievalFailedException {
         sqlInstruction = "SELECT amount FROM product WHERE barcode = ?;";

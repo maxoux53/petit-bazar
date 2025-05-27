@@ -20,7 +20,8 @@ public interface ProductDAO {
 
     ArrayList<Category> getAllCategories() throws DAORetrievalFailedException, ProhibitedValueException;
     ArrayList<Vat> getAllVats() throws DAORetrievalFailedException, ProhibitedValueException;
-
+    ArrayList<Brand> getAllBrands() throws DAORetrievalFailedException, ProhibitedValueException;
+    
     int getCurrentStock(Long barcode) throws NotFoundException, DAORetrievalFailedException;
     ArrayList<Product> getOutOfStock() throws DAORetrievalFailedException, ProhibitedValueException;
     boolean exists(Long barcode) throws DAORetrievalFailedException;
