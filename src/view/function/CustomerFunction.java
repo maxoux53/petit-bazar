@@ -22,7 +22,7 @@ public class CustomerFunction extends JPanel {
         setLayout(new BorderLayout());
 
         JPanel topPanel = new JPanel();
-        topPanel.add(new JLabel("Identifiant de l'employé :"));
+        topPanel.add(new JLabel("Matricule de l'employé :"));
         idEmployeeField = new JTextField(10);
         topPanel.add(idEmployeeField);
 
