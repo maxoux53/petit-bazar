@@ -6,9 +6,7 @@ import model.City;
 import model.Employee;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.time.LocalDate;
 
 public class AddEmployee extends EmployeePanel {
     public AddEmployee() {
@@ -17,6 +15,8 @@ public class AddEmployee extends EmployeePanel {
 
         getButton().addActionListener((ActionEvent e) -> {
             try {
+                fieldsAreFilled();
+                
                 Integer zipCode = stringToZipCode(getCityZipCodeField().getText().trim());
                 String cityName = getCityNameField().getText();
 
@@ -40,7 +40,7 @@ public class AddEmployee extends EmployeePanel {
                 ));
 
                 clearFields();
-            } catch (WrongTypeException | ProhibitedValueException | InsertionFailedException | DAORetrievalFailedException | NumberFormatException | HashFailedException ex) {
+            } catch (WrongTypeException | ProhibitedValueException | InsertionFailedException | DAORetrievalFailedException | NumberFormatException | HashFailedException | FieldIsEmptyException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         });

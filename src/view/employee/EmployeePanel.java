@@ -133,35 +133,6 @@ public class EmployeePanel extends JPanel {
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    private JPanel buildInputPanel(String labelText, JTextField field) {
-        JPanel panel = new JPanel(new GridLayout(1, 2, 50, 0));
-        panel.setBackground(Color.white);
-        JLabel label = new JLabel(labelText, SwingConstants.RIGHT);
-        label.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.PLAIN, FontPreferences.MID_SIZE));
-        field.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.PLAIN, FontPreferences.NORMAL_SIZE));
-        field.setBackground(Color.white);
-        field.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-        panel.add(label);
-        panel.add(field);
-        return panel;
-    }
-
-    public void clearFields() {
-        firstNameField.setText("");
-        lastNameField.setText("");
-        passwordField.setText("");
-        streetField.setText("");
-        streetNumberField.setText("");
-        unitNumberField.setText("");
-        managerIdField.setText("");
-        cityZipCodeField.setText("");
-        cityNameField.setText("");
-        hireDateSpinner.setValue(new Date());
-        activeYes.setSelected(true);
-        if (roleComboBox.getItemCount() > 0) roleComboBox.setSelectedIndex(0);
-        if (countryComboBox.getItemCount() > 0) countryComboBox.setSelectedIndex(0);
-    }
-
     public void setController(EmployeeController controller) {
         this.controller = controller;
     }
@@ -189,6 +160,70 @@ public class EmployeePanel extends JPanel {
     public JComboBox<String> getCountryComboBox() { return countryComboBox; }
     public ArrayList<String> getCountriesList() {
         return countriesList;
+    }
+
+    // Public methods
+    public void clearFields() {
+        firstNameField.setText("");
+        lastNameField.setText("");
+        passwordField.setText("");
+        streetField.setText("");
+        streetNumberField.setText("");
+        unitNumberField.setText("");
+        managerIdField.setText("");
+        cityZipCodeField.setText("");
+        cityNameField.setText("");
+        hireDateSpinner.setValue(new Date());
+        activeYes.setSelected(true);
+        if (roleComboBox.getItemCount() > 0) roleComboBox.setSelectedIndex(0);
+        if (countryComboBox.getItemCount() > 0) countryComboBox.setSelectedIndex(0);
+    }
+    
+    public void fieldsAreFilled() throws FieldIsEmptyException{
+        if (nullIfEmptyName(firstNameField.getText()) == null) {
+            throw new FieldIsEmptyException("Prénom");
+        } else {
+            if (nullIfEmptyName(lastNameField.getText()) == null) {
+                throw new FieldIsEmptyException("Nom");
+            }
+            else {
+                if (nullIfEmptyName(passwordField.getText()) == null) {
+                    throw new FieldIsEmptyException("Mot de passe");
+                }
+                else {
+                    if (nullIfEmptyName(streetField.getText()) == null) {
+                        throw new FieldIsEmptyException("Rue");
+                    } 
+                    else {
+                        if (nullIfEmptyName(streetNumberField.getText()) == null) {
+                            throw new FieldIsEmptyException("Numéro de rue");
+                        }
+                        else {
+                            if (nullIfEmptyName(cityZipCodeField.getText()) == null) {
+                                throw new FieldIsEmptyException("Code postal");
+                            } 
+                            else {
+                                if (nullIfEmptyName(cityNameField.getText()) == null) {
+                                    throw new FieldIsEmptyException("Ville");
+                                } 
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    private JPanel buildInputPanel(String labelText, JTextField field) {
+        JPanel panel = new JPanel(new GridLayout(1, 2, 50, 0));
+        panel.setBackground(Color.white);
+        JLabel label = new JLabel(labelText, SwingConstants.RIGHT);
+        label.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.PLAIN, FontPreferences.MID_SIZE));
+        field.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.PLAIN, FontPreferences.NORMAL_SIZE));
+        field.setBackground(Color.white);
+        field.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+        panel.add(label);
+        panel.add(field);
+        return panel;
     }
 
     public Integer stringToUnitNumber(String unitNumberAsString) throws ProhibitedValueException, WrongTypeException {
@@ -243,5 +278,11 @@ public class EmployeePanel extends JPanel {
             }
         }
         return null;
+    }
+    
+    // Private methods
+
+    private String nullIfEmptyName(String field) {
+        return (field.isEmpty() ? null : field);
     }
 }
