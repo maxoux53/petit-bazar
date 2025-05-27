@@ -35,7 +35,8 @@ public class CustomerFeature extends JPanel {
                 "Prénom du client",
                 "Nom du client",
                 "Nombre d'achats"},
-                0);
+                0
+        );
 
         resultTable = new JTable(tableModel);
         resultTable.setDefaultEditor(Object.class, null);
