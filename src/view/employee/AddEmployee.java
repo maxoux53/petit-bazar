@@ -15,7 +15,7 @@ public class AddEmployee extends EmployeePanel {
 
         getButton().addActionListener((ActionEvent e) -> {
             try {
-                fieldsAreFilled();
+                checkFields();
                 
                 Integer zipCode = stringToZipCode(getCityZipCodeField().getText().trim());
                 String cityName = getCityNameField().getText();
