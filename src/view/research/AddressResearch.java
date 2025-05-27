@@ -23,7 +23,7 @@ public class AddressResearch extends JPanel {
 
         // Initialisation du JPanel (idField)
         JPanel topPanel = new JPanel();
-        topPanel.add(new JLabel("Identifiant de l'employé :"));
+        topPanel.add(new JLabel("Matricule de l'employé :"));
         idField = new JTextField(10);
         topPanel.add(idField);
 
