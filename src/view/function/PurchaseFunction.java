@@ -1,7 +1,10 @@
 package view.function;
 
+import controller.ProductController;
 import controller.PurchaseController;
 import exceptions.DAORetrievalFailedException;
+import exceptions.ProhibitedValueException;
+import model.Category;
 import model.SalesInfo;
 
 import javax.swing.*;
@@ -10,21 +13,36 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class PurchaseFunction extends JPanel {
-    private JTextField categoryField;
+    private JComboBox<String> categoryComboBox;
+    private ArrayList<Category> categories;
     private JButton searchButton;
     private JTable resultTable;
     private DefaultTableModel tableModel;
 
-    private PurchaseController controller;
+    private PurchaseController purchaseController;
+    private ProductController productController;
 
     public PurchaseFunction() {
-        setController(new PurchaseController());
+        setPurchaseController(new PurchaseController());
+        setProductController(new ProductController());
         setLayout(new BorderLayout());
 
         JPanel topPanel = new JPanel();
         topPanel.add(new JLabel("Catégorie :"));
-        categoryField = new JTextField(15);
-        topPanel.add(categoryField);
+        categoryComboBox = new JComboBox<>();
+        
+        try {
+            categories = productController.getAllCategories();
+            
+            for (Category category : categories) {
+                categoryComboBox.addItem(category.getLabel());
+            }
+            
+        } catch (DAORetrievalFailedException | ProhibitedValueException e) {
+            JOptionPane.showMessageDialog(this, "Erreur lors de la récupération des données : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        topPanel.add(categoryComboBox);
 
         searchButton = new JButton("Rechercher");
         topPanel.add(searchButton);
@@ -44,17 +62,10 @@ public class PurchaseFunction extends JPanel {
     }
 
     private void functionPurchase() {
-        String categoryLabel = categoryField.getText().trim();
-
-        if (categoryLabel.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "Veuillez entrer un nom de catégorie",
-                    "Erreur", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
+        Category categorySelected = categories.get(categoryComboBox.getSelectedIndex());
+        
         try {
-            ArrayList<SalesInfo> results = controller.salesRanking(categoryLabel);
+            ArrayList<SalesInfo> results = purchaseController.salesRanking(categorySelected.getLabel());
             fillTable(results);
         } catch (DAORetrievalFailedException e) {
             JOptionPane.showMessageDialog(this,
@@ -81,7 +92,12 @@ public class PurchaseFunction extends JPanel {
         }
     }
 
-    public void setController(PurchaseController controller) {
-        this.controller = controller;
+    // Getters
+    public void setPurchaseController(PurchaseController purchaseController) {
+        this.purchaseController = purchaseController;
+    }
+
+    public void setProductController(ProductController productController) {
+        this.productController = productController;
     }
 }
