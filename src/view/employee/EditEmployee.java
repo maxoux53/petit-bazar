@@ -23,10 +23,12 @@ public class EditEmployee extends EmployeePanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    fieldsAreFilled();
+                    
                     Integer zipCode = stringToZipCode(getCityZipCodeField().getText().trim());
                     String cityName = getCityNameField().getText();
 
-                    controller.setCity(new City(zipCode, cityName, (String)getCountryComboBox().getSelectedItem()));
+                    controller.setCity(new City(zipCode, cityName, (String) getCountryComboBox().getSelectedItem()));
 
                     controller.update(new Employee(
                             lastLoadedEmployeeId,
@@ -37,8 +39,8 @@ public class EditEmployee extends EmployeePanel {
                             getStreetField().getText(),
                             getStreetNumberField().getText().trim(),
                             stringToUnitNumber(getUnitNumberField().getText().trim()),
-                            (String)getRoleComboBox().getSelectedItem(),
-                            ((java.util.Date)getHireDateSpinner().getValue()).toInstant()
+                            (String) getRoleComboBox().getSelectedItem(),
+                            ((java.util.Date) getHireDateSpinner().getValue()).toInstant()
                                     .atZone(java.time.ZoneId.systemDefault())
                                     .toLocalDate(),
                             stringToId(getManagerIdField().getText().trim()),
@@ -48,7 +50,7 @@ public class EditEmployee extends EmployeePanel {
 
                     clearFields();
                     window.showEmployeeManagement();
-                } catch (WrongTypeException | ProhibitedValueException | UpdateFailedException | DAORetrievalFailedException | HashFailedException | NullPointerException ex) {
+                } catch (WrongTypeException | ProhibitedValueException | UpdateFailedException | DAORetrievalFailedException | HashFailedException | NullPointerException | FieldIsEmptyException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
             }
