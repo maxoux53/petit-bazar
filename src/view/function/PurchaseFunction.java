@@ -56,6 +56,7 @@ public class PurchaseFunction extends JPanel {
         }, 0);
 
         resultTable = new JTable(tableModel);
+        resultTable.setDefaultEditor(Object.class, null);
         add(new JScrollPane(resultTable), BorderLayout.CENTER);
 
         searchButton.addActionListener(e -> functionPurchase());

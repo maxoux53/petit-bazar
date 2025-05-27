@@ -43,6 +43,7 @@ public class TransactionResearch extends JPanel {
         );
 
         resultTable = new JTable(tableModel);
+        resultTable.setDefaultEditor(Object.class, null);
 
         // Initialisation du JPanel (dateSpinner + searchButton)
         JPanel topPanel = new JPanel();

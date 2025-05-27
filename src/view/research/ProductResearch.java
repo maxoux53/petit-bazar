@@ -56,6 +56,7 @@ public class ProductResearch extends JPanel {
         );
 
         resultTable = new JTable(tableModel);
+        resultTable.setDefaultEditor(Object.class, null);
 
         add(new JScrollPane(resultTable), BorderLayout.CENTER);
 
