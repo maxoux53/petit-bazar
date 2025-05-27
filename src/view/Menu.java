@@ -221,6 +221,7 @@ public class Menu extends JPanel {
     // Methods
     public void toggleMenu(boolean status) {
         home.setEnabled(status);
+        signOut.setEnabled(status);
         
         // Product
         addProduct.setEnabled(status);
@@ -239,8 +240,10 @@ public class Menu extends JPanel {
         productResearch.setEnabled(status);
         transactionResearch.setEnabled(status);
         
-        signOut.setEnabled(status);
-
+        // Function
+        customerFunction.setEnabled(status);
+        purchaseFunction.setEnabled(status);
+        
         menuBar.repaint();
     }
 
