@@ -74,7 +74,7 @@ public class PurchaseDBAccess extends DBAccess implements PurchaseDAO {
     }
 
     public ArrayList<LoyalCustomerPurchases> loyalCustomerPurchasesRankingByEmployee(Integer employeeId) throws DAORetrievalFailedException {
-        sqlInstruction = "SELECT UPPER(c.last_name), c.first_name, COUNT(p.id) AS sales_nb FROM purchase p INNER JOIN employee e ON p.employee_id = e.id INNER JOIN customer c ON p.customer_card_number = c.loyalty_card_number WHERE (SELECT COUNT(id) FROM purchase WHERE customer_card_number = c.loyalty_card_number) > 1 AND e.id = ? GROUP BY c.last_name, c.first_name ORDER BY COUNT(p.id) DESC;";
+        sqlInstruction = "SELECT UPPER(c.last_name) AS last_name, c.first_name AS first_name, COUNT(p.id) AS sales_nb FROM purchase p INNER JOIN employee e ON p.employee_id = e.id INNER JOIN customer c ON p.customer_card_number = c.loyalty_card_number WHERE (SELECT COUNT(id) FROM purchase WHERE customer_card_number = c.loyalty_card_number) > 1 AND e.id = ? GROUP BY c.last_name, c.first_name ORDER BY COUNT(p.id) DESC;";
         ArrayList<LoyalCustomerPurchases> ranking = new ArrayList<>();
 
         try {

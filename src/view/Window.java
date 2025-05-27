@@ -8,7 +8,7 @@ import view.product.ProductManagement;
 import view.employee.AddEmployee;
 import view.employee.EditEmployee;
 import view.employee.EmployeeManagement;
-import view.research.AddressResearch;
+import view.research.LocalityResearch;
 import view.research.ProductResearch;
 import view.research.TransactionResearch;
 
@@ -29,7 +29,7 @@ public class Window extends JFrame {
     private AddEmployee addEmployee; // Attribut - Ajout d'un employé
     private EditEmployee editEmployee; // Attribut - Modification d'un employé
     private EmployeeManagement employeeManagement; // Attribut - Gestion d'un employé
-    private AddressResearch addressResearch; // Attribut - Recherche 1
+    private LocalityResearch localityResearch; // Attribut - Recherche 1
     private ProductResearch productResearch; // Attribut - Recherche 2
     private TransactionResearch transactionResearch; // Attribut - Recherche 3
     private CustomerFeature customerFeature; // Attribut - Fonctionnalité métier 1
@@ -61,7 +61,7 @@ public class Window extends JFrame {
         addEmployee = new AddEmployee(); // Panel - Ajout d'un employé
         editEmployee = new EditEmployee(this); // Panel - Modification d'un employé
         employeeManagement = new EmployeeManagement(this); // Panel - Gestion d'un employé
-        addressResearch = new AddressResearch(); // Panel - Recherche 1
+        localityResearch = new LocalityResearch(); // Panel - Recherche 1
         productResearch = new ProductResearch(); // Panel - Recherche 2
         transactionResearch = new TransactionResearch(); // Panel - Recherche 3
         customerFeature = new CustomerFeature(); // Panel - Fonctionnalité métier 1
@@ -192,11 +192,11 @@ public class Window extends JFrame {
     }
 
     public void showAddressResearch() { // Show - Recherche 1
-        if (currentPanel != addressResearch) {
+        if (currentPanel != localityResearch) {
             container.remove(currentPanel);
 
-            container.add(addressResearch);
-            setCurrentPanel(addressResearch);
+            container.add(localityResearch);
+            setCurrentPanel(localityResearch);
 
             container.revalidate();
             container.repaint();
