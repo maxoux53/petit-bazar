@@ -76,6 +76,6 @@ public class EditEmployee extends EmployeePanel {
         getManagerIdField().setText(employee.getManagerId() == null ? "" : employee.getManagerId().toString());
         getCityZipCodeField().setText(cityZipCode.toString());
         getCityNameField().setText(cityName);
-        getCountryComboBox().setSelectedItem(getCountriesList().indexOf(controller.getCity(cityZipCode, cityName).getCountry()));
+        getCountryComboBox().setSelectedItem(controller.getCity(cityZipCode, cityName).getCountry());
     }
 }
