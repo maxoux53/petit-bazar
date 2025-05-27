@@ -22,6 +22,8 @@ public class ProductPanel extends JPanel {
     private JRadioButton availableRadioButtonYes, availableRadioButtonNo;
     private ButtonGroup availabilityGroup;
     private JButton button;
+    private ArrayList<Vat> vats;
+    private ArrayList<Category> categories;
     private ProductController controller;
 
     // Constructors
@@ -134,8 +136,7 @@ public class ProductPanel extends JPanel {
         vatTypeComboBox = new JComboBox<String>();
         vatTypeComboBox.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.PLAIN, FontPreferences.NORMAL_SIZE));
         vatTypeComboBox.setBackground(Color.white);
-
-        final ArrayList<Vat> vats;
+        
         try {
             vats = controller.getAllVats();
 
@@ -163,17 +164,14 @@ public class ProductPanel extends JPanel {
         categoryComboBox = new JComboBox<String>();
         categoryComboBox.setFont(new Font(FontPreferences.DEFAULT_STYLE, Font.PLAIN, FontPreferences.NORMAL_SIZE));
         categoryComboBox.setBackground(Color.white);
-
-        final ArrayList<Category> categories = new ArrayList<>();
+        
         try {
-            categories.addAll(controller.getAllCategories());
+            categories = controller.getAllCategories();
 
             for (Category category : categories) {
                 categoryComboBox.addItem(category.getLabel());
             }
-        } catch (DAORetrievalFailedException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
-        } catch (ProhibitedValueException e) {
+        } catch (DAORetrievalFailedException | ProhibitedValueException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
 
@@ -326,6 +324,10 @@ public class ProductPanel extends JPanel {
 
     public JButton getButton() {
         return button;
+    }
+
+    public ArrayList<Vat> getVats() {
+        return vats;
     }
 
     // Methods
