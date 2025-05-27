@@ -115,17 +115,17 @@ public class EmployeePanel extends JPanel {
         buttonPanel.add(button);
 
         formPanel.add(firstNamePanel);
-        formPanel.add(lastNamePanel);
-        formPanel.add(passwordPanel);
         formPanel.add(streetPanel);
+        formPanel.add(lastNamePanel);
         formPanel.add(streetNumberPanel);
+        formPanel.add(passwordPanel);
         formPanel.add(unitNumberPanel);
         formPanel.add(rolePanel);
-        formPanel.add(managerIdPanel);
         formPanel.add(cityZipCodePanel);
+        formPanel.add(managerIdPanel);
         formPanel.add(cityNamePanel);
-        formPanel.add(countryPanel);
         formPanel.add(hireDatePanel);
+        formPanel.add(countryPanel);
         formPanel.add(isActivePanel);
 
         add(titlePanel, BorderLayout.NORTH);
