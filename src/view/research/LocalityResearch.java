@@ -9,7 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class AddressResearch extends JPanel {
+public class LocalityResearch extends JPanel {
     private JTextField idField; // Entrée - Id
     private JButton searchButton; // Entrée - Bouton "Rechercher"
     private JTable resultTable; // Sortie - Tableau de l'adresse
@@ -17,7 +17,7 @@ public class AddressResearch extends JPanel {
 
     private EmployeeController controller;
 
-    public AddressResearch() {
+    public LocalityResearch() {
         setController(new EmployeeController());
         setLayout(new BorderLayout());
 
@@ -62,7 +62,7 @@ public class AddressResearch extends JPanel {
         try {
             employeeId = Integer.parseInt(idText);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "L'ID doit être un nombre entier", "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Le matricule doit être un nombre entier", "Erreur", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -90,7 +90,7 @@ public class AddressResearch extends JPanel {
         }
 
         if (places.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Aucune donnée trouvée pour cet ID", "Info", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Aucune donnée trouvée pour ce matricule", "Info", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 

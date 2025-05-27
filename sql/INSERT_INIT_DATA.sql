@@ -343,7 +343,17 @@ INSERT INTO purchase (date, employee_id, customer_card_number) VALUES
 ('2023-10-19', 1, 5),
 ('2023-10-20', 2, 6),
 ('2023-10-21', 1, 7),
-('2023-10-22', 2, 8);
+('2023-10-22', 2, 8),
+('2023-10-25', 1, 1),     -- Client 1 avec employé 1 (deuxième achat)
+('2023-11-02', 1, 1),     -- Client 1 avec employé 1 (troisième achat)
+('2023-10-28', 2, 3),     -- Client 3 avec employé 2 (deuxième achat)
+('2023-11-05', 2, 3),     -- Client 3 avec employé 2 (troisième achat)
+('2023-10-30', 2, 5),     -- Client 5 avec employé 2 (deuxième achat)
+('2023-11-10', 1, 5),     -- Client 5 avec employé 1 (troisième achat)
+('2023-11-01', 2, 7),     -- Client 7 avec employé 2 (deuxième achat)
+('2023-11-12', 3, 7),     -- Client 7 avec employé 3 (troisième achat)
+('2023-11-15', 3, 10),    -- Client 10 avec employé 3 (premier achat)
+('2023-11-20', 3, 10);    -- Client 10 avec employé 3 (deuxième achat)
 
 INSERT INTO order_line (quantity, product_barcode, purchase_id) VALUES
 (1, 5901234123457, 1),  -- Smartphone dans achat 1
@@ -362,4 +372,24 @@ INSERT INTO order_line (quantity, product_barcode, purchase_id) VALUES
 (1, 8714574638294, 7),  -- Shampooing L'Oréal dans achat 7
 (2, 8714574638299, 7),  -- Jeu Lego City dans achat 7
 (1, 8714574638300, 8),  -- Cartouche HP 304 dans achat 8
-(1, 8714574638301, 8);  -- Ordinateur portable Acer Aspire dans achat 8
+(1, 8714574638301, 8),  -- Ordinateur portable Acer Aspire dans achat 8
+(1, 8714574638303, 9),    -- PC portable Asus
+(2, 8714574638310, 9),    -- Jus d'orange Boni
+(1, 8714574638297, 10),   -- Perceuse Bosch
+(1, 8714574638334, 10),   -- Bâton de colle UHU
+(3, 8714574638309, 11),   -- Lait demi-écrémé Delhaize
+(1, 8714574638320, 11),   -- Scie sauteuse Bosch
+(2, 8714574638305, 12),   -- Biscuits Boni
+(1, 8714574638324, 12),   -- Écran PC Asus
+(1, 8714574638319, 13),   -- Table de jardin IKEA
+(2, 8714574638327, 13),   -- Brosse à cheveux L'Oréal
+(1, 8714574638316, 14),   -- Câble HDMI Sony
+(4, 8714574638306, 14),   -- Livre "Le Petit Prince"
+(1, 8714574638330, 15),   -- Huile moteur Bosch
+(2, 8714574638331, 15),   -- Essuie-glaces Bosch
+(1, 8714574638332, 16),   -- Batterie voiture Philips
+(3, 8714574638333, 16),   -- Gants de jardinage Gardena
+(1, 8714574638313, 17),   -- Tondeuse Gardena
+(2, 8714574638314, 17),   -- Batterie externe Samsung
+(1, 8714574638315, 18),   -- Chargeur Apple MagSafe
+(1, 8714574638318, 18);   -- Crème visage L'Oréal

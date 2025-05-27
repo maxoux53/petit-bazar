@@ -20,10 +20,10 @@ public class Menu extends JPanel {
         this.window = window;
         menuBar = new JMenuBar();
         application = new JMenu("Application");
-        product = new JMenu("Article");
-        employee = new JMenu("Employé"); // Element du constructeur - Employé
-        research = new JMenu("Recherche"); // Element du constructeur - Recherche
-        function = new JMenu("Fonction"); // Element du constructeur - Fonction
+        product = new JMenu("Articles");
+        employee = new JMenu("Employés"); // Element du constructeur - Employé
+        research = new JMenu("Recherches"); // Element du constructeur - Recherche
+        function = new JMenu("Fonctionnalités"); // Element du constructeur - Fonction
 
         setBackground(Color.WHITE);
 
@@ -150,7 +150,7 @@ public class Menu extends JPanel {
         employee.add(listingEmployee); // Menu | sous-menus - Gestion d'un employé
 
         /* Recherche */ /* Recherche 1 */
-        addressResearch = new JMenuItem("Recherche de l'adresse");
+        addressResearch = new JMenuItem("Recherche de la localité");
 
         addressResearch.addActionListener(new ActionListener() {
             @Override
@@ -184,7 +184,7 @@ public class Menu extends JPanel {
         research.add(transactionResearch); // Menu | sous-menus - Recherche 3
 
         /* Fonction */ /* Fonctionnalité métier 1 */
-        customerFunction = new JMenuItem("Fonction des clients");
+        customerFunction = new JMenuItem("Stats des clients fidèles");
 
         customerFunction.addActionListener(new ActionListener() {
             @Override
@@ -194,7 +194,7 @@ public class Menu extends JPanel {
         });
 
         /* Fonction */ /* Fonctionnalité métier 2 */
-        purchaseFunction = new JMenuItem("Fonction des achats");
+        purchaseFunction = new JMenuItem("Stats des catégories");
 
         purchaseFunction.addActionListener(new ActionListener() {
             @Override
