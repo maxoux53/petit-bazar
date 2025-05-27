@@ -140,7 +140,7 @@ public class EmployeeManagement extends JPanel {
                 "Matricule",
                 "Prénom",
                 "Nom",
-                "est actif",
+                "Actif",
                 "Rue",
                 "Numéro de rue",
                 "Numéro de boîte",
