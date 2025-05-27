@@ -1,7 +1,7 @@
 package view;
 
-import view.function.CustomerFunction;
-import view.function.PurchaseFunction;
+import view.features.CustomerFeature;
+import view.features.PurchaseFeature;
 import view.product.AddProduct;
 import view.product.EditProduct;
 import view.product.ProductManagement;
@@ -32,8 +32,8 @@ public class Window extends JFrame {
     private AddressResearch addressResearch; // Attribut - Recherche 1
     private ProductResearch productResearch; // Attribut - Recherche 2
     private TransactionResearch transactionResearch; // Attribut - Recherche 3
-    private CustomerFunction customerFunction; // Attribut - Fonctionnalité métier 1
-    private PurchaseFunction purchaseFunction; // Attribut - Fonctionnalité métier 2
+    private CustomerFeature customerFeature; // Attribut - Fonctionnalité métier 1
+    private PurchaseFeature purchaseFeature; // Attribut - Fonctionnalité métier 2
 
     // Constructors
     public Window(String title) {
@@ -64,8 +64,8 @@ public class Window extends JFrame {
         addressResearch = new AddressResearch(); // Panel - Recherche 1
         productResearch = new ProductResearch(); // Panel - Recherche 2
         transactionResearch = new TransactionResearch(); // Panel - Recherche 3
-        customerFunction = new CustomerFunction(); // Panel - Fonctionnalité métier 1
-        purchaseFunction = new PurchaseFunction(); // Panel - Fonctionnalité métier 2
+        customerFeature = new CustomerFeature(); // Panel - Fonctionnalité métier 1
+        purchaseFeature = new PurchaseFeature(); // Panel - Fonctionnalité métier 2
         
         container = getContentPane();
         container.add(login);
@@ -228,11 +228,11 @@ public class Window extends JFrame {
     }
 
     public void showCustomerFunction() { // Show - Fonctionnalité Métier 1
-        if (currentPanel != customerFunction) {
+        if (currentPanel != customerFeature) {
             container.remove(currentPanel);
 
-            container.add(customerFunction);
-            setCurrentPanel(customerFunction);
+            container.add(customerFeature);
+            setCurrentPanel(customerFeature);
 
             container.revalidate();
             container.repaint();
@@ -240,11 +240,11 @@ public class Window extends JFrame {
     }
 
     public void showPurchaseFunction() { // Show - Fonctionnalité Métier 2
-        if (currentPanel != purchaseFunction) {
+        if (currentPanel != purchaseFeature) {
             container.remove(currentPanel);
 
-            container.add(purchaseFunction);
-            setCurrentPanel(purchaseFunction);
+            container.add(purchaseFeature);
+            setCurrentPanel(purchaseFeature);
 
             container.revalidate();
             container.repaint();

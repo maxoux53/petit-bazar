@@ -1,4 +1,4 @@
-package view.function;
+package view.features;
 
 import controller.ProductController;
 import controller.PurchaseController;
@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class PurchaseFunction extends JPanel {
+public class PurchaseFeature extends JPanel {
     private JComboBox<String> categoryComboBox;
     private ArrayList<Category> categories;
     private JButton searchButton;
@@ -22,7 +22,7 @@ public class PurchaseFunction extends JPanel {
     private PurchaseController purchaseController;
     private ProductController productController;
 
-    public PurchaseFunction() {
+    public PurchaseFeature() {
         setPurchaseController(new PurchaseController());
         setProductController(new ProductController());
         setLayout(new BorderLayout());
