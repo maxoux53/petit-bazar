@@ -50,6 +50,7 @@ public class ProductManagement extends JPanel {
 
         try {
             listingTable = new JTable(infoTableModel());
+            listingTable.setDefaultEditor(Object.class, null);
         } catch (DAORetrievalFailedException | NotFoundException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
