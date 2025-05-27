@@ -176,7 +176,7 @@ public class EmployeePanel extends JPanel {
         if (countryComboBox.getItemCount() > 0) countryComboBox.setSelectedIndex(0);
     }
     
-    public void fieldsAreFilled() throws FieldIsEmptyException{
+    public void checkFields() throws FieldIsEmptyException{
         if (nullIfEmptyName(firstNameField.getText()) == null) {
             throw new FieldIsEmptyException("Prénom");
         } else {
