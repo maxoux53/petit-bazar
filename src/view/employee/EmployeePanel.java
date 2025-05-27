@@ -70,6 +70,7 @@ public class EmployeePanel extends JPanel {
         try {
             countriesList = controller.getAllCountries();
             countryComboBox = new JComboBox<>(countriesList.toArray(new String[0]));
+            countryComboBox.setSelectedItem("Belgique");
         } catch (DAORetrievalFailedException e) {
             countryComboBox = new JComboBox<>();
             JOptionPane.showMessageDialog(this, "Erreur lors du chargement des pays.", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -136,11 +137,7 @@ public class EmployeePanel extends JPanel {
     public void setController(EmployeeController controller) {
         this.controller = controller;
     }
-
-    public JPanel getCountryPanel() {
-        return countryPanel;
-    }
-
+    
     public JTextField getFirstNameField() { return firstNameField; }
     public JTextField getLastNameField() { return lastNameField; }
     public JPasswordField getPasswordField() { return passwordField; }
