@@ -29,7 +29,7 @@ public class PurchaseFeature extends JPanel {
 
         JPanel topPanel = new JPanel();
         topPanel.add(new JLabel("Catégorie :"));
-        categoryComboBox = new JComboBox<>();
+        categoryComboBox = new JComboBox<String>();
         
         try {
             categories = productController.getAllCategories();
@@ -49,11 +49,7 @@ public class PurchaseFeature extends JPanel {
 
         add(topPanel, BorderLayout.NORTH);
 
-        tableModel = new DefaultTableModel(new Object[]{
-                "Code-barres",
-                "Nom",
-                "Quantité vendue"
-        }, 0);
+        tableModel = new DefaultTableModel(new Object[]{"Code-barres", "Nom", "Quantité vendue"}, 0);
 
         resultTable = new JTable(tableModel);
         resultTable.setDefaultEditor(Object.class, null);
@@ -71,7 +67,8 @@ public class PurchaseFeature extends JPanel {
         } catch (DAORetrievalFailedException e) {
             JOptionPane.showMessageDialog(this,
                     "Erreur lors de la récupération des données : " + e.getMessage(),
-                    "Erreur", JOptionPane.ERROR_MESSAGE);
+                    "Erreur", JOptionPane.ERROR_MESSAGE
+            );
         }
     }
 
@@ -89,7 +86,8 @@ public class PurchaseFeature extends JPanel {
         if (results.isEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "Aucun résultat trouvé pour cette catégorie",
-                    "Info", JOptionPane.INFORMATION_MESSAGE);
+                    "Info", JOptionPane.INFORMATION_MESSAGE
+            );
         }
     }
 
