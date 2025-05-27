@@ -147,8 +147,8 @@ public class EmployeeManagement extends JPanel {
                 "Rôle",
                 "Date d'embauche",
                 "Matricule du manager",
-                "Code postal de la ville",
-                "Nom de la ville",
+                "Code postal",
+                "Ville",
                 "Pays"
         };
 
