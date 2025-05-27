@@ -45,7 +45,7 @@ public class EmployeePanel extends JPanel {
         streetPanel = buildInputPanel("Rue", streetField = new JTextField());
         streetNumberPanel = buildInputPanel("Numéro de rue", streetNumberField = new JTextField());
         unitNumberPanel = buildInputPanel("Boîte postale", unitNumberField = new JTextField());
-        managerIdPanel = buildInputPanel("ID du Manager", managerIdField = new JTextField());
+        managerIdPanel = buildInputPanel("Matricule du Manager", managerIdField = new JTextField());
         cityZipCodePanel = buildInputPanel("Code postal", cityZipCodeField = new JTextField());
         cityNamePanel = buildInputPanel("Ville", cityNameField = new JTextField());
 
