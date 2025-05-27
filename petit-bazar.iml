@@ -10,5 +10,114 @@
     <orderEntry type="library" exported="" name="postgresql-42.7.5" level="project" />
     <orderEntry type="library" exported="" name="io.github.cdimascio.dotenv.java" level="project" />
     <orderEntry type="library" exported="" name="lib" level="project" />
+    <orderEntry type="module-library">
+      <library name="JUnit5.8.1">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/junit-jupiter-5.8.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit-jupiter-api-5.8.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/opentest4j-1.2.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit-platform-commons-1.8.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/apiguardian-api-1.1.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit-jupiter-params-5.8.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit-jupiter-engine-5.8.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit-platform-engine-1.8.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="JUnit4">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/junit-4.13.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/hamcrest-core-1.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="JUnit5.8.1">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/junit-jupiter-5.8.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit-jupiter-api-5.8.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/opentest4j-1.2.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit-platform-commons-1.8.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/apiguardian-api-1.1.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit-jupiter-params-5.8.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit-jupiter-engine-5.8.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit-platform-engine-1.8.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="JUnit4">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/junit/junit-4.13.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit/hamcrest-core-1.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="JUnit5.8.1">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/junit/junit-jupiter-5.8.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit/junit-jupiter-api-5.8.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit/opentest4j-1.2.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit/junit-platform-commons-1.8.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit/apiguardian-api-1.1.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit/junit-jupiter-params-5.8.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit/junit-jupiter-engine-5.8.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit/junit-platform-engine-1.8.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="JUnit5.8.1">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/junit/junit-jupiter-5.8.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit/junit-jupiter-api-5.8.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit/opentest4j-1.2.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit/junit-platform-commons-1.8.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit/apiguardian-api-1.1.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit/junit-jupiter-params-5.8.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit/junit-jupiter-engine-5.8.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit/junit-platform-engine-1.8.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="JUnit4">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/junit/junit-4.13.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit/hamcrest-core-1.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="testng">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/junit/testng-7.1.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit/jcommander-1.72.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit/guice-4.1.0-no_aop.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit/javax.inject-1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit/aopalliance-1.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit/guava-19.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/junit/snakeyaml-1.21.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
