@@ -2,6 +2,7 @@ package view.research;
 
 import controller.ProductController;
 import exceptions.*;
+import model.Brand;
 import model.ProductInformation;
 
 import javax.swing.*;
@@ -10,7 +11,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class ProductResearch extends JPanel {
-    private JTextField brandIdField; // Entrée - Id de la marque
+    private JComboBox<String> brandComboBox; // Choix du nom de la marque
+    private ArrayList<Brand> brands; // Liste des marques
     private JButton searchButton; // Entrée - Bouton "Rechercher"
     private JTable resultTable; // Sortie - Tableau des produits
     private DefaultTableModel tableModel; // Modèle du tableau des produits
@@ -24,8 +26,20 @@ public class ProductResearch extends JPanel {
         // Initialisation du JPanel (brandIdField)
         JPanel topPanel = new JPanel();
         topPanel.add(new JLabel("Identifiant de la marque :"));
-        brandIdField = new JTextField(10);
-        topPanel.add(brandIdField);
+        brandComboBox = new JComboBox<>();
+        
+        try {
+            brands = controller.getAllBrands();
+            
+            for (Brand brand : brands) {
+                brandComboBox.addItem(brand.getName());
+            }
+        } catch (DAORetrievalFailedException | ProhibitedValueException e) {
+            JOptionPane.showMessageDialog(this, "Erreur lors de la récupération des données : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
+
+
+        topPanel.add(brandComboBox);
 
         // Initialisation du JButton (searchButton)
         searchButton = new JButton("Rechercher");
@@ -50,23 +64,10 @@ public class ProductResearch extends JPanel {
     }
 
     private void searchProduct() {
-        String idText = brandIdField.getText().trim();
-
-        if (idText.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Veuillez entrer un ID de marque", "Erreur", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        Integer brandId; // Récupération de l'id
+        Brand brandSelectd = brands.get(brandComboBox.getSelectedIndex());
+        
         try {
-            brandId = Integer.parseInt(idText);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "L'ID doit être un nombre entier", "Erreur", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        try {
-            ArrayList<ProductInformation> results = controller.getProductInformationByBrand(brandId); // Récupération des données
+            ArrayList<ProductInformation> results = controller.getProductInformationByBrand(brandSelectd.getId()); // Récupération des données
             fillTable(results);
         } catch (DAORetrievalFailedException ex) {
             JOptionPane.showMessageDialog(this, "Erreur lors de la récupération des données : " + ex.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
