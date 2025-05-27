@@ -1,4 +1,4 @@
-package view.function;
+package view.features;
 
 import controller.PurchaseController;
 import exceptions.*;
@@ -9,7 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class CustomerFunction extends JPanel {
+public class CustomerFeature extends JPanel {
     private JTextField idEmployeeField;
     private JButton searchButton;
     private JTable resultTable;
@@ -17,7 +17,7 @@ public class CustomerFunction extends JPanel {
 
     private PurchaseController controller;
 
-    public CustomerFunction() {
+    public CustomerFeature() {
         setController(new PurchaseController());
         setLayout(new BorderLayout());
 
