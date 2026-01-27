@@ -1,12 +1,9 @@
 <div align="center">
     <img width="255" alt="icon-light" src="./icon.png">
-    <h1>Le P'tit Bazar<br>un projet de gestion de magasin en Java & SQL</h1>
+    <h1>Le P'tit Bazar</h1>
 </div>
 
-## À propos
-
-Ce projet, réalisé en Java avec Swing et SQL (PostgreSQL), est un logiciel de gestion de magasin d'alimentation généraliste.
-Il permet la gestion des stocks, des client (programme de fidélité, etc) et des employés.
+Un logiciel de gestion, réalisé en Java avec Swing et SQL avec Postgres, permettant la régie de magasins d'alimentation généralistes. Il traite les stocks, les clients (fidélité, etc) et les employés.
 
 ## Feuille de route
 
@@ -14,20 +11,19 @@ Une feuille de route avec les fonctionnalités à implémenter et leur avancemen
 
 ## Table des matières
 
-1. [À propos](#à-propos)
-2. [Feuille de route](#feuille-de-route)
-3. [Table des matières](#table-des-matières)
-4. [Installation](#installation)
+1. [Feuille de route](#feuille-de-route)
+2. [Table des matières](#table-des-matières)
+3. [Installation](#installation)
    - [Prérequis](#prérequis)
    - [Build](#build)
-5. [Technologies utilisées](#technologies-utilisées)
+4. [Technologies utilisées](#technologies-utilisées)
    - [Développement](#développement)
    - [Dépendances](#dépendances)
    - [Interface utilisateur](#interface-utilisateur)
    - [Base de données](#base-de-données)
-   - [Conception](#conception)
-6. [Structure de la base de données](#structure-de-la-base-de-données)
-7. [Informations sur la licence](#informations-sur-la-licence)
+   - [Modélisation](#modélisation)
+5. [Structure de la base de données](#structure-de-la-base-de-données)
+6. [Informations sur la licence](#informations-sur-la-licence)
 
 ## Installation
 
@@ -91,9 +87,9 @@ Une feuille de route avec les fonctionnalités à implémenter et leur avancemen
 - Docker
 - DataGrip & Azure Data Studio (pour le développement)
 
-### Conception
+### Modélisation
 
-- Draw.io pour la modélisation de la base de données (EA + relationnel).
+- Draw.io (entité-association et relationnel)
 
 ## Structure de la base de données
 
@@ -110,7 +106,7 @@ Une feuille de route avec les fonctionnalités à implémenter et leur avancemen
 
 ### Contributions et crédits
 
-Ce projet est réalisé par [Constant B.](https://github.com/Zencaaw/), [Adrien D.](https://github.com/Tropicooooo/) et [Max N.](https://github.com/maxoux53/) dans le cadre du cours de Programmation orientée objet avancée (IG252).  
+Ce projet a été réalisé par [Constant B.](https://github.com/Zencaaw/), [Adrien D.](https://github.com/Tropicooooo/) et [Max N.](https://github.com/maxoux53/) dans le cadre du cours de Programmation orientée objet avancée (IG252).  
 Nom inspiré de l'illustre [Grand Bazar](https://github.com/Tisdax/grand-bazar) par Tisdo.
 
 ### Licence
